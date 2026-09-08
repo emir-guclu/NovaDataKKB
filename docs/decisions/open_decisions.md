@@ -43,11 +43,9 @@ ID'ler onek basina sirali verilir, **asla tekrar kullanilmaz** ve **asla yeniden
 | T-01 | OPEN | Kloudeks model envanteri ve limitleri nedir? | Model adlari, context uzunlugu, tool-calling, JSON mode, embedding ve rate limit bilgileri model kademelendirmesini belirler. |  | 2026-09-07 |  |
 | T-02 | OPEN | Kloudeks API'sine self-hosted sunucudan erisim mumkun mu? | IP/ag kisiti deployment mimarisini VPS, VPN veya laptop+tunnel seceneklerinden birine zorlar. |  | 2026-09-07 |  |
 | T-03 | OPEN | Canli deploy hedefi ne olacak? | Diger altyapi kararlarina bagli olarak maliyet, kurulum hizi ve ekip deneyimi acisindan hedef ortam secilmeli. |  | 2026-09-07 |  |
-| T-04 | OPEN | Backend kod organizasyonu nasil olacak? | `app/`, `core/`, `api/`, `modules/`, `models/` gibi katmanli yapi ile servis-bazli klasorleme arasinda secim yapmak modul sinirlarini, test edilebilirligi ve ekip hizini etkiler. |  | 2026-09-07 |  |
 | T-05 | OPEN | Ana veritabani teknolojisi ne olacak? | PostgreSQL, SQLite veya NoSQL secimi kalicilik, analitik sorgular, deployment karmasikligi ve demo guvenilirligini belirler. |  | 2026-09-07 |  |
 | T-06 | OPEN | Veritabani tablo sinirlari ve semasi ne olacak? | Kaynak metaverisi, seriler, sorgular, cevaplar, geri bildirimler ve loglar icin tablo sinirlari netlesmeden backend sozlesmeleri sabitlenemez. |  | 2026-09-07 |  |
 | T-07 | OPEN | Veri cekme ve guncelleme stratejisi nasil calisacak? | Ana verilerin tek seferlik yuklenmesi ile scheduler destekli surekli guncelleme arasindaki secim veri tazeligi, maliyet ve operasyonel riski etkiler. |  | 2026-09-07 |  |
-| T-08 | OPEN | EVDS veri erisimi icin pip paketi mi, ozel httpx istemcisi mi kullanilacak? | Bagimlilik riski ile gelistirme hizi arasinda karar verilmesi gerekiyor. |  | 2026-09-07 |  |
 | T-09 | OPEN | Veri toplamada kullanilacak kutuphaneler neler olacak? | HTTP client, PDF parsing, Excel okuma, HTML scraping, OCR ve API istemcisi secimleri kaynak kapsamini ve bakim riskini belirler. |  | 2026-09-07 |  |
 | T-10 | OPEN | BDDK yil-ici kumulatif tablo metaverisi var mi? | Resmi liste varsa decumulate modulu otomatik tespit ve capraz dogrulama ile daha guvenilir hale gelir. |  | 2026-09-07 |  |
 | T-11 | OPEN | Borsa Istanbul verileri nasil ele alinacak? | BIST 100, kiymetli madenler, PDF ve grafik kaynaklarinin cekilmesi, normalize edilmesi ve sunulmasi ek connector ve parsing stratejisi gerektirir. |  | 2026-09-07 |  |
@@ -125,7 +123,7 @@ ID'ler onek basina sirali verilir, **asla tekrar kullanilmaz** ve **asla yeniden
 Kod yazilmaya baslamadan once kapanmasi gereken, sonradan degistirilmesi pahali mimari iskelet kararlari.
 
 - `P-01`: urun adi.
-- `T-28`, `T-04`: frontend teknolojisi ve backend organizasyonu.
+- `T-28`: frontend teknolojisi (`T-04` kapatildi).
 - `T-05`, `T-24`: veritabani ve veri analizi teknolojisi; ayni oturumda birlikte ele alinmali.
 - `T-16`, `T-19`: agent mimarisi ve bir soru icin LLM cagri sayisi; art arda konusulmali.
 - `S-09`: branch stratejisi ve PR review sureci.
@@ -147,7 +145,7 @@ Ilk uctan uca cevabi ve 2026-09-11 kilometre tasini dogrudan etkileyen kararlar.
 - `T-17`, `T-18`, `T-20`: tool routing, AI'a verilecek bilgi formati ve model kademelendirme.
 - `T-22`, `T-38`, `P-08`: LLM dogrulama, citation standardi ve cevap formati.
 - `P-03`: zorunlu tool seti ve ek tool sirasi.
-- `T-08`, `T-09`, `T-11`: connector kutuphaneleri ve Borsa Istanbul yaklasimi.
+- `T-09`, `T-11`: connector kutuphaneleri ve Borsa Istanbul yaklasimi (`T-08` kapatildi).
 
 ### Katman 4 - Gelistirme ilerledikce organik netlesebilir
 
