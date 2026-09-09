@@ -1,0 +1,136 @@
+# ==============================================================================
+# TCMB EVDS Serileri İndirme Yönergesi (Series Ingestion Manifest)
+# ==============================================================================
+# Bu dosya, F-001 kapsamında Bronze katmanına (data/bronze/evds/{code}.json)
+# kaynaktan ham olarak indirilecek serilerin bildirimsel kaydıdır.
+#
+# İdempotency Kuralı: Dosya diskte mevcutsa ve boyutu > 0 ise indirme atlanır (skip).
+# Tarih Aralığı: Hackathon şartnamesi gereği 01-01-2021 / 01-06-2026.
+# ==============================================================================
+
+version: "1.0"
+default_start_date: "01-01-2021"
+default_end_date: "01-06-2026"
+
+series:
+  # ----------------------------------------------------------------------------
+  # 1. Çekirdek Hackathon Senaryosu (Konut Kredisi, Enflasyon, KFE)
+  # ----------------------------------------------------------------------------
+  - code: "TP.KTF10"
+    name: "Konut Kredisi Faiz Oranı"
+    category: "kredi_faizleri"
+    frequency: "Haftalık"
+    start_date: "01-01-2021"
+    end_date: "01-06-2026"
+    unit: "Yüzde (%)"
+    description: "Bankalarca açılan konut kredilerine uygulanan ağırlıklı ortalama faiz oranı (akım veri)."
+    priority: "CRITICAL"
+    tags: ["konut", "kredi", "faiz", "bddk_eslesme", "adim_01"]
+
+  - code: "TP.FG.J0"
+    name: "TÜFE Genel Endeksi (2003=100)"
+    category: "enflasyon"
+    frequency: "Aylık"
+    start_date: "01-01-2021"
+    end_date: "01-06-2026"
+    unit: "Endeks"
+    description: "Tüketici Fiyat Endeksi genel seviyesi. Konut kredisi tutarlarını reel değere dönüştürmek (enflasyondan arındırmak) için kullanılır."
+    priority: "CRITICAL"
+    tags: ["enflasyon", "tufe", "reel_kredi", "adim_02"]
+
+  - code: "TP.HKFE01"
+    name: "Konut Fiyat Endeksi (KFE - Türkiye Geneli)"
+    category: "konut_piyasasi"
+    frequency: "Aylık"
+    start_date: "01-01-2021"
+    end_date: "01-06-2026"
+    unit: "Endeks (2023=100)"
+    description: "Türkiye genelindeki konutların kalite etkisinden arındırılmış fiyat değişimlerini izleyen endeks. Faiz düşerken kredi talebinin artmama nedenini (ev fiyat artışı) analiz etmek için kullanılır."
+    priority: "CRITICAL"
+    tags: ["konut", "kfe", "ev_fiyatlari", "nedensellik", "adim_03"]
+
+  # ----------------------------------------------------------------------------
+  # 2. Döviz Kurları (Piyasa ve Likidite Göstergeleri)
+  # ----------------------------------------------------------------------------
+  - code: "TP.DK.USD.A.YTL"
+    name: "ABD Doları Döviz Alış Kuru"
+    category: "doviz"
+    frequency: "Günlük"
+    start_date: "01-01-2021"
+    end_date: "01-06-2026"
+    unit: "TL"
+    description: "TCMB gösterge niteliğindeki ABD Doları efektif/döviz alış kuru."
+    priority: "HIGH"
+    tags: ["dolar", "usd", "kur", "doviz"]
+
+  - code: "TP.DK.EUR.A.YTL"
+    name: "Euro Döviz Alış Kuru"
+    category: "doviz"
+    frequency: "Günlük"
+    start_date: "01-01-2021"
+    end_date: "01-06-2026"
+    unit: "TL"
+    description: "TCMB gösterge niteliğindeki Euro döviz alış kuru."
+    priority: "MEDIUM"
+    tags: ["euro", "eur", "kur", "doviz"]
+
+  # ----------------------------------------------------------------------------
+  # 3. Para Politikası & Fonlama Göstergeleri
+  # ----------------------------------------------------------------------------
+  - code: "TP.APIFON4"
+    name: "TCMB Ağırlıklı Ortalama Fonlama Maliyeti"
+    category: "para_politikasi"
+    frequency: "Günlük"
+    start_date: "01-01-2021"
+    end_date: "01-06-2026"
+    unit: "Yüzde (%)"
+    description: "TCMB'nin piyasaya sağladığı likiditenin ortalama maliyeti (Politika/Faiz koridoru göstergesi)."
+    priority: "HIGH"
+    tags: ["politika_faizi", "fonlama", "merkez_bankasi"]
+
+  - code: "TP.TRY.MT02"
+    name: "TL Mevduat Faiz Oranı (1-3 Ay Vadeli)"
+    category: "mevduat_faizleri"
+    frequency: "Haftalık"
+    start_date: "01-01-2021"
+    end_date: "01-06-2026"
+    unit: "Yüzde (%)"
+    description: "Bankalarca açılan 1-3 ay vadeli TL mevduatlara uygulanan ağırlıklı ortalama faiz oranı. Kredi-mevduat faiz makası için kullanılır."
+    priority: "MEDIUM"
+    tags: ["mevduat", "mevduat_faizi", "faiz_makasi"]
+
+  # ----------------------------------------------------------------------------
+  # 4. Karşılaştırmalı Diğer Kredi Türleri (BDDK ile Çapraz Analiz)
+  # ----------------------------------------------------------------------------
+  - code: "TP.KTF17"
+    name: "Ticari Kredi Faiz Oranı (TL)"
+    category: "kredi_faizleri"
+    frequency: "Haftalık"
+    start_date: "01-01-2021"
+    end_date: "01-06-2026"
+    unit: "Yüzde (%)"
+    description: "Bankalarca açılan Türk Lirası cinsinden ticari kredilere uygulanan ağırlıklı ortalama faiz oranı."
+    priority: "MEDIUM"
+    tags: ["ticari_kredi", "kobi", "faiz"]
+
+  - code: "TP.KTF11"
+    name: "İhtiyaç Kredisi Faiz Oranı"
+    category: "kredi_faizleri"
+    frequency: "Haftalık"
+    start_date: "01-01-2021"
+    end_date: "01-06-2026"
+    unit: "Yüzde (%)"
+    description: "Tüketici ihtiyaç kredilerine uygulanan ağırlıklı ortalama faiz oranı."
+    priority: "LOW"
+    tags: ["ihtiyac_kredisi", "bireysel", "faiz"]
+
+  - code: "TP.KTF12"
+    name: "Taşıt Kredisi Faiz Oranı"
+    category: "kredi_faizleri"
+    frequency: "Haftalık"
+    start_date: "01-01-2021"
+    end_date: "01-06-2026"
+    unit: "Yüzde (%)"
+    description: "Taşıt kredilerine uygulanan ağırlıklı ortalama faiz oranı."
+    priority: "LOW"
+    tags: ["tasit_kredisi", "faiz"]
