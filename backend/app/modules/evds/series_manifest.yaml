@@ -6,9 +6,12 @@
 #
 # İdempotency Kuralı: Dosya diskte mevcutsa ve boyutu > 0 ise indirme atlanır (skip).
 # Tarih Aralığı: Hackathon şartnamesi gereği 01-01-2021 / 01-06-2026.
+#
+# Durum: Tüm seriler data/bronze/evds/evds_catalog.parquet taranarak
+# %100 resmi EVDS kodlarıyla doğrulanmış ve kilitlenmiştir.
 # ==============================================================================
 
-version: "1.0"
+version: "2.0"
 default_start_date: "01-01-2021"
 default_end_date: "01-06-2026"
 
@@ -27,6 +30,20 @@ series:
     priority: "CRITICAL"
     tags: ["konut", "kredi", "faiz", "bddk_eslesme", "adim_01"]
 
+  - code: "TP.HPBITABLO6.3"
+    name: "Konut Kredisi Hacmi / Bakiyesi (Tutar)"
+    category: "kredi_hacimleri"
+    frequency: "Haftalık"
+    start_date: "01-01-2021"
+    end_date: "01-06-2026"
+    unit: "Bin TL"
+    description: >
+      Bankacılık sektörü toplam konut kredisi bakiye büyüklüğü (TL + YP).
+      Örnek senaryo 1. adımı: Faiz oranı düştüğü halde kredi miktarının
+      yükselmediği dönemleri tespit etmek için gereken tutar serisi.
+    priority: "CRITICAL"
+    tags: ["konut", "kredi", "hacim", "bakiye", "adim_01"]
+
   - code: "TP.FG.J0"
     name: "TÜFE Genel Endeksi (2003=100)"
     category: "enflasyon"
@@ -37,6 +54,19 @@ series:
     description: "Tüketici Fiyat Endeksi genel seviyesi. Konut kredisi tutarlarını reel değere dönüştürmek (enflasyondan arındırmak) için kullanılır."
     priority: "CRITICAL"
     tags: ["enflasyon", "tufe", "reel_kredi", "adim_02"]
+
+  - code: "TP.TUFE1YI.T1"
+    name: "ÜFE Genel Endeksi (Yurt İçi Üretici Fiyat Endeksi)"
+    category: "enflasyon"
+    frequency: "Aylık"
+    start_date: "01-01-2021"
+    end_date: "01-06-2026"
+    unit: "Endeks (2003=100)"
+    description: >
+      TÜFE ile birlikte enflasyon karşılaştırması ve maliyet-fiyat ayrışması
+      analizleri için gerekli. PDF §5.2'deki zorunlu çekirdek seri listesindedir.
+    priority: "HIGH"
+    tags: ["enflasyon", "ufe", "maliyet"]
 
   - code: "TP.HKFE01"
     name: "Konut Fiyat Endeksi (KFE - Türkiye Geneli)"
@@ -84,9 +114,22 @@ series:
     start_date: "01-01-2021"
     end_date: "01-06-2026"
     unit: "Yüzde (%)"
-    description: "TCMB'nin piyasaya sağladığı likiditenin ortalama maliyeti (Politika/Faiz koridoru göstergesi)."
+    description: "TCMB'nin piyasaya sağladığı likiditenin ortalama maliyeti (Faiz koridoru göstergesi)."
     priority: "HIGH"
     tags: ["politika_faizi", "fonlama", "merkez_bankasi"]
+
+  - code: "TP.APIFON1.IHA"
+    name: "TCMB İhale Yoluyla Fonlama Faizi (1 Hafta Repo)"
+    category: "para_politikasi"
+    frequency: "Günlük"
+    start_date: "01-01-2021"
+    end_date: "01-06-2026"
+    unit: "Yüzde (%)"
+    description: >
+      TCMB 1 Hafta Vadeli Repo İhale Faizi (Politika Faizi göstergesi).
+      Causality analizlerinde 'politika faizinde artış' senaryoları için kullanılır.
+    priority: "HIGH"
+    tags: ["politika_faizi", "repo", "ihale_faizi"]
 
   - code: "TP.TRY.MT02"
     name: "TL Mevduat Faiz Oranı (1-3 Ay Vadeli)"
@@ -99,9 +142,53 @@ series:
     priority: "MEDIUM"
     tags: ["mevduat", "mevduat_faizi", "faiz_makasi"]
 
+  - code: "TP.PBD.H01"
+    name: "M1 Para Arzı"
+    category: "para_arzi"
+    frequency: "Haftalık"
+    start_date: "01-01-2021"
+    end_date: "01-06-2026"
+    unit: "Bin TL"
+    description: "Dolaşımdaki para ve vadesiz mevduatlar. PDF §5.2 çekirdek listede yer alır."
+    priority: "MEDIUM"
+    tags: ["m1", "para_arzi", "likidite"]
+
+  - code: "TP.PBD.H09"
+    name: "M2 Para Arzı"
+    category: "para_arzi"
+    frequency: "Haftalık"
+    start_date: "01-01-2021"
+    end_date: "01-06-2026"
+    unit: "Bin TL"
+    description: "M1 + Vadeli mevduatlar. PDF §5.2 çekirdek listede yer alır."
+    priority: "MEDIUM"
+    tags: ["m2", "para_arzi", "likidite"]
+
+  - code: "TP.PBD.H17"
+    name: "M3 Para Arzı"
+    category: "para_arzi"
+    frequency: "Haftalık"
+    start_date: "01-01-2021"
+    end_date: "01-06-2026"
+    unit: "Bin TL"
+    description: "M2 + Repo ve Para Piyasası Fonları. PDF §5.2 çekirdek listede yer alır."
+    priority: "LOW"
+    tags: ["m3", "para_arzi", "likidite"]
+
   # ----------------------------------------------------------------------------
   # 4. Karşılaştırmalı Diğer Kredi Türleri (BDDK ile Çapraz Analiz)
   # ----------------------------------------------------------------------------
+  - code: "TP.HPBITABLO6.1"
+    name: "Toplam Kredi Hacmi (Bankacılık Sektörü)"
+    category: "kredi_hacimleri"
+    frequency: "Haftalık"
+    start_date: "01-01-2021"
+    end_date: "01-06-2026"
+    unit: "Bin TL"
+    description: "Yurt içi yerleşikler toplam kredi stoku. Genel kredi büyümesi analizleri için kullanılır."
+    priority: "HIGH"
+    tags: ["kredi_hacmi", "bankacilik", "toplam_kredi"]
+
   - code: "TP.KTF17"
     name: "Ticari Kredi Faiz Oranı (TL)"
     category: "kredi_faizleri"
@@ -134,3 +221,72 @@ series:
     description: "Taşıt kredilerine uygulanan ağırlıklı ortalama faiz oranı."
     priority: "LOW"
     tags: ["tasit_kredisi", "faiz"]
+
+  # ----------------------------------------------------------------------------
+  # 5. Makro Bağlam Göstergeleri (Genel Amaçlılık & Korelasyon)
+  # ----------------------------------------------------------------------------
+  - code: "TP.TIG08"
+    name: "İşsizlik Oranı (%)"
+    category: "istihdam"
+    frequency: "Aylık"
+    start_date: "01-01-2021"
+    end_date: "01-06-2026"
+    unit: "Yüzde (%)"
+    description: "TÜİK kaynaklı mevsimsellikten arındırılmış genel işsizlik oranı. PDF §5.2 çekirdek listededir."
+    priority: "MEDIUM"
+    tags: ["issizlik", "istihdam", "makro"]
+
+  - code: "TP.TSANAYMT2021.BCD"
+    name: "Sanayi Üretim Endeksi (Mevsim ve Takvim Arındırılmış)"
+    category: "reel_sektor"
+    frequency: "Aylık"
+    start_date: "01-01-2021"
+    end_date: "01-06-2026"
+    unit: "Endeks (2021=100)"
+    description: "Toplam Sanayi Üretim Endeksi. Reel ekonomik aktivite sorularında referans göstergedir."
+    priority: "MEDIUM"
+    tags: ["sanayi_uretimi", "reel_sektor"]
+
+  - code: "TP.TG2.Y01"
+    name: "Tüketici Güven Endeksi"
+    category: "guven_endeksleri"
+    frequency: "Aylık"
+    start_date: "01-01-2021"
+    end_date: "01-06-2026"
+    unit: "Endeks"
+    description: "TCMB / TÜİK Tüketici Eğilim Anketi genel güven seviyesi. Kredi ve harcama iştahı analizlerinde kullanılır."
+    priority: "MEDIUM"
+    tags: ["tuketici_guveni", "guven_endeksi"]
+
+  - code: "TP.ODANA6.Q01"
+    name: "Cari İşlemler Dengesi"
+    category: "disa_baglilik"
+    frequency: "Aylık"
+    start_date: "01-01-2021"
+    end_date: "01-06-2026"
+    unit: "Milyon USD"
+    description: "Ödemeler Dengesi Analitik Sunum 1. Cari İşlemler Hesabı. Dış açık ve döviz kuru ilişkisi için kullanılır."
+    priority: "LOW"
+    tags: ["cari_acik", "odemeler_dengesi"]
+
+  - code: "TP.AB.B6"
+    name: "TCMB Toplam Uluslararası Rezervler"
+    category: "rezervler"
+    frequency: "Haftalık"
+    start_date: "01-01-2021"
+    end_date: "01-06-2026"
+    unit: "Milyon USD"
+    description: "TCMB Brüt Döviz ve Altın Toplam Rezerv Büyüklüğü. PDF §5.2 çekirdek listededir."
+    priority: "LOW"
+    tags: ["rezerv", "doviz", "tcmb"]
+
+# ==============================================================================
+# NOT: Aşağıdaki seriler EVDS kapsamı DIŞINDA — TÜİK/BDDK/Borsa İstanbul
+# kaynaklı. Bu manifest sadece EVDS için olduğundan buraya EKLENMEDİ, ama
+# ayrı connector'lar (connectors/tuik.py, Borsa İstanbul connector) için
+# not düşülüyor:
+#   - İpotekli Satışların Toplam Satışlara Oranı (TÜİK) — örnek grafikte
+#     (§7.8) 4. seri olarak geçiyor, EVDS'de YOK.
+#   - BIST100 endeksi, kıymetli maden fiyatları — Borsa İstanbul kaynaklı,
+#     ayrı görev olarak takip ediliyor (bkz. T-11).
+# ==============================================================================
