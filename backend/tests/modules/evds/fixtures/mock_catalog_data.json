@@ -1,0 +1,50 @@
+{
+  "categories": [
+    {
+      "CATEGORY_ID": 1,
+      "TOPIC_TITLE_TR": "Piyasa Verileri"
+    },
+    {
+      "CATEGORY_ID": 2,
+      "TOPIC_TITLE_TR": "Fiyat Endeksleri"
+    }
+  ],
+  "sub_categories": {
+    "1": [
+      {
+        "DATAGROUP_CODE": "bie_yssk",
+        "DATAGROUP_NAME": "Menkul Kıymet İstatistikleri",
+        "CATEGORY_ID": 1
+      }
+    ],
+    "2": [
+      {
+        "DATAGROUP_CODE": "bie_fe",
+        "DATAGROUP_NAME": "Tüketici Fiyat Endeksi",
+        "CATEGORY_ID": 2
+      }
+    ]
+  },
+  "series": {
+    "bie_yssk": [
+      {
+        "SERIE_CODE": "TP.KTF10",
+        "SERIE_NAME": "Konut Kredisi Faiz Oranı",
+        "DATAGROUP_CODE": "bie_yssk",
+        "FREQUENCY_STR": "Haftalık",
+        "START_DATE": "01-01-2021",
+        "END_DATE": "01-06-2026"
+      }
+    ],
+    "bie_fe": [
+      {
+        "SERIE_CODE": "TP.FG.J0",
+        "SERIE_NAME": "TÜFE Genel İndeksi",
+        "DATAGROUP_CODE": "bie_fe",
+        "FREQUENCY_STR": "Aylık",
+        "START_DATE": "01-01-2021",
+        "END_DATE": "01-06-2026"
+      }
+    ]
+  }
+}
