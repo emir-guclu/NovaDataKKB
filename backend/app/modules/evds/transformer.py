@@ -35,31 +35,8 @@ logger = logging.getLogger(__name__)
 DEFAULT_BRONZE_DIR = Path("data/bronze/evds")
 DEFAULT_SILVER_DIR = Path("data/silver/evds")
 DEFAULT_METADATA_JSON_PATH = Path("data/bronze/evds/metadata_raw.json")
+from app.modules.evds.model_silver import OBSERVATIONS_SCHEMA, SERIES_METADATA_SCHEMA
 
-OBSERVATIONS_SCHEMA = pa.schema([
-    ("series_id", pa.string()),
-    ("source", pa.string()),
-    ("date", pa.date32()),
-    ("period_start", pa.date32()),
-    ("period_end", pa.date32()),
-    ("value", pa.float64()),
-    ("freq", pa.string()),
-    ("dims", pa.string()),
-])
-
-SERIES_METADATA_SCHEMA = pa.schema([
-    ("series_id", pa.string()),
-    ("series_code", pa.string()),
-    ("series_name", pa.string()),
-    ("category", pa.string()),
-    ("tcmb_category", pa.string()),
-    ("tcmb_datagroup", pa.string()),
-    ("freq", pa.string()),
-    ("unit", pa.string()),
-    ("description", pa.string()),
-    ("tags", pa.list_(pa.string())),
-    ("source", pa.string()),
-])
 
 FREQ_MAP = {
     "3 AYLIK": "Q",
