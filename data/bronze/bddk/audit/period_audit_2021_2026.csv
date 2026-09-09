@@ -1,0 +1,573 @@
+﻿donem_id,period_text,dropdown_year,dropdown_date,report_year,report_date,exact_date_match,year_match,raw_header,error
+652,Haziran/26 (26. Hafta),2026,2026-06-26,2026,2026-06-26,True,True,"Sektör / Krediler                     (
+26 Haziran 2026 Cuma ) (Milyon TL) TP YP TOPLAM",
+651,Haziran/19 (25. Hafta),2026,2026-06-19,2026,2026-06-19,True,True,"Sektör / Krediler                     (
+19 Haziran 2026 Cuma ) (Milyon TL) TP YP TOPLAM",
+650,Haziran/12 (24. Hafta),2026,2026-06-12,2026,2026-06-12,True,True,"Sektör / Krediler                     (
+12 Haziran 2026 Cuma ) (Milyon TL) TP YP TOPLAM",
+649,Haziran/05 (23. Hafta),2026,2026-06-05,2026,2026-06-05,True,True,"Sektör / Krediler                     (
+5 Haziran 2026 Cuma ) (Milyon TL) TP YP TOPLAM",
+648,Mayıs/26 (22. Hafta),2026,2026-05-26,2026,2026-05-26,True,True,"Sektör / Krediler                     (
+26 Mayıs 2026 Salı ) (Milyon TL) TP YP TOPLAM",
+647,Mayıs/22 (21. Hafta),2026,2026-05-22,2026,2026-05-22,True,True,"Sektör / Krediler                     (
+22 Mayıs 2026 Cuma ) (Milyon TL) TP YP TOPLAM",
+646,Mayıs/15 (20. Hafta),2026,2026-05-15,2026,2026-05-15,True,True,"Sektör / Krediler                     (
+15 Mayıs 2026 Cuma ) (Milyon TL) TP YP TOPLAM",
+645,Mayıs/08 (19. Hafta),2026,2026-05-08,2026,2026-05-08,True,True,"Sektör / Krediler                     (
+8 Mayıs 2026 Cuma ) (Milyon TL) TP YP TOPLAM",
+644,Nisan/30 (18. Hafta),2026,2026-04-30,2026,2026-04-30,True,True,"Sektör / Krediler                     (
+30 Nisan 2026 Perşembe ) (Milyon TL) TP YP TOPLAM",
+643,Nisan/24 (17. Hafta),2026,2026-04-24,2026,2026-04-24,True,True,"Sektör / Krediler                     (
+24 Nisan 2026 Cuma ) (Milyon TL) TP YP TOPLAM",
+642,Nisan/17 (16. Hafta),2026,2026-04-17,2026,2026-04-17,True,True,"Sektör / Krediler                     (
+17 Nisan 2026 Cuma ) (Milyon TL) TP YP TOPLAM",
+641,Nisan/10 (15. Hafta),2026,2026-04-10,2026,2026-04-10,True,True,"Sektör / Krediler                     (
+10 Nisan 2026 Cuma ) (Milyon TL) TP YP TOPLAM",
+640,Nisan/03 (14. Hafta),2026,2026-04-03,2026,2026-04-03,True,True,"Sektör / Krediler                     (
+3 Nisan 2026 Cuma ) (Milyon TL) TP YP TOPLAM",
+639,Mart/27 (13. Hafta),2026,2026-03-27,2026,2026-03-27,True,True,"Sektör / Krediler                     (
+27 Mart 2026 Cuma ) (Milyon TL) TP YP TOPLAM",
+638,Mart/19 (12. Hafta),2026,2026-03-19,2026,2026-03-19,True,True,"Sektör / Krediler                     (
+19 Mart 2026 Perşembe ) (Milyon TL) TP YP TOPLAM",
+637,Mart/13 (11. Hafta),2026,2026-03-13,2026,2026-03-13,True,True,"Sektör / Krediler                     (
+13 Mart 2026 Cuma ) (Milyon TL) TP YP TOPLAM",
+636,Mart/06 (10. Hafta),2026,2026-03-06,2026,2026-03-06,True,True,"Sektör / Krediler                     (
+6 Mart 2026 Cuma ) (Milyon TL) TP YP TOPLAM",
+635,Şubat/27 (9. Hafta),2026,2026-02-27,2026,2026-02-27,True,True,"Sektör / Krediler                     (
+27 Şubat 2026 Cuma ) (Milyon TL) TP YP TOPLAM",
+634,Şubat/20 (8. Hafta),2026,2026-02-20,2026,2026-02-20,True,True,"Sektör / Krediler                     (
+20 Şubat 2026 Cuma ) (Milyon TL) TP YP TOPLAM",
+633,Şubat/13 (7. Hafta),2026,2026-02-13,2026,2026-02-13,True,True,"Sektör / Krediler                     (
+13 Şubat 2026 Cuma ) (Milyon TL) TP YP TOPLAM",
+632,Şubat/06 (6. Hafta),2026,2026-02-06,2026,2026-02-06,True,True,"Sektör / Krediler                     (
+6 Şubat 2026 Cuma ) (Milyon TL) TP YP TOPLAM",
+631,Ocak/30 (5. Hafta),2026,2026-01-30,2026,2026-01-30,True,True,"Sektör / Krediler                     (
+30 Ocak 2026 Cuma ) (Milyon TL) TP YP TOPLAM",
+630,Ocak/23 (4. Hafta),2026,2026-01-23,2026,2026-01-23,True,True,"Sektör / Krediler                     (
+23 Ocak 2026 Cuma ) (Milyon TL) TP YP TOPLAM",
+629,Ocak/16 (3. Hafta),2026,2026-01-16,2026,2026-01-16,True,True,"Sektör / Krediler                     (
+16 Ocak 2026 Cuma ) (Milyon TL) TP YP TOPLAM",
+628,Ocak/09 (2. Hafta),2026,2026-01-09,2026,2026-01-09,True,True,"Sektör / Krediler                     (
+9 Ocak 2026 Cuma ) (Milyon TL) TP YP TOPLAM",
+627,Ocak/02 (1. Hafta),2026,2026-01-02,2026,2026-01-02,True,True,"Sektör / Krediler                     (
+2 Ocak 2026 Cuma ) (Milyon TL) TP YP TOPLAM",
+626,Aralık/26 (52. Hafta),2025,2025-12-26,2025,2025-12-26,True,True,"Sektör / Krediler                     (
+26 Aralık 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+625,Aralık/19 (51. Hafta),2025,2025-12-19,2025,2025-12-19,True,True,"Sektör / Krediler                     (
+19 Aralık 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+624,Aralık/12 (50. Hafta),2025,2025-12-12,2025,2025-12-12,True,True,"Sektör / Krediler                     (
+12 Aralık 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+623,Aralık/05 (49. Hafta),2025,2025-12-05,2025,2025-12-05,True,True,"Sektör / Krediler                     (
+5 Aralık 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+622,Kasım/28 (48. Hafta),2025,2025-11-28,2025,2025-11-28,True,True,"Sektör / Krediler                     (
+28 Kasım 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+621,Kasım/21 (47. Hafta),2025,2025-11-21,2025,2025-11-21,True,True,"Sektör / Krediler                     (
+21 Kasım 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+620,Kasım/14 (46. Hafta),2025,2025-11-14,2025,2025-11-14,True,True,"Sektör / Krediler                     (
+14 Kasım 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+619,Kasım/07 (45. Hafta),2025,2025-11-07,2025,2025-11-07,True,True,"Sektör / Krediler                     (
+7 Kasım 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+618,Ekim/31 (44. Hafta),2025,2025-10-31,2025,2025-10-31,True,True,"Sektör / Krediler                     (
+31 Ekim 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+617,Ekim/24 (43. Hafta),2025,2025-10-24,2025,2025-10-24,True,True,"Sektör / Krediler                     (
+24 Ekim 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+616,Ekim/17 (42. Hafta),2025,2025-10-17,2025,2025-10-17,True,True,"Sektör / Krediler                     (
+17 Ekim 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+615,Ekim/10 (41. Hafta),2025,2025-10-10,2025,2025-10-10,True,True,"Sektör / Krediler                     (
+10 Ekim 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+614,Ekim/03 (40. Hafta),2025,2025-10-03,2025,2025-10-03,True,True,"Sektör / Krediler                     (
+3 Ekim 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+613,Eylül/26 (39. Hafta),2025,2025-09-26,2025,2025-09-26,True,True,"Sektör / Krediler                     (
+26 Eylül 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+612,Eylül/19 (38. Hafta),2025,2025-09-19,2025,2025-09-19,True,True,"Sektör / Krediler                     (
+19 Eylül 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+611,Eylül/12 (37. Hafta),2025,2025-09-12,2025,2025-09-12,True,True,"Sektör / Krediler                     (
+12 Eylül 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+610,Eylül/05 (36. Hafta),2025,2025-09-05,2025,2025-09-05,True,True,"Sektör / Krediler                     (
+5 Eylül 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+609,Ağustos/29 (35. Hafta),2025,2025-08-29,2025,2025-08-29,True,True,"Sektör / Krediler                     (
+29 Ağustos 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+608,Ağustos/22 (34. Hafta),2025,2025-08-22,2025,2025-08-22,True,True,"Sektör / Krediler                     (
+22 Ağustos 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+607,Ağustos/15 (33. Hafta),2025,2025-08-15,2025,2025-08-15,True,True,"Sektör / Krediler                     (
+15 Ağustos 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+606,Ağustos/08 (32. Hafta),2025,2025-08-08,2025,2025-08-08,True,True,"Sektör / Krediler                     (
+8 Ağustos 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+605,Ağustos/01 (31. Hafta),2025,2025-08-01,2025,2025-08-01,True,True,"Sektör / Krediler                     (
+1 Ağustos 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+604,Temmuz/25 (30. Hafta),2025,2025-07-25,2025,2025-07-25,True,True,"Sektör / Krediler                     (
+25 Temmuz 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+603,Temmuz/18 (29. Hafta),2025,2025-07-18,2025,2025-07-18,True,True,"Sektör / Krediler                     (
+18 Temmuz 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+602,Temmuz/11 (28. Hafta),2025,2025-07-11,2025,2025-07-11,True,True,"Sektör / Krediler                     (
+11 Temmuz 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+601,Temmuz/04 (27. Hafta),2025,2025-07-04,2025,2025-07-04,True,True,"Sektör / Krediler                     (
+4 Temmuz 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+600,Haziran/27 (26. Hafta),2025,2025-06-27,2025,2025-06-27,True,True,"Sektör / Krediler                     (
+27 Haziran 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+599,Haziran/20 (25. Hafta),2025,2025-06-20,2025,2025-06-20,True,True,"Sektör / Krediler                     (
+20 Haziran 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+598,Haziran/13 (24. Hafta),2025,2025-06-13,2025,2025-06-13,True,True,"Sektör / Krediler                     (
+13 Haziran 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+597,Haziran/05 (23. Hafta),2025,2025-06-05,2025,2025-06-05,True,True,"Sektör / Krediler                     (
+5 Haziran 2025 Perşembe ) (Milyon TL) TP YP TOPLAM",
+596,Mayıs/30 (22. Hafta),2025,2025-05-30,2025,2025-05-30,True,True,"Sektör / Krediler                     (
+30 Mayıs 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+595,Mayıs/23 (21. Hafta),2025,2025-05-23,2025,2025-05-23,True,True,"Sektör / Krediler                     (
+23 Mayıs 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+594,Mayıs/16 (20. Hafta),2025,2025-05-16,2025,2025-05-16,True,True,"Sektör / Krediler                     (
+16 Mayıs 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+593,Mayıs/09 (19. Hafta),2025,2025-05-09,2025,2025-05-09,True,True,"Sektör / Krediler                     (
+9 Mayıs 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+592,Mayıs/02 (18. Hafta),2025,2025-05-02,2025,2025-05-02,True,True,"Sektör / Krediler                     (
+2 Mayıs 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+591,Nisan/25 (17. Hafta),2025,2025-04-25,2025,2025-04-25,True,True,"Sektör / Krediler                     (
+25 Nisan 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+590,Nisan/18 (16. Hafta),2025,2025-04-18,2025,2025-04-18,True,True,"Sektör / Krediler                     (
+18 Nisan 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+589,Nisan/11 (15. Hafta),2025,2025-04-11,2025,2025-04-11,True,True,"Sektör / Krediler                     (
+11 Nisan 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+588,Nisan/04 (14. Hafta),2025,2025-04-04,2025,2025-04-04,True,True,"Sektör / Krediler                     (
+4 Nisan 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+587,Mart/28 (13. Hafta),2025,2025-03-28,2025,2025-03-28,True,True,"Sektör / Krediler                     (
+28 Mart 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+586,Mart/21 (12. Hafta),2025,2025-03-21,2025,2025-03-21,True,True,"Sektör / Krediler                     (
+21 Mart 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+585,Mart/14 (11. Hafta),2025,2025-03-14,2025,2025-03-14,True,True,"Sektör / Krediler                     (
+14 Mart 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+584,Mart/07 (10. Hafta),2025,2025-03-07,2025,2025-03-07,True,True,"Sektör / Krediler                     (
+7 Mart 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+583,Şubat/28 (9. Hafta),2025,2025-02-28,2025,2025-02-28,True,True,"Sektör / Krediler                     (
+28 Şubat 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+582,Şubat/21 (8. Hafta),2025,2025-02-21,2025,2025-02-21,True,True,"Sektör / Krediler                     (
+21 Şubat 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+581,Şubat/14 (7. Hafta),2025,2025-02-14,2025,2025-02-14,True,True,"Sektör / Krediler                     (
+14 Şubat 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+580,Şubat/07 (6. Hafta),2025,2025-02-07,2025,2025-02-07,True,True,"Sektör / Krediler                     (
+7 Şubat 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+579,Ocak/31 (5. Hafta),2025,2025-01-31,2025,2025-01-31,True,True,"Sektör / Krediler                     (
+31 Ocak 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+578,Ocak/24 (4. Hafta),2025,2025-01-24,2025,2025-01-24,True,True,"Sektör / Krediler                     (
+24 Ocak 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+577,Ocak/17 (3. Hafta),2025,2025-01-17,2025,2025-01-17,True,True,"Sektör / Krediler                     (
+17 Ocak 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+576,Ocak/10 (2. Hafta),2025,2025-01-10,2025,2025-01-10,True,True,"Sektör / Krediler                     (
+10 Ocak 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+575,Ocak/03 (1. Hafta),2025,2025-01-03,2025,2025-01-03,True,True,"Sektör / Krediler                     (
+3 Ocak 2025 Cuma ) (Milyon TL) TP YP TOPLAM",
+574,Aralık/27 (52. Hafta),2024,2024-12-27,2024,2024-12-27,True,True,"Sektör / Krediler                     (
+27 Aralık 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+573,Aralık/20 (51. Hafta),2024,2024-12-20,2024,2024-12-20,True,True,"Sektör / Krediler                     (
+20 Aralık 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+572,Aralık/13 (50. Hafta),2024,2024-12-13,2024,2024-12-13,True,True,"Sektör / Krediler                     (
+13 Aralık 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+571,Aralık/06 (49. Hafta),2024,2024-12-06,2024,2024-12-06,True,True,"Sektör / Krediler                     (
+6 Aralık 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+570,Kasım/29 (48. Hafta),2024,2024-11-29,2024,2024-11-29,True,True,"Sektör / Krediler                     (
+29 Kasım 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+569,Kasım/22 (47. Hafta),2024,2024-11-22,2024,2024-11-22,True,True,"Sektör / Krediler                     (
+22 Kasım 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+568,Kasım/15 (46. Hafta),2024,2024-11-15,2024,2024-11-15,True,True,"Sektör / Krediler                     (
+15 Kasım 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+567,Kasım/08 (45. Hafta),2024,2024-11-08,2024,2024-11-08,True,True,"Sektör / Krediler                     (
+8 Kasım 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+566,Kasım/01 (44. Hafta),2024,2024-11-01,2024,2024-11-01,True,True,"Sektör / Krediler                     (
+1 Kasım 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+565,Ekim/25 (43. Hafta),2024,2024-10-25,2024,2024-10-25,True,True,"Sektör / Krediler                     (
+25 Ekim 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+564,Ekim/18 (42. Hafta),2024,2024-10-18,2024,2024-10-18,True,True,"Sektör / Krediler                     (
+18 Ekim 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+563,Ekim/11 (41. Hafta),2024,2024-10-11,2024,2024-10-11,True,True,"Sektör / Krediler                     (
+11 Ekim 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+562,Ekim/04 (40. Hafta),2024,2024-10-04,2024,2024-10-04,True,True,"Sektör / Krediler                     (
+4 Ekim 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+561,Eylül/27 (39. Hafta),2024,2024-09-27,2024,2024-09-27,True,True,"Sektör / Krediler                     (
+27 Eylül 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+560,Eylül/20 (38. Hafta),2024,2024-09-20,2024,2024-09-20,True,True,"Sektör / Krediler                     (
+20 Eylül 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+559,Eylül/13 (37. Hafta),2024,2024-09-13,2024,2024-09-13,True,True,"Sektör / Krediler                     (
+13 Eylül 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+558,Eylül/06 (36. Hafta),2024,2024-09-06,2024,2024-09-06,True,True,"Sektör / Krediler                     (
+6 Eylül 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+557,Ağustos/29 (35. Hafta),2024,2024-08-29,2024,2024-08-29,True,True,"Sektör / Krediler                     (
+29 Ağustos 2024 Perşembe ) (Milyon TL) TP YP TOPLAM",
+556,Ağustos/23 (34. Hafta),2024,2024-08-23,2024,2024-08-23,True,True,"Sektör / Krediler                     (
+23 Ağustos 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+555,Ağustos/16 (33. Hafta),2024,2024-08-16,2024,2024-08-16,True,True,"Sektör / Krediler                     (
+16 Ağustos 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+554,Ağustos/09 (32. Hafta),2024,2024-08-09,2024,2024-08-09,True,True,"Sektör / Krediler                     (
+9 Ağustos 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+553,Ağustos/02 (31. Hafta),2024,2024-08-02,2024,2024-08-02,True,True,"Sektör / Krediler                     (
+2 Ağustos 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+552,Temmuz/26 (30. Hafta),2024,2024-07-26,2024,2024-07-26,True,True,"Sektör / Krediler                     (
+26 Temmuz 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+551,Temmuz/19 (29. Hafta),2024,2024-07-19,2024,2024-07-19,True,True,"Sektör / Krediler                     (
+19 Temmuz 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+550,Temmuz/12 (28. Hafta),2024,2024-07-12,2024,2024-07-12,True,True,"Sektör / Krediler                     (
+12 Temmuz 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+549,Temmuz/05 (27. Hafta),2024,2024-07-05,2024,2024-07-05,True,True,"Sektör / Krediler                     (
+5 Temmuz 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+548,Haziran/28 (26. Hafta),2024,2024-06-28,2024,2024-06-28,True,True,"Sektör / Krediler                     (
+28 Haziran 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+547,Haziran/21 (25. Hafta),2024,2024-06-21,2024,2024-06-21,True,True,"Sektör / Krediler                     (
+21 Haziran 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+546,Haziran/14 (24. Hafta),2024,2024-06-14,2024,2024-06-14,True,True,"Sektör / Krediler                     (
+14 Haziran 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+545,Haziran/07 (23. Hafta),2024,2024-06-07,2024,2024-06-07,True,True,"Sektör / Krediler                     (
+7 Haziran 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+544,Mayıs/31 (22. Hafta),2024,2024-05-31,2024,2024-05-31,True,True,"Sektör / Krediler                     (
+31 Mayıs 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+543,Mayıs/24 (21. Hafta),2024,2024-05-24,2024,2024-05-24,True,True,"Sektör / Krediler                     (
+24 Mayıs 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+542,Mayıs/17 (20. Hafta),2024,2024-05-17,2024,2024-05-17,True,True,"Sektör / Krediler                     (
+17 Mayıs 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+541,Mayıs/10 (19. Hafta),2024,2024-05-10,2024,2024-05-10,True,True,"Sektör / Krediler                     (
+10 Mayıs 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+540,Mayıs/03 (18. Hafta),2024,2024-05-03,2024,2024-05-03,True,True,"Sektör / Krediler                     (
+3 Mayıs 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+539,Nisan/26 (17. Hafta),2024,2024-04-26,2024,2024-04-26,True,True,"Sektör / Krediler                     (
+26 Nisan 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+538,Nisan/19 (16. Hafta),2024,2024-04-19,2024,2024-04-19,True,True,"Sektör / Krediler                     (
+19 Nisan 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+537,Nisan/09 (15. Hafta),2024,2024-04-09,2024,2024-04-09,True,True,"Sektör / Krediler                     (
+9 Nisan 2024 Salı ) (Milyon TL) TP YP TOPLAM",
+536,Nisan/05 (14. Hafta),2024,2024-04-05,2024,2024-04-05,True,True,"Sektör / Krediler                     (
+5 Nisan 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+535,Mart/29 (13. Hafta),2024,2024-03-29,2024,2024-03-29,True,True,"Sektör / Krediler                     (
+29 Mart 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+534,Mart/22 (12. Hafta),2024,2024-03-22,2024,2024-03-22,True,True,"Sektör / Krediler                     (
+22 Mart 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+533,Mart/15 (11. Hafta),2024,2024-03-15,2024,2024-03-15,True,True,"Sektör / Krediler                     (
+15 Mart 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+532,Mart/08 (10. Hafta),2024,2024-03-08,2024,2024-03-08,True,True,"Sektör / Krediler                     (
+8 Mart 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+531,Mart/01 (9. Hafta),2024,2024-03-01,2024,2024-03-01,True,True,"Sektör / Krediler                     (
+1 Mart 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+530,Şubat/23 (8. Hafta),2024,2024-02-23,2024,2024-02-23,True,True,"Sektör / Krediler                     (
+23 Şubat 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+529,Şubat/16 (7. Hafta),2024,2024-02-16,2024,2024-02-16,True,True,"Sektör / Krediler                     (
+16 Şubat 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+528,Şubat/09 (6. Hafta),2024,2024-02-09,2024,2024-02-09,True,True,"Sektör / Krediler                     (
+9 Şubat 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+527,Şubat/02 (5. Hafta),2024,2024-02-02,2024,2024-02-02,True,True,"Sektör / Krediler                     (
+2 Şubat 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+526,Ocak/26 (4. Hafta),2024,2024-01-26,2024,2024-01-26,True,True,"Sektör / Krediler                     (
+26 Ocak 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+525,Ocak/19 (3. Hafta),2024,2024-01-19,2024,2024-01-19,True,True,"Sektör / Krediler                     (
+19 Ocak 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+524,Ocak/12 (2. Hafta),2024,2024-01-12,2024,2024-01-12,True,True,"Sektör / Krediler                     (
+12 Ocak 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+523,Ocak/05 (1. Hafta),2024,2024-01-05,2024,2024-01-05,True,True,"Sektör / Krediler                     (
+5 Ocak 2024 Cuma ) (Milyon TL) TP YP TOPLAM",
+522,Aralık/29 (52. Hafta),2023,2023-12-29,2023,2023-12-29,True,True,"Sektör / Krediler                     (
+29 Aralık 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+521,Aralık/22 (51. Hafta),2023,2023-12-22,2023,2023-12-22,True,True,"Sektör / Krediler                     (
+22 Aralık 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+520,Aralık/15 (50. Hafta),2023,2023-12-15,2023,2023-12-15,True,True,"Sektör / Krediler                     (
+15 Aralık 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+519,Aralık/08 (49. Hafta),2023,2023-12-08,2023,2023-12-08,True,True,"Sektör / Krediler                     (
+8 Aralık 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+518,Aralık/01 (48. Hafta),2023,2023-12-01,2023,2023-12-01,True,True,"Sektör / Krediler                     (
+1 Aralık 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+517,Kasım/24 (47. Hafta),2023,2023-11-24,2023,2023-11-24,True,True,"Sektör / Krediler                     (
+24 Kasım 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+516,Kasım/17 (46. Hafta),2023,2023-11-17,2023,2023-11-17,True,True,"Sektör / Krediler                     (
+17 Kasım 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+515,Kasım/10 (45. Hafta),2023,2023-11-10,2023,2023-11-10,True,True,"Sektör / Krediler                     (
+10 Kasım 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+514,Kasım/03 (44. Hafta),2023,2023-11-03,2023,2023-11-03,True,True,"Sektör / Krediler                     (
+3 Kasım 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+513,Ekim/27 (43. Hafta),2023,2023-10-27,2023,2023-10-27,True,True,"Sektör / Krediler                     (
+27 Ekim 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+512,Ekim/20 (42. Hafta),2023,2023-10-20,2023,2023-10-20,True,True,"Sektör / Krediler                     (
+20 Ekim 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+511,Ekim/13 (41. Hafta),2023,2023-10-13,2023,2023-10-13,True,True,"Sektör / Krediler                     (
+13 Ekim 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+510,Ekim/06 (40. Hafta),2023,2023-10-06,2023,2023-10-06,True,True,"Sektör / Krediler                     (
+6 Ekim 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+509,Eylül/29 (39. Hafta),2023,2023-09-29,2023,2023-09-29,True,True,"Sektör / Krediler                     (
+29 Eylül 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+508,Eylül/22 (38. Hafta),2023,2023-09-22,2023,2023-09-22,True,True,"Sektör / Krediler                     (
+22 Eylül 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+507,Eylül/15 (37. Hafta),2023,2023-09-15,2023,2023-09-15,True,True,"Sektör / Krediler                     (
+15 Eylül 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+506,Eylül/08 (36. Hafta),2023,2023-09-08,2023,2023-09-08,True,True,"Sektör / Krediler                     (
+8 Eylül 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+505,Eylül/01 (35. Hafta),2023,2023-09-01,2023,2023-09-01,True,True,"Sektör / Krediler                     (
+1 Eylül 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+504,Ağustos/25 (34. Hafta),2023,2023-08-25,2023,2023-08-25,True,True,"Sektör / Krediler                     (
+25 Ağustos 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+503,Ağustos/18 (33. Hafta),2023,2023-08-18,2023,2023-08-18,True,True,"Sektör / Krediler                     (
+18 Ağustos 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+502,Ağustos/11 (32. Hafta),2023,2023-08-11,2023,2023-08-11,True,True,"Sektör / Krediler                     (
+11 Ağustos 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+501,Ağustos/04 (31. Hafta),2023,2023-08-04,2023,2023-08-04,True,True,"Sektör / Krediler                     (
+4 Ağustos 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+500,Temmuz/28 (30. Hafta),2023,2023-07-28,2023,2023-07-28,True,True,"Sektör / Krediler                     (
+28 Temmuz 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+499,Temmuz/21 (29. Hafta),2023,2023-07-21,2023,2023-07-21,True,True,"Sektör / Krediler                     (
+21 Temmuz 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+498,Temmuz/14 (28. Hafta),2023,2023-07-14,2023,2023-07-14,True,True,"Sektör / Krediler                     (
+14 Temmuz 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+497,Temmuz/07 (27. Hafta),2023,2023-07-07,2023,2023-07-07,True,True,"Sektör / Krediler                     (
+7 Temmuz 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+496,Haziran/27 (26. Hafta),2023,2023-06-27,2023,2023-06-27,True,True,"Sektör / Krediler                     (
+27 Haziran 2023 Salı ) (Milyon TL) TP YP TOPLAM",
+495,Haziran/23 (25. Hafta),2023,2023-06-23,2023,2023-06-23,True,True,"Sektör / Krediler                     (
+23 Haziran 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+494,Haziran/16 (24. Hafta),2023,2023-06-16,2023,2023-06-16,True,True,"Sektör / Krediler                     (
+16 Haziran 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+493,Haziran/09 (23. Hafta),2023,2023-06-09,2023,2023-06-09,True,True,"Sektör / Krediler                     (
+9 Haziran 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+492,Haziran/02 (22. Hafta),2023,2023-06-02,2023,2023-06-02,True,True,"Sektör / Krediler                     (
+2 Haziran 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+491,Mayıs/26 (21. Hafta),2023,2023-05-26,2023,2023-05-26,True,True,"Sektör / Krediler                     (
+26 Mayıs 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+490,Mayıs/18 (20. Hafta),2023,2023-05-18,2023,2023-05-18,True,True,"Sektör / Krediler                     (
+18 Mayıs 2023 Perşembe ) (Milyon TL) TP YP TOPLAM",
+489,Mayıs/12 (19. Hafta),2023,2023-05-12,2023,2023-05-12,True,True,"Sektör / Krediler                     (
+12 Mayıs 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+488,Mayıs/05 (18. Hafta),2023,2023-05-05,2023,2023-05-05,True,True,"Sektör / Krediler                     (
+5 Mayıs 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+487,Nisan/28 (17. Hafta),2023,2023-04-28,2023,2023-04-28,True,True,"Sektör / Krediler                     (
+28 Nisan 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+486,Nisan/20 (16. Hafta),2023,2023-04-20,2023,2023-04-20,True,True,"Sektör / Krediler                     (
+20 Nisan 2023 Perşembe ) (Milyon TL) TP YP TOPLAM",
+485,Nisan/14 (15. Hafta),2023,2023-04-14,2023,2023-04-14,True,True,"Sektör / Krediler                     (
+14 Nisan 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+484,Nisan/07 (14. Hafta),2023,2023-04-07,2023,2023-04-07,True,True,"Sektör / Krediler                     (
+7 Nisan 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+483,Mart/31 (13. Hafta),2023,2023-03-31,2023,2023-03-31,True,True,"Sektör / Krediler                     (
+31 Mart 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+482,Mart/24 (12. Hafta),2023,2023-03-24,2023,2023-03-24,True,True,"Sektör / Krediler                     (
+24 Mart 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+481,Mart/17 (11. Hafta),2023,2023-03-17,2023,2023-03-17,True,True,"Sektör / Krediler                     (
+17 Mart 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+480,Mart/10 (10. Hafta),2023,2023-03-10,2023,2023-03-10,True,True,"Sektör / Krediler                     (
+10 Mart 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+479,Mart/03 (9. Hafta),2023,2023-03-03,2023,2023-03-03,True,True,"Sektör / Krediler                     (
+3 Mart 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+478,Şubat/24 (8. Hafta),2023,2023-02-24,2023,2023-02-24,True,True,"Sektör / Krediler                     (
+24 Şubat 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+477,Şubat/17 (7. Hafta),2023,2023-02-17,2023,2023-02-17,True,True,"Sektör / Krediler                     (
+17 Şubat 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+476,Şubat/10 (6. Hafta),2023,2023-02-10,2023,2023-02-10,True,True,"Sektör / Krediler                     (
+10 Şubat 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+475,Şubat/03 (5. Hafta),2023,2023-02-03,2023,2023-02-03,True,True,"Sektör / Krediler                     (
+3 Şubat 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+474,Ocak/27 (4. Hafta),2023,2023-01-27,2023,2023-01-27,True,True,"Sektör / Krediler                     (
+27 Ocak 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+473,Ocak/20 (3. Hafta),2023,2023-01-20,2023,2023-01-20,True,True,"Sektör / Krediler                     (
+20 Ocak 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+472,Ocak/13 (2. Hafta),2023,2023-01-13,2023,2023-01-13,True,True,"Sektör / Krediler                     (
+13 Ocak 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+471,Ocak/06 (1. Hafta),2023,2023-01-06,2023,2023-01-06,True,True,"Sektör / Krediler                     (
+6 Ocak 2023 Cuma ) (Milyon TL) TP YP TOPLAM",
+470,Aralık/30 (52. Hafta),2022,2022-12-30,2022,2022-12-30,True,True,"Sektör / Krediler                     (
+30 Aralık 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+469,Aralık/23 (51. Hafta),2022,2022-12-23,2022,2022-12-23,True,True,"Sektör / Krediler                     (
+23 Aralık 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+468,Aralık/16 (50. Hafta),2022,2022-12-16,2022,2022-12-16,True,True,"Sektör / Krediler                     (
+16 Aralık 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+467,Aralık/09 (49. Hafta),2022,2022-12-09,2022,2022-12-09,True,True,"Sektör / Krediler                     (
+9 Aralık 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+466,Aralık/02 (48. Hafta),2022,2022-12-02,2022,2022-12-02,True,True,"Sektör / Krediler                     (
+2 Aralık 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+465,Kasım/25 (47. Hafta),2022,2022-11-25,2022,2022-11-25,True,True,"Sektör / Krediler                     (
+25 Kasım 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+464,Kasım/18 (46. Hafta),2022,2022-11-18,2022,2022-11-18,True,True,"Sektör / Krediler                     (
+18 Kasım 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+463,Kasım/11 (45. Hafta),2022,2022-11-11,2022,2022-11-11,True,True,"Sektör / Krediler                     (
+11 Kasım 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+462,Kasım/04 (44. Hafta),2022,2022-11-04,2022,2022-11-04,True,True,"Sektör / Krediler                     (
+4 Kasım 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+461,Ekim/28 (43. Hafta),2022,2022-10-28,2022,2022-10-28,True,True,"Sektör / Krediler                     (
+28 Ekim 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+460,Ekim/21 (42. Hafta),2022,2022-10-21,2022,2022-10-21,True,True,"Sektör / Krediler                     (
+21 Ekim 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+459,Ekim/14 (41. Hafta),2022,2022-10-14,2022,2022-10-14,True,True,"Sektör / Krediler                     (
+14 Ekim 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+458,Ekim/07 (40. Hafta),2022,2022-10-07,2022,2022-10-07,True,True,"Sektör / Krediler                     (
+7 Ekim 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+457,Eylül/30 (39. Hafta),2022,2022-09-30,2022,2022-09-30,True,True,"Sektör / Krediler                     (
+30 Eylül 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+456,Eylül/23 (38. Hafta),2022,2022-09-23,2022,2022-09-23,True,True,"Sektör / Krediler                     (
+23 Eylül 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+455,Eylül/16 (37. Hafta),2022,2022-09-16,2022,2022-09-16,True,True,"Sektör / Krediler                     (
+16 Eylül 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+454,Eylül/09 (36. Hafta),2022,2022-09-09,2022,2022-09-09,True,True,"Sektör / Krediler                     (
+9 Eylül 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+453,Eylül/02 (35. Hafta),2022,2022-09-02,2022,2022-09-02,True,True,"Sektör / Krediler                     (
+2 Eylül 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+452,Ağustos/26 (34. Hafta),2022,2022-08-26,2022,2022-08-26,True,True,"Sektör / Krediler                     (
+26 Ağustos 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+451,Ağustos/19 (33. Hafta),2022,2022-08-19,2022,2022-08-19,True,True,"Sektör / Krediler                     (
+19 Ağustos 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+450,Ağustos/12 (32. Hafta),2022,2022-08-12,2022,2022-08-12,True,True,"Sektör / Krediler                     (
+12 Ağustos 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+449,Ağustos/05 (31. Hafta),2022,2022-08-05,2022,2022-08-05,True,True,"Sektör / Krediler                     (
+5 Ağustos 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+448,Temmuz/29 (30. Hafta),2022,2022-07-29,2022,2022-07-29,True,True,"Sektör / Krediler                     (
+29 Temmuz 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+447,Temmuz/22 (29. Hafta),2022,2022-07-22,2022,2022-07-22,True,True,"Sektör / Krediler                     (
+22 Temmuz 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+446,Temmuz/14 (28. Hafta),2022,2022-07-14,2022,2022-07-14,True,True,"Sektör / Krediler                     (
+14 Temmuz 2022 Perşembe ) (Milyon TL) TP YP TOPLAM",
+445,Temmuz/08 (27. Hafta),2022,2022-07-08,2022,2022-07-08,True,True,"Sektör / Krediler                     (
+8 Temmuz 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+444,Temmuz/01 (26. Hafta),2022,2022-07-01,2022,2022-07-01,True,True,"Sektör / Krediler                     (
+1 Temmuz 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+443,Haziran/24 (25. Hafta),2022,2022-06-24,2022,2022-06-24,True,True,"Sektör / Krediler                     (
+24 Haziran 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+442,Haziran/17 (24. Hafta),2022,2022-06-17,2022,2022-06-17,True,True,"Sektör / Krediler                     (
+17 Haziran 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+441,Haziran/10 (23. Hafta),2022,2022-06-10,2022,2022-06-10,True,True,"Sektör / Krediler                     (
+10 Haziran 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+440,Haziran/03 (22. Hafta),2022,2022-06-03,2022,2022-06-03,True,True,"Sektör / Krediler                     (
+3 Haziran 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+439,Mayıs/27 (21. Hafta),2022,2022-05-27,2022,2022-05-27,True,True,"Sektör / Krediler                     (
+27 Mayıs 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+438,Mayıs/20 (20. Hafta),2022,2022-05-20,2022,2022-05-20,True,True,"Sektör / Krediler                     (
+20 Mayıs 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+437,Mayıs/13 (19. Hafta),2022,2022-05-13,2022,2022-05-13,True,True,"Sektör / Krediler                     (
+13 Mayıs 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+436,Mayıs/06 (18. Hafta),2022,2022-05-06,2022,2022-05-06,True,True,"Sektör / Krediler                     (
+6 Mayıs 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+435,Nisan/29 (17. Hafta),2022,2022-04-29,2022,2022-04-29,True,True,"Sektör / Krediler                     (
+29 Nisan 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+434,Nisan/22 (16. Hafta),2022,2022-04-22,2022,2022-04-22,True,True,"Sektör / Krediler                     (
+22 Nisan 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+433,Nisan/15 (15. Hafta),2022,2022-04-15,2022,2022-04-15,True,True,"Sektör / Krediler                     (
+15 Nisan 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+432,Nisan/08 (14. Hafta),2022,2022-04-08,2022,2022-04-08,True,True,"Sektör / Krediler                     (
+8 Nisan 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+431,Nisan/01 (13. Hafta),2022,2022-04-01,2022,2022-04-01,True,True,"Sektör / Krediler                     (
+1 Nisan 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+430,Mart/25 (12. Hafta),2022,2022-03-25,2022,2022-03-25,True,True,"Sektör / Krediler                     (
+25 Mart 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+429,Mart/18 (11. Hafta),2022,2022-03-18,2022,2022-03-18,True,True,"Sektör / Krediler                     (
+18 Mart 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+428,Mart/11 (10. Hafta),2022,2022-03-11,2022,2022-03-11,True,True,"Sektör / Krediler                     (
+11 Mart 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+427,Mart/04 (9. Hafta),2022,2022-03-04,2022,2022-03-04,True,True,"Sektör / Krediler                     (
+4 Mart 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+426,Şubat/25 (8. Hafta),2022,2022-02-25,2022,2022-02-25,True,True,"Sektör / Krediler                     (
+25 Şubat 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+425,Şubat/18 (7. Hafta),2022,2022-02-18,2022,2022-02-18,True,True,"Sektör / Krediler                     (
+18 Şubat 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+424,Şubat/11 (6. Hafta),2022,2022-02-11,2022,2022-02-11,True,True,"Sektör / Krediler                     (
+11 Şubat 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+423,Şubat/04 (5. Hafta),2022,2022-02-04,2022,2022-02-04,True,True,"Sektör / Krediler                     (
+4 Şubat 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+422,Ocak/28 (4. Hafta),2022,2022-01-28,2022,2022-01-28,True,True,"Sektör / Krediler                     (
+28 Ocak 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+421,Ocak/21 (3. Hafta),2022,2022-01-21,2022,2022-01-21,True,True,"Sektör / Krediler                     (
+21 Ocak 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+420,Ocak/14 (2. Hafta),2022,2022-01-14,2022,2022-01-14,True,True,"Sektör / Krediler                     (
+14 Ocak 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+419,Ocak/07 (1. Hafta),2022,2022-01-07,2022,2022-01-07,True,True,"Sektör / Krediler                     (
+7 Ocak 2022 Cuma ) (Milyon TL) TP YP TOPLAM",
+418,Aralık/31 (52. Hafta),2021,2021-12-31,2021,2021-12-31,True,True,"Sektör / Krediler                     (
+31 Aralık 2021 Cuma ) (Milyon TL) TP YP TOPLAM",
+417,Aralık/24 (51. Hafta),2021,2021-12-24,2021,2021-12-24,True,True,"Sektör / Krediler                     (
+24 Aralık 2021 Cuma ) (Milyon TL) TP YP TOPLAM",
+416,Aralık/17 (50. Hafta),2021,2021-12-17,2021,2021-12-17,True,True,"Sektör / Krediler                     (
+17 Aralık 2021 Cuma ) (Milyon TL) TP YP TOPLAM",
+415,Aralık/10 (49. Hafta),2021,2021-12-10,2021,2021-12-10,True,True,"Sektör / Krediler                     (
+10 Aralık 2021 Cuma ) (Milyon TL) TP YP TOPLAM",
+414,Aralık/03 (48. Hafta),2021,2021-12-03,2021,2021-12-03,True,True,"Sektör / Krediler                     (
+3 Aralık 2021 Cuma ) (Milyon TL) TP YP TOPLAM",
+413,Kasım/26 (47. Hafta),2021,2021-11-26,2021,2021-11-26,True,True,"Sektör / Krediler                     (
+26 Kasım 2021 Cuma ) (Milyon TL) TP YP TOPLAM",
+412,Kasım/19 (46. Hafta),2021,2021-11-19,2021,2021-11-19,True,True,"Sektör / Krediler                     (
+19 Kasım 2021 Cuma ) (Milyon TL) TP YP TOPLAM",
+411,Kasım/12 (45. Hafta),2021,2021-11-12,2021,2021-11-12,True,True,"Sektör / Krediler                     (
+12 Kasım 2021 Cuma ) (Milyon TL) TP YP TOPLAM",
+410,Kasım/05 (44. Hafta),2021,2021-11-05,2021,2021-11-05,True,True,"Sektör / Krediler                     (
+5 Kasım 2021 Cuma ) (Milyon TL) TP YP TOPLAM",
+409,Ekim/28 (43. Hafta),2021,2021-10-28,2021,2021-10-28,True,True,"Sektör / Krediler                     (
+28 Ekim 2021 Perşembe ) (Milyon TL) TP YP TOPLAM",
+408,Ekim/22 (42. Hafta),2021,2021-10-22,2021,2021-10-22,True,True,"Sektör / Krediler                     (
+22 Ekim 2021 Cuma ) (Milyon TL) TP YP TOPLAM",
+407,Ekim/15 (41. Hafta),2021,2021-10-15,2021,2021-10-15,True,True,"Sektör / Krediler                     (
+15 Ekim 2021 Cuma ) (Milyon TL) TP YP TOPLAM",
+406,Ekim/08 (40. Hafta),2021,2021-10-08,2021,2021-10-08,True,True,"Sektör / Krediler                     (
+8 Ekim 2021 Cuma ) (Milyon TL) TP YP TOPLAM",
+405,Ekim/01 (39. Hafta),2021,2021-10-01,2021,2021-10-01,True,True,"Sektör / Krediler                     (
+1 Ekim 2021 Cuma ) (Milyon TL) TP YP TOPLAM",
+404,Eylül/24 (38. Hafta),2021,2021-09-24,2021,2021-09-24,True,True,"Sektör / Krediler                     (
+24 Eylül 2021 Cuma ) (Milyon TL) TP YP TOPLAM",
+403,Eylül/17 (37. Hafta),2021,2021-09-17,2021,2021-09-17,True,True,"Sektör / Krediler                     (
+17 Eylül 2021 Cuma ) (Milyon TL) TP YP TOPLAM",
+402,Eylül/10 (36. Hafta),2021,2021-09-10,2021,2021-09-10,True,True,"Sektör / Krediler                     (
+10 Eylül 2021 Cuma ) (Milyon TL) TP YP TOPLAM",
+401,Eylül/03 (35. Hafta),2021,2021-09-03,2021,2021-09-03,True,True,"Sektör / Krediler                     (
+3 Eylül 2021 Cuma ) (Milyon TL) TP YP TOPLAM",
+400,Ağustos/27 (34. Hafta),2021,2021-08-27,2021,2021-08-27,True,True,"Sektör / Krediler                     (
+27 Ağustos 2021 Cuma ) (Milyon TL) TP YP TOPLAM",
+399,Ağustos/20 (33. Hafta),2021,2021-08-20,2021,2021-08-20,True,True,"Sektör / Krediler                     (
+20 Ağustos 2021 Cuma ) (Milyon TL) TP YP TOPLAM",
+398,Ağustos/13 (32. Hafta),2021,2021-08-13,2021,2021-08-13,True,True,"Sektör / Krediler                     (
+13 Ağustos 2021 Cuma ) (Milyon TL) TP YP TOPLAM",
+397,Ağustos/06 (31. Hafta),2021,2021-08-06,2021,2021-08-06,True,True,"Sektör / Krediler                     (
+6 Ağustos 2021 Cuma ) (Milyon TL) TP YP TOPLAM",
+396,Temmuz/30 (30. Hafta),2021,2021-07-30,2021,2021-07-30,True,True,"Sektör / Krediler                     (
+30 Temmuz 2021 Cuma ) (Milyon TL) TP YP TOPLAM",
+395,Temmuz/19 (29. Hafta),2021,2021-07-19,2021,2021-07-19,True,True,"Sektör / Krediler                     (
+19 Temmuz 2021 Pazartesi ) (Milyon TL) TP YP TOPLAM",
+394,Temmuz/16 (28. Hafta),2021,2021-07-16,2021,2021-07-16,True,True,"Sektör / Krediler                     (
+16 Temmuz 2021 Cuma ) (Milyon TL) TP YP TOPLAM",
+393,Temmuz/09 (27. Hafta),2021,2021-07-09,2021,2021-07-09,True,True,"Sektör / Krediler                     (
+9 Temmuz 2021 Cuma ) (Milyon TL) TP YP TOPLAM",
+392,Temmuz/02 (26. Hafta),2021,2021-07-02,2021,2021-07-02,True,True,"Sektör / Krediler                     (
+2 Temmuz 2021 Cuma ) (Milyon TL) TP YP TOPLAM",
+391,Haziran/25 (25. Hafta),2021,2021-06-25,2021,2021-06-25,True,True,"Sektör / Krediler                     (
+25 Haziran 2021 Cuma ) (Milyon TL) TP YP TOPLAM",
+390,Haziran/18 (24. Hafta),2021,2021-06-18,2021,2021-06-18,True,True,"Sektör / Krediler                     (
+18 Haziran 2021 Cuma ) (Milyon TL) TP YP TOPLAM",
+389,Haziran/11 (23. Hafta),2021,2021-06-11,2021,2021-06-11,True,True,"Sektör / Krediler                     (
+11 Haziran 2021 Cuma ) (Milyon TL) TP YP TOPLAM",
+388,Haziran/04 (22. Hafta),2021,2021-06-04,2021,2021-06-04,True,True,"Sektör / Krediler                     (
+4 Haziran 2021 Cuma ) (Milyon TL) TP YP TOPLAM",
+387,Mayıs/28 (21. Hafta),2021,2021-05-28,2021,2021-05-28,True,True,"Sektör / Krediler                     (
+28 Mayıs 2021 Cuma ) (Milyon TL) TP YP TOPLAM",
+386,Mayıs/21 (20. Hafta),2021,2021-05-21,2021,2021-05-21,True,True,"Sektör / Krediler                     (
+21 Mayıs 2021 Cuma ) (Milyon TL) TP YP TOPLAM",
+385,Mayıs/12 (19. Hafta),2021,2021-05-12,2021,2021-05-12,True,True,"Sektör / Krediler                     (
+12 Mayıs 2021 Çarşamba ) (Milyon TL) TP YP TOPLAM",
+384,Mayıs/07 (18. Hafta),2021,2021-05-07,2021,2021-05-07,True,True,"Sektör / Krediler                     (
+7 Mayıs 2021 Cuma ) (Milyon TL) TP YP TOPLAM",
+383,Nisan/30 (17. Hafta),2021,2021-04-30,2021,2021-04-30,True,True,"Sektör / Krediler                     (
+30 Nisan 2021 Cuma ) (Milyon TL) TP YP TOPLAM",
+382,Nisan/22 (16. Hafta),2021,2021-04-22,2021,2021-04-22,True,True,"Sektör / Krediler                     (
+22 Nisan 2021 Perşembe ) (Milyon TL) TP YP TOPLAM",
+381,Nisan/16 (15. Hafta),2021,2021-04-16,2021,2021-04-16,True,True,"Sektör / Krediler                     (
+16 Nisan 2021 Cuma ) (Milyon TL) TP YP TOPLAM",
+380,Nisan/09 (14. Hafta),2021,2021-04-09,2021,2021-04-09,True,True,"Sektör / Krediler                     (
+9 Nisan 2021 Cuma ) (Milyon TL) TP YP TOPLAM",
+379,Nisan/02 (13. Hafta),2021,2021-04-02,2021,2021-04-02,True,True,"Sektör / Krediler                     (
+2 Nisan 2021 Cuma ) (Milyon TL) TP YP TOPLAM",
+378,Mart/26 (12. Hafta),2021,2021-03-26,2021,2021-03-26,True,True,"Sektör / Krediler                     (
+26 Mart 2021 Cuma ) (Milyon TL) TP YP TOPLAM",
+377,Mart/19 (11. Hafta),2021,2021-03-19,2021,2021-03-19,True,True,"Sektör / Krediler                     (
+19 Mart 2021 Cuma ) (Milyon TL) TP YP TOPLAM",
+376,Mart/12 (10. Hafta),2021,2021-03-12,2021,2021-03-12,True,True,"Sektör / Krediler                     (
+12 Mart 2021 Cuma ) (Milyon TL) TP YP TOPLAM",
+375,Mart/05 (9. Hafta),2021,2021-03-05,2021,2021-03-05,True,True,"Sektör / Krediler                     (
+5 Mart 2021 Cuma ) (Milyon TL) TP YP TOPLAM",
+374,Şubat/26 (8. Hafta),2021,2021-02-26,2021,2021-02-26,True,True,"Sektör / Krediler                     (
+26 Şubat 2021 Cuma ) (Milyon TL) TP YP TOPLAM",
+373,Şubat/19 (7. Hafta),2021,2021-02-19,2021,2021-02-19,True,True,"Sektör / Krediler                     (
+19 Şubat 2021 Cuma ) (Milyon TL) TP YP TOPLAM",
+372,Şubat/12 (6. Hafta),2021,2021-02-12,2021,2021-02-12,True,True,"Sektör / Krediler                     (
+12 Şubat 2021 Cuma ) (Milyon TL) TP YP TOPLAM",
+371,Şubat/05 (5. Hafta),2021,2021-02-05,2021,2021-02-05,True,True,"Sektör / Krediler                     (
+5 Şubat 2021 Cuma ) (Milyon TL) TP YP TOPLAM",
+370,Ocak/29 (4. Hafta),2021,2021-01-29,2021,2021-01-29,True,True,"Sektör / Krediler                     (
+29 Ocak 2021 Cuma ) (Milyon TL) TP YP TOPLAM",
+369,Ocak/22 (3. Hafta),2021,2021-01-22,2021,2021-01-22,True,True,"Sektör / Krediler                     (
+22 Ocak 2021 Cuma ) (Milyon TL) TP YP TOPLAM",
+368,Ocak/15 (2. Hafta),2021,2021-01-15,2021,2021-01-15,True,True,"Sektör / Krediler                     (
+15 Ocak 2021 Cuma ) (Milyon TL) TP YP TOPLAM",
+367,Ocak/08 (1. Hafta),2021,2021-01-08,2021,2021-01-08,True,True,"Sektör / Krediler                     (
+8 Ocak 2021 Cuma ) (Milyon TL) TP YP TOPLAM",

@@ -1,0 +1,8 @@
+﻿tablo_no,name,slug
+1,Krediler (Bin TL),krediler_bin_tl
+2,Mevduat (Bin TL),mevduat_bin_tl
+3,Bireysel Bankacılık (Bin TL),bireysel_bankacilik_bin_tl
+4,Seçilmiş Sektörel Krediler (Bin TL),secilmis_sektorel_krediler_bin_tl
+5,Oranlar (%),oranlar
+6,Şubeler (Adet) ve Nüfusa Göre Dağılım (TL),subeler_adet_ve_nufusa_gore_dagilim_tl
+7,Altın Kredileri ve Altın Mevduatı (Bin TL),altin_kredileri_ve_altin_mevduati_bin_tl
