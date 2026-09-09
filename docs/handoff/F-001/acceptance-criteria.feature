@@ -42,3 +42,18 @@ Feature: F-001 EVDS Veri Temini (Bronze Katmanı)
     When "python backend/scripts/seed_evds.py" komutu çalıştırılıp "TP.KTF10" başarıyla indirildiğinde
     Then "catalog_store.py" üzerinden ilgili parquet kaydı güncellenmelidir
     And katalogda "TP.KTF10" serisi için "is_ingested=True" ve "fetch_status='SUCCESS'" olarak işaretlenmelidir
+
+  Scenario: [Boundary/Edge Case] EVDS 1000 kayıt sınırında otomatik geriye dönük sayfalama (BR-11)
+    Given EVDS API günlük bir seri ("TP.DK.USD.A.YTL") için tek istekte tam 1000 kayıt döndürdüğünde
+    And ilk dönen kaydın tarihi istenen başlangıç tarihinden ("01-01-2021") daha ileri bir tarih ("06-09-2023") olduğunda
+    When istemci ("client.py") eksik kalan geçmiş dönemi tespit ettiğinde
+    Then istemci otomatik olarak geriye dönük ek sayfaları ("01-01-2021" ile "05-09-2023" arası) sorgulamalıdır
+    And gelen tüm parçalar tarihe göre tekilleştirilip kronolojik sırayla birleştirilmelidir
+    And sonuçta üretilen "TP.DK.USD.A.YTL.json" dosyası 1000'den fazla (1900+) kayıt içermeli ve 01-01-2021'den başlamalıdır
+
+  Scenario: [Error Case] API boş/None yanıt döndüğünde serinin başarısız sayılması ve katalogda FAILED işaretlenmesi (BR-12)
+    Given EVDS API bir seri sorgusuna "None" veya tanımsız formatta boş bir yanıt döndüğünde
+    When "ingestion.py" indirme işlemini yürüttüğünde
+    Then bu seri için dosya yazılmamalıdır
+    And konsolda "Failed: 1" ve ilgili serinin başarısız olduğuna dair hata logu basılmalıdır
+    And "catalog_store.py" üzerinden ilgili serinin katalog durumu "is_ingested=False" ve "fetch_status='FAILED'" olarak güncellenmelidir

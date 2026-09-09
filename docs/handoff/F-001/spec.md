@@ -1,7 +1,7 @@
 # Spec: F-001 — EVDS Veri Temini (Bronze Katmanı)
 
 ## 1. Spec Durumu
-**Implementation Ready** (Geliştirmeye Hazır)
+**Verified & Completed** (Doğrulandı ve Tamamlandı)
 
 ---
 
@@ -53,12 +53,10 @@ Sistemin ihtiyaç duyduğu ham finansal veriler güvenli, idareli (kotayı koruy
   - İndirme (Ingestion): `backend/app/modules/evds/ingestion.py` modülü, sadece `series_manifest.yaml` dosyasındaki öncelikli serileri işlemeli ve indirmelidir. Bu hızlı işlem `backend/scripts/seed_evds.py` ile tetiklenmelidir.
 * **BR-07 (Ortak Katalog Erişimi):** Hem `catalog.py` (keşif/yeni satır ekleme) hem de `ingestion.py` (indirme durumunu, `is_ingested`, güncellenme) aynı parquet dosyasına erişeceği için tüm okuma/yazma/upsert işlemleri `backend/app/modules/evds/catalog_store.py` modülünde toplanmalıdır. Bu, race condition ve şema tutarsızlıklarını engeller.
 * **BR-08 (Tarih Aralığı):** Çekilecek makro serilerin varsayılan tarih filtreleri hackathon brifingi doğrultusunda `01-01-2021` ile `01-06-2026` aralığı olmalıdır.
-* **BR-09 (Çekirdek Seri Kapsamı):** İlk aşamada en az şu 4 çekirdek makroekonomik seri yönergede yer almalı ve başarıyla indirilmelidir:
-  1. `TP.KTF10` (Konut Kredisi Faiz Oranı)
-  2. `TP.FG.J0` (TÜFE Genel İndeksi)
-  3. `TP.HKFE01` (Konut Fiyat Endeksi - KFE)
-  4. `TP.DK.USD.A.YTL` (ABD Doları Gösterge Döviz Alış Kuru)
-* **BR-10 (Test Kapsamı):** `tests/modules/evds/test_catalog.py` dosyası oluşturulmalı, discover_all mantığı ve `is_ingested` idempotency kuralının doğru çalıştığı test edilmelidir.
+* **BR-09 (Seri Kapsamı):** İlk aşamada 4 çekirdek seri ile başlanmış, ardından 53.710 satırlık resmi EVDS kataloğundan doğrulanarak kredi faizleri, kredi hacimleri, enflasyon (TÜFE/ÜFE), döviz kurları, TCMB politika/fonlama faizleri, reel sektör ve rezerv göstergelerini kapsayan **22 öncelikli seriye** genişletilmiştir.
+* **BR-10 (Test Kapsamı):** `tests/modules/evds/test_catalog.py`, `test_client.py` ve `test_ingestion.py` dosyaları oluşturulmalı, discover_all, anahtar rotasyonu, sayfalama ve `is_ingested` idempotency kuralları birim testlerle (%100 yeşil) doğrulanmalıdır.
+* **BR-11 (Otomatik Geriye Dönük Sayfalama / 1000 Kayıt Sınırı):** EVDS REST API günlük serilerde tek çağrıda en fazla 1000 kayıt döndürür ve eski tarihleri keser. İstemci (`client.py`), gelen ham yanıtta `len(res) == 1000` tespit ettiğinde ilk kaydın tarihinden geriye doğru eksik kalan zaman dilimini otomatik olarak ardışık ek sorgularla çekmeli, kronolojik sırada birleştirmeli ve tarihe göre tekilleştirmelidir (deduplication). Böylece 2021-2026 aralığı eksiksiz (örn. kurlar için ~1978 gün) tamamlanmalıdır.
+* **BR-12 (Katı Doğrulama ve Hata Raporlama):** API çağrısı `None` dönerse, seri tipi hatalıysa veya JSON ayrıştırılamazsa indirme sessizce başarılı sayılmamalı; `failed_count` artırılmalı ve katalogdaki seri durumu `fetch_status="FAILED"`, `is_ingested=False` olarak kaydedilmelidir.
 ---
 
 ## 6. Dosya ve Klasör Düzeni

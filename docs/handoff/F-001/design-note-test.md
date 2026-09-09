@@ -26,6 +26,8 @@ Status: complete
   - **YENİ:** Başarılı indirme sonrası katalogdaki kayıtların güncellenmesi çağrısının yapıldığının (mock `catalog_store`) doğrulanması.
 - T3_TEST: İstemci ve Key Rotasyonu Testleri (BR-05) — servis ettiği: `Scenario 3` — dosyalar: `backend/tests/modules/evds/test_client.py`
   - HTTP 429 hatasında sıradaki API anahtarına geçişin test edilmesi.
+- T4_TEST: 1000 Kayıt Sınırı ve Geriye Dönük Sayfalama Testi (BR-11) — servis ettiği: `Scenario 7` — dosyalar: `backend/tests/modules/evds/test_client.py`
+  - EVDS 1000 kayıt döndürdüğünde, istemcinin ardışık geçmiş sayfayı sorgulayıp 1500+ kaydı tekilleştirerek birleştirdiğini doğrulayan `test_get_data_paginates_when_1000_limit_hit` senaryosu.
 
 ## Coverage check (Testing)
 - Scenario 1 (Happy Path - Indirme) → T2_TEST ✓
@@ -34,3 +36,5 @@ Status: complete
 - Scenario 4 (Manifest Format Error) → T2_TEST ✓
 - Scenario 5 (Keşif - Katalog Oluşturma) → T1_TEST ✓
 - Scenario 6 (Katalog Güncelleme) → T1_TEST, T2_TEST ✓
+- Scenario 7 (1000 Kayıt Sınırında Geriye Dönük Sayfalama) → T4_TEST ✓
+- Scenario 8 (Hata Yönetimi ve FAILED Durumu) → T2_TEST ✓
