@@ -1,0 +1,42 @@
+series_id,unit,description,reviewed_years,monotonic_years,monotonic_share,avg_monotonic_dim_share,avg_nonnegative_ratio,max_nonnegative_ratio,reset_signals,review_score
+BDDK_MONTHLY:rasyolar:donem_net_k_ri_zarari_ortalama_ozkaynaklar,%,rasyolar / donem net k ri zarari ortalama ozkaynaklar,6,6,1.0,1.0,1.0,1.0,5,9.0
+BDDK_MONTHLY:rasyolar:donem_net_k_ri_zarari_ortalama_toplam_aktifler,%,rasyolar / donem net k ri zarari ortalama toplam aktifler,6,6,1.0,1.0,1.0,1.0,5,9.0
+BDDK_MONTHLY:rasyolar:isletme_giderleri_ortalama_toplam_aktifler,%,rasyolar / isletme giderleri ortalama toplam aktifler,6,6,1.0,1.0,1.0,1.0,5,9.0
+BDDK_MONTHLY:rasyolar:net_faiz_geliri_gideri_ortalama_toplam_aktifler,%,rasyolar / net faiz geliri gideri ortalama toplam aktifler,6,6,1.0,1.0,1.0,1.0,5,9.0
+BDDK_MONTHLY:rasyolar:toplam_faiz_gelirleri_faiz_getirili_aktifler_ortalamasi,%,rasyolar / toplam faiz gelirleri faiz getirili aktifler ortalamasi,6,6,1.0,1.0,1.0,1.0,5,9.0
+BDDK_MONTHLY:rasyolar:toplam_faiz_giderleri_faiz_maliyetli_pasifler_ortalamasi,%,rasyolar / toplam faiz giderleri faiz maliyetli pasifler ortalamasi,6,6,1.0,1.0,1.0,1.0,5,9.0
+BDDK_MONTHLY:rasyolar:ucret_komisyon_ve_bankacilik_hizmetleri_gelirleri_ortalama_toplam_aktifler,%,rasyolar / ucret komisyon ve bankacilik hizmetleri gelirleri ortalama toplam aktifler,6,6,1.0,1.0,1.0,1.0,5,9.0
+BDDK_MONTHLY:rasyolar:vergi_oncesi_kar_zarar_ortalama_toplam_aktifler,%,rasyolar / vergi oncesi kar zarar ortalama toplam aktifler,6,6,1.0,1.0,1.0,1.0,5,9.0
+BDDK_MONTHLY:rasyolar:vergi_oncesi_kar_zarar_ortalama_toplam_personel_sayisi_bin_tl,%,rasyolar / vergi oncesi kar zarar ortalama toplam personel sayisi bin tl,6,6,1.0,1.0,1.0,1.0,5,9.0
+BDDK_MONTHLY:likidite_durumu:gayrinakdi_kredi_komisyonlari,milyon TL,likidite durumu / gayrinakdi kredi komisyonlari,6,2,0.3333333333333333,0.4666666666666666,0.8466666666666667,1.0,3,4.98
+BDDK_MONTHLY:rasyolar:ortalama_toplam_aktifler_ortalama_toplam_personel_sayisi_bin_tl,%,rasyolar / ortalama toplam aktifler ortalama toplam personel sayisi bin tl,6,6,1.0,1.0,1.0,1.0,0,4.0
+BDDK_MONTHLY:yabanci_para_pozisyonu:yasal_ozkaynak,milyon TL,yabanci para pozisyonu / yasal ozkaynak,6,6,1.0,1.0,1.0,1.0,0,4.0
+BDDK_MONTHLY:diger_bilgiler:banka_sayisi,adet,diger bilgiler / banka sayisi,6,6,1.0,1.0,0.9848484848484849,1.0,0,3.984848484848485
+BDDK_MONTHLY:rasyolar:krediler_ortalama_toplam_sube_sayisi_bin_tl,%,rasyolar / krediler ortalama toplam sube sayisi bin tl,6,6,1.0,1.0,0.9848484848484849,1.0,0,3.984848484848485
+BDDK_MONTHLY:sermaye_yeterliligi:orana_esas_sermaye_toplami_1_2,milyon TL,sermaye yeterliligi / orana esas sermaye toplami 1 2,6,6,1.0,1.0,0.9848484848484849,1.0,0,3.984848484848485
+BDDK_MONTHLY:sermaye_yeterliligi:yasal_ozkaynak_3_4,milyon TL,sermaye yeterliligi / yasal ozkaynak 3 4,6,6,1.0,1.0,0.9848484848484849,1.0,0,3.984848484848485
+BDDK_MONTHLY:sermaye_yeterliligi:risk_agirligi_100_olan_kalemler_toplami,milyon TL,sermaye yeterliligi / risk agirligi 100 olan kalemler toplami,6,6,1.0,1.0,0.9696969696969697,1.0,0,3.9696969696969697
+BDDK_MONTHLY:sektorel_kredi_dagilimi:kredi_kartlari,bin TL,sektorel kredi dagilimi / kredi kartlari,6,5,0.8333333333333334,0.8888888888888888,0.9641414141414142,1.0,0,3.5196969696969695
+BDDK_MONTHLY:sektorel_kredi_dagilimi:toplam,bin TL,sektorel kredi dagilimi / toplam,6,5,0.8333333333333334,0.888888888888889,0.952020202020202,1.0,0,3.507575757575758
+BDDK_MONTHLY:likidite_durumu:bilanco_disi_islemler,milyon TL,likidite durumu / bilanco disi islemler,6,5,0.8333333333333334,0.8333333333333334,0.9545454545454545,1.0,0,3.4545454545454546
+BDDK_MONTHLY:rasyolar:toplam_mevduat_ortalama_toplam_personel_sayisi_bin_tl,%,rasyolar / toplam mevduat ortalama toplam personel sayisi bin tl,6,5,0.8333333333333334,0.8333333333333334,0.9515151515151515,1.0,0,3.4515151515151516
+BDDK_MONTHLY:rasyolar:toplam_mevduat_ortalama_toplam_sube_sayisi_bin_tl,%,rasyolar / toplam mevduat ortalama toplam sube sayisi bin tl,6,5,0.8333333333333334,0.8333333333333334,0.9515151515151515,1.0,0,3.4515151515151516
+BDDK_MONTHLY:sermaye_yeterliligi:ana_sermaye_toplami,milyon TL,sermaye yeterliligi / ana sermaye toplami,6,5,0.8333333333333334,0.8333333333333334,0.9515151515151515,1.0,0,3.4515151515151516
+BDDK_MONTHLY:sermaye_yeterliligi:risk_agirligi_250_olan_kalemler_toplami,milyon TL,sermaye yeterliligi / risk agirligi 250 olan kalemler toplami,6,5,0.8333333333333334,0.8333333333333334,0.9515151515151515,1.0,0,3.4515151515151516
+BDDK_MONTHLY:sermaye_yeterliligi:cekirdek_sermaye,milyon TL,sermaye yeterliligi / cekirdek sermaye,6,5,0.8333333333333334,0.8333333333333334,0.9363636363636364,1.0,0,3.4363636363636365
+BDDK_MONTHLY:sermaye_yeterliligi:risk_agirligi_50_olan_kalemler_toplami,milyon TL,sermaye yeterliligi / risk agirligi 50 olan kalemler toplami,6,5,0.8333333333333334,0.8333333333333334,0.9363636363636364,1.0,0,3.4363636363636365
+BDDK_MONTHLY:sermaye_yeterliligi:kredi_riskine_esas_tutar_11_12_13_29,milyon TL,sermaye yeterliligi / kredi riskine esas tutar 11 12 13 29,5,4,0.8,0.8,0.9636363636363636,1.0,0,3.363636363636364
+BDDK_MONTHLY:sermaye_yeterliligi:kredi_riskine_esas_tutar_11_12_13_29:c_karsi_taraf_kredi_riski_dahil_kredi_riskine_esas_tutar_standart_yaklasim,milyon TL,sermaye yeterliligi / kredi riskine esas tutar 11 12 13 29 / c karsi taraf kredi riski dahil kredi riskine esas tutar standart yaklasim,5,4,0.8,0.8,0.9636363636363636,1.0,0,3.363636363636364
+BDDK_MONTHLY:sermaye_yeterliligi:risk_agirlikli_kalemler_toplami_10_30_31,milyon TL,sermaye yeterliligi / risk agirlikli kalemler toplami 10 30 31,5,4,0.8,0.8,0.9636363636363636,1.0,0,3.363636363636364
+BDDK_MONTHLY:sektorel_kredi_dagilimi:imalat_sanayi_10_22_25,bin TL,sektorel kredi dagilimi / imalat sanayi 10 22 25,6,4,0.6666666666666666,0.8333333333333334,0.9116161616161617,1.0,0,3.0782828282828283
+BDDK_MONTHLY:sektorel_kredi_dagilimi:toptan_ve_perakende_ticaret_motorlu_araclar_servis_hizm_ile_kisisel_ve_hane_halki_urunleri_29_30_31,bin TL,sektorel kredi dagilimi / toptan ve perakende ticaret motorlu araclar servis hizm ile kisisel ve hane halki urunleri 29 30 31,6,4,0.6666666666666666,0.8333333333333334,0.9090909090909092,1.0,0,3.0757575757575757
+BDDK_MONTHLY:tuketici_kredileri:taksitli_ticari_krediler_tasit,milyon TL,tuketici kredileri / taksitli ticari krediler tasit,6,4,0.6666666666666666,0.7777777777777778,0.903030303030303,1.0,0,3.014141414141414
+BDDK_MONTHLY:diger_bilgiler:yurt_disi_sube_sayisi,adet,diger bilgiler / yurt disi sube sayisi,6,4,0.6666666666666666,0.6666666666666666,0.9545454545454546,1.0,0,2.9545454545454546
+BDDK_MONTHLY:sermaye_yeterliligi:operasyonel_riske_esas_tutar,milyon TL,sermaye yeterliligi / operasyonel riske esas tutar,6,4,0.6666666666666666,0.6666666666666666,0.9545454545454546,1.0,0,2.9545454545454546
+BDDK_MONTHLY:sektorel_kredi_dagilimi:elektrikli_ve_optik_aletler_san,bin TL,sektorel kredi dagilimi / elektrikli ve optik aletler san,6,4,0.6666666666666666,0.6944444444444445,0.8984848484848484,1.0,0,2.926262626262626
+BDDK_MONTHLY:sermaye_yeterliligi:risk_agirligi_35_olan_kalemler_toplami_g_menkul_ipotegi_ile_teminatlandirilanlar,milyon TL,sermaye yeterliligi / risk agirligi 35 olan kalemler toplami g menkul ipotegi ile teminatlandirilanlar,6,4,0.6666666666666666,0.6666666666666666,0.9212121212121213,1.0,0,2.9212121212121214
+BDDK_MONTHLY:sektorel_kredi_dagilimi:gida_mesrubat_ve_tutun_san,bin TL,sektorel kredi dagilimi / gida mesrubat ve tutun san,6,4,0.6666666666666666,0.6944444444444445,0.86010101010101,1.0,0,2.8878787878787877
+BDDK_MONTHLY:sermaye_yeterliligi:risk_agirligi_75_olan_kalemler_toplami,milyon TL,sermaye yeterliligi / risk agirligi 75 olan kalemler toplami,6,4,0.6666666666666666,0.6666666666666666,0.8787878787878788,1.0,0,2.878787878787879
+BDDK_MONTHLY:sektorel_kredi_dagilimi:baska_yerlerde_siniflandirilmamis_imalat_san,bin TL,sektorel kredi dagilimi / baska yerlerde siniflandirilmamis imalat san,6,4,0.6666666666666666,0.6666666666666666,0.8661616161616162,1.0,0,2.8661616161616164
+BDDK_MONTHLY:likidite_durumu:kiralama_islemlerinden_borclar,milyon TL,likidite durumu / kiralama islemlerinden borclar,6,4,0.6666666666666666,0.6333333333333333,0.86,1.0,0,2.8266666666666667
+BDDK_MONTHLY:diger_bilgiler:atm_sayisi,adet,diger bilgiler / atm sayisi,6,4,0.6666666666666666,0.6666666666666666,0.8181818181818182,1.0,0,2.8181818181818183
