@@ -3,6 +3,7 @@ import os
 import re
 import time
 import unicodedata
+import warnings
 
 import pandas as pd
 import requests
@@ -17,6 +18,11 @@ from app.modules.bddk.monthly import (
 
 
 truststore.inject_into_ssl()
+
+warnings.filterwarnings(
+    "ignore",
+    message="Workbook contains no default style"
+)
 
 
 BASE_URL = "https://www.bddk.org.tr/BultenAylik/"
