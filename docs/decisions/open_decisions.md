@@ -80,7 +80,7 @@ ID'ler onek basina sirali verilir, **asla tekrar kullanilmaz** ve **asla yeniden
 | T-40 | OPEN | Semantik katalog ve hybrid search stratejisi nasil olacak? | BM25, embedding aramasi, RRF, `synonyms.yaml` kapsami ve reranking mantigi netlesmeden `search_series` tool sozlesmesi sabitlenemez. |  | 2026-09-07 |  |
 | T-41 | OPEN | Artifact registry ve oturum durumu tasarimi nasil olacak? | Cok adimli senaryolarda "bu tabloyu" veya "bozmadan" gibi referanslarin cozumu, session tablolarinin tutulmasi ve schema koruyan transform operasyonlari netlesmeli. |  | 2026-09-07 |  |
 | T-42 | OPEN | Veri revizyonu ve vintage modellemesi nasil olacak? | BDDK gibi sonradan revize edilebilen veriler icin vintage alanlari, gecmise donuk sorgu tutarliligi ve raporda revizyon gosterimi belirlenmeli. |  | 2026-09-07 |  |
-| T-43 | OPEN | Secret ve credential yonetimi nasil olacak? | EVDS ve Kloudeks gibi API anahtarlarinin commit edilmemesi icin `.env` stratejisi, secret dagitimi ve pre-commit kontrolu netlesmeli. |  | 2026-09-07 |  |
+| T-43 | DECIDED_NO_ADR | Secret ve credential yonetimi nasil olacak? | EVDS ve Kloudeks gibi API anahtarlarinin commit edilmemesi icin `.env` stratejisi, secret dagitimi ve pre-commit kontrolu netlesmeli. | F-001 | 2026-09-07 |  |
 | T-44 | OPEN | Prompt injection ve guvenilmeyen icerik izolasyonu nasil saglanacak? | `url_ingest` ve `web_search` kaynakli iceriklerin komut gibi yorumlanmasini onlemek icin sanitization, etiketleme ve validation kurallari belirlenmeli. |  | 2026-09-07 |  |
 | T-45 | OPEN | Rapor disa aktarim implementasyonu nasil olacak? | `report_export` tool'unun PDF, XLSX ve Markdown ciktisini hangi kutuphanelerle ve hangi format standardiyla uretecegi netlesmeli. |  | 2026-09-07 |  |
 
