@@ -176,7 +176,7 @@ c:\Projects\kkb\
 │   │   └── transformer.py              # YENİ: Silver dönüşüm motoru (Bronze JSON + metadata -> Parquet)
 │   ├── scripts/
 │   │   ├── bddk/
-│   │   └── edvs/
+│   │   └── evds/
 │   │       ├── seed_catalog.py         # Keşif CLI
 │   │       ├── seed_evds.py            # Bronze indirme CLI
 │   │       └── seed_silver_evds.py     # YENİ: Silver boru hattı CLI (metadata + transformer)
@@ -211,7 +211,7 @@ c:\Projects\kkb\
 2. **Adım 2: Bronze Gözlem Çekimi:**
    - `python backend/scripts/seed_evds.py` çalıştırılır.
    - Mevcut 22 seri diskte olduğu için `[SKIP]` edilir, sadece yeni serinin Bronze gözlem JSON'ı indirilir.
-3. **Adım 3: Silver Boru Hattı Çalıştırma (`backend/scripts/edvs/seed_silver_evds.py`):**
+3. **Adım 3: Silver Boru Hattı Çalıştırma (`backend/scripts/evds/seed_silver_evds.py`):**
    - **Alt Adım 3.1 (`metadata.py`):** `metadata_raw.json` dosyasını kontrol eder. 22 seri zaten olduğu için onları atlar; sadece yeni serinin ait olduğu veri grubunu TCMB API'den çeker ve `metadata_raw.json`'a ekler.
    - **Alt Adım 3.2 (`transformer.py`):** 
      - Akıllı modda: Yeni seriyi ve güncellenen JSON'ları parse eder, mevcut `observations.parquet` ve `series_metadata.parquet` dosyalarına atomik olarak enjekte eder (`upsert`).

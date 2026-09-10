@@ -105,7 +105,7 @@ dosyasıdır.
 EVDS Bronze verilerinden Silver katmanı oluşturmak için:
 
     PYTHONPATH=backend python \
-      backend/scripts/edvs/seed_silver_evds.py \
+      backend/scripts/evds/seed_silver_evds.py \
       --full-refresh
 
 Beklenen çıktılar:
@@ -300,7 +300,7 @@ Bronze veriler güncellendiğinde pipeline aşağıdaki sırayla çalıştırıl
       backend/scripts/bddk/build_silver_duckdb.py
 
     PYTHONPATH=backend python \
-      backend/scripts/edvs/seed_silver_evds.py \
+      backend/scripts/evds/seed_silver_evds.py \
       --full-refresh
 
     PYTHONPATH=backend python \
