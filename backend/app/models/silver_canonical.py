@@ -34,6 +34,30 @@ class CanonicalObservation(BaseModel):
     dims: dict[str, Any] = Field(default_factory=dict)
     source_file: str | None = None
 
+    @field_validator("dims", mode="before")
+    @classmethod
+    def validate_dims(cls, value: Any) -> dict[str, Any]:
+        if isinstance(value, str):
+            import json
+
+            try:
+                parsed = json.loads(value)
+                return parsed if isinstance(parsed, dict) else {}
+            except Exception:
+                return {}
+        if value is None:
+            return {}
+        return value
+
+    @field_validator("value", "unit", "source_file", mode="before")
+    @classmethod
+    def validate_nullable_obs(cls, value: Any) -> Any:
+        import math
+
+        if value is None or (isinstance(value, float) and math.isnan(value)):
+            return None
+        return value
+
     @field_validator("freq")
     @classmethod
     def validate_freq(cls, value: str) -> str:
@@ -77,6 +101,15 @@ class CanonicalSeriesMetadata(BaseModel):
     tags: list[str] = Field(default_factory=list)
     accumulation: str = "none"
     is_cumulative: bool = False
+
+    @field_validator("series_code", "unit", "description", mode="before")
+    @classmethod
+    def validate_nullable_meta(cls, value: Any) -> Any:
+        import math
+
+        if value is None or (isinstance(value, float) and math.isnan(value)):
+            return None
+        return value
 
     @field_validator("freq")
     @classmethod
