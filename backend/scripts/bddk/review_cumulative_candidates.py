@@ -18,7 +18,7 @@ OBSERVATIONS_PATH = (
     / "data"
     / "silver"
     / "bddk"
-    / "bddk_silver_observations.parquet"
+    / "observations.parquet"
 )
 
 CATALOG_PATH = (
@@ -26,7 +26,7 @@ CATALOG_PATH = (
     / "data"
     / "silver"
     / "bddk"
-    / "bddk_series_catalog.parquet"
+    / "series_metadata.parquet"
 )
 
 OUTPUT_PATH = (

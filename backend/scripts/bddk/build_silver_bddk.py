@@ -64,12 +64,12 @@ SILVER_DIR = (
 
 OBSERVATIONS_OUT = (
     SILVER_DIR
-    / "bddk_silver_observations.parquet"
+    / "observations.parquet"
 )
 
 CATALOG_OUT = (
     SILVER_DIR
-    / "bddk_series_catalog.parquet"
+    / "series_metadata.parquet"
 )
 
 

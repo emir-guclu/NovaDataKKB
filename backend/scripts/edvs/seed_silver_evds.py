@@ -21,7 +21,10 @@ try:
 except ImportError:
     pass
 
-from app.modules.evds.metadata import sync_metadata
+from app.modules.evds.metadata import (
+    load_manifest_series,
+    sync_metadata,
+)
 from app.modules.evds.transformer import transform_silver_evds
 
 logging.basicConfig(
@@ -69,6 +72,55 @@ def main() -> None:
         silver_dir=silver_dir,
         manifest_path=manifest_path,
         full_refresh=args.full_refresh,
+    )
+
+    expected_series = load_manifest_series(manifest_path)
+
+    expected_codes = {
+        str(item["code"])
+        for item in expected_series
+        if isinstance(item, dict) and item.get("code")
+    }
+
+    if not expected_codes:
+        raise RuntimeError(
+            "No EVDS series codes could be extracted from series_manifest.yaml"
+        )
+
+    available_bronze_codes = {
+        file_path.stem
+        for file_path in bronze_dir.glob("*.json")
+        if file_path.name != "metadata_raw.json"
+    }
+
+    available_expected = (
+        expected_codes & available_bronze_codes
+    )
+
+    missing_bronze = (
+        expected_codes - available_bronze_codes
+    )
+
+    coverage_pct = (
+        100.0 * len(available_expected) / len(expected_codes)
+    )
+
+    logger.info("=== EVDS BRONZE COVERAGE ===")
+    logger.info(
+        "Expected manifest series: %d",
+        len(expected_codes),
+    )
+    logger.info(
+        "Available Bronze series: %d",
+        len(available_expected),
+    )
+    logger.info(
+        "Missing Bronze series: %d",
+        len(missing_bronze),
+    )
+    logger.info(
+        "Coverage: %.2f%%",
+        coverage_pct,
     )
 
     logger.info("=== SILVER PIPELINE COMPLETED SUCCESSFULLY ===")

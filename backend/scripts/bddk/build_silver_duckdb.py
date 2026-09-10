@@ -12,11 +12,11 @@ ROOT = Path(__file__).resolve().parents[3]
 SILVER_DIR = ROOT / "data" / "silver" / "bddk"
 
 OBSERVATIONS_PARQUET = (
-    SILVER_DIR / "bddk_silver_observations.parquet"
+    SILVER_DIR / "observations.parquet"
 )
 
 CATALOG_PARQUET = (
-    SILVER_DIR / "bddk_series_catalog.parquet"
+    SILVER_DIR / "series_metadata.parquet"
 )
 
 DUCKDB_PATH = (
