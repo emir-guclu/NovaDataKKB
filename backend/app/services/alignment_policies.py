@@ -20,9 +20,23 @@ BDDK_WEEKLY_POLICY = AlignmentPolicy(method="last")
 
 
 EVDS_ALIGNMENT_POLICIES: dict[str, AlignmentPolicy] = {
-    # Daily FX rates -> monthly average rate.
-    "EVDS:TP.DK.EUR.A.YTL": AlignmentPolicy(method="mean"),
+    # Daily FX rates (buying and selling) -> monthly average rate.
     "EVDS:TP.DK.USD.A.YTL": AlignmentPolicy(method="mean"),
+    "EVDS:TP.DK.USD.S.YTL": AlignmentPolicy(method="mean"),
+    "EVDS:TP.DK.EUR.A.YTL": AlignmentPolicy(method="mean"),
+    "EVDS:TP.DK.EUR.S.YTL": AlignmentPolicy(method="mean"),
+    "EVDS:TP.DK.GBP.A.YTL": AlignmentPolicy(method="mean"),
+    "EVDS:TP.DK.JPY.A.YTL": AlignmentPolicy(method="mean"),
+    "EVDS:TP.DK.CHF.A.YTL": AlignmentPolicy(method="mean"),
+
+    # Daily TCMB funding indicators -> monthly average level/cost.
+    "EVDS:TP.APIFON1.IHA": AlignmentPolicy(method="mean"),
+    "EVDS:TP.APIFON4": AlignmentPolicy(method="mean"),
+
+    # Daily precious metals market prices -> monthly average.
+    "EVDS:TP.ALTINPIYASA.KAP02": AlignmentPolicy(method="mean"),
+    "EVDS:TP.ALTINPIYASA.KAP03": AlignmentPolicy(method="mean"),
+    "EVDS:TP.GUMUSPIYASA.KAP03": AlignmentPolicy(method="mean"),
 
     # Weekly weighted-average credit interest rates -> monthly average.
     "EVDS:TP.KTF10": AlignmentPolicy(method="mean"),
@@ -30,12 +44,15 @@ EVDS_ALIGNMENT_POLICIES: dict[str, AlignmentPolicy] = {
     "EVDS:TP.KTF12": AlignmentPolicy(method="mean"),
     "EVDS:TP.KTF17": AlignmentPolicy(method="mean"),
 
-    # Weekly weighted-average deposit interest rate -> monthly average.
+    # Weekly weighted-average deposit interest rates (TRY & FX) -> monthly average.
+    "EVDS:TP.TRY.MT01": AlignmentPolicy(method="mean"),
     "EVDS:TP.TRY.MT02": AlignmentPolicy(method="mean"),
-
-    # Daily TCMB funding indicators -> monthly average level/cost.
-    "EVDS:TP.APIFON1.IHA": AlignmentPolicy(method="mean"),
-    "EVDS:TP.APIFON4": AlignmentPolicy(method="mean"),
+    "EVDS:TP.TRY.MT03": AlignmentPolicy(method="mean"),
+    "EVDS:TP.TRY.MT04": AlignmentPolicy(method="mean"),
+    "EVDS:TP.TRY.MT05": AlignmentPolicy(method="mean"),
+    "EVDS:TP.TRY.MT06": AlignmentPolicy(method="mean"),
+    "EVDS:TP.USD.MT02": AlignmentPolicy(method="mean"),
+    "EVDS:TP.EUR.MT02": AlignmentPolicy(method="mean"),
 }
 
 

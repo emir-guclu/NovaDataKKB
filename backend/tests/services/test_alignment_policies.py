@@ -57,6 +57,6 @@ def test_real_canonical_dw_series_have_complete_policy_coverage():
 
     policies = build_alignment_policies(metadata)
 
-    assert len(metadata) == 197
-    assert len(policies) == 197
+    assert len(metadata) == 212
+    assert len(policies) == 212
     assert set(policies) == set(metadata["series_id"])
