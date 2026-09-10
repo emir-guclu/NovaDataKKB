@@ -51,6 +51,14 @@ EVDS Bronze JSON dosyaları şu klasör altında bulunmalıdır:
 
     data/bronze/evds/
 
+Bronze katmanını sıfırdan indirmek veya doğrulamak için tek komutlu orkestratörler:
+
+    # BDDK Bronze verilerini doğrula/indir:
+    PYTHONPATH=backend python backend/scripts/bddk/build_bronze_bddk.py
+
+    # EVDS Bronze verilerini doğrula/indir:
+    PYTHONPATH=backend python backend/scripts/evds/build_bronze_evds.py
+
 ---
 
 # 3. BDDK Silver Katmanını Oluşturma
@@ -105,7 +113,7 @@ dosyasıdır.
 EVDS Bronze verilerinden Silver katmanı oluşturmak için:
 
     PYTHONPATH=backend python \
-      backend/scripts/evds/seed_silver_evds.py \
+      backend/scripts/evds/build_silver_evds.py \
       --full-refresh
 
 Beklenen çıktılar:
@@ -291,16 +299,23 @@ Bu testler şu durumları kontrol eder:
 
 # 10. Baştan Sona Önerilen Çalıştırma Sırası
 
-Bronze veriler güncellendiğinde pipeline aşağıdaki sırayla çalıştırılmalıdır:
+Tüm pipeline sıfırdan oluşturulurken aşağıdaki sırayla çalıştırılmalıdır:
 
+    # 0. Bronze Katmanını Doğrulama / İndirme
+    PYTHONPATH=backend python backend/scripts/bddk/build_bronze_bddk.py
+    PYTHONPATH=backend python backend/scripts/evds/build_bronze_evds.py
+
+    # 1. BDDK Silver Üretimi
     PYTHONPATH=backend python \
       backend/scripts/bddk/build_silver_bddk.py
 
+    # 2. BDDK DuckDB (Opsiyonel / İnceleme Amaçlı)
     PYTHONPATH=backend python \
       backend/scripts/bddk/build_silver_duckdb.py
 
+    # 3. EVDS Silver Üretimi
     PYTHONPATH=backend python \
-      backend/scripts/evds/seed_silver_evds.py \
+      backend/scripts/evds/build_silver_evds.py \
       --full-refresh
 
     PYTHONPATH=backend python \

@@ -32,7 +32,7 @@ logging.basicConfig(
     format="%(asctime)s [%(levelname)s] %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S",
 )
-logger = logging.getLogger("seed_silver_evds")
+logger = logging.getLogger("build_silver_evds")
 
 
 def main() -> None:
