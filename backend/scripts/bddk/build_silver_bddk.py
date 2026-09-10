@@ -99,6 +99,8 @@ CATALOG_COLUMNS = [
     "accumulation",
     "description",
     "is_cumulative",
+    "nature",
+    "alignment_override",
 ]
 
 

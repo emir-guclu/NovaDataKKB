@@ -354,6 +354,8 @@ def _build_evds_metadata() -> pd.DataFrame:
             "tags": meta["tags"],
             "accumulation": "none",
             "is_cumulative": False,
+            "nature": meta["nature"],
+            "alignment_override": meta["alignment_override"],
         }
     )
 
@@ -430,6 +432,12 @@ def _build_bddk_metadata() -> pd.DataFrame:
             "is_cumulative": meta[
                 "is_cumulative"
             ],
+            "nature": meta[
+                "nature"
+            ],
+            "alignment_override": meta[
+                "alignment_override"
+            ],
         }
     )
 
@@ -477,6 +485,19 @@ def main() -> None:
     ).any():
         raise ValueError(
             "Canonical observations contain duplicate keys"
+        )
+
+    invalid_nature = metadata[
+        metadata["nature"].isna()
+        | (metadata["nature"] == "unclassified")
+        | ~metadata["nature"].isin({"stock", "flow", "rate", "price"})
+    ]
+
+    if not invalid_nature.empty:
+        sample = invalid_nature[["series_id", "nature"]].head(30)
+        raise ValueError(
+            "Canonical Silver build stopped because financial nature is missing/unclassified:\n"
+            + sample.to_string(index=False)
         )
 
     if metadata["series_id"].duplicated().any():
@@ -551,7 +572,9 @@ def main() -> None:
                 CAST(description AS VARCHAR) AS description,
                 tags,
                 CAST(accumulation AS VARCHAR) AS accumulation,
-                CAST(is_cumulative AS BOOLEAN) AS is_cumulative
+                CAST(is_cumulative AS BOOLEAN) AS is_cumulative,
+                CAST(nature AS VARCHAR) AS nature,
+                CAST(alignment_override AS VARCHAR) AS alignment_override
             FROM _canonical_metadata
             """
         )

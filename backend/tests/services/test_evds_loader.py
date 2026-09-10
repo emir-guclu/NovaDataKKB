@@ -28,7 +28,7 @@ def mock_evds_client():
             "SERIE_CODE": "TP.DK.USD.A.YTL",
             "SERIE_NAME": "ABD Doları (Döviz Alış)",
             "FREQUENCY_STR": "AYLIK",
-            "DATAGROUP_NAME": "Kurlar",
+            "DATAGROUP_NAME": "Döviz Kurları",
             "BIRIMI": "TL",
             "NOTE": "Aylık ortalama kur",
             "TAG": ["kur", "usd"],
@@ -66,7 +66,9 @@ def canonical_silver_db(tmp_path: Path):
             description VARCHAR,
             tags VARCHAR[],
             accumulation VARCHAR,
-            is_cumulative BOOLEAN
+            is_cumulative BOOLEAN,
+            nature VARCHAR,
+            alignment_override VARCHAR
         );
         """
     )
@@ -162,6 +164,17 @@ def test_load_evds_series_with_silver_db(
         ).fetchone()[0]
         assert meta_count == 1
 
+        meta_row = con.execute(
+            """
+            SELECT nature, alignment_override
+            FROM series_metadata
+            WHERE series_id = 'EVDS:TP.DK.USD.A.YTL'
+            """
+        ).fetchone()
+
+        assert meta_row[0] == "price"
+        assert meta_row[1] is None
+
         # Check canonical rule: date == period_end
         date_check = con.execute(
             "SELECT COUNT(*) FROM observations WHERE series_id = 'EVDS:TP.DK.USD.A.YTL' AND date != period_end"
@@ -238,4 +251,28 @@ def test_load_evds_series_empty_error(tmp_path: Path):
             client=mock_client,
             bronze_dir=tmp_path / "bronze",
             silver_dir=tmp_path / "silver",
+        )
+
+
+def test_unclassified_evds_cannot_be_added_to_canonical_silver(tmp_path, canonical_silver_db):
+    client = MagicMock()
+    client.get_data.return_value = [{"Tarih": "2023-1", "TP_UNKNOWN_SERIES": "1.0"}]
+    client.get_series_metadata.return_value = [{
+        "SERIE_CODE": "TP.UNKNOWN.SERIES",
+        "SERIE_NAME": "Unknown Official Series",
+        "FREQUENCY_STR": "AYLIK",
+        "DATAGROUP_NAME": "Tanimsiz Yeni Kategori",
+        "BIRIMI": "TL",
+        "NOTE": "Unknown test category",
+        "TAG": [],
+    }]
+    with pytest.raises(ValueError, match="EVDS:TP.UNKNOWN.SERIES"):
+        load_evds_series(
+            series_code="TP.UNKNOWN.SERIES",
+            client=client,
+            add_to_silver=True,
+            bronze_dir=tmp_path / "bronze",
+            silver_dir=tmp_path / "silver",
+            silver_db_path=canonical_silver_db,
+            metadata_raw_path=tmp_path / "bronze" / "metadata_raw.json",
         )

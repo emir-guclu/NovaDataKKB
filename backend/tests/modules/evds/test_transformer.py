@@ -115,7 +115,8 @@ def test_series_metadata_parquet_schema_and_types():
     meta = pd.read_parquet(META_PATH)
     expected_cols = [
         "series_id", "series_code", "series_name", "category", "tcmb_category",
-        "tcmb_datagroup", "freq", "unit", "description", "tags", "source"
+        "tcmb_datagroup", "freq", "unit", "description", "tags", "source",
+        "nature", "alignment_override"
     ]
     assert list(meta.columns) == expected_cols
     assert (meta["source"] == "EVDS").all()

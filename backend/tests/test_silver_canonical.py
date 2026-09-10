@@ -78,6 +78,7 @@ def test_metadata_defaults_non_cumulative():
         category="test",
         freq="M",
         unit="%",
+        nature="rate",
     )
 
     assert meta.accumulation == "none"
@@ -94,6 +95,7 @@ def test_ytd_metadata_must_be_cumulative():
         unit="milyon TL",
         accumulation="ytd",
         is_cumulative=True,
+        nature="stock",
     )
 
     assert meta.is_cumulative is True
@@ -109,4 +111,55 @@ def test_inconsistent_cumulative_metadata_rejected():
             freq="M",
             accumulation="ytd",
             is_cumulative=False,
+            nature="stock",
+        )
+
+
+
+def test_metadata_requires_nature():
+    with pytest.raises(ValidationError):
+        CanonicalSeriesMetadata(
+            series_id="EVDS:UNKNOWN",
+            source="EVDS",
+            series_name="Unknown",
+            category="unknown",
+            freq="M",
+        )
+
+
+def test_invalid_nature_rejected():
+    with pytest.raises(ValidationError):
+        CanonicalSeriesMetadata(
+            series_id="EVDS:BAD",
+            source="EVDS",
+            series_name="Bad",
+            category="bad",
+            freq="M",
+            nature="invalid",
+        )
+
+
+def test_alignment_override_is_optional():
+    meta = CanonicalSeriesMetadata(
+        series_id="EVDS:TEST",
+        source="EVDS",
+        series_name="Test",
+        category="test",
+        freq="D",
+        nature="price",
+    )
+
+    assert meta.alignment_override is None
+
+
+def test_invalid_alignment_override_rejected():
+    with pytest.raises(ValidationError):
+        CanonicalSeriesMetadata(
+            series_id="EVDS:TEST",
+            source="EVDS",
+            series_name="Test",
+            category="test",
+            freq="D",
+            nature="price",
+            alignment_override="median",
         )

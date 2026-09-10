@@ -7,6 +7,7 @@ from app.services.align_service import (
     align_pair,
     align_to_monthly,
     generate_alignment_warnings,
+    _infer_series_aggregation_method,
 )
 
 
@@ -378,14 +379,14 @@ def test_align_pair_auto_target_freq_and_method_inference():
     """Tests automatic downsampling to coarser frequency and semantic method inference."""
     weekly_stock = pd.DataFrame(
         [
-            {"series_id": "BDDK_WEEKLY:LOAN", "source": "BDDK_WEEKLY", "date": "2026-01-09", "value": 100.0, "freq": "W"},
-            {"series_id": "BDDK_WEEKLY:LOAN", "source": "BDDK_WEEKLY", "date": "2026-01-30", "value": 130.0, "freq": "W"},
+            {"series_id": "BDDK_WEEKLY:LOAN", "source": "BDDK_WEEKLY", "date": "2026-01-09", "value": 100.0, "freq": "W", "nature": "stock"},
+            {"series_id": "BDDK_WEEKLY:LOAN", "source": "BDDK_WEEKLY", "date": "2026-01-30", "value": 130.0, "freq": "W", "nature": "stock"},
         ]
     )
 
     monthly_inflation = pd.DataFrame(
         [
-            {"series_id": "EVDS:CPI", "source": "EVDS", "date": "2026-01-31", "value": 45.0, "freq": "M"},
+            {"series_id": "EVDS:CPI", "source": "EVDS", "date": "2026-01-31", "value": 45.0, "freq": "M", "nature": "stock"},
         ]
     )
 
@@ -411,7 +412,7 @@ def test_align_pair_quarterly_sparse_preserves_quarter_ends_only():
 
     quarterly_obs = pd.DataFrame(
         [
-            {"series_id": "Q:FINTURK", "source": "BDDK_FINTURK", "date": "2026-03-31", "value": 500.0, "freq": "Q"},
+            {"series_id": "Q:FINTURK", "source": "BDDK_FINTURK", "date": "2026-03-31", "value": 500.0, "freq": "Q", "nature": "stock"},
         ]
     )
 
@@ -425,29 +426,12 @@ def test_align_pair_quarterly_sparse_preserves_quarter_ends_only():
     assert any("çeyreklik veriler yalnızca çeyrek sonlarında bırakıldı" in w for w in res.warnings)
 
 
-def test_align_pair_cumulative_exclusion(tmp_path):
-    """Raw cumulative series cannot be paired directly without de-accumulation."""
-    df_a = pd.DataFrame(
-        [{"series_id": "A", "date": "2026-01-31", "value": 1.0, "freq": "M"}]
-    )
-    df_b = pd.DataFrame(
-        [{"series_id": "B", "date": "2026-01-31", "value": 2.0, "freq": "M"}]
-    )
+def test_align_pair_raw_cumulative_uses_last():
+    assert _infer_series_aggregation_method("RAW:YTD", "ANY", "M", "stock", None, "ytd") == "last"
 
-    # If metadata shows accumulation != none
-    meta_path = tmp_path / "mock.duckdb"
-    import duckdb
-    con = duckdb.connect(str(meta_path))
-    con.execute("CREATE TABLE observations (series_id VARCHAR, source VARCHAR, date DATE, value DOUBLE, freq VARCHAR, unit VARCHAR, dims JSON);")
-    con.execute("CREATE TABLE series_metadata (series_id VARCHAR, source VARCHAR, series_code VARCHAR, series_name VARCHAR, freq VARCHAR, unit VARCHAR, accumulation VARCHAR);")
-    con.execute("INSERT INTO observations VALUES ('A', 'EVDS', '2026-01-31', 1.0, 'M', 'TL', '{}');")
-    con.execute("INSERT INTO observations VALUES ('B', 'BDDK', '2026-01-31', 2.0, 'M', 'TL', '{}');")
-    con.execute("INSERT INTO series_metadata VALUES ('A', 'EVDS', 'A', 'A', 'M', 'TL', 'ytd_cumulative');")
-    con.execute("INSERT INTO series_metadata VALUES ('B', 'BDDK', 'B', 'B', 'M', 'TL', 'none');")
-    con.close()
 
-    with pytest.raises(ValueError, match="Raw cumulative/YTD series cannot be aligned directly"):
-        align_pair("A", "B", silver_db_path=meta_path)
+def test_align_pair_periodic_flow_uses_sum():
+    assert _infer_series_aggregation_method("RAW:YTD_periodic", "ANY", "M", "flow", None, "none") == "sum"
 
 
 def test_align_pair_real_silver_duckdb():

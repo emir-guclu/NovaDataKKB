@@ -91,7 +91,9 @@ def load_canonical_silver():
                 description,
                 tags,
                 accumulation,
-                is_cumulative
+                is_cumulative,
+                nature,
+                alignment_override
             FROM series_metadata
             ORDER BY series_id
             """

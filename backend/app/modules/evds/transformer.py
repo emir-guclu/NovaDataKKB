@@ -29,6 +29,7 @@ import pyarrow as pa
 import pyarrow.parquet as pq
 
 from app.modules.evds.metadata import load_manifest_series
+from app.services.series_nature import classify_series_nature
 
 logger = logging.getLogger(__name__)
 
@@ -350,6 +351,13 @@ def build_series_dimension_row(series_code: str, meta: Dict[str, Any]) -> Dict[s
     else:
         tags = []
 
+    nature, alignment_override = classify_series_nature(
+        series_id=series_id,
+        source="EVDS",
+        category=cat_slug,
+        accumulation="none",
+    )
+
     return {
         "series_id": series_id,
         "series_code": series_code,
@@ -362,6 +370,8 @@ def build_series_dimension_row(series_code: str, meta: Dict[str, Any]) -> Dict[s
         "description": meta.get("NOTE"),
         "tags": tags,
         "source": "EVDS",
+        "nature": nature,
+        "alignment_override": alignment_override,
     }
 
 

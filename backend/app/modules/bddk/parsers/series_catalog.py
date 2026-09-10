@@ -6,6 +6,8 @@ import re
 
 import pandas as pd
 
+from app.services.series_nature import classify_series_nature
+
 
 VALID_ACCUMULATIONS = {
     "none",
@@ -232,6 +234,50 @@ def build_series_catalog(
         base["accumulation"] != "none"
     )
 
+    nature_results = []
+
+    for row in base.itertuples(index=False):
+        series_id = str(row.series_id)
+        source = str(row.source)
+
+        parts = series_id.split(":")
+        category = parts[1] if len(parts) >= 2 else ""
+
+        nature_results.append(
+            classify_series_nature(
+                series_id=series_id,
+                source=source,
+                category=category,
+                accumulation=str(row.accumulation),
+            )
+        )
+
+    base["nature"] = [
+        result[0]
+        for result in nature_results
+    ]
+
+    base["alignment_override"] = [
+        result[1]
+        for result in nature_results
+    ]
+
+    unclassified = base[
+        base["nature"] == "unclassified"
+    ]
+
+    if not unclassified.empty:
+        raise ValueError(
+            "BDDK Silver build stopped because nature is "
+            "unclassified for series: "
+            + ", ".join(
+                unclassified["series_id"]
+                .astype(str)
+                .head(30)
+                .tolist()
+            )
+        )
+
     result = base[
         [
             "series_id",
@@ -241,6 +287,8 @@ def build_series_catalog(
             "accumulation",
             "description",
             "is_cumulative",
+            "nature",
+            "alignment_override",
         ]
     ].sort_values(
         "series_id",

@@ -105,6 +105,22 @@ class SeriesMetadataRecord(BaseModel):
         description="Data origin system (EVDS, BDDK, BIST)"
     )
 
+    nature: str = Field(
+        ...,
+        description=(
+            "Financial nature: stock, flow, rate, price "
+            "or unclassified"
+        )
+    )
+
+    alignment_override: Optional[str] = Field(
+        default=None,
+        description=(
+            "Optional exceptional alignment method: "
+            "last, sum or mean"
+        )
+    )
+
 
 # ==============================================================================
 # 2. PyArrow Table Schemas (Parquet Physical Storage Specification)
@@ -133,4 +149,6 @@ SERIES_METADATA_SCHEMA = pa.schema([
     ("description", pa.string()),
     ("tags", pa.list_(pa.string())),
     ("source", pa.string()),
+    ("nature", pa.string()),
+    ("alignment_override", pa.string()),
 ])

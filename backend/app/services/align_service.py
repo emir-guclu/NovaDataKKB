@@ -652,7 +652,16 @@ def _fetch_series_from_silver_db(
 
         meta_rows = con.execute(
             """
-            SELECT series_id, source, series_code, series_name, freq, unit, accumulation
+            SELECT
+                series_id,
+                source,
+                series_code,
+                series_name,
+                freq,
+                unit,
+                accumulation,
+                nature,
+                alignment_override
             FROM series_metadata
             WHERE series_id = ?
             """,
@@ -672,38 +681,58 @@ def _infer_series_aggregation_method(
     series_id: str,
     source: str,
     freq: str,
+    nature: str | None,
+    alignment_override: str | None = None,
+    accumulation: str = "none",
 ) -> AggregationMethod:
-    """Resolves aggregation method using explicit policies or semantic defaults."""
-    try:
-        from app.services.alignment_policies import resolve_alignment_policy
+    """Resolve aggregation strictly from canonical financial semantics.
 
-        policy = resolve_alignment_policy(series_id, source, freq)
-        if policy is not None:
-            return policy.method
-    except Exception:
-        pass
+    `source` and `freq` are retained for provenance/API compatibility.
+    They are not used as semantic fallbacks.
+    """
 
-    if source == "BDDK_WEEKLY" or "BDDK" in source:
+    del source, freq
+
+    from app.services.series_nature import (
+        alignment_method_for_nature,
+    )
+
+    if nature is None:
+        raise ValueError(
+            f"Series {series_id!r} has missing financial nature; "
+            "alignment is not allowed."
+        )
+
+    nature = str(nature).strip()
+
+    if not nature or nature == "unclassified":
+        raise ValueError(
+            f"Series {series_id!r} has missing/unclassified "
+            "financial nature; alignment is not allowed."
+        )
+
+    if alignment_override is not None:
+        try:
+            if pd.isna(alignment_override):
+                alignment_override = None
+        except (TypeError, ValueError):
+            pass
+
+    if alignment_override is not None:
+        alignment_override = str(
+            alignment_override
+        ).strip() or None
+
+    accumulation = str(accumulation or "none").strip()
+
+    if accumulation != "none":
         return "last"
 
-    upper_id = series_id.upper()
-    if any(
-        tok in upper_id
-        for tok in [
-            "DK.",
-            "KTF",
-            "TRY.",
-            "USD.",
-            "EUR.",
-            "FAIZ",
-            "RATE",
-            "FON",
-            "ORAN",
-        ]
-    ):
-        return "mean"
+    return alignment_method_for_nature(
+        nature,
+        alignment_override,
+    )
 
-    return "last"
 
 
 def _aggregate_series_to_freq(
@@ -819,7 +848,11 @@ def align_pair(
             else "UNKNOWN"
         )
         freq_a = str(df_a["freq"].iloc[0]) if "freq" in df_a.columns else "M"
-        meta_a = {}
+        meta_a = {
+            "nature": df_a["nature"].iloc[0] if "nature" in df_a.columns else None,
+            "alignment_override": df_a["alignment_override"].iloc[0] if "alignment_override" in df_a.columns else None,
+            "accumulation": df_a["accumulation"].iloc[0] if "accumulation" in df_a.columns else "none",
+        }
 
     # 2. Resolve Series B
     if isinstance(series_b, str):
@@ -840,16 +873,16 @@ def align_pair(
             else "UNKNOWN"
         )
         freq_b = str(df_b["freq"].iloc[0]) if "freq" in df_b.columns else "M"
-        meta_b = {}
+        meta_b = {
+            "nature": df_b["nature"].iloc[0] if "nature" in df_b.columns else None,
+            "alignment_override": df_b["alignment_override"].iloc[0] if "alignment_override" in df_b.columns else None,
+            "accumulation": df_b["accumulation"].iloc[0] if "accumulation" in df_b.columns else "none",
+        }
 
-    # 3. Check cumulative exclusion rule
-    acc_a = meta_a.get("accumulation", "none")
-    acc_b = meta_b.get("accumulation", "none")
-    if acc_a != "none" or acc_b != "none":
-        raise ValueError(
-            f"Raw cumulative/YTD series cannot be aligned directly: "
-            f"{series_a_id} ({acc_a}), {series_b_id} ({acc_b})"
-        )
+    # 3. Resolve accumulation semantics
+
+    acc_a = meta_a.get("accumulation", "none") or "none"
+    acc_b = meta_b.get("accumulation", "none") or "none"
 
     # 4. Resolve Target Frequency (Auto-detect if not provided)
     if target_freq is None:
@@ -861,12 +894,12 @@ def align_pair(
     res_method_a = method_a or (
         "native"
         if freq_a == target_freq
-        else _infer_series_aggregation_method(series_a_id, source_a, freq_a)
+        else _infer_series_aggregation_method(series_a_id, source_a, freq_a, meta_a.get("nature"), meta_a.get("alignment_override"), acc_a)
     )
     res_method_b = method_b or (
         "native"
         if freq_b == target_freq
-        else _infer_series_aggregation_method(series_b_id, source_b, freq_b)
+        else _infer_series_aggregation_method(series_b_id, source_b, freq_b, meta_b.get("nature"), meta_b.get("alignment_override"), acc_b)
     )
 
     # 6. Aggregate each series onto target frequency

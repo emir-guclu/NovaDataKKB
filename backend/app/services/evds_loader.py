@@ -26,6 +26,7 @@ import pandas as pd
 import pyarrow as pa
 import pyarrow.parquet as pq
 
+from app.services.series_nature import classify_series_nature
 from app.models.silver_canonical import (
     CanonicalObservation,
     CanonicalSeriesMetadata,
@@ -244,6 +245,13 @@ def load_evds_series(
         )
         canonical_obs_rows.append(obs_model.model_dump())
 
+    nature, alignment_override = classify_series_nature(
+        series_id=series_id,
+        source="EVDS",
+        category=dim_row.get("category", "genel"),
+        accumulation="none",
+    )
+
     meta_model = CanonicalSeriesMetadata(
         series_id=series_id,
         source="EVDS",
@@ -256,8 +264,16 @@ def load_evds_series(
         tags=dim_row.get("tags", []),
         accumulation="none",
         is_cumulative=False,
+        nature=nature,
+        alignment_override=alignment_override,
     )
     canonical_meta_dict = meta_model.model_dump()
+
+    if add_to_silver and nature == "unclassified":
+        raise ValueError(
+            f"Series {series_id!r} has unclassified financial nature; "
+            "cannot add it to canonical Silver."
+        )
 
     # 5. Insert into silver.duckdb if requested
     added_to_silver = False
@@ -309,7 +325,9 @@ def load_evds_series(
                     CAST(description AS VARCHAR),
                     tags,
                     CAST(accumulation AS VARCHAR),
-                    CAST(is_cumulative AS BOOLEAN)
+                    CAST(is_cumulative AS BOOLEAN),
+                    CAST(nature AS VARCHAR),
+                    CAST(alignment_override AS VARCHAR)
                 FROM _new_canonical_meta
                 """
             )

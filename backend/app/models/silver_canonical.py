@@ -13,6 +13,8 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator, model_valida
 
 VALID_FREQS = {"D", "W", "M", "Q", "Y"}
 VALID_ACCUMULATIONS = {"none", "ytd", "since_start"}
+VALID_NATURES = {"stock", "flow", "rate", "price", "unclassified"}
+VALID_ALIGNMENT_OVERRIDES = {"last", "sum", "mean"}
 
 
 class CanonicalObservation(BaseModel):
@@ -101,6 +103,8 @@ class CanonicalSeriesMetadata(BaseModel):
     tags: list[str] = Field(default_factory=list)
     accumulation: str = "none"
     is_cumulative: bool = False
+    nature: str
+    alignment_override: str | None = None
 
     @field_validator("series_code", "unit", "description", mode="before")
     @classmethod
@@ -126,6 +130,30 @@ class CanonicalSeriesMetadata(BaseModel):
         if value not in VALID_ACCUMULATIONS:
             raise ValueError(
                 f"Unsupported accumulation type: {value!r}"
+            )
+        return value
+
+    @field_validator("nature")
+    @classmethod
+    def validate_nature(cls, value: str) -> str:
+        if value not in VALID_NATURES:
+            raise ValueError(
+                f"Unsupported financial nature: {value!r}"
+            )
+        return value
+
+    @field_validator("alignment_override")
+    @classmethod
+    def validate_alignment_override(
+        cls,
+        value: str | None,
+    ) -> str | None:
+        if (
+            value is not None
+            and value not in VALID_ALIGNMENT_OVERRIDES
+        ):
+            raise ValueError(
+                f"Unsupported alignment_override: {value!r}"
             )
         return value
 
