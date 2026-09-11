@@ -324,13 +324,21 @@ Tüm pipeline sıfırdan oluşturulurken aşağıdaki sırayla çalıştırılma
     PYTHONPATH=backend python \
       backend/scripts/build_aligned_monthly.py
 
+    # 6. Gold Katmanı Üretimi
+    PYTHONPATH=backend python \
+      backend/app/modules/gold/build_all_gold.py
+      
+    # 7. Unified Lakehouse Catalog & DuckDB Routing
+    PYTHONPATH=backend python \
+      backend/app/modules/gold/build_duckdb_views.py
+
 Ardından full test suite çalıştırılmalıdır:
 
     PYTHONPATH=backend python -m pytest -v
 
-Doğrulanmış full test sonucu:
+Doğrulanmış full test sonucu (Gold katmanı dâhil):
 
-    119 passed
+    122 passed
 
 ---
 
@@ -354,6 +362,10 @@ Doğrulanmış full test sonucu:
                     │
                     ▼
                    Gold
+                    │
+                    ▼
+             lakehouse.duckdb
+         (Unified Lakehouse Router)
 
 ---
 
@@ -424,6 +436,8 @@ Doğrulanmış full test sonucu:
     Alignment regression tests
         ✅
 
-    Gold
-        ⏳ Sonraki aşama
+    Gold Core Tables (build_all_gold.py)
+        ✅
 
+    Unified Lakehouse & Data Catalog (lakehouse.duckdb)
+        ✅
