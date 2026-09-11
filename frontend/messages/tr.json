@@ -1,0 +1,20 @@
+{
+  "Index": {
+    "title": "NOVA Analytics Agent",
+    "subtitle": "KKB Hackathon İçin Geliştirilmiş Yapay Zeka",
+    "login_prompt": "Sistemi kullanmak için lütfen kurum hesabınızla giriş yapın.",
+    "login_button": "Google ile Giriş Yap",
+    "welcome": "Hoş geldin",
+    "logout_button": "Çıkış Yap",
+    "auth_success": "✅ Sisteme giriş yapıldı. Ajan paneli yükleniyor...",
+    "chat_placeholder": "Finansal bir soru sorun...",
+    "panel_title": "📈 Analiz ve Kanıt Paneli",
+    "verifier_active": "✅ Verifier (Doğrulama) Katmanı Aktif: 14 sayı programatik olarak doğrulandı.",
+    "sources": "📚 Kullanılan Kaynaklar: EVDS, BDDK",
+    "send_button": "Gönder",
+    "chat_title": "NOVA Chat",
+    "graph_placeholder": "[Grafik Alanı - Veriler API'den Bekleniyor]",
+    "graph_subtext": "Recharts veya Plotly grafiği buraya render edilecek",
+    "welcome_message": "Hoş geldin! NOVA Analytics Agent sistemine başarıyla bağlandınız. Size nasıl yardımcı olabilirim?"
+  }
+}

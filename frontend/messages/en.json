@@ -1,0 +1,20 @@
+{
+  "Index": {
+    "title": "NOVA Analytics Agent",
+    "subtitle": "AI Developed for KKB Hackathon",
+    "login_prompt": "Please sign in with your corporate account to use the system.",
+    "login_button": "Sign in with Google",
+    "welcome": "Welcome",
+    "logout_button": "Sign out",
+    "auth_success": "✅ System logged in. Loading agent panel...",
+    "chat_placeholder": "Ask a financial question...",
+    "panel_title": "📈 Analysis and Evidence Panel",
+    "verifier_active": "✅ Verifier Layer Active: 14 numbers programmatically verified.",
+    "sources": "📚 Sources Used: EVDS, BDDK",
+    "send_button": "Send",
+    "chat_title": "NOVA Chat",
+    "graph_placeholder": "[Graph Area - Waiting for API Data]",
+    "graph_subtext": "Recharts or Plotly graph will be rendered here",
+    "welcome_message": "Welcome! Successfully connected to NOVA Analytics Agent system. How can I help you?"
+  }
+}
