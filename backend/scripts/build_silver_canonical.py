@@ -355,6 +355,7 @@ def _build_evds_metadata() -> pd.DataFrame:
             "accumulation": "none",
             "is_cumulative": False,
             "nature": meta["nature"],
+            "nature_reviewed": meta["nature_reviewed"],
             "alignment_override": meta["alignment_override"],
         }
     )
@@ -434,6 +435,9 @@ def _build_bddk_metadata() -> pd.DataFrame:
             ],
             "nature": meta[
                 "nature"
+            ],
+            "nature_reviewed": meta[
+                "nature_reviewed"
             ],
             "alignment_override": meta[
                 "alignment_override"
@@ -574,6 +578,7 @@ def main() -> None:
                 CAST(accumulation AS VARCHAR) AS accumulation,
                 CAST(is_cumulative AS BOOLEAN) AS is_cumulative,
                 CAST(nature AS VARCHAR) AS nature,
+                CAST(nature_reviewed AS BOOLEAN) AS nature_reviewed,
                 CAST(alignment_override AS VARCHAR) AS alignment_override
             FROM _canonical_metadata
             """

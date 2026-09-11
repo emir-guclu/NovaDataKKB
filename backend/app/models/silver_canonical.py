@@ -104,6 +104,7 @@ class CanonicalSeriesMetadata(BaseModel):
     accumulation: str = "none"
     is_cumulative: bool = False
     nature: str
+    nature_reviewed: bool = False
     alignment_override: str | None = None
 
     @field_validator("series_code", "unit", "description", mode="before")

@@ -68,6 +68,48 @@ def canonical_silver_db(tmp_path: Path):
             accumulation VARCHAR,
             is_cumulative BOOLEAN,
             nature VARCHAR,
+            nature_reviewed BOOLEAN,
+            alignment_override VARCHAR
+        );
+        """
+    )
+    con.close()
+    return db_path
+
+
+@pytest.fixture
+def aligned_db(tmp_path: Path):
+    db_path = tmp_path / "aligned.duckdb"
+    con = duckdb.connect(str(db_path))
+    con.execute(
+        """
+        CREATE TABLE observations (
+            series_id VARCHAR,
+            source VARCHAR,
+            date DATE,
+            value DOUBLE,
+            source_freq VARCHAR,
+            aligned_freq VARCHAR,
+            unit VARCHAR,
+            dims JSON,
+            alignment_method VARCHAR,
+            is_imputed BOOLEAN
+        );
+
+        CREATE TABLE series_metadata (
+            series_id VARCHAR,
+            source VARCHAR,
+            series_code VARCHAR,
+            series_name VARCHAR,
+            category VARCHAR,
+            freq VARCHAR,
+            unit VARCHAR,
+            description VARCHAR,
+            tags VARCHAR[],
+            accumulation VARCHAR,
+            is_cumulative BOOLEAN,
+            nature VARCHAR,
+            nature_reviewed BOOLEAN,
             alignment_override VARCHAR
         );
         """
@@ -166,14 +208,15 @@ def test_load_evds_series_with_silver_db(
 
         meta_row = con.execute(
             """
-            SELECT nature, alignment_override
+            SELECT nature, nature_reviewed, alignment_override
             FROM series_metadata
             WHERE series_id = 'EVDS:TP.DK.USD.A.YTL'
             """
         ).fetchone()
 
         assert meta_row[0] == "price"
-        assert meta_row[1] is None
+        assert meta_row[1] is True
+        assert meta_row[2] is None
 
         # Check canonical rule: date == period_end
         date_check = con.execute(
@@ -276,3 +319,170 @@ def test_unclassified_evds_cannot_be_added_to_canonical_silver(tmp_path, canonic
             silver_db_path=canonical_silver_db,
             metadata_raw_path=tmp_path / "bronze" / "metadata_raw.json",
         )
+
+    assert not (tmp_path / "silver" / "observations.parquet").exists()
+    assert not (tmp_path / "silver" / "series_metadata.parquet").exists()
+
+    con = duckdb.connect(str(canonical_silver_db))
+    try:
+        obs_count = con.execute(
+            "SELECT COUNT(*) FROM observations WHERE series_id = ?",
+            ["EVDS:TP.UNKNOWN.SERIES"],
+        ).fetchone()[0]
+        meta_count = con.execute(
+            "SELECT COUNT(*) FROM series_metadata WHERE series_id = ?",
+            ["EVDS:TP.UNKNOWN.SERIES"],
+        ).fetchone()[0]
+        assert obs_count == 0
+        assert meta_count == 0
+    finally:
+        con.close()
+
+
+def test_unclassified_evds_live_is_pending_review(tmp_path, canonical_silver_db):
+    client = MagicMock()
+    client.get_data.return_value = [
+        {"Tarih": "2023-1", "TP_UNKNOWN_LIVE": "1.0"}
+    ]
+    client.get_series_metadata.return_value = [{
+        "SERIE_CODE": "TP.UNKNOWN.LIVE",
+        "SERIE_NAME": "Unknown Live Series",
+        "FREQUENCY_STR": "AYLIK",
+        "DATAGROUP_NAME": "Tanimsiz Yeni Kategori",
+        "BIRIMI": "TL",
+        "NOTE": "Pending review test",
+        "TAG": [],
+    }]
+
+    result = load_evds_series(
+        series_code="TP.UNKNOWN.LIVE",
+        client=client,
+        add_to_silver=True,
+        context="live",
+        bronze_dir=tmp_path / "bronze_live",
+        silver_dir=tmp_path / "silver_live",
+        silver_db_path=canonical_silver_db,
+        metadata_raw_path=tmp_path / "bronze_live" / "metadata_raw.json",
+    )
+
+    assert result["status"] == "pending_review"
+    assert result["added_to_silver"] is True
+    assert result["message"] is not None
+
+    con = duckdb.connect(str(canonical_silver_db))
+    try:
+        row = con.execute(
+            """
+            SELECT nature, nature_reviewed
+            FROM series_metadata
+            WHERE series_id = ?
+            """,
+            ["EVDS:TP.UNKNOWN.LIVE"],
+        ).fetchone()
+        assert row == ("unclassified", False)
+    finally:
+        con.close()
+
+    assert (tmp_path / "silver_live" / "observations.parquet").exists()
+    assert (tmp_path / "silver_live" / "series_metadata.parquet").exists()
+
+
+def test_invalid_loader_context_fails_before_fetch(tmp_path):
+    client = MagicMock()
+
+    with pytest.raises(ValueError, match="Unsupported EVDS loader context"):
+        load_evds_series(
+            series_code="TP.TEST.INVALID.CONTEXT",
+            client=client,
+            context="invalid",
+            bronze_dir=tmp_path / "bronze",
+            silver_dir=tmp_path / "silver",
+        )
+
+    client.get_data.assert_not_called()
+
+
+def test_classified_evds_is_written_to_aligned(
+    tmp_path, mock_evds_client, canonical_silver_db, aligned_db
+):
+    result = load_evds_series(
+        series_code="TP.DK.USD.A.YTL",
+        client=mock_evds_client,
+        add_to_silver=True,
+        bronze_dir=tmp_path / "bronze_aligned",
+        silver_dir=tmp_path / "silver_aligned",
+        silver_db_path=canonical_silver_db,
+        aligned_db_path=aligned_db,
+        metadata_raw_path=tmp_path / "bronze_aligned" / "metadata_raw.json",
+    )
+
+    assert result["status"] == "success"
+    assert result["added_to_silver"] is True
+    assert result["added_to_aligned"] is True
+
+    con = duckdb.connect(str(aligned_db))
+    try:
+        obs_count = con.execute(
+            "SELECT COUNT(*) FROM observations WHERE series_id = ?",
+            ["EVDS:TP.DK.USD.A.YTL"],
+        ).fetchone()[0]
+        meta_row = con.execute(
+            """
+            SELECT nature, nature_reviewed
+            FROM series_metadata
+            WHERE series_id = ?
+            """,
+            ["EVDS:TP.DK.USD.A.YTL"],
+        ).fetchone()
+
+        assert obs_count == 3
+        assert meta_row == ("price", True)
+    finally:
+        con.close()
+
+
+def test_live_unclassified_never_enters_aligned(
+    tmp_path, canonical_silver_db, aligned_db
+):
+    client = MagicMock()
+    client.get_data.return_value = [
+        {"Tarih": "2023-1", "TP_UNKNOWN_PENDING": "1.0"}
+    ]
+    client.get_series_metadata.return_value = [{
+        "SERIE_CODE": "TP.UNKNOWN.PENDING",
+        "SERIE_NAME": "Unknown Pending Series",
+        "FREQUENCY_STR": "AYLIK",
+        "DATAGROUP_NAME": "Tanimsiz Yeni Kategori",
+        "BIRIMI": "TL",
+        "NOTE": "Pending review alignment guard test",
+        "TAG": [],
+    }]
+
+    result = load_evds_series(
+        series_code="TP.UNKNOWN.PENDING",
+        client=client,
+        add_to_silver=True,
+        context="live",
+        bronze_dir=tmp_path / "bronze_pending",
+        silver_dir=tmp_path / "silver_pending",
+        silver_db_path=canonical_silver_db,
+        aligned_db_path=aligned_db,
+        metadata_raw_path=tmp_path / "bronze_pending" / "metadata_raw.json",
+    )
+
+    assert result["status"] == "pending_review"
+    assert result["added_to_silver"] is True
+    assert result["added_to_aligned"] is False
+
+    con = duckdb.connect(str(aligned_db))
+    try:
+        assert con.execute(
+            "SELECT COUNT(*) FROM observations WHERE series_id = ?",
+            ["EVDS:TP.UNKNOWN.PENDING"],
+        ).fetchone()[0] == 0
+        assert con.execute(
+            "SELECT COUNT(*) FROM series_metadata WHERE series_id = ?",
+            ["EVDS:TP.UNKNOWN.PENDING"],
+        ).fetchone()[0] == 0
+    finally:
+        con.close()

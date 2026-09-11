@@ -132,6 +132,34 @@ def alignment_method_for_nature(
     )
 
 
+def classify_evds_official_metadata_nature(
+    *,
+    unit: str | None,
+    default_agg_method: str | None,
+) -> tuple[Nature, AlignmentOverride | None]:
+    """Conservatively classify unknown EVDS series from official metadata only.
+
+    Series-name keyword matching is intentionally prohibited because names can
+    contain conflicting financial concepts and create silent misclassification.
+    Ambiguous metadata remains unclassified and must be reviewed explicitly.
+    """
+    unit_norm = str(unit or "").strip().upper()
+    agg_norm = str(default_agg_method or "").strip().upper()
+
+    signals: set[Nature] = set()
+
+    if agg_norm == "KÜMÜLATİF":
+        signals.add("flow")
+
+    if unit_norm in {"%", "YÜZDE", "YUZDE", "ORAN", "PUAN"}:
+        signals.add("rate")
+
+    if len(signals) == 1:
+        return next(iter(signals)), None
+
+    return "unclassified", None
+
+
 def classify_series_nature(
     *,
     series_id: str,

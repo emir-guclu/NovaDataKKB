@@ -113,6 +113,11 @@ class SeriesMetadataRecord(BaseModel):
         )
     )
 
+    nature_reviewed: bool = Field(
+        default=False,
+        description="Whether financial nature has been explicitly reviewed"
+    )
+
     alignment_override: Optional[str] = Field(
         default=None,
         description=(
@@ -150,5 +155,6 @@ SERIES_METADATA_SCHEMA = pa.schema([
     ("tags", pa.list_(pa.string())),
     ("source", pa.string()),
     ("nature", pa.string()),
+    ("nature_reviewed", pa.bool_()),
     ("alignment_override", pa.string()),
 ])

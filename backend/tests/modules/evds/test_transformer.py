@@ -12,6 +12,7 @@ from app.modules.evds.transformer import (
     resolve_canonical_freq,
     clean_observation_value,
     slugify_turkish,
+    build_series_dimension_row,
     transform_silver_evds,
     OBSERVATIONS_SCHEMA,
     SERIES_METADATA_SCHEMA,
@@ -116,7 +117,7 @@ def test_series_metadata_parquet_schema_and_types():
     expected_cols = [
         "series_id", "series_code", "series_name", "category", "tcmb_category",
         "tcmb_datagroup", "freq", "unit", "description", "tags", "source",
-        "nature", "alignment_override"
+        "nature", "nature_reviewed", "alignment_override"
     ]
     assert list(meta.columns) == expected_cols
     assert (meta["source"] == "EVDS").all()
@@ -175,3 +176,112 @@ def test_deterministic_sorting():
     obs = pd.read_parquet(OBS_PATH)
     sorted_obs = obs.sort_values(by=["series_id", "date"]).reset_index(drop=True)
     pd.testing.assert_frame_equal(obs[["series_id", "date"]], sorted_obs[["series_id", "date"]])
+
+
+def test_reviewed_evds_category_sets_nature_reviewed_true():
+    row = build_series_dimension_row(
+        "TP.DK.USD.A.YTL",
+        {
+            "SERIE_NAME": "USD",
+            "FREQUENCY_STR": "AYLIK",
+            "DATAGROUP_NAME": "Döviz Kurları",
+            "BIRIMI": "Türk lirası",
+        },
+    )
+    assert row["nature"] == "price"
+    assert row["nature_reviewed"] is True
+
+
+def test_unknown_evds_official_metadata_classification_is_unreviewed():
+    row = build_series_dimension_row(
+        "TP.NEW.FLOW",
+        {
+            "SERIE_NAME": "New Official Series",
+            "FREQUENCY_STR": "AYLIK",
+            "DATAGROUP_NAME": "Yeni Resmi Kategori",
+            "BIRIMI": "Adet",
+            "DEFAULT_AGG_METHOD_STR": "KÜMÜLATİF",
+        },
+    )
+    assert row["nature"] == "flow"
+    assert row["nature_reviewed"] is False
+
+
+def test_unknown_ambiguous_evds_stays_unclassified_and_unreviewed():
+    row = build_series_dimension_row(
+        "TP.NEW.AMBIGUOUS",
+        {
+            "SERIE_NAME": "Ambiguous Official Series",
+            "FREQUENCY_STR": "AYLIK",
+            "DATAGROUP_NAME": "Yeni Resmi Kategori",
+            "BIRIMI": "bin TL",
+            "DEFAULT_AGG_METHOD_STR": "BİTİŞ",
+        },
+    )
+    assert row["nature"] == "unclassified"
+    assert row["nature_reviewed"] is False
+
+
+def test_single_series_parquet_upsert_rolls_back_when_second_write_fails(tmp_path, monkeypatch):
+    import app.modules.evds.transformer as transformer_module
+
+    silver_dir = tmp_path / "silver"
+    series_id = "EVDS:TP.TEST.ROLLBACK"
+    observations = [{
+        "series_id": series_id,
+        "source": "EVDS",
+        "date": pd.Timestamp("2023-01-31").date(),
+        "period_start": pd.Timestamp("2023-01-01").date(),
+        "period_end": pd.Timestamp("2023-01-31").date(),
+        "value": 1.0,
+        "freq": "M",
+        "unit": "Adet",
+        "dims": "{}",
+        "source_file": "TP.TEST.ROLLBACK.json",
+    }]
+    metadata = {
+        "series_id": series_id,
+        "series_code": "TP.TEST.ROLLBACK",
+        "series_name": "Rollback Test",
+        "category": "test",
+        "tcmb_category": None,
+        "tcmb_datagroup": None,
+        "freq": "M",
+        "unit": "Adet",
+        "description": None,
+        "tags": [],
+        "source": "EVDS",
+        "nature": "flow",
+        "nature_reviewed": False,
+        "alignment_override": None,
+    }
+
+    transformer_module.upsert_single_series_to_silver_parquet(
+        series_id, observations, metadata, silver_dir=silver_dir
+    )
+
+    obs_path = silver_dir / "observations.parquet"
+    meta_path = silver_dir / "series_metadata.parquet"
+    obs_before = obs_path.read_bytes()
+    meta_before = meta_path.read_bytes()
+
+    original_write = transformer_module.write_parquet_atomic
+    calls = {"count": 0}
+
+    def fail_on_second_write(table, target_path):
+        calls["count"] += 1
+        if calls["count"] == 2:
+            raise RuntimeError("injected metadata parquet failure")
+        return original_write(table, target_path)
+
+    monkeypatch.setattr(transformer_module, "write_parquet_atomic", fail_on_second_write)
+
+    changed_observations = [dict(observations[0], value=99.0)]
+
+    with pytest.raises(RuntimeError, match="injected metadata parquet failure"):
+        transformer_module.upsert_single_series_to_silver_parquet(
+            series_id, changed_observations, metadata, silver_dir=silver_dir
+        )
+
+    assert obs_path.read_bytes() == obs_before
+    assert meta_path.read_bytes() == meta_before

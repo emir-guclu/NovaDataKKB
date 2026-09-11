@@ -2,6 +2,7 @@ import pytest
 
 from app.services.series_nature import (
     alignment_method_for_nature,
+    classify_evds_official_metadata_nature,
     classify_series_nature,
 )
 
@@ -104,4 +105,40 @@ def test_finturk_ratio_category_is_rate():
     )
 
     assert nature == "rate"
+    assert override is None
+
+
+def test_evds_official_metadata_cumulative_is_flow():
+    nature, override = classify_evds_official_metadata_nature(
+        unit="Adet",
+        default_agg_method="KÜMÜLATİF",
+    )
+    assert nature == "flow"
+    assert override is None
+
+
+def test_evds_official_metadata_pure_rate_unit_is_rate():
+    nature, override = classify_evds_official_metadata_nature(
+        unit="Yüzde",
+        default_agg_method="BİTİŞ",
+    )
+    assert nature == "rate"
+    assert override is None
+
+
+def test_evds_official_metadata_ambiguous_stays_unclassified():
+    nature, override = classify_evds_official_metadata_nature(
+        unit="bin TL",
+        default_agg_method="BİTİŞ",
+    )
+    assert nature == "unclassified"
+    assert override is None
+
+
+def test_evds_official_metadata_conflicting_signals_stay_unclassified():
+    nature, override = classify_evds_official_metadata_nature(
+        unit="Yüzde",
+        default_agg_method="KÜMÜLATİF",
+    )
+    assert nature == "unclassified"
     assert override is None

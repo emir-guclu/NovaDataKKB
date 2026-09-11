@@ -93,6 +93,7 @@ def load_canonical_silver():
                 accumulation,
                 is_cumulative,
                 nature,
+                nature_reviewed,
                 alignment_override
             FROM series_metadata
             ORDER BY series_id

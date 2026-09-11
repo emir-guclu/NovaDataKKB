@@ -29,7 +29,10 @@ import pyarrow as pa
 import pyarrow.parquet as pq
 
 from app.modules.evds.metadata import load_manifest_series
-from app.services.series_nature import classify_series_nature
+from app.services.series_nature import (
+    classify_evds_official_metadata_nature,
+    classify_series_nature,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -357,6 +360,13 @@ def build_series_dimension_row(series_code: str, meta: Dict[str, Any]) -> Dict[s
         category=cat_slug,
         accumulation="none",
     )
+    nature_reviewed = nature != "unclassified"
+
+    if not nature_reviewed:
+        nature, alignment_override = classify_evds_official_metadata_nature(
+            unit=meta.get("BIRIMI"),
+            default_agg_method=meta.get("DEFAULT_AGG_METHOD_STR"),
+        )
 
     return {
         "series_id": series_id,
@@ -371,8 +381,28 @@ def build_series_dimension_row(series_code: str, meta: Dict[str, Any]) -> Dict[s
         "tags": tags,
         "source": "EVDS",
         "nature": nature,
+        "nature_reviewed": nature_reviewed,
         "alignment_override": alignment_override,
     }
+
+
+def _upsert_parquet_table(target_path: Path, new_df: pd.DataFrame, schema: pa.Schema, key_column: str = "series_id") -> None:
+    """Idempotently upsert one series into a Parquet table."""
+    if target_path.exists() and target_path.stat().st_size > 0:
+        existing_df = pq.read_table(target_path).to_pandas()
+        series_id_val = new_df[key_column].iloc[0]
+        retained_df = existing_df[existing_df[key_column] != series_id_val]
+        combined_df = pd.concat([retained_df, new_df], ignore_index=True)
+    else:
+        combined_df = new_df
+
+    if "date" in combined_df.columns:
+        combined_df = combined_df.sort_values([key_column, "date"]).reset_index(drop=True)
+    else:
+        combined_df = combined_df.sort_values(key_column).reset_index(drop=True)
+
+    table = pa.Table.from_pandas(combined_df, schema=schema, preserve_index=False)
+    write_parquet_atomic(table, target_path)
 
 
 def write_parquet_atomic(table: pa.Table, target_path: Union[str, Path]) -> Path:
@@ -392,6 +422,60 @@ def write_parquet_atomic(table: pa.Table, target_path: Union[str, Path]) -> Path
                 temp_path.unlink()
             except OSError:
                 pass
+
+
+def upsert_single_series_to_silver_parquet(
+    series_id: str,
+    observations: list[dict[str, Any]],
+    metadata: dict[str, Any],
+    silver_dir: Union[str, Path] = DEFAULT_SILVER_DIR,
+) -> None:
+    """Upsert one EVDS series into both Silver Parquet tables with rollback."""
+    path = Path(silver_dir)
+    obs_target = path / "observations.parquet"
+    meta_target = path / "series_metadata.parquet"
+    obs_df = pd.DataFrame(observations)
+    meta_df = pd.DataFrame([metadata])
+
+    if obs_df.empty:
+        raise ValueError(f"No observations supplied for {series_id!r}")
+    if metadata.get("series_id") != series_id:
+        raise ValueError("Metadata series_id does not match requested series_id")
+
+    snapshots = {
+        obs_target: obs_target.read_bytes() if obs_target.exists() else None,
+        meta_target: meta_target.read_bytes() if meta_target.exists() else None,
+    }
+
+    try:
+        _upsert_parquet_table(obs_target, obs_df, OBSERVATIONS_SCHEMA)
+        _upsert_parquet_table(meta_target, meta_df, SERIES_METADATA_SCHEMA)
+    except Exception:
+        rollback_errors = []
+        for target, previous_bytes in snapshots.items():
+            try:
+                if previous_bytes is None:
+                    if target.exists():
+                        target.unlink()
+                else:
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    temp_path = target.parent / f".rollback_{os.getpid()}_{uuid.uuid4().hex}.parquet"
+                    temp_path.write_bytes(previous_bytes)
+                    os.replace(temp_path, target)
+            except Exception as rollback_error:
+                rollback_errors.append(f"{target}: {rollback_error}")
+        if rollback_errors:
+            logger.critical(
+                "EVDS Silver Parquet rollback failed for %s; inconsistent state possible: %s",
+                series_id,
+                "; ".join(rollback_errors),
+            )
+        else:
+            logger.error(
+                "EVDS Silver Parquet upsert failed for %s; previous state restored.",
+                series_id,
+            )
+        raise
 
 
 def transform_silver_evds(

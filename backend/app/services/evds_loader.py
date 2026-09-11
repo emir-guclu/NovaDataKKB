@@ -19,14 +19,11 @@ import json
 import logging
 from datetime import date as dt_date
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Literal, Optional, Union
 
 import duckdb
 import pandas as pd
-import pyarrow as pa
-import pyarrow.parquet as pq
 
-from app.services.series_nature import classify_series_nature
 from app.models.silver_canonical import (
     CanonicalObservation,
     CanonicalSeriesMetadata,
@@ -34,9 +31,10 @@ from app.models.silver_canonical import (
 from app.modules.evds.catalog_store import load_catalog
 from app.modules.evds.client import EvdsClient
 from app.modules.evds.metadata import sync_metadata
+from app.services.align_service import align_to_monthly
+from app.services.aligned_store import upsert_single_series_to_aligned_duckdb
+from app.services.alignment_policies import build_alignment_policies
 from app.modules.evds.transformer import (
-    OBSERVATIONS_SCHEMA,
-    SERIES_METADATA_SCHEMA,
     build_series_dimension_row,
     clean_observation_value,
     compute_period_boundaries,
@@ -45,7 +43,7 @@ from app.modules.evds.transformer import (
     parse_evds_date,
     resolve_canonical_freq,
     transform_single_series,
-    write_parquet_atomic,
+    upsert_single_series_to_silver_parquet,
 )
 
 logger = logging.getLogger("evds_loader")
@@ -54,6 +52,7 @@ BACKEND_DIR = Path(__file__).resolve().parents[2]
 DEFAULT_BRONZE_DIR = BACKEND_DIR.parent / "data" / "bronze" / "evds"
 DEFAULT_SILVER_DIR = BACKEND_DIR.parent / "data" / "silver" / "evds"
 DEFAULT_SILVER_DB = BACKEND_DIR.parent / "data" / "silver" / "silver.duckdb"
+DEFAULT_ALIGNED_DB = BACKEND_DIR.parent / "data" / "aligned" / "monthly" / "aligned.duckdb"
 DEFAULT_METADATA_RAW = DEFAULT_BRONZE_DIR / "metadata_raw.json"
 DEFAULT_CATALOG_PATH = DEFAULT_BRONZE_DIR / "evds_catalog.parquet"
 
@@ -66,35 +65,6 @@ def _normalize_series_code(code: str) -> str:
     return clean
 
 
-def _upsert_parquet_table(
-    target_path: Path,
-    new_df: pd.DataFrame,
-    schema: pa.Schema,
-    key_column: str = "series_id",
-) -> None:
-    """Idempotently upserts rows for a series into an existing Parquet file."""
-    if target_path.exists() and target_path.stat().st_size > 0:
-        existing_table = pq.read_table(target_path)
-        existing_df = existing_table.to_pandas()
-        series_id_val = new_df[key_column].iloc[0]
-        retained_df = existing_df[existing_df[key_column] != series_id_val]
-        combined_df = pd.concat([retained_df, new_df], ignore_index=True)
-    else:
-        combined_df = new_df
-
-    if "date" in combined_df.columns:
-        combined_df = combined_df.sort_values(
-            [key_column, "date"], ascending=[True, True]
-        ).reset_index(drop=True)
-    else:
-        combined_df = combined_df.sort_values(
-            key_column, ascending=True
-        ).reset_index(drop=True)
-
-    table = pa.Table.from_pandas(combined_df, schema=schema, preserve_index=False)
-    write_parquet_atomic(table, target_path)
-
-
 def load_evds_series(
     series_code: str,
     start_date: str = "01-01-2021",
@@ -104,7 +74,9 @@ def load_evds_series(
     bronze_dir: Optional[Path] = None,
     silver_dir: Optional[Path] = None,
     silver_db_path: Optional[Path] = None,
+    aligned_db_path: Optional[Path] = None,
     metadata_raw_path: Optional[Path] = None,
+    context: Literal["batch", "live"] = "batch",
 ) -> Dict[str, Any]:
     """Ingests, transforms, canonicalizes, and registers a single EVDS series on-demand.
 
@@ -117,17 +89,26 @@ def load_evds_series(
         bronze_dir: Optional override for data/bronze/evds directory.
         silver_dir: Optional override for data/silver/evds directory.
         silver_db_path: Optional override for data/silver/silver.duckdb path.
+        aligned_db_path: Optional override for monthly aligned.duckdb path.
         metadata_raw_path: Optional override for metadata_raw.json path.
 
     Returns:
         Summary dict containing series info, row counts, preview, and silver status.
     """
+    if context not in {"batch", "live"}:
+        raise ValueError(f"Unsupported EVDS loader context: {context!r}")
+
     code = _normalize_series_code(series_code)
     series_id = f"EVDS:{code}"
 
     b_dir = bronze_dir or DEFAULT_BRONZE_DIR
     s_dir = silver_dir or DEFAULT_SILVER_DIR
     db_path = silver_db_path or DEFAULT_SILVER_DB
+    aligned_path = (
+        aligned_db_path
+        if aligned_db_path is not None
+        else (DEFAULT_ALIGNED_DB if silver_db_path is None else None)
+    )
     meta_path = metadata_raw_path or DEFAULT_METADATA_RAW
 
     b_dir.mkdir(parents=True, exist_ok=True)
@@ -195,16 +176,31 @@ def load_evds_series(
         raise ValueError(f"No valid numeric observations could be parsed for {code!r}")
 
     dim_row = build_series_dimension_row(code, meta_info)
+    nature = str(dim_row.get("nature") or "unclassified")
+    nature_reviewed = bool(dim_row.get("nature_reviewed", False))
+    alignment_override = dim_row.get("alignment_override")
+    pending_review = add_to_silver and nature == "unclassified"
 
-    # Upsert local EVDS Parquet files
-    obs_parquet = s_dir / "observations.parquet"
-    meta_parquet = s_dir / "series_metadata.parquet"
+    if pending_review and context == "batch":
+        raise ValueError(
+            f"Series {series_id!r} has unclassified financial nature; "
+            "cannot add it to canonical Silver."
+        )
 
-    raw_obs_df = pd.DataFrame(raw_obs_rows)
-    dim_df = pd.DataFrame([dim_row])
+    if pending_review and context == "live":
+        logger.info(
+            "Live EVDS series %s is unclassified; it will be stored with "
+            "nature_reviewed=False and must not enter alignment or Gold.",
+            series_id,
+        )
 
-    _upsert_parquet_table(obs_parquet, raw_obs_df, OBSERVATIONS_SCHEMA, "series_id")
-    _upsert_parquet_table(meta_parquet, dim_df, SERIES_METADATA_SCHEMA, "series_id")
+    # Persist transformed EVDS Silver through the transformer boundary
+    upsert_single_series_to_silver_parquet(
+        series_id,
+        raw_obs_rows,
+        dim_row,
+        silver_dir=s_dir,
+    )
 
     # 4. Canonical Transformation (Enforce Canonical Silver Rules)
     canonical_obs_rows = []
@@ -245,12 +241,6 @@ def load_evds_series(
         )
         canonical_obs_rows.append(obs_model.model_dump())
 
-    nature, alignment_override = classify_series_nature(
-        series_id=series_id,
-        source="EVDS",
-        category=dim_row.get("category", "genel"),
-        accumulation="none",
-    )
 
     meta_model = CanonicalSeriesMetadata(
         series_id=series_id,
@@ -265,15 +255,10 @@ def load_evds_series(
         accumulation="none",
         is_cumulative=False,
         nature=nature,
+        nature_reviewed=nature_reviewed,
         alignment_override=alignment_override,
     )
     canonical_meta_dict = meta_model.model_dump()
-
-    if add_to_silver and nature == "unclassified":
-        raise ValueError(
-            f"Series {series_id!r} has unclassified financial nature; "
-            "cannot add it to canonical Silver."
-        )
 
     # 5. Insert into silver.duckdb if requested
     added_to_silver = False
@@ -287,6 +272,7 @@ def load_evds_series(
 
         con = duckdb.connect(str(db_path))
         try:
+            con.execute("BEGIN TRANSACTION")
             # Idempotently delete existing records
             con.execute("DELETE FROM observations WHERE series_id = ?", [series_id])
             con.execute("DELETE FROM series_metadata WHERE series_id = ?", [series_id])
@@ -294,7 +280,18 @@ def load_evds_series(
             con.register("_new_canonical_obs", canonical_obs_df)
             con.execute(
                 """
-                INSERT INTO observations
+                INSERT INTO observations (
+                    series_id,
+                    source,
+                    date,
+                    period_start,
+                    period_end,
+                    value,
+                    freq,
+                    unit,
+                    dims,
+                    source_file
+                )
                 SELECT
                     CAST(series_id AS VARCHAR),
                     CAST(source AS VARCHAR),
@@ -313,7 +310,22 @@ def load_evds_series(
             con.register("_new_canonical_meta", canonical_meta_df)
             con.execute(
                 """
-                INSERT INTO series_metadata
+                INSERT INTO series_metadata (
+                    series_id,
+                    source,
+                    series_code,
+                    series_name,
+                    category,
+                    freq,
+                    unit,
+                    description,
+                    tags,
+                    accumulation,
+                    is_cumulative,
+                    nature,
+                    nature_reviewed,
+                    alignment_override
+                )
                 SELECT
                     CAST(series_id AS VARCHAR),
                     CAST(source AS VARCHAR),
@@ -327,18 +339,63 @@ def load_evds_series(
                     CAST(accumulation AS VARCHAR),
                     CAST(is_cumulative AS BOOLEAN),
                     CAST(nature AS VARCHAR),
+                    CAST(nature_reviewed AS BOOLEAN),
                     CAST(alignment_override AS VARCHAR)
                 FROM _new_canonical_meta
                 """
             )
+            con.execute("COMMIT")
             added_to_silver = True
             logger.info(
                 f"Successfully inserted {len(canonical_obs_rows)} rows into {db_path.name}"
             )
+        except Exception:
+            con.execute("ROLLBACK")
+            raise
         finally:
             con.close()
 
-    # 6. Build preview
+    # 6. Update monthly aligned layer when financial semantics are known.
+    added_to_aligned = False
+    if (
+        add_to_silver
+        and added_to_silver
+        and not pending_review
+        and aligned_path is not None
+    ):
+        if not aligned_path.exists():
+            raise FileNotFoundError(
+                f"Aligned database not found: {aligned_path}"
+            )
+
+        alignment_obs = pd.DataFrame(canonical_obs_rows)
+        alignment_meta = pd.DataFrame([canonical_meta_dict])
+        policies = build_alignment_policies(alignment_meta)
+        aligned_rows = align_to_monthly(
+            alignment_obs,
+            alignment_meta,
+            policies,
+            quarterly_policy="sparse",
+        )
+
+        try:
+            upsert_single_series_to_aligned_duckdb(
+                db_path=aligned_path,
+                series_id=series_id,
+                aligned=aligned_rows,
+                metadata=alignment_meta,
+            )
+            added_to_aligned = True
+        except Exception:
+            logger.critical(
+                "Canonical Silver was updated for %s but aligned update failed; "
+                "cross-layer inconsistency is possible and requires repair/rebuild.",
+                series_id,
+                exc_info=True,
+            )
+            raise
+
+    # 7. Build preview
     sorted_obs = sorted(canonical_obs_rows, key=lambda x: x["date"])
     preview = [
         {"date": str(o["date"]), "value": o["value"]}
@@ -346,7 +403,13 @@ def load_evds_series(
     ]
 
     return {
-        "status": "success",
+        "status": "pending_review" if pending_review else "success",
+        "message": (
+            "Bu seri sisteme yeni ekleniyor, finansal sınıflandırması inceleme bekliyor. "
+            "Kesin analiz için sınıflandırma tamamlandıktan sonra tekrar deneyin."
+            if pending_review
+            else None
+        ),
         "series_id": series_id,
         "series_code": code,
         "series_name": canonical_meta_dict["series_name"],
@@ -357,5 +420,6 @@ def load_evds_series(
         "last_date": str(sorted_obs[-1]["date"]),
         "latest_value": sorted_obs[-1]["value"],
         "added_to_silver": added_to_silver,
+        "added_to_aligned": added_to_aligned,
         "preview": preview,
     }

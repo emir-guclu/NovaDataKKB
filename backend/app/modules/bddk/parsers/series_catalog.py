@@ -261,6 +261,7 @@ def build_series_catalog(
         result[1]
         for result in nature_results
     ]
+    base["nature_reviewed"] = True
 
     unclassified = base[
         base["nature"] == "unclassified"
@@ -288,6 +289,7 @@ def build_series_catalog(
             "description",
             "is_cumulative",
             "nature",
+            "nature_reviewed",
             "alignment_override",
         ]
     ].sort_values(

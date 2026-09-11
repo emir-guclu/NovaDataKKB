@@ -100,6 +100,7 @@ CATALOG_COLUMNS = [
     "description",
     "is_cumulative",
     "nature",
+    "nature_reviewed",
     "alignment_override",
 ]
 
