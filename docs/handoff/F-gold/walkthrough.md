@@ -17,12 +17,17 @@ Gold katmanı Faz 4 tasarımı başarıyla hayata geçirilmiş ve tüm hedeflene
 
 ### 3. Coğrafi ve Keşif Katmanı (Dalga 2)
 - **`gold_finturk_province_credit_quality`**: Çeyreklik bazda il özelindeki NPL oranları, takipteki alacaklar ve kredi hacmi detayları derlendi. Sadece `geo_level=province` verileri baz alındı.
-- **DuckDB Entegrasyonu**: Tüm tablolar (`gold_evds_catalog` dâhil) `data/lakehouse.duckdb` üzerinde VIEW olarak Agent ve SQL kullanımlarına hazır hale getirildi (`build_duckdb_views.py`).
+### 4. LLM-Native Lakehouse & Unified Data Catalog (Bonus & Güvenlik Entegrasyonu)
+- **Güvenlik Çözümü:** `build_duckdb_views.py` dosyası `f-string` zafiyetlerinden arındırılarak SQLAlchemy Core altyapısıyla güvenli hale getirildi. 
+- **Merkezi Şema Modelleri:** Projenin genelinde kullanılmak üzere `backend/app/models/lakehouse_models.py` içerisine tüm Gold tablolarının yapıları (kolon isimleri, tipleri ve yorumları/commentleri) SQLAlchemy `MetaData` olarak kaydedildi.
+- **Tek Merkezden (Unified) Erişim:** `lakehouse.duckdb` içerisine sadece Gold tabloları fiziksel olarak yaratılmakla kalmadı; aynı zamanda `ATTACH` komutlarıyla `silver.duckdb` ve `aligned.duckdb` veritabanları içeriye read-only view olarak alındı. LLM tek bir duckdb dosyasına bağlanarak tüm 3 katmana da (Medallion) erişebilir hale geldi.
+- **Data Catalog:** `lakehouse.duckdb` içerisine `lakehouse_data_catalog` adında fiziksel bir katalog tablosu yaratıldı ve tüm tabloların `COMMENT` bilgileri doğrudan DuckDB'nin kendi dahili sistemine (information_schema) yazıldı. LLM, tabloların nerede olduğunu ve ne işe yaradığını tek sorguda anlayabilir noktaya taşındı.
 
-### 4. Testler ve Doğrulama
-- TDD prensibiyle **`test_gold_join_uniqueness.py`** yazıldı ve çapraz Gold tablolarında hiçbir şekilde duplicate Date (tarih) oluşmadığı (yani doğru dimension slice'ın kullanıldığı) testlerle ispatlandı.
-- **`test_gold_precious_metal_ratio_calculation.py`** içerisinde matematiksel bir regresyon testiyle `avg(altin) / avg(gumus) != avg(altin/gumus)` durumu (avg() mantığının günlükte işlendiğinin garantisi) test edildi.
+### 5. Testler ve Doğrulama
+- TDD prensibiyle **`test_gold_join_uniqueness.py`** yazıldı ve çapraz Gold tablolarında hiçbir şekilde duplicate Date (tarih) oluşmadığı testlerle ispatlandı.
+- **`test_gold_precious_metal_ratio_calculation.py`** içerisinde matematiksel bir regresyon testiyle rasyo kuralları test edildi.
+- **`test_gold_tables.py`** ile tablolarda MoM değişimlerinin ve veri tiplerinin doğru hesaplandığı kontrol edildi. Tüm testler başarıyla geçildi (`pytest backend/tests/modules/gold/`).
 - Tüm pipeline `build_all_gold.py` kullanılarak otomatik bir formata bağlandı.
 
 ## Katalog ve Örnek Sorgular
-- `notes/gold_catalog_and_sample_queries.md` adında yeni bir doküman ile her Gold tablosunun açıklaması (Agent için) ve Agent'ın kullanabileceği 4 adet gelişmiş analitik (Text-to-SQL) sorusu örneklendi.
+- `notes/gold_catalog_and_sample_queries.md` adında yeni bir doküman ile her Gold tablosunun açıklaması ve SQL/Analitik soru örnekleri oluşturuldu. Mimarinin genişlemesiyle bu dökümanın yeri artık DuckDB'nin bizzat kendi içine de (Data Catalog tablosuna) taşınmış oldu.
