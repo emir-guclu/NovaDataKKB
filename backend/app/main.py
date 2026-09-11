@@ -7,8 +7,8 @@ from dotenv import load_dotenv
 # Env dosyasını yükle
 load_dotenv(os.path.join(os.path.dirname(__file__), "../../../.env"))
 
-# Bizim yazdığımız o özel HTTP LLM istemcisi
-from backend.app.modules.llm.cloudx_client import KloudeksClient
+# Yeni kloudeks modülünden QwenChatClient içe aktarılıyor
+from backend.app.modules.llm.kloudeks import QwenChatClient, KloudeksAPIError
 
 app = FastAPI(
     title="NOVA Analytics Agent API",
@@ -27,7 +27,7 @@ class AskRequest(BaseModel):
     question: str
 
 # Kloudeks API İstemcisini Başlat (Şifreyi .env'den otomatik alacak)
-llm_client = KloudeksClient()
+llm_client = QwenChatClient()
 
 @app.get("/health")
 def health_check():
@@ -45,7 +45,7 @@ def ask_agent(request: AskRequest):
     
     try:
         # LLM'i çağırıyoruz (O yazdığımız retry mekanizmalı client üzerinden)
-        answer = llm_client.chat_completion(messages=messages)
+        answer = llm_client.chat(messages=messages)
         
         return {
             "answer": answer,
