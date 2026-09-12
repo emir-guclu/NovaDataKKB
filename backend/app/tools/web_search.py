@@ -1,7 +1,10 @@
 import logging
 from pydantic import BaseModel
 from typing import List, Dict, Optional, Any
-from ddgs import DDGS
+try:
+    from duckduckgo_search import DDGS
+except ImportError:
+    from ddgs import DDGS
 
 from backend.app.tools.base import BaseTool
 

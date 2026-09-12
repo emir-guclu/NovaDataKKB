@@ -23,9 +23,16 @@ Python'ın virtual environment üzerinden geldiğini kontrol et:
     which python
     python --version
 
-Backend importlarının doğru çalışması için proje komutlarında şu yapı kullanılmalıdır:
+Backend importlarının doğru çalışması için proje komutlarında `PYTHONPATH` tanımlanmalıdır:
 
-    PYTHONPATH=backend python ...
+    # Linux / macOS (Bash):
+    PYTHONPATH=backend python -m pytest
+
+    # Windows (PowerShell):
+    $env:PYTHONPATH="backend"; python -m pytest
+
+    # Windows (CMD):
+    set PYTHONPATH=backend && python -m pytest
 
 ---
 

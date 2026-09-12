@@ -26,3 +26,5 @@ pydantic>=2.10.0
 duckdb>=1.1.0
 sqlalchemy>=2.0.0
 openai>=3.13.0
+duckduckgo-search>=8.0.0
+
