@@ -2,17 +2,6 @@ import os
 from dotenv import load_dotenv
 from openai import OpenAI
 
-load_dotenv()
-
-api_key = os.getenv("MIA_API_KEY")
-if not api_key:
-    raise RuntimeError("MIA_API_KEY is not set")
-
-client = OpenAI(
-    api_key=api_key,
-    base_url="https://mia.csp.kloudeks.com/v1",
-)
-
 MODEL = "kkbhackathon2026/Qwen3.8-27B"
 
 CASES = [
@@ -104,23 +93,39 @@ CASES = [
     },
 ]
 
-for case in CASES:
-    print(f"\\n=== {case['name']} ===")
-    try:
-        response = client.chat.completions.create(
-            model=MODEL,
-            messages=[{"role": "user", "content": case["prompt"]}],
-            tools=case["tools"],
-            tool_choice="auto",
-            temperature=0.0,
-        )
+def main() -> None:
+    load_dotenv()
 
-        choice = response.choices[0]
-        message = choice.message
+    api_key = os.getenv("MIA_API_KEY")
+    if not api_key:
+        raise RuntimeError("MIA_API_KEY is not set")
 
-        print("finish_reason:", choice.finish_reason)
-        print("tool_calls:", message.tool_calls)
-        print("content:", message.content)
+    client = OpenAI(
+        api_key=api_key,
+        base_url="https://mia.csp.kloudeks.com/v1",
+    )
 
-    except Exception as exc:
-        print("ERROR:", type(exc).__name__, str(exc))
+    for case in CASES:
+        print(f"\\n=== {case['name']} ===")
+        try:
+            response = client.chat.completions.create(
+                model=MODEL,
+                messages=[{"role": "user", "content": case["prompt"]}],
+                tools=case["tools"],
+                tool_choice="auto",
+                temperature=0.0,
+            )
+
+            choice = response.choices[0]
+            message = choice.message
+
+            print("finish_reason:", choice.finish_reason)
+            print("tool_calls:", message.tool_calls)
+            print("content:", message.content)
+
+        except Exception as exc:
+            print("ERROR:", type(exc).__name__, str(exc))
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,542 @@
+{
+  "timestamp": "2026-09-13 01:34:44",
+  "total_tests": 10,
+  "passed_tests": 10,
+  "tool_accuracy_pct": 100.0,
+  "cumulative_llm_time_s": 102.6350575999968,
+  "cumulative_tool_time_s": 33.56808679999085,
+  "total_duration_s": 136.37444249998953,
+  "test_cases": [
+    {
+      "scenario_id": "1.1",
+      "tool_class": "ChangeDetectionTool",
+      "expected_tool": "change_detection",
+      "prompt": "Konut kredileri hacmi geçen aya göre nasıl ve ne kadar değişti?",
+      "selected_tools": [
+        "change_detection"
+      ],
+      "tool_success": true,
+      "passed": true,
+      "duration_s": 9.057238299996243,
+      "llm_time_s": 8.285368700002437,
+      "tool_time_s": 0.7618070999960764,
+      "step_timings": [
+        {
+          "iteration": 1,
+          "step_type": "llm_decision",
+          "name": "LLM Call (Iter 1)",
+          "duration_s": 2.8296386000001803
+        },
+        {
+          "iteration": 1,
+          "step_type": "tool_output",
+          "name": "change_detection",
+          "duration_s": 0.7618070999960764
+        },
+        {
+          "iteration": 2,
+          "step_type": "llm_final",
+          "name": "LLM Final Synthesis (Iter 2)",
+          "duration_s": 5.455730100002256
+        }
+      ],
+      "final_answer": "\n\n**Konut kredileri hacmi (Toplam, BDDK aylık veri):**\n\nEn güncel gözlem **Haziran 2026** sonu itibarıyla:\n\n- **Hacim:** 801.437,9 milyon TL\n- **Önceki aya göre (MoM) değişim:** **+18.519,7 milyon TL**\n- **Yüzde olarak:** **%2,37 artış**\n\nYani konut kredisi stoğu bir önceki aya göre yaklaşık 18,5 milyar TL (yüzde 2,37) artmış durumda. (Not: Temmuz 2026 verisi henüz yayınlanmamış görünüyor; Haziran 2026 mevcut son veri.)",
+      "error": null
+    },
+    {
+      "scenario_id": "1.2",
+      "tool_class": "ChangeDetectionTool",
+      "expected_tool": "change_detection",
+      "prompt": "Taşıt kredisi hacmindeki yıllık değişim yüzdesi nedir?",
+      "selected_tools": [
+        "change_detection"
+      ],
+      "tool_success": true,
+      "passed": true,
+      "duration_s": 4.488398900000902,
+      "llm_time_s": 4.345352700001968,
+      "tool_time_s": 0.12242809999588644,
+      "step_timings": [
+        {
+          "iteration": 1,
+          "step_type": "llm_decision",
+          "name": "LLM Call (Iter 1)",
+          "duration_s": 2.1404559000002337
+        },
+        {
+          "iteration": 1,
+          "step_type": "tool_output",
+          "name": "change_detection",
+          "duration_s": 0.12242809999588644
+        },
+        {
+          "iteration": 2,
+          "step_type": "llm_final",
+          "name": "LLM Final Synthesis (Iter 2)",
+          "duration_s": 2.204896800001734
+        }
+      ],
+      "final_answer": "\n\n**Taşıt kredisi hacmindeki yıllık değişim:**\n\n- **En güncel gözlem (30 Haziran 2026):** Taşıt kredisi stoku **43.062,4 milyon TL**\n- **Yıllık (YoY) değişim:** **% -27,51** (bir önceki yılın aynı dönemine göre yaklaşık 16.343 milyon TL azalma)\n\nKısaca, taşıt kredisi hacmi son bir yılda yaklaşık dörtte birlik bir oranda gerilemiş durumda.",
+      "error": null
+    },
+    {
+      "scenario_id": "2.1",
+      "tool_class": "WebSearchTool",
+      "expected_tool": "web_search",
+      "prompt": "Türkiye'nin 2026 yılı güncel enflasyon oranı ve TÜİK son haberleri nelerdir?",
+      "selected_tools": [
+        "web_search",
+        "web_search",
+        "web_search",
+        "web_search"
+      ],
+      "tool_success": true,
+      "passed": true,
+      "duration_s": 24.5320722999968,
+      "llm_time_s": 11.244116800000484,
+      "tool_time_s": 13.261780099994212,
+      "step_timings": [
+        {
+          "iteration": 1,
+          "step_type": "llm_decision",
+          "name": "LLM Call (Iter 1)",
+          "duration_s": 1.464458000002196
+        },
+        {
+          "iteration": 1,
+          "step_type": "tool_output",
+          "name": "web_search",
+          "duration_s": 2.8161093999951845
+        },
+        {
+          "iteration": 2,
+          "step_type": "llm_decision",
+          "name": "LLM Call (Iter 2)",
+          "duration_s": 2.5786386999971
+        },
+        {
+          "iteration": 2,
+          "step_type": "tool_output",
+          "name": "web_search",
+          "duration_s": 3.348643899997114
+        },
+        {
+          "iteration": 2,
+          "step_type": "tool_output",
+          "name": "web_search",
+          "duration_s": 3.924234600002819
+        },
+        {
+          "iteration": 3,
+          "step_type": "llm_decision",
+          "name": "LLM Call (Iter 3)",
+          "duration_s": 1.026027100000647
+        },
+        {
+          "iteration": 3,
+          "step_type": "tool_output",
+          "name": "web_search",
+          "duration_s": 3.172792199999094
+        },
+        {
+          "iteration": 4,
+          "step_type": "llm_final",
+          "name": "LLM Final Synthesis (Iter 4)",
+          "duration_s": 6.174993000000541
+        }
+      ],
+      "final_answer": "\n\n## Türkiye Enflasyon — Güncel Durum (TÜİK)\n\n**En güncel resmi veri (Ağustos 2026):**\n- **TÜFE yıllık: %31,51** artış\n- **TÜFE aylık: %1,84** artış\n- Kaynak: Türkiye İstatistik Kurumu (TÜİK), Ağustos 2026 verisi\n\n**İlgili gelişme:**\n- Bu Ağustos ayı enflasyon verisi, aynı zamanda **Eylül ayı yasal kira artış tavan oranını** da belirliyor.\n- Hazine ve Maliye Bakanı Mehmet Şimşek enflasyon rakamlarıyla ilgili bir açıklama yaptı; açıklamasında **dönemsel eğitim fiyat artışları** ve **savaşın etkileri** (snippet kesik — tam metin doğrulanamadı) gibi kalemlere değindi.\n\n**Not:**\n- Aramada **Eylül 2026** (hâlihazırda devam eden) ayına ait henüz açıklanmış resmi TÜİK rakamına ulaşılamadı; yani son *resmi* TÜFE verisi yukarıdaki Ağustos 2026 rakamıdır.\n- Şimşek'in açıklamasının tam metni arama sonuçlarında kesik göründüğü için, savaş etki kalemiyle ilgili tam ifadeyi kesin olarak doğrulayamıyorum.\n\nİsterseniz bir sonraki TÜİK açıklamasının (Eylül verisi) tarihini ya da kira tavanına etkisini ayrıca araştırayım.",
+      "error": null
+    },
+    {
+      "scenario_id": "2.2",
+      "tool_class": "WebSearchTool",
+      "expected_tool": "web_search",
+      "prompt": "TCMB'nin en son faiz kararı ve açıklamaları nelerdir?",
+      "selected_tools": [
+        "web_search",
+        "web_search",
+        "web_search",
+        "web_search",
+        "web_search"
+      ],
+      "tool_success": true,
+      "passed": true,
+      "duration_s": 37.82558440000139,
+      "llm_time_s": 19.272571999994398,
+      "tool_time_s": 18.52945579999505,
+      "step_timings": [
+        {
+          "iteration": 1,
+          "step_type": "llm_decision",
+          "name": "LLM Call (Iter 1)",
+          "duration_s": 0.8510909999968135
+        },
+        {
+          "iteration": 1,
+          "step_type": "tool_output",
+          "name": "web_search",
+          "duration_s": 4.051073100003123
+        },
+        {
+          "iteration": 2,
+          "step_type": "llm_decision",
+          "name": "LLM Call (Iter 2)",
+          "duration_s": 1.0705732999995234
+        },
+        {
+          "iteration": 2,
+          "step_type": "tool_output",
+          "name": "web_search",
+          "duration_s": 3.623280200001318
+        },
+        {
+          "iteration": 3,
+          "step_type": "llm_decision",
+          "name": "LLM Call (Iter 3)",
+          "duration_s": 3.0777489000029163
+        },
+        {
+          "iteration": 3,
+          "step_type": "tool_output",
+          "name": "web_search",
+          "duration_s": 3.723234199998842
+        },
+        {
+          "iteration": 4,
+          "step_type": "llm_decision",
+          "name": "LLM Call (Iter 4)",
+          "duration_s": 0.6330997999975807
+        },
+        {
+          "iteration": 4,
+          "step_type": "tool_output",
+          "name": "web_search",
+          "duration_s": 3.5840529999986757
+        },
+        {
+          "iteration": 5,
+          "step_type": "llm_decision",
+          "name": "LLM Call (Iter 5)",
+          "duration_s": 1.39548819999618
+        },
+        {
+          "iteration": 5,
+          "step_type": "tool_output",
+          "name": "web_search",
+          "duration_s": 3.54781529999309
+        },
+        {
+          "iteration": 6,
+          "step_type": "llm_final",
+          "name": "LLM Final Synthesis (Iter 6)",
+          "duration_s": 12.244570800001384
+        }
+      ],
+      "final_answer": "\n\nTCMB’nin en son faiz kararına ilişkin güncel haberlere göre **Eylül 2026 PPK toplantısında** alınan karar şu şekilde özetleniyor:\n\n- **Politika faizi / 1 hafta vadeli repo ihale faiz oranı:** **%37’de sabit tutuldu.**\n- **Gecelik borç verme faizi:** **%40** olarak korundu.\n- **Gecelik borçlanma faizi:** **%35,5** olarak korundu.\n- Karar, haberlerde **piyasa beklentileriyle uyumlu / beklentiler dahilinde** olarak aktarıldı.\n- Bir haber değerlendirmesinde, PPK karar metnindeki **enflasyon görünümüne ilişkin ifadenin önceki toplantıya kıyasla daha olumlu bir tona geçtiği** belirtildi.\n\nKısacası TCMB, en son açıklamada faiz oranını değiştirmedi; **%37’lik politika faizini aynen korudu**. Elindeki arama sonuçlarında resmî PPK metninin tam içeriği bulunmuyor; bu özet, haber kaynağında yer alan açıklamalardan derlenmiştir.",
+      "error": null
+    },
+    {
+      "scenario_id": "3.1",
+      "tool_class": "LakehouseQueryTool",
+      "expected_tool": "lakehouse_query",
+      "prompt": "2021 yılı konut kredisi faiz oranlarını Lakehouse veritabanından getir.",
+      "selected_tools": [
+        "lakehouse_query"
+      ],
+      "tool_success": true,
+      "passed": true,
+      "duration_s": 5.074921599996742,
+      "llm_time_s": 5.001601199997822,
+      "tool_time_s": 0.06194849999883445,
+      "step_timings": [
+        {
+          "iteration": 1,
+          "step_type": "llm_decision",
+          "name": "LLM Call (Iter 1)",
+          "duration_s": 1.6050726999965264
+        },
+        {
+          "iteration": 1,
+          "step_type": "tool_output",
+          "name": "lakehouse_query",
+          "duration_s": 0.06194849999883445
+        },
+        {
+          "iteration": 2,
+          "step_type": "llm_final",
+          "name": "LLM Final Synthesis (Iter 2)",
+          "duration_s": 3.3965285000012955
+        }
+      ],
+      "final_answer": "\n\n2021 yılı konut kredisi faiz oranlarını Lakehouse'taki `gold_housing_credit_market` tablosundan çektim. Aylık veriler aşağıda:\n\n| Ay (2021) | Konut Kredisi Faiz Oranı (%) |\n|---|---|\n| Ocak | 18,39 |\n| Şubat | 17,99 |\n| Mart | 17,74 |\n| Nisan | 18,13 |\n| Mayıs | 17,84 |\n| Haziran | 17,90 |\n| Temmuz | 17,93 |\n| Ağustos | 17,86 |\n| Eylül | 17,90 |\n| Ekim | 17,82 |\n| Kasım | 17,10 |\n| Aralık | 17,31 |\n\n**Kısa özet:**\n- Yılın en yüksek oranı **Ocak 2021**'de (18,39%), en düşüğü ise **Kasım 2021**'de (17,10%) görülmüş.\n- Yıl geneline bakıldığında oranlar büyük ölçüde 17–18,5% bandında seyretmiş; aralıkta belirgin bir düşüş yaşandı (Kasım'daki 17,10% yılın tabanı).",
+      "error": null
+    },
+    {
+      "scenario_id": "3.2",
+      "tool_class": "LakehouseQueryTool",
+      "expected_tool": "lakehouse_query",
+      "prompt": "Gold katmanındaki konut piyasası tablosunun tarih ve faiz oranı verilerini sorgula.",
+      "selected_tools": [
+        "lakehouse_query"
+      ],
+      "tool_success": true,
+      "passed": true,
+      "duration_s": 8.696185299995705,
+      "llm_time_s": 8.632886999999755,
+      "tool_time_s": 0.05529679999744985,
+      "step_timings": [
+        {
+          "iteration": 1,
+          "step_type": "llm_decision",
+          "name": "LLM Call (Iter 1)",
+          "duration_s": 1.077434999999241
+        },
+        {
+          "iteration": 1,
+          "step_type": "tool_output",
+          "name": "lakehouse_query",
+          "duration_s": 0.05529679999744985
+        },
+        {
+          "iteration": 2,
+          "step_type": "llm_final",
+          "name": "LLM Final Synthesis (Iter 2)",
+          "duration_s": 7.555452000000514
+        }
+      ],
+      "final_answer": "\n\nGold katmanındaki `gold_housing_credit_market` tablosundan tarih ve konut kredisi faiz oranı verilerini getirdim (en yeni 50 kayıt, en yeni tarihten eskiye doğru):\n\n| Tarih | Konut Kredisi Faiz Oranı (%) |\n|---|---|\n| 2026-06-30 | 39,33 |\n| 2026-05-31 | 38,43 |\n| 2026-04-30 | 36,62 |\n| 2026-03-31 | 34,66 |\n| 2026-02-28 | 35,16 |\n| 2026-01-31 | 36,24 |\n| 2025-12-31 | 37,29 |\n| 2025-11-30 | 37,76 |\n| 2025-10-31 | 37,94 |\n| 2025-09-30 | 38,80 |\n| 2025-08-31 | 40,36 |\n| 2025-07-31 | 42,56 |\n| 2025-06-30 | 43,47 |\n| 2025-05-31 | 42,14 |\n| 2025-04-30 | 39,56 |\n| 2025-03-31 | 39,38 |\n| 2025-02-28 | 39,97 |\n| 2025-01-31 | 40,54 |\n| 2024-12-31 | 41,06 |\n| 2024-11-30 | 41,24 |\n| 2024-10-31 | 41,52 |\n| 2024-09-30 | 43,15 |\n| 2024-08-31 | 43,53 |\n| 2024-07-31 | 44,10 |\n| 2024-06-30 | 44,48 |\n| 2024-05-31 | 44,69 |\n| 2024-04-30 | 44,72 |\n| 2024-03-31 | 42,30 |\n| 2024-02-29 | 40,97 |\n| 2024-01-31 | 41,58 |\n| 2023-12-31 | 42,09 |\n| 2023-11-30 | 42,15 |\n| 2023-10-31 | 41,53 |\n| 2023-09-30 | 40,25 |\n| 2023-08-31 | 36,22 |\n| 2023-07-31 | 32,24 |\n| 2023-06-30 | 21,29 |\n| 2023-05-31 | 18,56 |\n| 2023-04-30 | 18,59 |\n| 2023-03-31 | 17,61 |\n| 2023-02-28 | 21,01 |\n| 2023-01-31 | 21,65 |\n| 2022-12-31 | 20,56 |\n| 2022-11-30 | 21,58 |\n| 2022-10-31 | 20,98 |\n| 2022-09-30 | 20,26 |\n| 2022-08-31 | 18,61 |\n| 2022-07-31 | 18,30 |\n| 2022-06-30 | 18,18 |\n| 2022-05-31 | 18,42 |\n\nÖzet:\n- **Son gözlem:** Haziran 2026'da %39,33\n- **Görüntülenen dönemdeki en düşük değer:** Mart 2023'te %17,61; **en yüksek değer:** Nisan 2024'te %44,72\n- 2022–2023 başında %18–21 bandında seyreden oran, 2023 ikinci yarısında belirgin şekilde yükselmiş; 2024'te %41–45 aralığında kalmış, 2025–2026'da ise genel olarak gerileme eğiliminde (Mart 2026'da %34,66'ya inerek %39,33'e yeniden yükselmiş).\n\nNot: Sorgu varsayılan 50 kayıt sınırıyla 2022-05-31 tarihine kadar döndü; daha eski kayıtlar isterseniz tarih aralığıyla tekrar sorgulayabilirim.",
+      "error": null
+    },
+    {
+      "scenario_id": "4.1",
+      "tool_class": "CausalityCheckTool",
+      "expected_tool": "causality_check",
+      "prompt": "Konut kredileri ile taşıt kredileri arasında istatistiksel bir korelasyon var mı?",
+      "selected_tools": [
+        "causality_check",
+        "causality_check"
+      ],
+      "tool_success": true,
+      "passed": true,
+      "duration_s": 5.3917553999999654,
+      "llm_time_s": 5.268913800005976,
+      "tool_time_s": 0.09694340000714874,
+      "step_timings": [
+        {
+          "iteration": 1,
+          "step_type": "llm_decision",
+          "name": "LLM Call (Iter 1)",
+          "duration_s": 1.8379043000022648
+        },
+        {
+          "iteration": 1,
+          "step_type": "tool_output",
+          "name": "causality_check",
+          "duration_s": 0.007130100006179418
+        },
+        {
+          "iteration": 2,
+          "step_type": "llm_decision",
+          "name": "LLM Call (Iter 2)",
+          "duration_s": 0.8513056000010693
+        },
+        {
+          "iteration": 2,
+          "step_type": "tool_output",
+          "name": "causality_check",
+          "duration_s": 0.08981330000096932
+        },
+        {
+          "iteration": 3,
+          "step_type": "llm_final",
+          "name": "LLM Final Synthesis (Iter 3)",
+          "duration_s": 2.5797039000026416
+        }
+      ],
+      "final_answer": "\n\nEvet, istatistiksel olarak pozitif bir ilişki var. Gold katmanındaki BDDK aylık verilerine göre:\n\n- **Pearson korelasyon katsayısı (seviye bazında): 0,40**\n- Gözlem sayısı: 66 ay\n- Kullanılan seriler: Konut kredileri (Toplam) ve Taşıt kredileri (Toplam)\n\n**Yorum:**\n- 0,40'lık katsayı, iki seri arasında **orta düzeyde pozitif bir ilişki** olduğunu gösteriyor: konut kredi stoku artan dönemlerde taşıt kredileri de genelde artış eğiliminde.\n- Ancak bu korelasyon güçlü sayılmaz (1.0'a uzak), yani iki değişken birbirini tek başına açıklamıyor; faiz ortamı, regülasyonlar ve talep koşulları gibi ortak faktörler her iki seriyi de etkileyebilir.\n- Hatırlatma: Bu bir **korelasyon**, nedensellik ispatı değildir — yalnızca değişimlerin birlikte hareket etme yönünü ve gücünü ölçer.",
+      "error": null
+    },
+    {
+      "scenario_id": "4.2",
+      "tool_class": "CausalityCheckTool",
+      "expected_tool": "causality_check",
+      "prompt": "Tüketici kredileri ile konut kredilerinin değişimi birbiriyle ilişkili mi?",
+      "selected_tools": [
+        "lakehouse_query",
+        "causality_check",
+        "lakehouse_query",
+        "causality_check",
+        "lakehouse_query",
+        "change_detection",
+        "lakehouse_query"
+      ],
+      "tool_success": true,
+      "passed": true,
+      "duration_s": 26.66481080000085,
+      "llm_time_s": 26.18026449999161,
+      "tool_time_s": 0.4595080000071903,
+      "step_timings": [
+        {
+          "iteration": 1,
+          "step_type": "llm_decision",
+          "name": "LLM Call (Iter 1)",
+          "duration_s": 2.263422099997115
+        },
+        {
+          "iteration": 1,
+          "step_type": "tool_output",
+          "name": "lakehouse_query",
+          "duration_s": 0.04736330000014277
+        },
+        {
+          "iteration": 2,
+          "step_type": "llm_decision",
+          "name": "LLM Call (Iter 2)",
+          "duration_s": 4.929834499998833
+        },
+        {
+          "iteration": 2,
+          "step_type": "tool_output",
+          "name": "causality_check",
+          "duration_s": 0.058075699998880737
+        },
+        {
+          "iteration": 2,
+          "step_type": "tool_output",
+          "name": "lakehouse_query",
+          "duration_s": 0.032459200003359
+        },
+        {
+          "iteration": 3,
+          "step_type": "llm_decision",
+          "name": "LLM Call (Iter 3)",
+          "duration_s": 1.357547200001136
+        },
+        {
+          "iteration": 3,
+          "step_type": "tool_output",
+          "name": "causality_check",
+          "duration_s": 0.09201089999987744
+        },
+        {
+          "iteration": 4,
+          "step_type": "llm_decision",
+          "name": "LLM Call (Iter 4)",
+          "duration_s": 1.2452095999979065
+        },
+        {
+          "iteration": 4,
+          "step_type": "tool_output",
+          "name": "lakehouse_query",
+          "duration_s": 0.07128789999842411
+        },
+        {
+          "iteration": 5,
+          "step_type": "llm_decision",
+          "name": "LLM Call (Iter 5)",
+          "duration_s": 2.305382999998983
+        },
+        {
+          "iteration": 5,
+          "step_type": "tool_output",
+          "name": "change_detection",
+          "duration_s": 0.10834430000249995
+        },
+        {
+          "iteration": 5,
+          "step_type": "tool_output",
+          "name": "lakehouse_query",
+          "duration_s": 0.04996670000400627
+        },
+        {
+          "iteration": 6,
+          "step_type": "llm_final",
+          "name": "LLM Final Synthesis (Iter 6)",
+          "duration_s": 14.078868099997635
+        }
+      ],
+      "final_answer": "\n\nElindeki tool sonuçlarıyla bu soru **tam olarak ve sayısal bir korelasyon/neden-sonuç ilişkisi kurularak** cevaplanamıyor. Nedeni şu:\n\n- Tüketici kredileri toplamı için gerekli seri bulunamadı; bu yüzden tüketici kredileri ile konut kredileri değişimleri arasında istatistiksel ilişki hesaplanamadı.  \n- Konut kredisi tarafında ise 30 Haziran 2026 itibarıyla şu veriler mevcut:\n  - Konut kredisi stoku: **801.437,882 milyon TL**\n  - Bir önceki aya göre değişim: **+18.519,717 milyon TL**\n  - Aylık değişim oranı: **%2,37 artış**\n  - Yıllık değişim: **+218.172,992 milyon TL**\n  - Yıllık değişim oranı: **%37,41 artış**\n\nKonut kredisi faiz oranı tarafında ise şunlar görülüyor:\n\n| Tarih | Konut Kredisi Faiz Oranı |\n|---|---:|\n| 28 Şubat 2026 | 35,155 |\n| 31 Mart 2026 | 34,655 |\n| 30 Nisan 2026 | 36,615 |\n| 31 Mayıs 2026 | 38,426 |\n| 30 Haziran 2026 | 39,33 |\n\nBu veriler, konut kredilerinde son aylarda **hacim artışı** ve **faiz oranında yükselme** olduğunu gösteriyor. Ancak tüketici kredileri toplamının dönemsel değişimi alınamadığı için, “tüketici kredileri ile konut kredileri değişimi aynı yönde mi, ters yönde mi, ne kadar ilişkili?” sorusuna **eldeki verilerle kesin bir cevap verilemez**.\n\nKısa özet:  \n**Konut kredilerinin değişimi ölçülebilmiş; ancak tüketici kredileri toplam değişimi alınabildiği için iki değişim arasındaki ilişki sayısal olarak kanıtlanamamış durumda.**",
+      "error": null
+    },
+    {
+      "scenario_id": "5.1",
+      "tool_class": "AnomalyDetectionTool",
+      "expected_tool": "anomaly_detection",
+      "prompt": "Konut kredisi hacminde son dönemde olağan dışı bir sıçrama veya anomali var mı?",
+      "selected_tools": [
+        "anomaly_detection",
+        "change_detection"
+      ],
+      "tool_success": true,
+      "passed": true,
+      "duration_s": 8.428277300001355,
+      "llm_time_s": 8.263911499998358,
+      "tool_time_s": 0.15274119999958202,
+      "step_timings": [
+        {
+          "iteration": 1,
+          "step_type": "llm_decision",
+          "name": "LLM Call (Iter 1)",
+          "duration_s": 3.4967825999992783
+        },
+        {
+          "iteration": 1,
+          "step_type": "tool_output",
+          "name": "anomaly_detection",
+          "duration_s": 0.07382009999855654
+        },
+        {
+          "iteration": 1,
+          "step_type": "tool_output",
+          "name": "change_detection",
+          "duration_s": 0.07892110000102548
+        },
+        {
+          "iteration": 2,
+          "step_type": "llm_final",
+          "name": "LLM Final Synthesis (Iter 2)",
+          "duration_s": 4.767128899999079
+        }
+      ],
+      "final_answer": "\n\n## Sonuç: Son dönemde anomali yok; sıçrama 2023'teydi\n\n**Son dönem (güncel veri):**\n- En güncel gözlem **Haziran 2026**: konut kredisi stoğu **801.437,9 milyon TL**, aylık değişim **%2,37**, yıllık değişim **%37,4**\n- Bu aylık artış, serinin ortalamasının (~%1,66) ve standart sapmasının (~%1,53) içinde kaldığı için **olağan dışı sayılmıyor**\n\n**Anomali taraması (65 aylık gözlem, z-eşiği 2):**\nYalnızca **Mart–Mayıs 2023** döneminde olağan üstü yüksek aylık sıçramalar tespit edilmiş:\n\n| Tarih | Aylık değişim | Z-score | Yön |\n|---|---|---|---|\n| 31 Mar 2023 | %6,49 | 3,15 | Yüksek |\n| 31 May 2023 | %5,42 | 2,45 | Yüksek |\n| 30 Nis 2023 | %4,79 | 2,04 | Yüksek |\n\n**Yorum:** Konut kredisi hacminde istatistiksel olarak belirgin tek sıçrama 2023 baharında gerçekleşmiş. 2023 sonrasında ve özellikle son dönemde (2026 ortası) olağan dışı bir artış ya da düşüş gözlenmemiş; mevcut seyir tarihsel ortalamaya yakın, normal aralıkta seyrediyor.",
+      "error": null
+    },
+    {
+      "scenario_id": "5.2",
+      "tool_class": "AnomalyDetectionTool",
+      "expected_tool": "anomaly_detection",
+      "prompt": "Taşıt kredisi değişimlerinde z-score bazında anomali tespit et.",
+      "selected_tools": [
+        "anomaly_detection"
+      ],
+      "tool_success": true,
+      "passed": true,
+      "duration_s": 6.215198199999577,
+      "llm_time_s": 6.140069400003995,
+      "tool_time_s": 0.06617779999942286,
+      "step_timings": [
+        {
+          "iteration": 1,
+          "step_type": "llm_decision",
+          "name": "LLM Call (Iter 1)",
+          "duration_s": 2.8291357000052813
+        },
+        {
+          "iteration": 1,
+          "step_type": "tool_output",
+          "name": "anomaly_detection",
+          "duration_s": 0.06617779999942286
+        },
+        {
+          "iteration": 2,
+          "step_type": "llm_final",
+          "name": "LLM Final Synthesis (Iter 2)",
+          "duration_s": 3.3109336999987136
+        }
+      ],
+      "final_answer": "\n\nTaşıt kredisi stok değişimlerinde (aylık yüzde değişim, z-score eşiği 2,0) **3 anomali** tespit edildi — tümü **olağanüstü yüksek artış** yönünde:\n\n| Tarih | Aylık Değişim (%) | Z-Score | Yön |\n|---|---|---|---|\n| 2022-12-31 | +22,88 | 2,91 | Yüksek |\n| 2022-04-30 | +20,12 | 2,52 | Yüksek |\n| 2022-05-31 | +19,84 | 2,48 | Yüksek |\n\n**Değerlendirme:**\n- Seri ortalaması ~%2,2, standart sapması ~%7,1 (65 gözlem) üzerinde hesaplanmıştır.\n- Üç anomali de 2022 yılına (Nisan–Mayıs ve Aralık) ait olup, taşıt kredisi stokunda normalin yaklaşık 2,5–3 katı sapma gösteren güçlü aylık artışları işaret etmektedir.\n- Düşüş yönünde (negatif) anomali saptanmamıştır.",
+      "error": null
+    }
+  ]
+}

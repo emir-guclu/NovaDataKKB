@@ -6,7 +6,10 @@ from pydantic import BaseModel
 from backend.app.agent.loop import run_agent
 from backend.app.agent.tool_registry import ToolRegistry
 from backend.app.core.llm_provider import KloudeksProvider
+from backend.app.tools.anomaly_detection import AnomalyDetectionTool
+from backend.app.tools.causality_check import CausalityCheckTool
 from backend.app.tools.change_detection import ChangeDetectionTool
+from backend.app.tools.lakehouse_query import LakehouseQueryTool
 from backend.app.tools.web_search import WebSearchTool
 
 
@@ -20,6 +23,9 @@ class AskRequest(BaseModel):
 registry = ToolRegistry()
 registry.register(ChangeDetectionTool())
 registry.register(WebSearchTool())
+registry.register(LakehouseQueryTool())
+registry.register(CausalityCheckTool())
+registry.register(AnomalyDetectionTool())
 
 
 @router.post("/api/v1/ask")

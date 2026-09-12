@@ -13,25 +13,37 @@ from dotenv import load_dotenv
 from backend.app.agent.loop import run_agent
 from backend.app.agent.tool_registry import ToolRegistry
 from backend.app.core.llm_provider import KloudeksProvider
+from backend.app.tools.anomaly_detection import AnomalyDetectionTool
+from backend.app.tools.causality_check import CausalityCheckTool
 from backend.app.tools.change_detection import ChangeDetectionTool
+from backend.app.tools.lakehouse_query import LakehouseQueryTool
 from backend.app.tools.web_search import WebSearchTool
 
-load_dotenv()
-logging.basicConfig(level=logging.INFO)
 
-registry = ToolRegistry()
-registry.register(ChangeDetectionTool())
-registry.register(WebSearchTool())
+def main() -> None:
+    load_dotenv()
+    logging.basicConfig(level=logging.INFO)
 
-provider = KloudeksProvider()
+    registry = ToolRegistry()
+    registry.register(ChangeDetectionTool())
+    registry.register(WebSearchTool())
+    registry.register(LakehouseQueryTool())
+    registry.register(CausalityCheckTool())
+    registry.register(AnomalyDetectionTool())
 
-questions = [
-    "Konut kredisi hacmi geçen aya göre nasıl değişti?",
-    "Türkiye'nin güncel enflasyon oranı hakkında en son haberler neler?",
-]
+    provider = KloudeksProvider()
 
-for question in questions:
-    print(f"SORU: {question}")
-    answer = run_agent(question, registry, provider)
-    print(f"CEVAP: {answer}")
-    print("=" * 60)
+    questions = [
+        "Konut kredisi hacmi gecen aya gore nasil degisti?",
+        "Turkiye'nin guncel enflasyon orani hakkinda en son haberler neler?",
+    ]
+
+    for question in questions:
+        print(f"SORU: {question}")
+        answer = run_agent(question, registry, provider)
+        print(f"CEVAP: {answer}")
+        print("=" * 60)
+
+
+if __name__ == "__main__":
+    main()

@@ -1,7 +1,8 @@
-from __future__ import annotations
-
+import json
 import logging
+import time
 from datetime import date
+from typing import Any, Callable
 
 from pydantic import ValidationError
 
@@ -11,11 +12,21 @@ from backend.app.core.llm_provider import KloudeksProvider
 logger = logging.getLogger(__name__)
 
 
+def _canonical_tool_signature(tool_name: str, arguments_str: str) -> tuple[str, str]:
+    try:
+        parsed = json.loads(arguments_str)
+        canonical_args = json.dumps(parsed, sort_keys=True, ensure_ascii=False)
+    except Exception:
+        canonical_args = arguments_str.strip()
+    return (tool_name, canonical_args)
+
+
 def run_agent(
     question: str,
     registry: ToolRegistry,
     provider: KloudeksProvider,
     max_iterations: int = 6,
+    on_event: Callable[[str, dict[str, Any]], None] | None = None,
 ) -> str:
     if max_iterations < 1:
         raise ValueError("max_iterations en az 1 olmali.")
@@ -41,6 +52,8 @@ def run_agent(
         {"role": "user", "content": question},
     ]
     tools_schema = registry.to_openai_tools_format()
+    executed_tool_calls: set[tuple[str, str]] = set()
+    max_parallel_calls = 2
 
     for iteration in range(1, max_iterations + 1):
         logger.info(
@@ -50,11 +63,34 @@ def run_agent(
             question,
         )
 
+        if on_event:
+            on_event(
+                "llm_input",
+                {
+                    "iteration": iteration,
+                    "question": question,
+                    "messages": [dict(m) for m in messages],
+                    "tools": tools_schema,
+                },
+            )
+
+        llm_t0 = time.perf_counter()
         response = provider.chat(messages, tools=tools_schema)
+        llm_duration_s = time.perf_counter() - llm_t0
 
         if not response.tool_calls:
-            logger.info("agent finished iteration=%s", iteration)
-            return response.content or "Model bos cevap dondurdu."
+            logger.info("agent finished iteration=%s llm_duration=%.2fs", iteration, llm_duration_s)
+            final_text = response.content or "Model bos cevap dondurdu."
+            if on_event:
+                on_event(
+                    "llm_final",
+                    {
+                        "iteration": iteration,
+                        "answer": final_text,
+                        "llm_duration_s": llm_duration_s,
+                    },
+                )
+            return final_text
 
         assistant_tool_calls = []
 
@@ -78,13 +114,29 @@ def run_agent(
             }
         )
 
-        for call in response.tool_calls:
+        # Cap parallel tool calls to prevent latency explosion
+        calls_to_execute = response.tool_calls[:max_parallel_calls]
+        calls_to_skip = response.tool_calls[max_parallel_calls:]
+
+        for call in calls_to_execute:
             logger.info(
-                "tool selected iteration=%s tool=%s arguments=%s",
+                "tool selected iteration=%s tool=%s arguments=%s llm_duration=%.2fs",
                 iteration,
                 call.name,
                 call.arguments,
+                llm_duration_s,
             )
+            if on_event:
+                on_event(
+                    "llm_decision",
+                    {
+                        "iteration": iteration,
+                        "call_id": call.id,
+                        "tool_name": call.name,
+                        "arguments": call.arguments,
+                        "llm_duration_s": llm_duration_s,
+                    },
+                )
 
             tool = registry.get(call.name)
 
@@ -98,19 +150,85 @@ def run_agent(
                         "content": error_message,
                     }
                 )
+                if on_event:
+                    on_event(
+                        "tool_output",
+                        {
+                            "iteration": iteration,
+                            "call_id": call.id,
+                            "tool_name": call.name,
+                            "result": error_message,
+                            "success": False,
+                            "tool_duration_s": 0.0,
+                        },
+                    )
+                    on_event(
+                        "llm_input_after_tool",
+                        {
+                            "iteration": iteration,
+                            "call_id": call.id,
+                            "tool_name": call.name,
+                            "content": error_message,
+                        },
+                    )
                 continue
 
+            # Anti-Thrashing Guard: check if identical tool + arguments already succeeded
+            call_sig = _canonical_tool_signature(call.name, call.arguments)
+            if call_sig in executed_tool_calls:
+                repeat_message = (
+                    "Bu sorgu az once basariyla calistirildi ve sonuc yukaridaki mesajlarda mevcuttur. "
+                    "Ayni tool'u tekrar calistirmak gereksizdir. Lutfen eldeki sonuclari yorumlayarak nihai yanitinizi olusturun."
+                )
+                logger.info("anti-thrashing guard intercepted tool=%s", call.name)
+                messages.append(
+                    {
+                        "role": "tool",
+                        "tool_call_id": call.id,
+                        "content": repeat_message,
+                    }
+                )
+                if on_event:
+                    on_event(
+                        "tool_output",
+                        {
+                            "iteration": iteration,
+                            "call_id": call.id,
+                            "tool_name": call.name,
+                            "result": repeat_message,
+                            "success": False,
+                            "tool_duration_s": 0.0,
+                        },
+                    )
+                    on_event(
+                        "llm_input_after_tool",
+                        {
+                            "iteration": iteration,
+                            "call_id": call.id,
+                            "tool_name": call.name,
+                            "content": repeat_message,
+                        },
+                    )
+                continue
+
+            tool_t0 = time.perf_counter()
             try:
                 params = tool.Input.model_validate_json(call.arguments)
                 logger.info("tool validated tool=%s params=%s", call.name, params.model_dump())
 
                 result = tool.run(params)
+                tool_duration_s = time.perf_counter() - tool_t0
                 result_json = result.model_dump_json()
 
+                success = getattr(result, "success", None)
+                if success is True:
+                    executed_tool_calls.add(call_sig)
+
                 logger.info(
-                    "tool result tool=%s success=%s result=%s",
+                    "tool result tool=%s success=%s duration=%.2fs result=%s",
                     call.name,
-                    getattr(result, "success", None),
+                    success,
+                    tool_duration_s,
                     result_json,
                 )
 
@@ -121,8 +239,30 @@ def run_agent(
                         "content": result_json,
                     }
                 )
+                if on_event:
+                    on_event(
+                        "tool_output",
+                        {
+                            "iteration": iteration,
+                            "call_id": call.id,
+                            "tool_name": call.name,
+                            "result": result_json,
+                            "success": success,
+                            "tool_duration_s": tool_duration_s,
+                        },
+                    )
+                    on_event(
+                        "llm_input_after_tool",
+                        {
+                            "iteration": iteration,
+                            "call_id": call.id,
+                            "tool_name": call.name,
+                            "content": result_json,
+                        },
+                    )
 
             except ValidationError as exc:
+                tool_duration_s = time.perf_counter() - tool_t0
                 error_message = (
                     f"Bu tool basarisiz oldu: parametre dogrulama hatasi: {exc}"
                 )
@@ -138,16 +278,112 @@ def run_agent(
                         "content": error_message,
                     }
                 )
+                if on_event:
+                    on_event(
+                        "tool_output",
+                        {
+                            "iteration": iteration,
+                            "call_id": call.id,
+                            "tool_name": call.name,
+                            "result": error_message,
+                            "success": False,
+                            "tool_duration_s": tool_duration_s,
+                        },
+                    )
+                    on_event(
+                        "llm_input_after_tool",
+                        {
+                            "iteration": iteration,
+                            "call_id": call.id,
+                            "tool_name": call.name,
+                            "content": error_message,
+                        },
+                    )
 
             except Exception as exc:
+                tool_duration_s = time.perf_counter() - tool_t0
                 logger.exception("tool execution failed tool=%s", call.name)
+                error_msg = f"Bu tool basarisiz oldu: {exc}"
                 messages.append(
                     {
                         "role": "tool",
                         "tool_call_id": call.id,
-                        "content": f"Bu tool basarisiz oldu: {exc}",
+                        "content": error_msg,
                     }
                 )
+                if on_event:
+                    on_event(
+                        "tool_output",
+                        {
+                            "iteration": iteration,
+                            "call_id": call.id,
+                            "tool_name": call.name,
+                            "result": error_msg,
+                            "success": False,
+                            "tool_duration_s": tool_duration_s,
+                        },
+                    )
+                    on_event(
+                        "llm_input_after_tool",
+                        {
+                            "iteration": iteration,
+                            "call_id": call.id,
+                            "tool_name": call.name,
+                            "content": error_msg,
+                        },
+                    )
 
-    logger.warning("agent max_iterations reached max_iterations=%s", max_iterations)
-    return "Maksimum adim sayisina ulasildi; mevcut bilgilerle guvenilir bir son cevap uretilemedi."
+        # Handle skipped calls due to max_parallel_calls
+        for skipped_call in calls_to_skip:
+            skipped_msg = (
+                "Paralel tool limiti asildi (en fazla 2). "
+                "Lutfen once calistirilan tool sonuclarini degerlendirerek yanitinizi olusturun."
+            )
+            messages.append(
+                {
+                    "role": "tool",
+                    "tool_call_id": skipped_call.id,
+                    "content": skipped_msg,
+                }
+            )
+
+    # Graceful Force-Synthesis: if max_iterations is reached, force a synthesis response without tools
+    logger.info("agent max_iterations reached; triggering graceful force-synthesis")
+    force_synthesis_prompt = (
+        "Maksimum adim sinirina gelindi. Artik yeni bir arac cagirma. "
+        "Su ana kadar topladigin tum arac sonuclarini analiz ederek kullaniciya "
+        "elindeki veriler cercevesinde en eksiksiz ve durust sentez yanitini uret."
+    )
+    messages.append({"role": "user", "content": force_synthesis_prompt})
+
+    if on_event:
+        on_event(
+            "llm_input",
+            {
+                "iteration": max_iterations + 1,
+                "question": question,
+                "messages": [dict(m) for m in messages],
+                "tools": None,
+                "is_force_synthesis": True,
+            },
+        )
+
+    synth_t0 = time.perf_counter()
+    synth_response = provider.chat(messages, tools=None)
+    synth_duration_s = time.perf_counter() - synth_t0
+
+    final_text = synth_response.content or "Mevcut bilgilerle guvenilir bir son sentez cevabi uretilemedi."
+    logger.info("graceful force-synthesis completed in %.2fs", synth_duration_s)
+
+    if on_event:
+        on_event(
+            "llm_final",
+            {
+                "iteration": max_iterations + 1,
+                "answer": final_text,
+                "llm_duration_s": synth_duration_s,
+                "is_force_synthesis": True,
+            },
+        )
+
+    return final_text
