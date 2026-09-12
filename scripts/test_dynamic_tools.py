@@ -30,10 +30,11 @@ from backend.app.tools.causality_check import CausalityCheckTool
 from backend.app.tools.change_detection import ChangeDetectionTool
 from backend.app.tools.lakehouse_query import LakehouseQueryTool
 from backend.app.tools.web_search import WebSearchTool
+from backend.app.tools.web_url_reader import WebUrlReaderTool
 
 logger = logging.getLogger("test_dynamic_tools")
 
-# 10 Prompts across 5 dynamic tools as defined in the plan
+# 14 Prompts across 6 dynamic tools as defined in the plan
 TEST_SCENARIOS = [
     # 1. ChangeDetectionTool
     {
@@ -100,6 +101,48 @@ TEST_SCENARIOS = [
         "expected_tool": "anomaly_detection",
         "prompt": "Taşıt kredisi değişimlerinde z-score bazında anomali tespit et.",
     },
+    # 6. WebUrlReaderTool
+    {
+        "id": "6.1",
+        "tool_class": "WebUrlReaderTool",
+        "expected_tool": "web_url_reader",
+        "content_kind": "pdf",
+        "prompt": (
+            "https://www.borsaistanbul.com/veriler/kiymetli-madenler-ve-kiymetli-taslar-piyasasi/piyasa-verileri "
+            "adresindeki Kiymetli Madenler Piyasasi Verileri altindaki Altin Islemleri PDF icerigini oku; "
+            "islem hacmi, miktar ve fiyat seviyelerinden piyasa hakkinda kisa bir anlam cikar."
+        ),
+    },
+    {
+        "id": "6.2",
+        "tool_class": "WebUrlReaderTool",
+        "expected_tool": "web_url_reader",
+        "content_kind": "html",
+        "prompt": (
+            "https://www.borsaistanbul.com/endeks/xtumy adresindeki ham HTML/CSS web sayfasi icerigini oku; "
+            "BIST Tum endeksi icin sayfada gorunen gunluk veya aylik degisim bilgisini ozetle."
+        ),
+    },
+    {
+        "id": "6.3",
+        "tool_class": "WebUrlReaderTool",
+        "expected_tool": "web_url_reader",
+        "content_kind": "excel",
+        "prompt": (
+            "https://file-examples.com/storage/fe1fd0c8fba163b72c48b80/2017/02/file_example_XLSX_10.xlsx "
+            "adresindeki Excel dosyasini oku; sayfa adlarini, kolonlari ve ilk satirlardaki tablo yapisini ozetle."
+        ),
+    },
+    {
+        "id": "6.4",
+        "tool_class": "WebUrlReaderTool",
+        "expected_tool": "web_url_reader",
+        "content_kind": "image",
+        "prompt": (
+            "https://www.borsaistanbul.com/files/borsa_istanbul_logo.png adresindeki gorseli OCR ile oku; "
+            "gorseldeki metin veya logo bilgisini kisaca acikla."
+        ),
+    },
 ]
 
 
@@ -132,6 +175,7 @@ def create_registry() -> ToolRegistry:
     registry = ToolRegistry()
     registry.register(ChangeDetectionTool())
     registry.register(WebSearchTool())
+    registry.register(WebUrlReaderTool())
     registry.register(LakehouseQueryTool())
     registry.register(CausalityCheckTool())
     registry.register(AnomalyDetectionTool())
@@ -347,7 +391,7 @@ def main() -> None:
         print("[ERROR] MIA_API_KEY is not set in environment or .env file.")
         sys.exit(1)
 
-    print("Initializing KloudeksProvider and registering 5 Dynamic Tools...")
+    print("Initializing KloudeksProvider and registering 6 Dynamic Tools...")
     registry = create_registry()
     provider = KloudeksProvider()
 

@@ -54,3 +54,21 @@ class ToolRegistry:
             )
 
         return "\n\n".join(blocks)
+
+
+def create_default_tool_registry() -> ToolRegistry:
+    from backend.app.tools.anomaly_detection import AnomalyDetectionTool
+    from backend.app.tools.causality_check import CausalityCheckTool
+    from backend.app.tools.change_detection import ChangeDetectionTool
+    from backend.app.tools.lakehouse_query import LakehouseQueryTool
+    from backend.app.tools.web_search import WebSearchTool
+    from backend.app.tools.web_url_reader import WebUrlReaderTool
+
+    registry = ToolRegistry()
+    registry.register(ChangeDetectionTool())
+    registry.register(WebSearchTool())
+    registry.register(WebUrlReaderTool())
+    registry.register(LakehouseQueryTool())
+    registry.register(CausalityCheckTool())
+    registry.register(AnomalyDetectionTool())
+    return registry

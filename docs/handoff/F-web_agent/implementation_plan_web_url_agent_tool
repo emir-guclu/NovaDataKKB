@@ -1,0 +1,116 @@
+# Web URL Reader & Content Extractor Uygulama Planı
+
+Kullanıcı veya ajanın belirttiği web URL'lerindeki içerikleri (HTML web sayfası, Excel/CSV tabloları, Görseller ve PDF'ler) indirip formatına göre ayrıştıran, görüntüleri Kloudeks `Unlimited-OCR` ile metne dönüştüren ve ajanın analiz sürecine dahil eden çok modlu araç altyapısıdır.
+
+---
+
+## 1. Mimari Tasarım ve İsimlendirme
+
+* **Tool Katmanı:** `backend/app/tools/web_url_reader.py` (`WebUrlReaderTool`, Ajan adı: `web_url_reader`)
+* **Servis Katmanı:** `backend/app/services/url_content_extractor.py` (`url_content_extractor`)
+
+```
+[Kullanıcı Sorusu / Ajan Kararı]
+               │
+               ▼
+[Tool] backend/app/tools/web_url_reader.py (WebUrlReaderTool: web_url_reader)
+               │
+               ▼
+[Servis] backend/app/services/url_content_extractor.py
+       ├── 1. Safe HTTP Downloader (Streaming, Content-Type, 15 MB Sınırı)
+       ├── 2. Format Router / Dispatcher
+       │      ├── HTML / Text Parser (BeautifulSoup4 -> Temiz Markdown)
+       │      ├── Excel / CSV Parser (pandas + openpyxl -> Tablo & İstatistik)
+       │      ├── Image Parser (Base64 -> KloudeksProvider.ocr -> Unlimited-OCR)
+       │      └── PDF Parser (pypdf -> Sayfa bazlı metin)
+       └── 3. ExtractedContent Veri Modeli (Ajan için özet ve metin)
+```
+
+---
+
+## 2. Format Ayrıştırma Detayları
+
+1. **Excel & CSV (`.xlsx`, `.xls`, `.csv`):**
+   * Sayfa (sheet) isimleri listelenir.
+   * İlk 15 satır Markdown tablosu olarak formatlanır.
+   * Varsa kolon tipleri, satır sayısı ve temel istatistiksel özet (`min`, `max`, `mean`) eklenir.
+
+2. **Görseller (`.png`, `.jpg`, `.jpeg`, `.webp`):**
+   * Resim binary olarak indirilir, `base64` formatına dönüştürülür.
+   * `KloudeksProvider.ocr(image_base64)` çağrılır.
+   * `Unlimited-OCR` modeli resimdeki tüm tablo, grafik ve metinleri decode eder.
+
+3. **HTML & Web Sayfaları (`text/html`, `.html`):**
+   * `requests` ile indirilir (özel User-Agent ile bot korumaları aşılır).
+   * `BeautifulSoup` ile `<script>`, `<style>`, `<nav>`, `<footer>` temizlenir.
+   * Başlık ve temizlenmiş ana gövde Markdown formatında çıkarılır.
+
+4. **PDF Dokümanları (`.pdf`):**
+   * `pypdf` kütüphanesi kullanılarak sayfaların metinleri ayıklanır.
+
+---
+
+## User Review Required
+
+> [!IMPORTANT]
+> **PDF Desteği:** `pypdf` paketi `.venv` ortamına kurulacaktır (`.venv\Scripts\pip install pypdf`).
+
+> [!TIP]
+> **Güvenlik Sınırı:** Sunucuyu korumak için **maksimum 15 MB** dosya boyutu sınırı ve 15 saniye HTTP timeout uygulanacaktır.
+
+---
+
+## Proposed Changes
+
+### 1. Servis Katmanı
+
+#### [NEW] [backend/app/services/url_content_extractor.py](file:///c:/Projects/kkb/backend/app/services/url_content_extractor.py)
+* `extract_url_content(url: str, provider: KloudeksProvider | None = None) -> ExtractedContent`
+* HTTP indirme, boyut kontrolü, MIME type tespiti.
+* HTML, Excel/CSV, Image (OCR), PDF ayrıştırıcıları.
+* `ExtractedContent` dataclass çıktısı (`content_type`, `title`, `text`, `metadata`, `success`, `error`).
+
+---
+
+### 2. Ajan Tool Katmanı
+
+#### [NEW] [backend/app/tools/web_url_reader.py](file:///c:/Projects/kkb/backend/app/tools/web_url_reader.py)
+* `WebUrlReaderTool` sınıfı (`BaseTool` miras alır).
+* Tool Adı: `web_url_reader`
+* Girdi Parametreleri: `url: str`, `max_length: int = 4000`
+* Çıktı: `success: bool`, `url: str`, `content_type: str`, `title: str | None`, `content: str`, `error: str | None`.
+
+---
+
+### 3. Tool Kaydı (Registry)
+
+#### [MODIFY] [backend/app/agent/tool_registry.py](file:///c:/Projects/kkb/backend/app/agent/tool_registry.py) (veya test scripti)
+* `WebUrlReaderTool`'un varsayılan araç listesine eklenmesi.
+
+---
+
+### 4. Testler
+
+#### [NEW] [backend/tests/services/test_url_content_extractor.py](file:///c:/Projects/kkb/backend/tests/services/test_url_content_extractor.py)
+* HTML, Excel/CSV, Görsel (OCR mock) ve PDF test senaryoları.
+
+#### [NEW] [backend/tests/tools/test_web_url_reader_tool.py](file:///c:/Projects/kkb/backend/tests/tools/test_web_url_reader_tool.py)
+* Tool Pydantic şema ve yürütme testleri.
+
+---
+
+## Verification Plan
+
+### Automated Tests
+1. **Kütüphane Kurulumu:**
+   ```powershell
+   .venv\Scripts\pip install pypdf
+   ```
+2. **Yeni Testlerin Çalıştırılması:**
+   ```powershell
+   $env:PYTHONPATH="backend"; .venv\Scripts\python -m pytest backend/tests/services/test_url_content_extractor.py backend/tests/tools/test_web_url_reader_tool.py -v
+   ```
+3. **Mevcut 180 Testin Regresyon Kontrolü:**
+   ```powershell
+   $env:PYTHONPATH="backend"; .venv\Scripts\python -m pytest backend/tests -q
+   ```
