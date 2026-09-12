@@ -1,6 +1,7 @@
 import pandas as pd
 from pathlib import Path
 import json
+from app.modules.gold.review_guard import reviewed_series_ids
 
 def build_gold_periodic_change(
     aligned_obs_path: Path,
@@ -21,9 +22,10 @@ def build_gold_periodic_change(
     # Extract only necessary columns from observations
     df = obs_df[['date', 'series_id', 'value', 'source', 'unit', 'dims']].copy()
     
-    # Extract nature from metadata and merge
-    meta_subset = meta_df[['series_id', 'nature']].drop_duplicates()
-    df = df.merge(meta_subset, on='series_id', how='left')
+    # Gold eligibility: only human/reviewed nature classifications may enter Gold.
+    reviewed_ids = reviewed_series_ids(meta_df)
+    meta_subset = meta_df[meta_df['series_id'].isin(reviewed_ids)][['series_id', 'nature']].drop_duplicates()
+    df = df.merge(meta_subset, on='series_id', how='inner')
     
     # Sort to ensure proper shifting
     df.sort_values(by=['series_id', 'dims', 'date'], inplace=True)

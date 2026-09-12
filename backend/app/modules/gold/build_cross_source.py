@@ -3,6 +3,7 @@ from pathlib import Path
 import json
 from dataclasses import dataclass
 from typing import Optional, Dict
+from app.modules.gold.review_guard import reviewed_series_ids
 
 @dataclass
 class ColumnDef:
@@ -29,8 +30,10 @@ def build_cross_source_gold_table(
     final_df = None
     
     for col_name, col_def in columns_config.items():
-        # Filter by series_id
+        # Filter by series_id. An explicit Gold dependency must be reviewed.
         slice_df = obs_df[obs_df['series_id'] == col_def.series_id].copy()
+        if slice_df.empty:
+            raise ValueError(f"Gold review guard: {table_name}.{col_name} requires reviewed series {col_def.series_id}")
         
         # Filter by dimension if specified
         if col_def.dim_key is not None and col_def.dim_value is not None:
@@ -71,6 +74,9 @@ def build_cross_source_gold_table(
 def build_all_cross_source(aligned_obs_path: Path, gold_dir: Path) -> None:
     print("Reading aligned observations...")
     obs_df = pd.read_parquet(aligned_obs_path)
+    meta_df = pd.read_parquet(aligned_obs_path.parent / "series_metadata.parquet")
+    reviewed_ids = reviewed_series_ids(meta_df)
+    obs_df = obs_df[obs_df["series_id"].isin(reviewed_ids)].copy()
     
     # 2. gold_housing_credit_market
     build_cross_source_gold_table(

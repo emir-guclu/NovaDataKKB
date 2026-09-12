@@ -1,5 +1,6 @@
 import pandas as pd
 from pathlib import Path
+from app.modules.gold.review_guard import require_reviewed_series
 
 def build_gold_precious_metals(
     evds_silver_obs_path: Path,
@@ -12,6 +13,12 @@ def build_gold_precious_metals(
     """
     print("Reading EVDS silver observations...")
     obs_df = pd.read_parquet(evds_silver_obs_path)
+    meta_df = pd.read_parquet(evds_silver_obs_path.parent / "series_metadata.parquet")
+    require_reviewed_series(
+        meta_df,
+        ["EVDS:TP.ALTINPIYASA.KAP03", "EVDS:TP.GUMUSPIYASA.KAP03"],
+        "gold_precious_metal_ratios",
+    )
     
     # Ensure date is datetime
     if not pd.api.types.is_datetime64_any_dtype(obs_df['date']):
