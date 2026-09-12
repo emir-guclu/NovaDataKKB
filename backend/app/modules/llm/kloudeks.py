@@ -16,11 +16,11 @@ class KloudeksClient:
     Initializes the shared OpenAI client using the MIA base_url and API key.
     """
     def __init__(self, api_key: str = None, base_url: str = "https://mia.csp.kloudeks.com/v1"):
-        self.api_key = api_key or os.getenv("KLOUDEKS_API_KEY")
+        self.api_key = api_key or os.getenv("MIA_API_KEY") or os.getenv("KLOUDEKS_API_KEY")
         self.base_url = base_url
         
         if not self.api_key:
-            raise ValueError("KLOUDEKS_API_KEY is required in .env")
+            raise ValueError("MIA_API_KEY is required in .env")
             
         self.client = OpenAI(
             api_key=self.api_key,

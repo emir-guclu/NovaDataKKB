@@ -1,6 +1,7 @@
 import pandas as pd
 from pathlib import Path
 import json
+from app.modules.gold.review_guard import require_reviewed_series, reviewed_series_ids
 
 def build_gold_finturk(
     aligned_obs_path: Path,
@@ -12,6 +13,11 @@ def build_gold_finturk(
     """
     print("Reading aligned observations...")
     obs_df = pd.read_parquet(aligned_obs_path)
+    meta_df = pd.read_parquet(aligned_obs_path.parent / "series_metadata.parquet")
+    cash_loans_id = "BDDK_FINTURK:t1:nakdikrediler"
+    npl_id = "BDDK_FINTURK:t1:takiptekialacaklar"
+    require_reviewed_series(meta_df, [cash_loans_id, npl_id], "gold_finturk_province_credit_quality")
+    obs_df = obs_df[obs_df["series_id"].isin(reviewed_series_ids(meta_df))].copy()
     
     # Ensure date is datetime
     if not pd.api.types.is_datetime64_any_dtype(obs_df['date']):
@@ -37,8 +43,6 @@ def build_gold_finturk(
     # Let's keep geo_level in the output so consumers can filter.
     
     # Target series
-    cash_loans_id = "BDDK_FINTURK:t1:nakdikrediler"
-    npl_id = "BDDK_FINTURK:t1:takiptekialacaklar"
     # From phase 3: housing_loans (t1 doesn't have it directly, but maybe t1:konut_kredileri, or we skip if not present)
     # Actually, we will just pivot by series_id
     
