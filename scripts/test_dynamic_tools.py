@@ -29,6 +29,7 @@ from backend.app.tools.anomaly_detection import AnomalyDetectionTool
 from backend.app.tools.causality_check import CausalityCheckTool
 from backend.app.tools.change_detection import ChangeDetectionTool
 from backend.app.tools.lakehouse_query import LakehouseQueryTool
+from backend.app.tools.series_catalog_search import SeriesCatalogSearchTool
 from backend.app.tools.web_search import WebSearchTool
 from backend.app.tools.web_url_reader import WebUrlReaderTool
 
@@ -153,6 +154,43 @@ TEST_SCENARIOS = [
             "'akhan un fabrikasi' adinda bir sirket bu sayfada islem goruyor olarak geciyor mu kontrol et."
         ),
     },
+    # 7. SeriesCatalogSearchTool
+    {
+        "id": "7.1",
+        "tool_class": "SeriesCatalogSearchTool",
+        "expected_tool": "series_catalog_search",
+        "prompt": "Tasit kredisi ve faizleri icin hangi serileri kullanabilirim?",
+    },
+    {
+        "id": "7.2",
+        "tool_class": "SeriesCatalogSearchTool",
+        "expected_tool": "series_catalog_search",
+        "prompt": "Platin fiyati ve Londra metal borsasi icin yerel seriler var mi?",
+    },
+    {
+        "id": "7.3",
+        "tool_class": "WebSearchTool",
+        "expected_tool": "web_search",
+        "prompt": "Mars gezegenindeki ortalama yuzey sicakligi ve atmosfer basinci hakkinda bana bilgi ver.",
+    },
+    {
+        "id": "7.4",
+        "tool_class": "SeriesCatalogSearchTool",
+        "expected_tool": "series_catalog_search",
+        "prompt": "Cin Yuani (CNY) vadeli mevduat faiz oranlari hakkinda bana bilgi ver.",
+    },
+    {
+        "id": "7.5",
+        "tool_class": "SeriesCatalogSearchTool",
+        "expected_tool": "series_catalog_search",
+        "prompt": "Vatandaslarin bireysel kredi karti borclari ve toplam bakiyesi son donemde ne durumda?",
+    },
+    {
+        "id": "7.6",
+        "tool_class": "SeriesCatalogSearchTool",
+        "expected_tool": "series_catalog_search",
+        "prompt": "Bankacilik sektorundeki mevduatin ne kadari Turk Lirasi ne kadari doviz olarak tutuluyor, guncel dagilim nasil?",
+    },
 ]
 
 
@@ -186,6 +224,7 @@ def create_registry() -> ToolRegistry:
     registry.register(ChangeDetectionTool())
     registry.register(WebSearchTool())
     registry.register(WebUrlReaderTool())
+    registry.register(SeriesCatalogSearchTool())
     registry.register(LakehouseQueryTool())
     registry.register(CausalityCheckTool())
     registry.register(AnomalyDetectionTool())
