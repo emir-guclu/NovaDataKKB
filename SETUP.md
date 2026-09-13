@@ -448,3 +448,57 @@ Doğrulanmış full test sonucu (Gold katmanı dâhil):
 
     Unified Lakehouse & Data Catalog (lakehouse.duckdb)
         ✅
+
+    Semantik Seri Vektör Kataloğu (series_embeddings.parquet)
+        ✅
+
+---
+
+# 14. Semantik Seri Embedding Kataloğunu Üretme (Gold)
+
+LLM Ajanının Lakehouse'daki 963 finansal zaman serisini doğal dil ile (kod bilmeden) arayabilmesi için Qwen3-Embedding-8B modeliyle vektör kataloğu oluşturulur.
+
+### Çalıştırma Komutu:
+```powershell
+# Windows (PowerShell):
+$env:PYTHONPATH="backend"; .venv\Scripts\python backend/scripts/generate_catalog_embeddings.py
+
+# Linux / macOS (Bash):
+PYTHONPATH=backend python backend/scripts/generate_catalog_embeddings.py
+```
+
+* **Girdi:** `data/silver/silver.duckdb` (`series_metadata`, `observations`) ve `data/bronze/evds/metadata_raw.json`.
+* **Çıktı:** `data/gold/series_embeddings.parquet` (963 satır, 4096 boyutlu vektörler + zengin metadata).
+* **Süre:** Kloudeks batch API ile ~70 saniye.
+* **Kullanan Araç:** `backend/app/tools/series_catalog_search.py` (<0.15s gecikme ile arama yapar).
+
+---
+
+# 15. Dinamik Ajan ve Tool Testleri (`scripts/test_dynamic_tools.py`)
+
+Ajanın doğru araçları seçtiğini, LLM karar sürelerini ve tool yanıtlarını ölçmek için uçtan uca dinamik test suite'i kullanılır.
+
+### Testleri Çalıştırma:
+```powershell
+# Belirli senaryoları çalıştırmak için (örn: 7.5, 7.6 ve 8.1):
+.venv\Scripts\python scripts/test_dynamic_tools.py 7.5 7.6 8.1
+
+# Tüm senaryoları çalıştırmak için:
+.venv\Scripts\python scripts/test_dynamic_tools.py
+```
+* **Rapor Çıktısı:** `reports/dynamic_tools_timing_report.json` dosyasına her adımın (LLM karar süresi, tool süresi, toplam süre) metrikleri kaydedilir.
+
+### Yeni Test Senaryosu Nasıl Eklenir?
+`scripts/test_dynamic_tools.py` dosyasındaki `TEST_SCENARIOS` listesine aşağıdaki formatta bir sözlük eklemeniz yeterlidir:
+
+```python
+{
+    "id": "8.4",                                    # Benzersiz senaryo ID'si
+    "tool_class": "EvdsTool",                       # İlgili Tool sınıfı adı (raporlama için)
+    "expected_tool": "evds_data_service",           # Ajanın çağırması beklenen tool adı
+    "prompt": "Kullanıcının soracağı doğal dil sorusu buraya yazılır.",
+},
+```
+
+> **İpucu:** Soruları teknik meta dille değil (*"veritabanında şu seri var mı"* gibi), gerçek bir kullanıcının sorabileceği doğal finansal sorular olarak yazın (*"Merkez Bankası'nın brüt rezervi ne kadar?"* gibi).
+
