@@ -28,6 +28,7 @@ from backend.app.core.llm_provider import KloudeksProvider
 from backend.app.tools.anomaly_detection import AnomalyDetectionTool
 from backend.app.tools.causality_check import CausalityCheckTool
 from backend.app.tools.change_detection import ChangeDetectionTool
+from backend.app.tools.evds_tool import EvdsTool
 from backend.app.tools.lakehouse_query import LakehouseQueryTool
 from backend.app.tools.series_catalog_search import SeriesCatalogSearchTool
 from backend.app.tools.web_search import WebSearchTool
@@ -191,6 +192,25 @@ TEST_SCENARIOS = [
         "expected_tool": "series_catalog_search",
         "prompt": "Bankacilik sektorundeki mevduatin ne kadari Turk Lirasi ne kadari doviz olarak tutuluyor, guncel dagilim nasil?",
     },
+    # 8. EvdsTool (TCMB Canli Veri Servisi & Arama)
+    {
+        "id": "8.1",
+        "tool_class": "EvdsTool",
+        "expected_tool": "evds_data_service",
+        "prompt": "Merkez Bankasi'nin brüt rezervleri ve resmi uluslararasi rezerv varliklari ne durumda?",
+    },
+    {
+        "id": "8.2",
+        "tool_class": "EvdsTool",
+        "expected_tool": "evds_data_service",
+        "prompt": "TCMB bankalarla yaptigi doviz karsiligi Turk lirasi swap stoku ne kadar?",
+    },
+    {
+        "id": "8.3",
+        "tool_class": "EvdsTool",
+        "expected_tool": "evds_data_service",
+        "prompt": "Reeskont kredisi iskonto faiz oranlari ile ilgili Merkez Bankasi resmi verisi nedir?",
+    },
 ]
 
 
@@ -221,10 +241,11 @@ class TestCaseResult:
 
 def create_registry() -> ToolRegistry:
     registry = ToolRegistry()
+    registry.register(SeriesCatalogSearchTool())
+    registry.register(EvdsTool())
     registry.register(ChangeDetectionTool())
     registry.register(WebSearchTool())
     registry.register(WebUrlReaderTool())
-    registry.register(SeriesCatalogSearchTool())
     registry.register(LakehouseQueryTool())
     registry.register(CausalityCheckTool())
     registry.register(AnomalyDetectionTool())
