@@ -21,6 +21,49 @@ def _canonical_tool_signature(tool_name: str, arguments_str: str) -> tuple[str, 
     return (tool_name, canonical_args)
 
 
+def _collect_sources_from_tool_result(
+    tool_name: str,
+    result: Any,
+    collected_sources: list[dict[str, str]],
+) -> None:
+    seen_urls = {s["url"] for s in collected_sources if s.get("url")}
+    if tool_name == "web_search":
+        results = getattr(result, "results", []) or []
+        for item in results:
+            if isinstance(item, dict):
+                url = (item.get("url") or "").strip()
+                title = (item.get("title") or "").strip() or url
+                if url and url not in seen_urls:
+                    seen_urls.add(url)
+                    collected_sources.append({"url": url, "title": title})
+    elif tool_name == "web_url_reader":
+        url = (getattr(result, "url", None) or "").strip()
+        title = (getattr(result, "title", None) or "").strip() or url
+        if url and url not in seen_urls:
+            seen_urls.add(url)
+            collected_sources.append({"url": url, "title": title})
+
+
+def _ensure_citations_in_response(
+    text: str,
+    collected_sources: list[dict[str, str]],
+) -> str:
+    if not collected_sources:
+        return text
+
+    if "🔗 Kaynaklar" in text or "### Kaynaklar" in text or "## Kaynaklar" in text:
+        return text
+
+    citation_lines = ["### 🔗 Kaynaklar"]
+    for src in collected_sources:
+        title = src.get("title") or src.get("url")
+        url = src.get("url")
+        if url:
+            citation_lines.append(f"- [{title}]({url})")
+
+    return text.rstrip() + "\n\n" + "\n".join(citation_lines)
+
+
 def run_agent(
     question: str,
     registry: ToolRegistry,
@@ -50,6 +93,9 @@ def run_agent(
                 "ve konu Merkez Bankasi / TCMB makroekonomik verisi ise evds_data_service aracina basvur: "
                 "once resmi EVDS katalogunda ara (action='search'), ardindan bulunan seri kodunu canli yukle (action='load'). "
                 "Diger harici bilgi ihtiyaclarinda web_search aracina basvur. "
+                "Eger cevabini uretirken web_search veya web_url_reader araclarindan faydalandiysan, "
+                "cevabinin en sonuna MUTLAKA '### 🔗 Kaynaklar' basligi altinda tiklanabilir markdown linkleri "
+                "([Baslik](URL) - Aciklama veya [Baslik](URL)) ekle. "
                 "Uydurma veri kullanma. Tool sonucunda acikca desteklenmeyen sayisal deger, tarih, alinti veya iddia ekleme. "
                 "URL tahmin ederek uydurma; sayfada acikca listelenmeyen hicbir URL'yi kullanma. "
                 "web_url_reader sonucundaki Bulunan Dosyalar veya Gorseller listesinde gercek bir URL varsa, "
@@ -65,6 +111,7 @@ def run_agent(
     ]
     tools_schema = registry.to_openai_tools_format()
     executed_tool_calls: set[tuple[str, str]] = set()
+    collected_sources: list[dict[str, str]] = []
     max_parallel_calls = 2
 
     for iteration in range(1, max_iterations + 1):
@@ -92,7 +139,8 @@ def run_agent(
 
         if not response.tool_calls:
             logger.info("agent finished iteration=%s llm_duration=%.2fs", iteration, llm_duration_s)
-            final_text = response.content or "Model bos cevap dondurdu."
+            raw_text = response.content or "Model bos cevap dondurdu."
+            final_text = _ensure_citations_in_response(raw_text, collected_sources)
             if on_event:
                 on_event(
                     "llm_final",
@@ -235,6 +283,7 @@ def run_agent(
                 success = getattr(result, "success", None)
                 if success is True:
                     executed_tool_calls.add(call_sig)
+                    _collect_sources_from_tool_result(call.name, result, collected_sources)
 
                 logger.info(
                     "tool result tool=%s success=%s duration=%.2fs result=%s",
@@ -384,7 +433,8 @@ def run_agent(
     synth_response = provider.chat(messages, tools=None)
     synth_duration_s = time.perf_counter() - synth_t0
 
-    final_text = synth_response.content or "Mevcut bilgilerle guvenilir bir son sentez cevabi uretilemedi."
+    raw_text = synth_response.content or "Mevcut bilgilerle guvenilir bir son sentez cevabi uretilemedi."
+    final_text = _ensure_citations_in_response(raw_text, collected_sources)
     logger.info("graceful force-synthesis completed in %.2fs", synth_duration_s)
 
     if on_event:

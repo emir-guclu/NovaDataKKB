@@ -379,8 +379,14 @@ def run_single_test(scenario: dict[str, str], registry: ToolRegistry, provider: 
         f"Tool Total: {tool_total_time:.2f}s | Overall Duration: {total_duration:.2f}s"
     )
 
+    citation_valid = True
+    if any(t in selected_tools for t in ("web_search", "web_url_reader")):
+        citation_valid = "### 🔗 Kaynaklar" in final_answer or "🔗 Kaynaklar" in final_answer
+        if not citation_valid:
+            print(f"\n[WARN]: Test {scenario_id} executed web tools {selected_tools} but missing '### 🔗 Kaynaklar' in final answer!")
+
     tool_matched = expected_tool in selected_tools
-    passed = tool_matched and (error_str is None) and bool(final_answer.strip())
+    passed = tool_matched and (error_str is None) and bool(final_answer.strip()) and citation_valid
 
     return TestCaseResult(
         scenario_id=scenario_id,
