@@ -90,3 +90,7 @@ tmp/
 temp/
 scratch/
 data/aligned/
+
+# Reports & Benchmarks
+reports/*.json
+
