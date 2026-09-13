@@ -4,6 +4,7 @@ from io import BytesIO
 
 import pandas as pd
 import pytest
+import requests
 
 from backend.app.services import url_content_extractor as extractor
 
@@ -16,12 +17,18 @@ class FakeResponse:
         content_type: str,
         url: str = "https://example.com/report",
         headers: dict[str, str] | None = None,
+        status_code: int = 200,
     ) -> None:
         self.body = body
         self.url = url
         self.headers = {"Content-Type": content_type, **(headers or {})}
+        self.status_code = status_code
 
     def raise_for_status(self) -> None:
+        if self.status_code >= 400:
+            error = requests.HTTPError(f"{self.status_code} Error")
+            error.response = self
+            raise error
         return None
 
     def iter_content(self, chunk_size: int = 8192):
@@ -40,7 +47,9 @@ class FakeProvider:
 
 def mock_get(monkeypatch, response: FakeResponse) -> None:
     def fake_get(url, *, headers, stream, timeout):
-        assert headers["User-Agent"]
+        assert headers["User-Agent"].startswith("Mozilla/5.0")
+        assert "application/pdf" in headers["Accept"]
+        assert "tr-TR" in headers["Accept-Language"]
         assert stream is True
         assert timeout == 15
         return response
@@ -72,6 +81,89 @@ def test_extract_url_content_cleans_html_to_markdown(monkeypatch):
     assert "Faiz oranlari yuksek seyrediyor." in result.text
     assert "menu" not in result.text
     assert "alert" not in result.text
+    assert "Dinamik icerik uyarisi" not in result.text
+
+
+def test_extract_url_content_lists_absolute_document_and_image_urls(monkeypatch):
+    html = b"""
+    <html>
+      <head><title>BIST</title></head>
+      <body>
+        <main>
+          <h1>Piyasa Verileri</h1>
+          <a href="/dosyalar/kmtp/veriler/kmp_au.pdf">Altin Islemleri</a>
+          <a href="rapor.xlsx">Excel Raporu</a>
+          <img src="/file/inline-images/teknoloji_gorsel.jpeg" alt="BISTECH mimari semasi">
+          <img src="/logo.png" alt="Logo">
+        </main>
+      </body>
+    </html>
+    """
+    mock_get(
+        monkeypatch,
+        FakeResponse(
+            html,
+            content_type="text/html; charset=utf-8",
+            url="https://www.borsaistanbul.com/veriler/piyasa-verileri",
+        ),
+    )
+
+    result = extractor.extract_url_content("https://www.borsaistanbul.com/veriler/piyasa-verileri")
+
+    assert result.success is True
+    assert "Bulunan Dosyalar" in result.text
+    assert "Altin Islemleri: https://www.borsaistanbul.com/dosyalar/kmtp/veriler/kmp_au.pdf" in result.text
+    assert "Excel Raporu: https://www.borsaistanbul.com/veriler/rapor.xlsx" in result.text
+    assert "Sayfa Ici Gorseller / Semalar" in result.text
+    assert "BISTECH mimari semasi: https://www.borsaistanbul.com/file/inline-images/teknoloji_gorsel.jpeg" in result.text
+    assert "logo.png" not in result.text
+
+
+def test_extract_url_content_uses_browser_fallback_after_forbidden_static_fetch(monkeypatch):
+    calls: list[str] = []
+
+    def fake_get(url, *, headers, stream, timeout):
+        calls.append("static")
+        return FakeResponse(
+            b"Forbidden",
+            content_type="text/html",
+            url=url,
+            status_code=403,
+        )
+
+    def fake_browser_fetch(url):
+        calls.append("browser")
+        return (
+            b"<html><head><title>Rendered</title></head><body><div>JS ile gelen veri</div></body></html>",
+            "text/html; charset=utf-8",
+            url,
+            None,
+        )
+
+    monkeypatch.setattr(extractor.requests, "get", fake_get)
+    monkeypatch.setattr(extractor, "_fetch_with_browser", fake_browser_fetch, raising=False)
+
+    result = extractor.extract_url_content("https://example.com/spa")
+
+    assert result.success is True
+    assert result.title == "Rendered"
+    assert "JS ile gelen veri" in result.text
+    assert calls == ["static", "browser"]
+
+
+def test_extract_url_content_reports_missing_browser_for_empty_js_shell(monkeypatch):
+    html = b"<html><body><div id=\"root\"></div><script src=\"app.js\"></script></body></html>"
+    mock_get(monkeypatch, FakeResponse(html, content_type="text/html", url="https://example.com/app"))
+
+    def fake_browser_fetch(url):
+        return None, "", url, "Playwright kurulu degil"
+
+    monkeypatch.setattr(extractor, "_fetch_with_browser", fake_browser_fetch, raising=False)
+
+    result = extractor.extract_url_content("https://example.com/app")
+
+    assert result.success is True
+    assert "Dinamik icerik uyarisi: Playwright kurulu degil" in result.text
 
 
 def test_extract_url_content_formats_csv_preview_and_statistics(monkeypatch):

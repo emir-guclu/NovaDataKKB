@@ -5,7 +5,7 @@ from dataclasses import dataclass, field
 from io import BytesIO, StringIO
 from pathlib import Path
 from typing import Any
-from urllib.parse import urlparse
+from urllib.parse import urljoin, urlparse
 
 import pandas as pd
 import requests
@@ -21,7 +21,17 @@ from backend.app.core.llm_provider import KloudeksProvider
 
 MAX_BYTES = 15 * 1024 * 1024
 TIMEOUT_SECONDS = 15
-USER_AGENT = "NOVA-Analytics-Agent/1.0"
+USER_AGENT = (
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+    "(KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+)
+REQUEST_HEADERS = {
+    "User-Agent": USER_AGENT,
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,application/pdf,*/*;q=0.8",
+    "Accept-Language": "tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7",
+}
+DOCUMENT_EXTENSIONS = {".pdf", ".xlsx", ".xls", ".csv", ".docx"}
+IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".webp"}
 
 
 @dataclass
@@ -37,14 +47,43 @@ class ExtractedContent:
 def extract_url_content(
     url: str,
     provider: KloudeksProvider | None = None,
+    render_js: bool = False,
 ) -> ExtractedContent:
     try:
         _validate_url(url)
-        body, content_type, final_url = _download(url)
+        browser_warning = None
+        if render_js:
+            body, content_type, final_url, browser_warning = _fetch_with_browser(url)
+            if body is None:
+                raise ValueError(browser_warning or "Tarayici render islemi basarisiz oldu.")
+            return _extract_html_v2(body, content_type, final_url, dynamic_warning=browser_warning)
+
+        try:
+            body, content_type, final_url = _download(url)
+        except requests.HTTPError as exc:
+            if getattr(exc.response, "status_code", None) != 403:
+                raise
+            body, content_type, final_url, browser_warning = _fetch_with_browser(url)
+            if body is None:
+                raise ValueError(browser_warning or "Statik istek 403 dondurdu ve browser fallback kullanilamadi.")
+
         kind = _detect_kind(final_url, content_type)
 
         if kind == "html":
-            return _extract_html(body, content_type)
+            html_text = body.decode(_charset_from_content_type(content_type), errors="replace")
+            if browser_warning is None and _looks_like_js_shell(html_text):
+                browser_body, browser_type, browser_url, browser_error = _fetch_with_browser(final_url)
+                if browser_body is not None:
+                    body, content_type, final_url = browser_body, browser_type, browser_url
+                    html_text = body.decode(_charset_from_content_type(content_type), errors="replace")
+                else:
+                    browser_warning = browser_error
+            return _extract_html_v2(
+                body,
+                content_type,
+                final_url,
+                dynamic_warning=browser_warning,
+            )
         if kind == "csv":
             return _extract_csv(body)
         if kind == "excel":
@@ -88,7 +127,7 @@ def _validate_url(url: str) -> None:
 def _download(url: str) -> tuple[bytes, str, str]:
     response = requests.get(
         url,
-        headers={"User-Agent": USER_AGENT},
+        headers=REQUEST_HEADERS,
         stream=True,
         timeout=TIMEOUT_SECONDS,
     )
@@ -109,6 +148,39 @@ def _download(url: str) -> tuple[bytes, str, str]:
         chunks.append(chunk)
 
     return b"".join(chunks), response.headers.get("Content-Type", ""), response.url
+
+
+def _fetch_with_browser(url: str) -> tuple[bytes | None, str, str, str | None]:
+    try:
+        from playwright.sync_api import sync_playwright
+    except ImportError:
+        return None, "", url, "Playwright kurulu degil; dinamik sayfa statik HTML ile sinirli kaldi."
+
+    try:
+        with sync_playwright() as playwright:
+            browser = playwright.chromium.launch(headless=True)
+            page = browser.new_page(
+                user_agent=USER_AGENT,
+                extra_http_headers={
+                    "Accept": REQUEST_HEADERS["Accept"],
+                    "Accept-Language": REQUEST_HEADERS["Accept-Language"],
+                },
+            )
+            response = page.goto(url, wait_until="domcontentloaded", timeout=TIMEOUT_SECONDS * 1000)
+            page.wait_for_timeout(2500)
+            html = page.content().encode("utf-8")
+            final_url = page.url
+            content_type = "text/html; charset=utf-8"
+            if response is not None:
+                header_value = response.headers.get("content-type")
+                if header_value:
+                    content_type = header_value
+            browser.close()
+            if len(html) > MAX_BYTES:
+                return None, "", final_url, "Browser ile alinan icerik 15 MB sinirini asiyor."
+            return html, content_type, final_url, None
+    except Exception as exc:
+        return None, "", url, f"Playwright fallback basarisiz oldu: {exc}"
 
 
 def _detect_kind(url: str, content_type: str) -> str:
@@ -141,22 +213,98 @@ def _charset_from_content_type(content_type: str) -> str:
     return "utf-8"
 
 
-def _extract_html(body: bytes, content_type: str) -> ExtractedContent:
+def _looks_like_js_shell(html: str) -> bool:
+    soup = BeautifulSoup(html, "html.parser")
+    for container_id in ("root", "app"):
+        container = soup.find(id=container_id)
+        if container is not None and not container.get_text(" ", strip=True):
+            return True
+
+    visible_text = soup.get_text(" ", strip=True)
+    has_script = soup.find("script") is not None
+    has_static_content = soup.find(["h1", "h2", "h3", "p", "table", "a"]) is not None
+    return has_script and not has_static_content and len(visible_text) < 300
+
+
+def _extract_html_v2(
+    body: bytes,
+    content_type: str,
+    base_url: str,
+    *,
+    dynamic_warning: str | None = None,
+) -> ExtractedContent:
     html = body.decode(_charset_from_content_type(content_type), errors="replace")
     soup = BeautifulSoup(html, "html.parser")
+    title = soup.title.get_text(" ", strip=True) if soup.title else None
+    documents = _extract_document_links(soup, base_url)
+    images = _extract_meaningful_images(soup, base_url)
+
     for tag in soup(["script", "style", "nav", "footer"]):
         tag.decompose()
 
-    title = soup.title.get_text(" ", strip=True) if soup.title else None
     lines = [line.strip() for line in soup.get_text("\n").splitlines()]
-    text = "\n".join(line for line in lines if line)
+    sections = ["\n".join(line for line in lines if line)]
+
+    if documents:
+        sections.append(
+            "Bulunan Dosyalar\n"
+            + "\n".join(f"- {document['label']}: {document['url']}" for document in documents)
+        )
+
+    if images:
+        sections.append(
+            "Sayfa Ici Gorseller / Semalar\n"
+            + "\n".join(f"- {image['label']}: {image['url']}" for image in images)
+        )
+
+    if dynamic_warning:
+        sections.append(f"Dinamik icerik uyarisi: {dynamic_warning}")
 
     return ExtractedContent(
         content_type="html",
         title=title,
-        text=text,
-        metadata={"source_content_type": content_type},
+        text="\n\n".join(section for section in sections if section),
+        metadata={
+            "source_content_type": content_type,
+            "documents": documents,
+            "images": images,
+        },
     )
+
+
+def _extract_html(body: bytes, content_type: str) -> ExtractedContent:
+    return _extract_html_v2(body, content_type, "")
+
+
+def _extract_document_links(soup: BeautifulSoup, base_url: str) -> list[dict[str, str]]:
+    documents: list[dict[str, str]] = []
+    seen: set[str] = set()
+    for anchor in soup.find_all("a", href=True):
+        absolute_url = urljoin(base_url, anchor["href"])
+        suffix = Path(urlparse(absolute_url).path).suffix.lower()
+        if suffix not in DOCUMENT_EXTENSIONS or absolute_url in seen:
+            continue
+        label = anchor.get_text(" ", strip=True) or Path(urlparse(absolute_url).path).name
+        documents.append({"label": label, "url": absolute_url})
+        seen.add(absolute_url)
+    return documents
+
+
+def _extract_meaningful_images(soup: BeautifulSoup, base_url: str) -> list[dict[str, str]]:
+    images: list[dict[str, str]] = []
+    seen: set[str] = set()
+    for image in soup.find_all("img", src=True):
+        absolute_url = urljoin(base_url, image["src"])
+        suffix = Path(urlparse(absolute_url).path).suffix.lower()
+        label = (image.get("alt") or image.get("title") or "").strip()
+        lowered = (label + " " + absolute_url).lower()
+        if suffix not in IMAGE_EXTENSIONS or absolute_url in seen:
+            continue
+        if not label or "logo" in lowered or "icon" in lowered:
+            continue
+        images.append({"label": label, "url": absolute_url})
+        seen.add(absolute_url)
+    return images
 
 
 def _extract_csv(body: bytes) -> ExtractedContent:

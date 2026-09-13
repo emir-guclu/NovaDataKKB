@@ -1,266 +1,85 @@
 {
-  "timestamp": "2026-09-13 02:13:22",
-  "total_tests": 4,
-  "passed_tests": 4,
+  "timestamp": "2026-09-13 03:10:58",
+  "total_tests": 1,
+  "passed_tests": 1,
   "tool_accuracy_pct": 100.0,
-  "cumulative_llm_time_s": 43.85680619999766,
-  "cumulative_tool_time_s": 24.078104599990183,
-  "total_duration_s": 67.98045749999437,
+  "cumulative_llm_time_s": 11.095613900004537,
+  "cumulative_tool_time_s": 13.839469899990945,
+  "total_duration_s": 24.93993789999513,
   "test_cases": [
     {
-      "scenario_id": "6.1",
+      "scenario_id": "6.5",
       "tool_class": "WebUrlReaderTool",
       "expected_tool": "web_url_reader",
-      "prompt": "https://www.borsaistanbul.com/veriler/kiymetli-madenler-ve-kiymetli-taslar-piyasasi/piyasa-verileri adresindeki Kiymetli Madenler Piyasasi Verileri altindaki Altin Islemleri PDF icerigini oku; islem hacmi, miktar ve fiyat seviyelerinden piyasa hakkinda kisa bir anlam cikar.",
+      "prompt": "https://borsaistanbul.com/sirketler/islem-goren-sirketler adresindeki sayfayi oku; 'akhan un fabrikasi' adinda bir sirket bu sayfada islem goruyor olarak geciyor mu kontrol et.",
       "selected_tools": [
         "web_url_reader",
         "web_url_reader",
-        "web_url_reader",
         "web_search",
-        "web_url_reader",
-        "web_search",
-        "web_search",
-        "web_search"
+        "web_url_reader"
       ],
       "tool_success": true,
       "passed": true,
-      "duration_s": 37.97524929999781,
-      "llm_time_s": 23.312916600007156,
-      "tool_time_s": 14.649527299996407,
+      "duration_s": 24.93993789999513,
+      "llm_time_s": 11.095613900004537,
+      "tool_time_s": 13.839469899990945,
       "step_timings": [
         {
           "iteration": 1,
           "step_type": "llm_decision",
           "name": "LLM Call (Iter 1)",
-          "duration_s": 2.1258520999981556
+          "duration_s": 2.250880600004166
         },
         {
           "iteration": 1,
           "step_type": "tool_output",
           "name": "web_url_reader",
-          "duration_s": 0.6152044000045862
+          "duration_s": 0.3594865999984904
         },
         {
           "iteration": 2,
           "step_type": "llm_decision",
           "name": "LLM Call (Iter 2)",
-          "duration_s": 2.1512221000011778
+          "duration_s": 1.2706011999980547
         },
         {
           "iteration": 2,
           "step_type": "tool_output",
           "name": "web_url_reader",
-          "duration_s": 0.6991808000020683
-        },
-        {
-          "iteration": 2,
-          "step_type": "tool_output",
-          "name": "web_url_reader",
-          "duration_s": 0.6903069999971194
+          "duration_s": 4.583193599995866
         },
         {
           "iteration": 3,
           "step_type": "llm_decision",
           "name": "LLM Call (Iter 3)",
-          "duration_s": 1.2117352999994182
+          "duration_s": 2.2824219999965862
         },
         {
           "iteration": 3,
           "step_type": "tool_output",
           "name": "web_search",
-          "duration_s": 1.7679868000050192
+          "duration_s": 7.910878299997421
         },
         {
           "iteration": 4,
           "step_type": "llm_decision",
           "name": "LLM Call (Iter 4)",
-          "duration_s": 1.3584344000046258
+          "duration_s": 1.2944948000003933
         },
         {
           "iteration": 4,
           "step_type": "tool_output",
           "name": "web_url_reader",
-          "duration_s": 0.4034239999964484
-        },
-        {
-          "iteration": 4,
-          "step_type": "tool_output",
-          "name": "web_search",
-          "duration_s": 4.321483699997771
+          "duration_s": 0.9859113999991678
         },
         {
           "iteration": 5,
-          "step_type": "llm_decision",
-          "name": "LLM Call (Iter 5)",
-          "duration_s": 3.2089285000038217
-        },
-        {
-          "iteration": 5,
-          "step_type": "tool_output",
-          "name": "web_search",
-          "duration_s": 2.4671741999991355
-        },
-        {
-          "iteration": 5,
-          "step_type": "tool_output",
-          "name": "web_search",
-          "duration_s": 3.6847663999942597
-        },
-        {
-          "iteration": 6,
           "step_type": "llm_final",
-          "name": "LLM Final Synthesis (Iter 6)",
-          "duration_s": 13.256744199999957
+          "name": "LLM Final Synthesis (Iter 5)",
+          "duration_s": 3.9972153000053368
         }
       ],
-      "final_answer": "\n\n## Kısa ve dürüst özet\n\nİstediğin PDF’in **içeriğini (işlem hacmi, miktar, fiyat tablosu) okuyabildim.** Sayfaya erişebildim, ancak sayfa metninde **yalnızca başlık/ana menü yapısı** var; PDF’in kendisi ya da içindeki sayısal tablolar HTML içeriğinde gelmedi. Bu yüzden **gerçek hacim/miktar/fiyat değerlerini temelli bir piyasa yorumu yapmam mümkün değil.** Uydurma sayı vermemek adına bunu açıkça belirtiyorum.\n\n**Elindeki verilerden (tool sonuçlarından) çıkan somut gerçekler:**\n\n1. Sayfa “Kıymetli Madenler Piyasası Verileri” bölümünü içeriyor; altında **Altın, Gümüş, Platin, Paladyum İşlemleri** başlıkları listeleniyor. Yani istediğin “Altın İşlemleri” bölümü sayfada var.\n2. Aynı veri yapısına sahip sayfada şu not var: iki tarih aralığına ait **günlük veriler için bir form** kullanılıyor ve **01.08.2015 tarihinden itibaren veri dosyaları yalnızca `datastore.borsaistanbul.com`** üzerinden erişilebilir.\n3. PDF’in doğrudan adresini tahmin ederek denediğim URL’ler **404 (bulunamadı)** döndü; `datastore.borsaistanbul.com` üzerinde de veri gövdesi değil, yalnızca “Borsa İstanbul DataStore” başlığı geldi.\n\n**Sonuç:** Bu tool sonuçları, PDF’in **yapısını ve veriye erişim yolunu** (DataStore + tarih aralığı formu) gösteriyor; ama **hacim, adet ve fiyat rakamlarını içermiyor.** Dolayısıyla “fiyat X seviyesinde, hacim Y, piyasa Z” şeklinde bir çıkarım yaparsam bu tool sonuçlarında **desteklenmeyen sayı/iddia** olur ve yazmam.\n\n**Bunun yerine (genel yöntem, veriden çıkmayan yorum değil):** Elde edilebilir olduğunda bu tabloya şu üç şeyden bakılır — (a) **günlük/hesaplanan ortalama işlem hacmi ve adedin** önceki günlere göre artıp azalması (ilgi/akış), (b) **ortalama ve son fiyatın** yönü, (c) **hacim–fiyat uyumu** (fiyat artışı hacimle destekleniyor mu). Rakamlar DataStore’dan form/arama ile çekilebildiğinde bu üç madde üzerinden kısa, veriye dayalı yorumu verebilirim.\n\nİstersen bir sonraki adımda doğrudan **`datastore.borsaistanbul.com`** üzerinden Altın İşlemleri dosyasının gerçek URL’sini veya günlük bülten verilerini çekmeyi deneyebilirim.",
-      "error": null
-    },
-    {
-      "scenario_id": "6.2",
-      "tool_class": "WebUrlReaderTool",
-      "expected_tool": "web_url_reader",
-      "prompt": "https://www.borsaistanbul.com/endeks/xtumy adresindeki ham HTML/CSS web sayfasi icerigini oku; BIST Tum endeksi icin sayfada gorunen gunluk veya aylik degisim bilgisini ozetle.",
-      "selected_tools": [
-        "web_url_reader",
-        "web_search",
-        "web_search"
-      ],
-      "tool_success": true,
-      "passed": true,
-      "duration_s": 20.305498499998066,
-      "llm_time_s": 12.287673499995435,
-      "tool_time_s": 8.00487769999745,
-      "step_timings": [
-        {
-          "iteration": 1,
-          "step_type": "llm_decision",
-          "name": "LLM Call (Iter 1)",
-          "duration_s": 1.0896563999995124
-        },
-        {
-          "iteration": 1,
-          "step_type": "tool_output",
-          "name": "web_url_reader",
-          "duration_s": 1.1145472999996855
-        },
-        {
-          "iteration": 2,
-          "step_type": "llm_decision",
-          "name": "LLM Call (Iter 2)",
-          "duration_s": 7.198076799999399
-        },
-        {
-          "iteration": 2,
-          "step_type": "tool_output",
-          "name": "web_search",
-          "duration_s": 3.4080830000020796
-        },
-        {
-          "iteration": 3,
-          "step_type": "llm_decision",
-          "name": "LLM Call (Iter 3)",
-          "duration_s": 0.763501699999324
-        },
-        {
-          "iteration": 3,
-          "step_type": "tool_output",
-          "name": "web_search",
-          "duration_s": 3.4822473999956856
-        },
-        {
-          "iteration": 4,
-          "step_type": "llm_final",
-          "name": "LLM Final Synthesis (Iter 4)",
-          "duration_s": 3.2364385999972
-        }
-      ],
-      "final_answer": "\n\nSayfayı okudum; ancak istediğiniz bilgiyi **sayfa içeriğinde bulamadım**.\n\n**Sayfada ne vardı:**\n- Sayfa başlığı: **BIST TUM-100 (XTUMY)**, BIST Pay Endeksleri / Gösterge Endeksler altında\n- Endeks özellikleri: ISIN kodu **TRAIMKB01380**, tip: \"Piyasa Değeri Ağırlıklı, Ağırlık Sınırlamalı Olmayan, Fiyat\", başlangıç değeri: **268,6407** (Kur: TL)\n- \"Güncel Endeks Değerleri\" ve \"Önceki Kapanış\" bölümleri mevcut, tarih **13.09.2026** görünüyor\n\n**Neden deği­şim bilgisi yok:**\nBIST'in bu sayfası endeks seviyesini, günlük/aylık değişimi gibi güncel rakamları JavaScript ile dinamik olarak yüklüyor; ham HTML çıktısında bu alanlar **boş geliyor** (sadece etiketler var, sayısal değer yok). Bu yüzden sayfada görünen bir günlük veya aylık değişim oranı/ değeri aktaramıyorum.\n\nAyrıca web aramasıyla (13.09.2026 tarihli BIST 100 kapanış) çapraz doğrulama yapmayı denedim ancak sonuç dönmedi.\n\nİsterseniz:\n- BIST'in endeks verileri için alternatif bir API/link kullanmasını,\n- veya farklı bir kaynaktan (ör. haber sitesi) güncel BIST 100 değeri aramayı deneyebilirim.",
-      "error": null
-    },
-    {
-      "scenario_id": "6.3",
-      "tool_class": "WebUrlReaderTool",
-      "expected_tool": "web_url_reader",
-      "prompt": "https://file-examples.com/storage/fe1fd0c8fba163b72c48b80/2017/02/file_example_XLSX_10.xlsx adresindeki Excel dosyasini oku; sayfa adlarini, kolonlari ve ilk satirlardaki tablo yapisini ozetle.",
-      "selected_tools": [
-        "web_url_reader",
-        "web_url_reader"
-      ],
-      "tool_success": false,
-      "passed": true,
-      "duration_s": 6.03386469999532,
-      "llm_time_s": 5.098926700004085,
-      "tool_time_s": 0.9251550999979372,
-      "step_timings": [
-        {
-          "iteration": 1,
-          "step_type": "llm_decision",
-          "name": "LLM Call (Iter 1)",
-          "duration_s": 0.8925264999998035
-        },
-        {
-          "iteration": 1,
-          "step_type": "tool_output",
-          "name": "web_url_reader",
-          "duration_s": 0.5682932999989134
-        },
-        {
-          "iteration": 2,
-          "step_type": "llm_decision",
-          "name": "LLM Call (Iter 2)",
-          "duration_s": 1.2510791000022436
-        },
-        {
-          "iteration": 2,
-          "step_type": "tool_output",
-          "name": "web_url_reader",
-          "duration_s": 0.3568617999990238
-        },
-        {
-          "iteration": 3,
-          "step_type": "llm_final",
-          "name": "LLM Final Synthesis (Iter 3)",
-          "duration_s": 2.9553211000020383
-        }
-      ],
-      "final_answer": "\n\nBu dosyaya erişemedim; iki denemede de sunucu **403 Forbidden** hatası döndü. Dolayısıyla Excel dosyasının sayfa adlarını, kolonlarını ve tablo yapısını şu an okuyamıyorum — erişim engelli olduğu için içerik hakkında bir özet sunmam doğru olmaz.\n\nÖneriler:\n1. **Başka bir URL:** Dosya farklı bir adreste (ör. doğrudan erişilebilir bir paylaşım bağlantısı) varsa onu gönderin.\n2. **Dosyayı doğrudan paylaştırın:** Dosyayı sohbet içine ekleyebilirseniz sayfa adlarını, kolon başlıklarını ve ilk satırları içeren yapısal özet çıkarabilirim.\n3. **Alternatif kaynak:** Eğer bu bilinen \"file_example_XLSX_10.xlsx\" örnek dosyasıysa, dosyayı indirip aynı içeriği başka bir bağlantıdan sunabilirseniz analiz ederim.\n\nDoğru erişilebilir bir bağlantı ya da dosya geldiğinde derhal özetini hazırlarım.",
-      "error": null
-    },
-    {
-      "scenario_id": "6.4",
-      "tool_class": "WebUrlReaderTool",
-      "expected_tool": "web_url_reader",
-      "prompt": "https://www.borsaistanbul.com/files/borsa_istanbul_logo.png adresindeki gorseli OCR ile oku; gorseldeki metin veya logo bilgisini kisaca acikla.",
-      "selected_tools": [
-        "web_url_reader"
-      ],
-      "tool_success": false,
-      "passed": true,
-      "duration_s": 3.6658450000031735,
-      "llm_time_s": 3.1572893999909866,
-      "tool_time_s": 0.49854449999838835,
-      "step_timings": [
-        {
-          "iteration": 1,
-          "step_type": "llm_decision",
-          "name": "LLM Call (Iter 1)",
-          "duration_s": 0.8744811999931699
-        },
-        {
-          "iteration": 1,
-          "step_type": "tool_output",
-          "name": "web_url_reader",
-          "duration_s": 0.49854449999838835
-        },
-        {
-          "iteration": 2,
-          "step_type": "llm_final",
-          "name": "LLM Final Synthesis (Iter 2)",
-          "duration_s": 2.2828081999978167
-        }
-      ],
-      "final_answer": "\n\nVerdiğiniz adresi OCR ile okumaya çalıştım ancak okunamadı.\n\n**Sebep:** URL `https://www.borsaistanbul.com/files/borsa_istanbul_logo.png` adresine istek yapıldığında **404 (Not Found)** hatası döndü. Yani bu adresteki görsel mevcut değil; dosya kaldırılmış, taşınmış ya da yol bilgisi hatalı olabilir.\n\n**Sonuç:** Görsel indirilemediği için üzerinde metin/logoyu okuyup açıklamam mümkün değil — uydurma bir içerik sunmam doğru olmaz.\n\n**Öneri:**\n- Doğru logonun güncel URL'sini kontrol edip yeniden paylaşabilirsiniz (örn. borsaistanbul.com ana sayfasındaki logo dosyasının tam bağlantısı).\n- Doğru URL'i verirseniz görseli indirip metin/logo bilgisini tekrar okuyabilirim.",
+      "final_answer": "\n\nEvet — **\"Akhan Un Fabrikası\" Borsa İstanbul'da işlem gören bir şirkettir.**\n\nKontrol ettiğim veriler:\n\n- **Borsa İstanbul sayfası:** Verdiğiniz linkteki şirket listesi sayfada JavaScript ile dinamik yüklendiği için ham içerikte doğrudan görünmedi; ancak şirketin BIST'te işlem gördüğünü bağımsız kaynaklarla doğruladım.\n- **Şirket ünvanı:** Akhan Un Fabrikası ve Tarım Ürünleri Gıda Sanayi Ticaret A.Ş.\n- **Hisse kodu:** **AKHAN**\n- **Pazar:** Ana Pazar\n- **Endeksler:** BIST 500, BIST TÜM, BIST ANA, BIST HALKA ARZ, BIST GIDA-İÇECEK, BIST SINAİ, BIST TÜM-100, BIST KATILIM TÜM\n- **İşlem geçmişi:** Hisse 3 Şubat 2026'da (kote tarihi 6 Şubat 2026) Ana Pazar'da işlem görmeye başladı; Eylül 2026 aybaşı açılış fiyatı 41,54 ₺, piyasa değeri ~11,4 milyar ₺.\n\nSonuç: AKHAN, BIST Ana Pazar'da işlem gören ve BIST 500 endeksine dahil olan bir şirket olarak bu sayfada yer alır.",
       "error": null
     }
   ]

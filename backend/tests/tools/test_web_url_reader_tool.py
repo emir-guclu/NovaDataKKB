@@ -34,7 +34,7 @@ def test_web_url_reader_tool_schema_requires_url():
 
 
 def test_web_url_reader_tool_runs_extractor_and_truncates(monkeypatch):
-    def fake_extract(url, provider=None):
+    def fake_extract(url, provider=None, render_js=False):
         assert url == "https://example.com/report"
         return FakeExtractedContent(text="abcdefghijklmnopqrstuvwxyz")
 
@@ -52,7 +52,7 @@ def test_web_url_reader_tool_runs_extractor_and_truncates(monkeypatch):
 
 
 def test_web_url_reader_tool_returns_structured_failure(monkeypatch):
-    def fake_extract(url, provider=None):
+    def fake_extract(url, provider=None, render_js=False):
         return FakeExtractedContent(success=False, text="", error="indirilemedi")
 
     monkeypatch.setattr("backend.app.tools.web_url_reader.extract_url_content", fake_extract)

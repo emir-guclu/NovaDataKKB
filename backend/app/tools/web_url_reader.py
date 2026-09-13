@@ -25,6 +25,10 @@ class WebUrlReaderTool(BaseTool):
             le=20000,
             description="Dondurulecek metnin maksimum karakter uzunlugu",
         )
+        render_js: bool = Field(
+            default=False,
+            description="Sayfadaki veriler JavaScript ile dinamik yukleniyorsa veya tablolar bossa True vererek gercek tarayicida render et.",
+        )
 
     class Output(BaseModel):
         success: bool
@@ -36,7 +40,7 @@ class WebUrlReaderTool(BaseTool):
 
     def run(self, params: Input) -> Output:
         try:
-            extracted = extract_url_content(params.url)
+            extracted = extract_url_content(params.url, render_js=params.render_js)
             content = extracted.text[: params.max_length] if extracted.success else ""
             return self.Output(
                 success=extracted.success,

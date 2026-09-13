@@ -129,8 +129,8 @@ TEST_SCENARIOS = [
         "expected_tool": "web_url_reader",
         "content_kind": "excel",
         "prompt": (
-            "https://file-examples.com/storage/fe1fd0c8fba163b72c48b80/2017/02/file_example_XLSX_10.xlsx "
-            "adresindeki Excel dosyasini oku; sayfa adlarini, kolonlari ve ilk satirlardaki tablo yapisini ozetle."
+            "https://github.com/derekbanas/pandas-tutorial/raw/master/Financial%20Sample.xlsx "
+            "adresindeki Excel dosyasini oku; sayfa adlarini, kolonlari ve ilk 5 satirlardaki tablo yapisini ozetle."
         ),
     },
     {
@@ -139,8 +139,18 @@ TEST_SCENARIOS = [
         "expected_tool": "web_url_reader",
         "content_kind": "image",
         "prompt": (
-            "https://www.borsaistanbul.com/files/borsa_istanbul_logo.png adresindeki gorseli OCR ile oku; "
+            "https://www.borsaistanbul.com/file/inline-images/teknoloji_gorsel.jpeg adresindeki gorseli OCR ile oku; "
             "gorseldeki metin veya logo bilgisini kisaca acikla."
+        ),
+    },
+    {
+        "id": "6.5",
+        "tool_class": "WebUrlReaderTool",
+        "expected_tool": "web_url_reader",
+        "content_kind": "html",
+        "prompt": (
+            "https://borsaistanbul.com/sirketler/islem-goren-sirketler adresindeki sayfayi oku; "
+            "'akhan un fabrikasi' adinda bir sirket bu sayfada islem goruyor olarak geciyor mu kontrol et."
         ),
     },
 ]
