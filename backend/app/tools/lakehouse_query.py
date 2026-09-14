@@ -16,6 +16,8 @@ PROJECT_ROOT = Path(__file__).resolve().parents[3]
 LAKEHOUSE_DB = PROJECT_ROOT / "data" / "lakehouse.duckdb"
 SILVER_DB = PROJECT_ROOT / "data" / "silver" / "silver.duckdb"
 ALIGNED_DB = PROJECT_ROOT / "data" / "aligned" / "monthly" / "aligned.duckdb"
+GOLD_DIR = PROJECT_ROOT / "data" / "gold"
+EVDS_CATALOG = PROJECT_ROOT / "data" / "bronze" / "evds" / "evds_catalog.parquet"
 
 FORBIDDEN_KEYWORDS = [
     "DROP",
@@ -49,12 +51,37 @@ def _json_ready(value: Any) -> Any:
     return value
 
 
+def _sql_string_literal(value: str) -> str:
+    return value.replace("'", "''")
+
+
+def _bind_local_parquet_views(con: duckdb.DuckDBPyConnection) -> None:
+    """Makineye ozel persistent view pathlerini local repo Parquetleriyle golgeler."""
+    if GOLD_DIR.exists():
+        for parquet_path in sorted(GOLD_DIR.glob("*.parquet")):
+            view_name = parquet_path.stem
+            parquet_sql_path = _sql_string_literal(parquet_path.resolve().as_posix())
+            con.execute(
+                f"CREATE OR REPLACE TEMP VIEW {_quote_identifier(view_name)} "
+                f"AS SELECT * FROM read_parquet('{parquet_sql_path}')"
+            )
+
+    if EVDS_CATALOG.exists():
+        evds_sql_path = _sql_string_literal(EVDS_CATALOG.resolve().as_posix())
+        con.execute(
+            f"CREATE OR REPLACE TEMP VIEW {_quote_identifier('gold_evds_catalog')} "
+            f"AS SELECT * FROM read_parquet('{evds_sql_path}')"
+        )
+
+
 def _connect_lakehouse() -> duckdb.DuckDBPyConnection:
     con = duckdb.connect(str(LAKEHOUSE_DB), read_only=True)
     if SILVER_DB.exists():
-        con.execute(f"ATTACH IF NOT EXISTS '{SILVER_DB.as_posix()}' AS silver_db (READ_ONLY)")
+        con.execute(f"ATTACH IF NOT EXISTS '{_sql_string_literal(SILVER_DB.resolve().as_posix())}' AS silver_db (READ_ONLY)")
     if ALIGNED_DB.exists():
-        con.execute(f"ATTACH IF NOT EXISTS '{ALIGNED_DB.as_posix()}' AS aligned_db (READ_ONLY)")
+        con.execute(f"ATTACH IF NOT EXISTS '{_sql_string_literal(ALIGNED_DB.resolve().as_posix())}' AS aligned_db (READ_ONLY)")
+
+    _bind_local_parquet_views(con)
     return con
 
 
