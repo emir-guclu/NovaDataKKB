@@ -1,13 +1,17 @@
 import json
 import logging
 import time
-from datetime import date
 from typing import Any, Callable
 
 from pydantic import ValidationError
 
 from backend.app.agent.tool_registry import ToolRegistry
 from backend.app.core.llm_provider import KloudeksProvider
+from backend.app.prompts.loader import get_system_prompt
+from backend.app.prompts.sanitizer import (
+    flag_suspicious_content,
+    format_safe_user_message,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -74,40 +78,12 @@ def run_agent(
     if max_iterations < 1:
         raise ValueError("max_iterations en az 1 olmali.")
 
+    flag_suspicious_content(question, source_url="user_query")
+    safe_user_message = format_safe_user_message(question)
+
     messages: list[dict] = [
-        {
-            "role": "system",
-            "content": (
-                f"Sen finansal veri analiz ajanisin. Bugunun tarihi {date.today().isoformat()}. "
-                "Kullanici sorusunu cevaplamak icin gereken toolu sec. "
-                "Kullanici guncel, son, en yeni veya latest bilgi istiyorsa arama sorgusunda "
-                "bugunun yilini/tarihini dikkate al ve daha eski sonucu en guncelmis gibi sunma. "
-                "Bir tool basarili olup soruyu cevaplamak icin yeterli ve ilgili veri dondurdugunde "
-                "ayni toolu benzer sorgularla gereksiz yere tekrar cagirma; mevcut tool sonucunu "
-                "yorumlayip final cevabi ver. Tool sonucu basarisizsa veya gercekten yetersizse "
-                "baska bir tool ya da farkli parametrelerle tekrar deneyebilirsin. "
-                "Kullanici belirli bir finansal gosterge, kredi turu, faiz, sektor veya makroekonomik veri "
-                "sordugunda HER ZAMAN ONCE series_catalog_search aracini kullanarak sistemde bu seriyi ara. "
-                "Eger ilgili seri yerelde bulunursa donen series_id uzerinden lakehouse_query veya change_detection cagrisi yap. "
-                "YALNIZCA serinin yerel katalogda bulunamadigi anlasilirsa (found_in_lakehouse=false veya yetersizse) "
-                "ve konu Merkez Bankasi / TCMB makroekonomik verisi ise evds_data_service aracina basvur: "
-                "once resmi EVDS katalogunda ara (action='search'), ardindan bulunan seri kodunu canli yukle (action='load'). "
-                "Diger harici bilgi ihtiyaclarinda web_search aracina basvur. "
-                "Eger cevabini uretirken web_search veya web_url_reader araclarindan faydalandiysan, "
-                "cevabinin en sonuna MUTLAKA '### 🔗 Kaynaklar' basligi altinda tiklanabilir markdown linkleri "
-                "([Baslik](URL) - Aciklama veya [Baslik](URL)) ekle. "
-                "Uydurma veri kullanma. Tool sonucunda acikca desteklenmeyen sayisal deger, tarih, alinti veya iddia ekleme. "
-                "URL tahmin ederek uydurma; sayfada acikca listelenmeyen hicbir URL'yi kullanma. "
-                "web_url_reader sonucundaki Bulunan Dosyalar veya Gorseller listesinde gercek bir URL varsa, "
-                "kullanici ilgili rapor, tablo, sema veya gorsel hakkinda ayrinti istediginde ikinci adimda o URL'yi oku. "
-                "Eger bir sayfadaki sayisal veriler veya tablolar ham HTML'de bossa ya da JavaScript ile yuklendigi anlasiliyorsa, "
-                "ayni URL'yi web_url_reader ile render_js=True parametresi vererek tekrar oku. "
-                "Bir bilgi tool sonucunda yoksa bunu kesin gercek gibi yazma. "
-                "Tool sonucundan dogrudan cikmayan trend, yayin takvimi, beklenti veya ek sayisal yorum uretme. "
-                "Yalnizca tool sonucunda acikca desteklenen gercekleri ve bu gerceklerin basit yorumunu kullan."
-            ),
-        },
-        {"role": "user", "content": question},
+        {"role": "system", "content": get_system_prompt()},
+        {"role": "user", "content": safe_user_message},
     ]
     tools_schema = registry.to_openai_tools_format()
     executed_tool_calls: set[tuple[str, str]] = set()

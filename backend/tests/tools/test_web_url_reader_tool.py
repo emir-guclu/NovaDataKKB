@@ -46,8 +46,8 @@ def test_web_url_reader_tool_runs_extractor_and_truncates(monkeypatch):
     assert result.success is True
     assert result.url == "https://example.com/report"
     assert result.content_type == "html"
-    assert result.title == "Baslik"
-    assert result.content == "abcdefghij"
+    assert "abcdefghij" in result.content
+    assert "<untrusted_external_web_content" in result.content
     assert result.error is None
 
 

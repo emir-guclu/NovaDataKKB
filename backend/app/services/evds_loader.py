@@ -268,6 +268,10 @@ def load_evds_series(
         canonical_obs_df["dims"] = canonical_obs_df["dims"].map(
             lambda d: json.dumps(d, ensure_ascii=False)
         )
+        # Safeguard: deduplicate by PK (series_id, date, dims) to avoid constraint violation
+        canonical_obs_df = canonical_obs_df.drop_duplicates(
+            subset=["series_id", "date", "dims"], keep="last"
+        )
         canonical_meta_df = pd.DataFrame([canonical_meta_dict])
 
         con = duckdb.connect(str(db_path))

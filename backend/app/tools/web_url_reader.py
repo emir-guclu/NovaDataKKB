@@ -4,6 +4,10 @@ import logging
 
 from pydantic import BaseModel, Field
 
+from backend.app.prompts.sanitizer import (
+    flag_suspicious_content,
+    format_untrusted_web_content,
+)
 from backend.app.services.url_content_extractor import extract_url_content
 from backend.app.tools.base import BaseTool
 
@@ -41,7 +45,11 @@ class WebUrlReaderTool(BaseTool):
     def run(self, params: Input) -> Output:
         try:
             extracted = extract_url_content(params.url, render_js=params.render_js)
-            content = extracted.text[: params.max_length] if extracted.success else ""
+            if extracted.success and extracted.text:
+                flag_suspicious_content(extracted.text, source_url=params.url)
+                content = format_untrusted_web_content(extracted.text[: params.max_length], params.url)
+            else:
+                content = ""
             return self.Output(
                 success=extracted.success,
                 url=params.url,

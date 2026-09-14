@@ -17,6 +17,25 @@ LAKEHOUSE_DB = PROJECT_ROOT / "data" / "lakehouse.duckdb"
 SILVER_DB = PROJECT_ROOT / "data" / "silver" / "silver.duckdb"
 ALIGNED_DB = PROJECT_ROOT / "data" / "aligned" / "monthly" / "aligned.duckdb"
 
+FORBIDDEN_KEYWORDS = [
+    "DROP",
+    "DELETE",
+    "INSERT",
+    "UPDATE",
+    "ALTER",
+    "CREATE",
+    "ATTACH",
+    "COPY",
+]
+
+
+def validate_query_safety(sql: str) -> tuple[bool, str | None]:
+    upper = sql.upper()
+    for kw in FORBIDDEN_KEYWORDS:
+        if kw in upper:
+            return False, f"Bu sorgu türü ({kw}) desteklenmiyor, sadece SELECT kullanılabilir."
+    return True, None
+
 
 def _quote_identifier(identifier: str) -> str:
     return '"' + identifier.replace('"', '""') + '"'
@@ -31,7 +50,7 @@ def _json_ready(value: Any) -> Any:
 
 
 def _connect_lakehouse() -> duckdb.DuckDBPyConnection:
-    con = duckdb.connect(str(LAKEHOUSE_DB))
+    con = duckdb.connect(str(LAKEHOUSE_DB), read_only=True)
     if SILVER_DB.exists():
         con.execute(f"ATTACH IF NOT EXISTS '{SILVER_DB.as_posix()}' AS silver_db (READ_ONLY)")
     if ALIGNED_DB.exists():
@@ -132,6 +151,10 @@ class LakehouseQueryTool(BaseTool):
                     sql += f" ORDER BY {_quote_identifier(params.order_by)} {params.order_direction.upper()}"
                 sql += " LIMIT ?"
                 query_params.append(params.limit)
+
+                is_safe, safety_err = validate_query_safety(sql)
+                if not is_safe:
+                    return self.Output(success=False, error=safety_err, table=params.table)
 
                 cursor = con.execute(sql, query_params)
                 columns = [col[0] for col in cursor.description]
