@@ -32,7 +32,7 @@ class WebSearchTool(BaseTool):
             if params.query == "ERROR_TRIGGER":
                 raise Exception("Simulated network error")
                 
-            with DDGS() as ddgs:
+            with DDGS(timeout=5) as ddgs:
                 raw_results = list(ddgs.text(params.query, max_results=3))
             
             results = []

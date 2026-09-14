@@ -61,6 +61,8 @@ class KloudeksProvider(LLMProvider):
         self.client = client or OpenAI(
             api_key=self.api_key,
             base_url=self.BASE_URL,
+            timeout=60.0,
+            max_retries=0,
         )
         self._sleep = sleep_fn
 

@@ -2,6 +2,7 @@
 import logging
 import os
 from datetime import datetime, timedelta
+from functools import partial
 from typing import Any, List, Optional, Tuple, Union
 import pandas as pd
 import requests
@@ -14,6 +15,7 @@ logger = logging.getLogger(__name__)
 # This provides an ample historical buffer for long series (our 2021-2026 requirement spans ~1978 days / 2 pages)
 # while acting as an absolute safety ceiling against infinite loops (W-02).
 DEFAULT_MAX_PAGINATION_PAGES: int = 10
+EVDS_REQUEST_TIMEOUT_SECONDS: float = 75.0
 
 
 class EvdsClient:
@@ -68,6 +70,15 @@ class EvdsClient:
             f"to index {self._current_key_idx} (Key #{self._current_key_idx + 1})."
         )
 
+    def _create_api_instance(self, api_key: str) -> Any:
+        """EVDS istemcisini sonlu bir HTTP timeout ile olusturur."""
+        api_instance = evdsAPI(key=api_key)
+        api_instance.session.get = partial(
+            api_instance.session.get,
+            timeout=EVDS_REQUEST_TIMEOUT_SECONDS,
+        )
+        return api_instance
+
     def _execute_with_rotation(self, operation_name: str, op_callable: Any) -> Any:
         """Executes an API call with automatic key rotation upon encountering HTTP 429 or rate limits."""
         if not self.api_keys:
@@ -82,7 +93,7 @@ class EvdsClient:
             logger.debug(f"Attempting EVDS request with key index {self._current_key_idx} for {operation_name}")
 
             try:
-                api_instance = evdsAPI(key=active_key)
+                api_instance = self._create_api_instance(active_key)
                 return op_callable(api_instance)
             except requests.exceptions.HTTPError as http_err:
                 last_exception = http_err
