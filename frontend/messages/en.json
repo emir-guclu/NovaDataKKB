@@ -9,12 +9,13 @@
     "auth_success": "✅ System logged in. Loading agent panel...",
     "chat_placeholder": "Ask a financial question...",
     "panel_title": "📈 Analysis and Evidence Panel",
-    "verifier_active": "✅ Verifier Layer Active: 14 numbers programmatically verified.",
+    "verifier_active": "Source traceability: Every answer is grounded in tool outputs only.",
     "sources": "📚 Sources Used: EVDS, BDDK",
     "send_button": "Send",
     "chat_title": "NOVA Chat",
-    "graph_placeholder": "[Graph Area - Waiting for API Data]",
-    "graph_subtext": "Recharts or Plotly graph will be rendered here",
-    "welcome_message": "Welcome! Successfully connected to NOVA Analytics Agent system. How can I help you?"
+    "graph_placeholder": "Analysis Panel",
+    "graph_subtext": "The data sources and tools used will be listed here once you ask a question.",
+    "welcome_message": "Welcome! Successfully connected to NOVA Analytics Agent system. How can I help you?",
+    "trace_title": "Tools used for this answer"
   }
 }

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+import re
 from datetime import date, datetime
 from pathlib import Path
 from typing import Any, Literal
@@ -31,11 +32,16 @@ FORBIDDEN_KEYWORDS = [
 ]
 
 
+_FORBIDDEN_RE = re.compile(
+    r"\b(" + "|".join(FORBIDDEN_KEYWORDS) + r")\b", re.IGNORECASE
+)
+
+
 def validate_query_safety(sql: str) -> tuple[bool, str | None]:
-    upper = sql.upper()
-    for kw in FORBIDDEN_KEYWORDS:
-        if kw in upper:
-            return False, f"Bu sorgu türü ({kw}) desteklenmiyor, sadece SELECT kullanılabilir."
+    match = _FORBIDDEN_RE.search(sql)
+    if match:
+        kw = match.group(1).upper()
+        return False, f"Bu sorgu türü ({kw}) desteklenmiyor, sadece SELECT kullanılabilir."
     return True, None
 
 

@@ -15,6 +15,31 @@ from backend.app.prompts.sanitizer import (
 
 logger = logging.getLogger(__name__)
 
+MAX_HISTORY_TURNS = 6          # son 3 soru-cevap çifti
+MAX_HISTORY_CHARS = 4000       # tur başına üst sınır
+
+
+def _sanitize_history(history: list[dict[str, Any]] | None) -> list[dict]:
+    """İstemciden gelen geçmişi güvenli ve sınırlı hale getirir."""
+    if not history:
+        return []
+    cleaned: list[dict] = []
+    for turn in history[-MAX_HISTORY_TURNS:]:
+        if not isinstance(turn, dict):
+            continue
+        role = turn.get("role")
+        content = turn.get("content")
+        if role not in ("user", "assistant"):
+            continue
+        if not isinstance(content, str) or not content.strip():
+            continue
+        content = content[:MAX_HISTORY_CHARS]
+        if role == "user":
+            flag_suspicious_content(content, source_url="history")
+            content = format_safe_user_message(content)
+        cleaned.append({"role": role, "content": content})
+    return cleaned
+
 
 def _canonical_tool_signature(tool_name: str, arguments_str: str) -> tuple[str, str]:
     try:
@@ -74,6 +99,7 @@ def run_agent(
     provider: KloudeksProvider,
     max_iterations: int = 6,
     on_event: Callable[[str, dict[str, Any]], None] | None = None,
+    history: list[dict[str, Any]] | None = None,
 ) -> str:
     if max_iterations < 1:
         raise ValueError("max_iterations en az 1 olmali.")
@@ -81,10 +107,9 @@ def run_agent(
     flag_suspicious_content(question, source_url="user_query")
     safe_user_message = format_safe_user_message(question)
 
-    messages: list[dict] = [
-        {"role": "system", "content": get_system_prompt()},
-        {"role": "user", "content": safe_user_message},
-    ]
+    messages: list[dict] = [{"role": "system", "content": get_system_prompt()}]
+    messages.extend(_sanitize_history(history))
+    messages.append({"role": "user", "content": safe_user_message})
     tools_schema = registry.to_openai_tools_format()
     executed_tool_calls: set[tuple[str, str]] = set()
     collected_sources: list[dict[str, str]] = []

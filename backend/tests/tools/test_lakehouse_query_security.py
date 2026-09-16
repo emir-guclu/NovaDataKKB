@@ -61,3 +61,16 @@ def test_lakehouse_db_connection_is_read_only(tmp_path):
     with pytest.raises(duckdb.Error):
         con_ro.execute("DROP TABLE t1")
     con_ro.close()
+
+
+def test_validate_query_safety_allows_columns_containing_keywords():
+    """created_at / updated_at gibi kolon adları yanlışlıkla engellenmemeli."""
+    for sql in [
+        'SELECT "created_at" FROM t',
+        'SELECT "updated_at", value FROM t',
+        'SELECT "copy_count" FROM t',
+        'SELECT "insert_date" FROM t',
+    ]:
+        is_safe, error = validate_query_safety(sql)
+        assert is_safe is True, f"Yanlış pozitif: {sql} -> {error}"
+        assert error is None

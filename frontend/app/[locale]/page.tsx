@@ -7,6 +7,9 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8000";
+
 function DashboardContent({ t }: { t: any }) {
   const { data: session } = useSession();
   
@@ -16,7 +19,7 @@ function DashboardContent({ t }: { t: any }) {
 
   // Mesajlaşma State'leri
   const [input, setInput] = useState("");
-  const [messages, setMessages] = useState<Array<{ role: string; content: string }>>([
+  const [messages, setMessages] = useState<Array<{ role: string; content: string; trace?: any[] }>>([
     { role: "agent", content: "" } // İçerik boş, aşağıda t() ile doldurulacak
   ]);
   const [isLoading, setIsLoading] = useState(false);
@@ -64,24 +67,56 @@ function DashboardContent({ t }: { t: any }) {
 
   const isLoggedIn = session || devMode;
 
+  // Sağ paneldeki güven/izlenebilirlik bölümü için son agent mesajının trace'i
+  const lastAgentTrace = [...messages].reverse().find(m => m.role === "agent" && m.trace && m.trace.length > 0)?.trace;
+
+  // tool_call + tool_result çiftlerini tek bir adıma birleştir
+  const traceSteps: Array<{ tool_name: string; arguments?: string; success?: boolean; duration_s?: number }> = [];
+  if (lastAgentTrace) {
+    let pending: { tool_name: string; arguments?: string } | null = null;
+    for (const item of lastAgentTrace) {
+      if (item.type === "tool_call") {
+        pending = { tool_name: item.tool_name, arguments: item.arguments };
+      } else if (item.type === "tool_result") {
+        traceSteps.push({
+          tool_name: item.tool_name,
+          arguments: pending && pending.tool_name === item.tool_name ? pending.arguments : undefined,
+          success: item.success,
+          duration_s: item.duration_s,
+        });
+        pending = null;
+      }
+    }
+  }
+
   const handleSend = async () => {
     if (!input.trim()) return;
     
     const userMsg = input;
+    // Yeni kullanıcı mesajı state'e eklenmeden ÖNCE geçmişi hesapla,
+    // aksi halde son soru history içinde iki kez gider.
+    const history = messages
+      .filter(m => m.content && m.content.trim() !== "")
+      .slice(-6)
+      .map(m => ({ role: m.role, content: m.content }));
     setMessages(prev => [...prev, { role: "user", content: userMsg }]);
     setInput("");
     setIsLoading(true);
 
     try {
       // Backend'e istek atıyoruz
-      const response = await fetch("http://localhost:8000/ask", {
+      const response = await fetch(`${API_BASE_URL}/api/v1/ask`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question: userMsg })
+        body: JSON.stringify({ question: userMsg, history })
       });
-      
-      const data = await response.json();
-      setMessages(prev => [...prev, { role: "agent", content: data.answer }]);
+
+      const payload = await response.json();
+      const answerText =
+        payload?.answer ??
+        payload?.data?.answer ??
+        (payload?.error ? `Hata: ${payload.error}` : "Beklenmeyen yanıt formatı.");
+      setMessages(prev => [...prev, { role: "agent", content: answerText, trace: payload?.data?.trace }]);
     } catch (error) {
       setMessages(prev => [...prev, { role: "agent", content: "Hata: Sunucuya bağlanılamadı. Backend açık mı?" }]);
     } finally {
@@ -240,6 +275,35 @@ function DashboardContent({ t }: { t: any }) {
               <p className="text-white font-medium text-sm leading-relaxed pr-10">{t('sources')}</p>
             </div>
           </div>
+
+          {/* Güven Katmanı - İzlenebilirlik / Kullanılan Araçlar */}
+          {traceSteps.length > 0 && (
+            <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-6">
+              <h3 className="text-gray-300 font-bold text-xs uppercase tracking-wider mb-4">{t('trace_title')}</h3>
+              <ol className="space-y-2">
+                {traceSteps.map((step, idx) => (
+                  <li key={idx} className="flex flex-col gap-1 text-sm bg-white/[0.02] border border-white/5 rounded-lg px-3 py-2">
+                    <div className="flex items-center gap-2">
+                      <span className="text-gray-500 font-mono text-xs">{idx + 1}.</span>
+                      <span className="text-gray-200 font-medium">{step.tool_name}</span>
+                      {typeof step.duration_s === "number" && (
+                        <span className="text-gray-500 text-xs">{step.duration_s}s</span>
+                      )}
+                      <span className={step.success ? "text-emerald-400" : "text-red-400"}>
+                        {step.success ? "✓" : "✗"}
+                      </span>
+                    </div>
+                    {step.arguments && (
+                      <details className="text-xs text-gray-500">
+                        <summary className="cursor-pointer hover:text-gray-300">Parametreler</summary>
+                        <pre className="mt-1 whitespace-pre-wrap break-words text-gray-400">{step.arguments}</pre>
+                      </details>
+                    )}
+                  </li>
+                ))}
+              </ol>
+            </div>
+          )}
 
           {/* Grafik Alanı (Boş Durum) */}
           <div className="flex-1 min-h-[400px] bg-white/[0.02] border border-white/5 rounded-3xl p-8 flex flex-col items-center justify-center relative overflow-hidden group">
