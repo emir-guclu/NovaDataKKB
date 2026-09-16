@@ -1,6 +1,9 @@
 from __future__ import annotations
 
 import math
+from pathlib import Path
+
+import duckdb
 
 import pandas as pd
 import pytest
@@ -140,3 +143,48 @@ def test_series_catalog_search_schema_and_registry_expose_tool():
     assert "query" in schema["function"]["parameters"]["properties"]
     assert "top_k" in schema["function"]["parameters"]["properties"]
     assert create_default_tool_registry().get("series_catalog_search") is not None
+
+
+def _build_fallback_silver_db(path: Path) -> None:
+    con = duckdb.connect(str(path))
+    try:
+        con.execute("CREATE TABLE series_metadata (series_id VARCHAR, source VARCHAR, series_code VARCHAR, series_name VARCHAR, category VARCHAR, freq VARCHAR, unit VARCHAR, description VARCHAR, tags VARCHAR[])")
+        con.execute("CREATE TABLE observations (series_id VARCHAR, date DATE)")
+        con.execute("INSERT INTO series_metadata VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", ["TEST:HOUSING", "TEST", "HOUSING", "Konut Kredisi Hacmi", "credit", "M", "milyon TL", "Konut kredisi toplam hacmi", ["konut", "kredi"]])
+        con.execute("INSERT INTO series_metadata VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", ["TEST:GOLD", "TEST", "GOLD", "Altin Kapanis Fiyati", "commodity", "D", "USD/ons", "Altin piyasa fiyati", ["altin", "fiyat"]])
+        con.execute("INSERT INTO observations VALUES (?, ?)", ["TEST:HOUSING", "2024-01-31"])
+        con.execute("INSERT INTO observations VALUES (?, ?)", ["TEST:HOUSING", "2024-02-29"])
+        con.execute("INSERT INTO observations VALUES (?, ?)", ["TEST:GOLD", "2024-01-02"])
+    finally:
+        con.close()
+
+
+def test_series_catalog_search_falls_back_when_embeddings_missing(tmp_path: Path):
+    silver_db = tmp_path / "silver.duckdb"
+    _build_fallback_silver_db(silver_db)
+    tool = SeriesCatalogSearchTool(embeddings_path=tmp_path / "missing.parquet", silver_db_path=silver_db)
+    result = tool.run(tool.Input(query="konut kredisi", top_k=5))
+    assert result.success is True
+    assert result.found_in_lakehouse is True
+    assert result.matches
+    assert result.matches[0].series_id == "TEST:HOUSING"
+    assert result.matches[0].unit == "milyon TL"
+    assert result.matches[0].freq == "M"
+    assert result.matches[0].date_range == "2024-01-31 - 2024-02-29"
+
+
+def test_series_catalog_search_fallback_rejects_weak_unrelated_matches(tmp_path: Path):
+    silver_db = tmp_path / "silver.duckdb"
+    _build_fallback_silver_db(silver_db)
+    tool = SeriesCatalogSearchTool(embeddings_path=tmp_path / "missing.parquet", silver_db_path=silver_db)
+    result = tool.run(tool.Input(query="hasta sayisi", top_k=5))
+    assert result.success is True
+    assert result.found_in_lakehouse is False
+    assert result.matches == []
+
+
+def test_series_catalog_search_empty_query_without_catalog(tmp_path: Path):
+    tool = SeriesCatalogSearchTool(embeddings_path=tmp_path / "missing.parquet", silver_db_path=tmp_path / "missing.duckdb")
+    result = tool.run(tool.Input(query="   "))
+    assert result.success is False
+    assert result.error == "query bos olamaz."
