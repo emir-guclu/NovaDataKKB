@@ -27,6 +27,7 @@ registry = create_default_tool_registry()
 
 
 @router.post("/api/v1/ask")
+@router.post("/ask")
 async def ask(request: AskRequest):
     try:
         provider = KloudeksProvider()
@@ -41,6 +42,7 @@ async def ask(request: AskRequest):
         )
         return {
             "success": True,
+            "answer": answer,
             "data": {"answer": answer},
             "error": None,
         }

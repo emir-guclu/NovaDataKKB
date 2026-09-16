@@ -5,6 +5,7 @@ import { SessionProvider } from "next-auth/react";
 import { useTranslations } from 'next-intl';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import ReactMarkdown from 'react-markdown';
 
 function DashboardContent({ t }: { t: any }) {
   const { data: session } = useSession();
@@ -13,25 +14,53 @@ function DashboardContent({ t }: { t: any }) {
   // sayfa yüklendikten (useEffect) sonra localStorage'dan okuyoruz.
   const [devMode, setDevMode] = useState(false);
 
+  // Mesajlaşma State'leri
+  const [input, setInput] = useState("");
+  const [messages, setMessages] = useState<Array<{ role: string; content: string }>>([
+    { role: "agent", content: "" } // İçerik boş, aşağıda t() ile doldurulacak
+  ]);
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const isDev = localStorage.getItem('devMode') === 'true';
       if (isDev) setDevMode(true);
+
+      const savedChat = sessionStorage.getItem('nova_chat_messages');
+      if (savedChat) {
+        try {
+          const parsed = JSON.parse(savedChat);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            setMessages(parsed);
+          }
+        } catch (e) {
+          console.error("Failed to load chat from sessionStorage", e);
+        }
+      }
     }
   }, []);
+
+  // Mesajlar değiştikçe sessionStorage'a kaydet
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if (messages.length > 1 || (messages.length === 1 && messages[0].content !== "")) {
+        sessionStorage.setItem('nova_chat_messages', JSON.stringify(messages));
+      }
+    }
+  }, [messages]);
+
+  const clearChat = () => {
+    if (typeof window !== 'undefined') {
+      sessionStorage.removeItem('nova_chat_messages');
+    }
+    setMessages([{ role: "agent", content: "" }]);
+  };
 
   const toggleDevMode = (val: boolean) => {
     setDevMode(val);
     if (val) localStorage.setItem('devMode', 'true');
     else localStorage.removeItem('devMode');
   };
-  
-  // Mesajlaşma State'leri
-  const [input, setInput] = useState("");
-  const [messages, setMessages] = useState([
-    { role: "agent", content: "" } // İçerik boş, aşağıda t() ile doldurulacak
-  ]);
-  const [isLoading, setIsLoading] = useState(false);
 
   const isLoggedIn = session || devMode;
 
@@ -62,7 +91,7 @@ function DashboardContent({ t }: { t: any }) {
 
   if (isLoggedIn) {
     return (
-      <div className="flex h-screen bg-[#050505] text-gray-200 font-sans overflow-hidden selection:bg-blue-500/30">
+      <div className="flex h-full w-full bg-[#050505] text-gray-200 font-sans overflow-hidden selection:bg-blue-500/30">
         {/* Arka Plan Efektleri */}
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-blue-900/20 blur-[120px] pointer-events-none"></div>
         <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-emerald-900/10 blur-[120px] pointer-events-none"></div>
@@ -78,11 +107,22 @@ function DashboardContent({ t }: { t: any }) {
               </div>
               <h2 className="text-xl font-black bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400 tracking-tight">{t('chat_title')}</h2>
             </div>
-            <div className="flex gap-2 text-xs font-semibold">
+            <div className="flex gap-2 text-xs font-semibold items-center">
+              <button 
+                onClick={clearChat}
+                className="px-2 py-1 bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white rounded-md border border-white/5 transition-all flex items-center gap-1"
+                title="Sohbeti Temizle"
+              >
+                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                <span className="hidden sm:inline">Temizle</span>
+              </button>
               <Link href="/tr" className="px-2.5 py-1.5 bg-white/5 rounded-md hover:bg-white/10 border border-white/5 transition-all">TR</Link>
               <Link href="/en" className="px-2.5 py-1.5 bg-white/5 rounded-md hover:bg-white/10 border border-white/5 transition-all">EN</Link>
               <button 
-                onClick={() => devMode ? toggleDevMode(false) : signOut()} 
+                onClick={() => {
+                  if (typeof window !== 'undefined') sessionStorage.removeItem('nova_chat_messages');
+                  devMode ? toggleDevMode(false) : signOut();
+                }} 
                 className="px-2.5 py-1.5 text-red-400 hover:text-white hover:bg-red-500/80 rounded-md transition-all ml-1"
                 title={t('logout_button')}
               >
@@ -114,7 +154,15 @@ function DashboardContent({ t }: { t: any }) {
                     ? "bg-white/5 border border-white/10 rounded-bl-sm text-gray-200" 
                     : "bg-blue-600 border border-blue-500 rounded-br-sm text-white shadow-blue-900/20"
                   }`}>
-                    {msg.role === "agent" && idx === 0 ? t('welcome_message') : msg.content}
+                    {msg.role === "agent" ? (
+                      <div className="space-y-2 [&_p]:mb-2 [&_p:last-child]:mb-0 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:mb-2 [&_li]:mb-1 [&_strong]:text-white [&_strong]:font-bold [&_a]:text-blue-400 [&_a]:underline [&_a]:hover:text-blue-300 [&_h3]:text-base [&_h3]:font-bold [&_h3]:text-emerald-400 [&_h3]:mt-3 [&_h3]:mb-1">
+                        <ReactMarkdown>
+                          {idx === 0 ? t('welcome_message') : msg.content}
+                        </ReactMarkdown>
+                      </div>
+                    ) : (
+                      msg.content
+                    )}
                   </div>
                 </div>
               </div>
