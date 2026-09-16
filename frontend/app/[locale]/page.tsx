@@ -3,12 +3,21 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import { SessionProvider } from "next-auth/react";
 import { useTranslations } from 'next-intl';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8000";
+
+class ApiRequestError extends Error {
+  type: "validation" | "http" | "network" | "stream" | "runtime";
+
+  constructor(type: "validation" | "http" | "network" | "stream" | "runtime", message: string) {
+    super(message);
+    this.type = type;
+  }
+}
 
 function DashboardContent({ t }: { t: any }) {
   const { data: session } = useSession();
@@ -25,6 +34,8 @@ function DashboardContent({ t }: { t: any }) {
   const [isLoading, setIsLoading] = useState(false);
   // Uzun süren (streaming) sorgularda gösterilen tek satırlık ilerleme durumu
   const [streamStatus, setStreamStatus] = useState<string | null>(null);
+  const [activitySteps, setActivitySteps] = useState<Array<{ message: string; done: boolean }>>([]);
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -54,11 +65,20 @@ function DashboardContent({ t }: { t: any }) {
     }
   }, [messages]);
 
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({
+      behavior: isLoading ? "smooth" : "auto",
+      block: "end",
+    });
+  }, [messages, isLoading, streamStatus]);
+
   const clearChat = () => {
     if (typeof window !== 'undefined') {
       sessionStorage.removeItem('nova_chat_messages');
     }
     setMessages([{ role: "agent", content: "" }]);
+    setStreamStatus(null);
+    setActivitySteps([]);
   };
 
   const toggleDevMode = (val: boolean) => {
@@ -94,18 +114,42 @@ function DashboardContent({ t }: { t: any }) {
   // Stream olayını ("llm_decision" / "tool_output" vb.) kullanıcıya gösterilecek
   // tek satırlık bir duruma çevirir; ilgisiz olaylar için null döner.
   const describeStreamEvent = (evt: any): string | null => {
+    const toolMessages: Record<string, string> = {
+      series_catalog_search: t("activity_catalog"),
+      evds_data_service: t("activity_evds"),
+      lakehouse_query: t("activity_lakehouse"),
+      change_detection: t("activity_change"),
+      anomaly_detection: t("activity_anomaly"),
+      causality_check: t("activity_causality"),
+      web_search: t("activity_web_search"),
+      web_url_reader: t("activity_web_reader"),
+    };
+
     if (evt.kind === "llm_decision" && evt.tool_name) {
-      return `${evt.tool_name} çalışıyor...`;
+      return toolMessages[evt.tool_name] ?? t("activity_working");
     }
+
     if (evt.kind === "tool_output" && evt.tool_name) {
-      const durText = typeof evt.duration_s === "number" ? ` (${evt.duration_s} sn)` : "";
-      return evt.success === false
-        ? `${evt.tool_name} başarısız oldu${durText}`
-        : `${evt.tool_name} tamamlandı${durText}`;
+      if (evt.success === false) {
+        return t("activity_alternative");
+      }
+      return t("activity_evaluating");
     }
+
+    if (evt.kind === "llm_input_after_tool") {
+      return t("activity_analyzing");
+    }
+
     if (evt.kind === "llm_input") {
-      return "Düşünüyor...";
+      return evt.iteration && evt.iteration > 1
+        ? t("activity_synthesis")
+        : t("activity_planning");
     }
+
+    if (evt.kind === "llm_final") {
+      return t("activity_finalizing");
+    }
+
     return null;
   };
 
@@ -119,8 +163,16 @@ function DashboardContent({ t }: { t: any }) {
       body: JSON.stringify({ question, history })
     });
 
-    if (!response.ok || !response.body) {
-      throw new Error("Stream desteklenmiyor veya başlatılamadı.");
+    if (response.status === 422) {
+      throw new ApiRequestError("validation", t("error_validation"));
+    }
+
+    if (!response.ok) {
+      throw new ApiRequestError("http", `${t("error_http")} (${response.status})`);
+    }
+
+    if (!response.body) {
+      throw new ApiRequestError("stream", t("error_stream"));
     }
 
     const reader = response.body.getReader();
@@ -153,13 +205,20 @@ function DashboardContent({ t }: { t: any }) {
             trace.push({ type: "tool_result", tool_name: evt.tool_name, success: evt.success, duration_s: evt.duration_s });
           }
           const status = describeStreamEvent(evt);
-          if (status) setStreamStatus(status);
+          if (status) {
+            setStreamStatus(status);
+            setActivitySteps(prev => {
+              if (prev.at(-1)?.message === status) return prev;
+              const completed = prev.map(step => ({ ...step, done: true }));
+              return [...completed.slice(-3), { message: status, done: false }];
+            });
+          }
         }
       }
     }
 
-    if (streamError) throw new Error(streamError);
-    if (finalAnswer === null) throw new Error("Stream tamamlanmadan bitti.");
+    if (streamError) throw new ApiRequestError("runtime", `${t("error_runtime")}: ${streamError}`);
+    if (finalAnswer === null) throw new ApiRequestError("stream", t("error_stream"));
     return { answer: finalAnswer, trace };
   };
 
@@ -171,16 +230,24 @@ function DashboardContent({ t }: { t: any }) {
       body: JSON.stringify({ question, history })
     });
 
+    if (response.status === 422) {
+      throw new ApiRequestError("validation", t("error_validation"));
+    }
+
+    if (!response.ok) {
+      throw new ApiRequestError("http", `${t("error_http")} (${response.status})`);
+    }
+
     const payload = await response.json();
     const answerText =
       payload?.answer ??
       payload?.data?.answer ??
-      (payload?.error ? `Hata: ${payload.error}` : "Beklenmeyen yanıt formatı.");
+      (payload?.error ? `${t("error_runtime")}: ${payload.error}` : t("error_unknown"));
     return { answer: answerText, trace: payload?.data?.trace };
   };
 
   const handleSend = async () => {
-    if (!input.trim()) return;
+    if (isLoading || !input.trim()) return;
 
     const userMsg = input;
     // Yeni kullanıcı mesajı state'e eklenmeden ÖNCE geçmişi hesapla,
@@ -193,19 +260,36 @@ function DashboardContent({ t }: { t: any }) {
     setInput("");
     setIsLoading(true);
     setStreamStatus(null);
+    setActivitySteps([]);
 
     try {
       let result;
       try {
         result = await sendViaStream(userMsg, history);
       } catch (streamErr) {
-        // Stream hata verdi veya desteklenmiyor: eski endpoint'e düş,
-        // böylece demo sırasında SSE sorun çıkarsa sistem çalışmaya devam eder.
+        // Validation / HTTP / uygulama hatalarında aynı isteği ikinci kez gönderme.
+        // Yalnızca streaming taşıma katmanı sorunlarında klasik endpoint'e düş.
+        if (
+          streamErr instanceof ApiRequestError &&
+          ["validation", "http", "runtime"].includes(streamErr.type)
+        ) {
+          throw streamErr;
+        }
         result = await sendViaFallback(userMsg, history);
       }
       setMessages(prev => [...prev, { role: "agent", content: result.answer, trace: result.trace }]);
     } catch (error) {
-      setMessages(prev => [...prev, { role: "agent", content: "Hata: Sunucuya bağlanılamadı. Backend açık mı?" }]);
+      let message = t("error_unknown");
+
+      if (error instanceof ApiRequestError) {
+        message = error.message;
+      } else if (error instanceof TypeError) {
+        message = t("error_network");
+      } else if (error instanceof Error) {
+        message = `${t("error_runtime")}: ${error.message}`;
+      }
+
+      setMessages(prev => [...prev, { role: "agent", content: message }]);
     } finally {
       setIsLoading(false);
       setStreamStatus(null);
@@ -254,14 +338,6 @@ function DashboardContent({ t }: { t: any }) {
             </div>
           </div>
 
-          {/* Akış Durum Çubuğu - uzun süren sorgularda canlı ilerleme */}
-          {isLoading && streamStatus && (
-            <div className="px-6 py-2 bg-blue-500/10 border-b border-blue-500/20 text-xs text-blue-300 flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse flex-shrink-0"></span>
-              <span className="truncate">{streamStatus}</span>
-            </div>
-          )}
-
           {/* Mesajlaşma Alanı */}
           <div className="flex-1 p-6 overflow-y-auto space-y-6 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-white/10 [&::-webkit-scrollbar-thumb]:rounded-full">
             {messages.map((msg, idx) => (
@@ -300,17 +376,49 @@ function DashboardContent({ t }: { t: any }) {
             ))}
             
             {isLoading && (
-              <div className="flex items-end gap-2 max-w-[85%]">
-                <div className="w-7 h-7 rounded-full bg-gradient-to-br from-emerald-400 to-teal-600 flex-shrink-0 flex items-center justify-center mb-1">
+              <div className="flex items-end gap-2 max-w-[92%]">
+                <div className="w-7 h-7 rounded-full bg-gradient-to-br from-emerald-400 to-teal-600 flex-shrink-0 flex items-center justify-center mb-1 shadow-lg shadow-emerald-500/20">
                   <span className="text-[10px] font-black text-white">N</span>
                 </div>
-                <div className="p-4 rounded-2xl bg-white/5 border border-white/10 rounded-bl-sm flex gap-1.5 items-center">
-                  <div className="w-1.5 h-1.5 rounded-full bg-gray-500 animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                  <div className="w-1.5 h-1.5 rounded-full bg-gray-500 animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                  <div className="w-1.5 h-1.5 rounded-full bg-gray-500 animate-bounce" style={{ animationDelay: '300ms' }}></div>
+
+                <div className="min-w-[260px] p-4 rounded-2xl rounded-bl-sm bg-gradient-to-br from-white/[0.08] to-white/[0.03] border border-emerald-500/20 shadow-lg">
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
+                    </span>
+                    <span className="text-[11px] uppercase tracking-wider font-bold text-emerald-400">
+                      {t("activity_title")}
+                    </span>
+                  </div>
+
+                  <div className="space-y-2">
+                    {(activitySteps.length > 0
+                      ? activitySteps
+                      : [{ message: t("activity_initial"), done: false }]
+                    ).map((step, idx) => (
+                      <div
+                        key={idx}
+                        className={`flex items-start gap-2 text-xs transition-all duration-300 ${
+                          step.done ? "text-gray-500" : "text-gray-200"
+                        }`}
+                      >
+                        {step.done ? (
+                          <span className="text-emerald-400 mt-[1px]">✓</span>
+                        ) : (
+                          <span className="w-1.5 h-1.5 mt-1 rounded-full bg-blue-400 animate-pulse flex-shrink-0"></span>
+                        )}
+                        <span className={step.done ? "" : "animate-pulse"}>
+                          {step.message}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             )}
+
+            <div ref={messagesEndRef} />
           </div>
 
           {/* Input Alanı */}
@@ -320,9 +428,12 @@ function DashboardContent({ t }: { t: any }) {
                 type="text" 
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                placeholder={t('chat_placeholder')} 
-                className="w-full pl-5 pr-14 py-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500/50 focus:bg-white/10 transition-all text-sm shadow-inner"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && !isLoading) handleSend();
+                }}
+                disabled={isLoading}
+                placeholder={isLoading ? t("chat_busy") : t('chat_placeholder')} 
+                className="w-full pl-5 pr-14 py-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500/50 focus:bg-white/10 transition-all text-sm shadow-inner disabled:opacity-50 disabled:cursor-not-allowed"
               />
               <button 
                 onClick={handleSend}
