@@ -2,7 +2,7 @@
 
 import { signIn, signOut, useSession } from "next-auth/react";
 import { SessionProvider } from "next-auth/react";
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
@@ -14,10 +14,32 @@ const API_BASE_URL =
 function formatMarkdownContent(rawText: string): string {
   if (!rawText) return "";
   let text = rawText;
-  // If markdown table rows are joined on a single line like "| col | col | |---|---| | val | val |"
+
+  // 1. Başıboş/tek başına duran '|' satırlarını temizle (örn. "Karşılaştırma\n|\n\n|Önceki Soru...")
+  text = text.replace(/(^|\n)\s*\|\s*\n+(?=\|)/g, "$1\n");
+
+  // 2. Tek satırda birleştirilmiş tablo satırlarını ayır: "| |" -> "|\n|"
   text = text.replace(/\|\s*\|\s*/g, "|\n|");
-  // Ensure table starts with newlines
-  text = text.replace(/([^\n])(\n\|[^\n]+\|\n\|[\s\-:|]+\|)/g, "$1\n\n$2");
+
+  // 3. Başlık ve ayırıcı (|---|) sütun sayısı uyuşmazlığını düzelt (GFM standardına uydur)
+  const lines = text.split("\n");
+  for (let i = 0; i < lines.length - 1; i++) {
+    const line = lines[i].trim();
+    const nextLine = lines[i + 1].trim();
+    if (/^\|[\s\-:|]+\|$/.test(nextLine)) {
+      const headerCols = (line.match(/\|/g) || []).length - 1;
+      const sepCols = (nextLine.match(/\|/g) || []).length - 1;
+      if (headerCols > 0 && sepCols > headerCols) {
+        const diff = sepCols - headerCols;
+        lines[i] = "| " + " | ".repeat(diff) + line.replace(/^\|/, "");
+      }
+    }
+  }
+  text = lines.join("\n");
+
+  // 4. Tablo öncesinde ve sonrasında boşluk bırakılmasını garanti et
+  text = text.replace(/([^\n])\n(\|[^\n]+\|\n\|[\s\-:|]+\|)/g, "$1\n\n$2");
+
   return text;
 }
 
@@ -36,6 +58,8 @@ interface ChatMessage {
   attachmentName?: string;
   attachmentType?: string;
   trace?: any[];
+  duration_s?: number;
+  activitySteps?: Array<{ message: string; done: boolean }>;
 }
 
 interface AttachedFile {
@@ -67,6 +91,7 @@ function createDefaultSession(title: string): ChatSession {
 
 function DashboardContent({ t }: { t: any }) {
   const { data: session } = useSession();
+  const locale = useLocale();
   
   // Hydration hatasını önlemek için state'i önce false başlatıp,
   // sayfa yüklendikten (useEffect) sonra localStorage'dan okuyoruz.
@@ -93,6 +118,7 @@ function DashboardContent({ t }: { t: any }) {
   const [attachment, setAttachment] = useState<AttachedFile | null>(null);
   const [isUploadingAttachment, setIsUploadingAttachment] = useState(false);
   const [attachmentError, setAttachmentError] = useState<string | null>(null);
+  const [showRightPanelTrace, setShowRightPanelTrace] = useState<boolean>(true);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
@@ -274,7 +300,26 @@ function DashboardContent({ t }: { t: any }) {
   const isLoggedIn = session || devMode;
 
   // Sağ paneldeki güven/izlenebilirlik bölümü için son agent mesajının trace'i
-  const lastAgentTrace = [...messages].reverse().find(m => m.role === "agent" && m.trace && m.trace.length > 0)?.trace;
+  const latestAgentMsg = [...messages].reverse().find(m => m.role === "agent" && m.content);
+  const lastAgentTrace = latestAgentMsg?.trace;
+
+  // Sağ panelde gösterilecek analitik grafikler (tüm oturum boyunca üretilenlerin tamamı)
+  const sessionImages: Array<{ src: string; alt: string; messageIndex: number; questionPrompt?: string }> = [];
+  messages.forEach((msg, idx) => {
+    if (msg.role === "agent" && msg.content) {
+      const imgRegex = /!\[(.*?)\]\((.*?)\)/g;
+      let match;
+      const prevUserMsg = messages.slice(0, idx).reverse().find(m => m.role === "user");
+      while ((match = imgRegex.exec(msg.content)) !== null) {
+        sessionImages.push({
+          alt: match[1] || "Grafik",
+          src: match[2],
+          messageIndex: idx,
+          questionPrompt: prevUserMsg?.content || "",
+        });
+      }
+    }
+  });
 
   // tool_call + tool_result çiftlerini tek bir adıma birleştir
   const traceSteps: Array<{ tool_name: string; arguments?: string; success?: boolean; duration_s?: number }> = [];
@@ -551,6 +596,7 @@ function DashboardContent({ t }: { t: any }) {
     setStreamStatus(null);
     setActivitySteps([]);
 
+    const startTime = performance.now();
     try {
       let result;
       try {
@@ -564,12 +610,19 @@ function DashboardContent({ t }: { t: any }) {
         }
         result = await sendViaFallback(userMsg, history, currentAttachment);
       }
-      const newMessagesWithAgent = [
+      const duration_s = Number(((performance.now() - startTime) / 1000).toFixed(2));
+      const newMessagesWithAgent: ChatMessage[] = [
         ...newMessagesWithUser,
-        { role: "agent", content: result.answer, trace: result.trace }
+        {
+          role: "agent",
+          content: result.answer,
+          trace: result.trace,
+          duration_s: duration_s,
+        }
       ];
       updateCurrentSessionMessages(newMessagesWithAgent, updatedTitle);
     } catch (error) {
+      const duration_s = Number(((performance.now() - startTime) / 1000).toFixed(2));
       let message = t("error_unknown");
 
       if (error instanceof ApiRequestError) {
@@ -580,15 +633,297 @@ function DashboardContent({ t }: { t: any }) {
         message = `${t("error_runtime")}: ${error.message}`;
       }
 
-      const newMessagesWithError = [
+      const newMessagesWithError: ChatMessage[] = [
         ...newMessagesWithUser,
-        { role: "agent", content: message }
+        { role: "agent", content: message, duration_s: duration_s }
       ];
       updateCurrentSessionMessages(newMessagesWithError, updatedTitle);
     } finally {
       setIsLoading(false);
       setStreamStatus(null);
     }
+  };
+
+  // Ajan Düşünce Süreci / Akıl Yürütme Accordion Bileşeni (Sendeki gibi adım adım açılır kapanır)
+  const MessageReasoningAccordion = ({
+    trace,
+    duration_s,
+  }: {
+    trace?: any[];
+    duration_s?: number;
+  }) => {
+    const [isOpen, setIsOpen] = useState(false);
+
+    // tool_call + tool_result çiftlerini tek adımda birleştir
+    const steps: Array<{ tool_name: string; arguments?: string; success?: boolean; duration_s?: number }> = [];
+    if (trace && Array.isArray(trace)) {
+      let pending: { tool_name: string; arguments?: string } | null = null;
+      for (const item of trace) {
+        if (item.type === "tool_call") {
+          pending = { tool_name: item.tool_name, arguments: item.arguments };
+        } else if (item.type === "tool_result") {
+          steps.push({
+            tool_name: item.tool_name,
+            arguments: pending && pending.tool_name === item.tool_name ? pending.arguments : undefined,
+            success: item.success,
+            duration_s: item.duration_s,
+          });
+          pending = null;
+        }
+      }
+    }
+
+    if (steps.length === 0 && !duration_s) return null;
+
+    return (
+      <div className={`mb-3 rounded-xl border transition-all text-xs ${
+        isDark 
+          ? "bg-black/30 border-white/10" 
+          : "bg-slate-50/80 border-slate-200"
+      }`}>
+        {/* Accordion Header */}
+        <button
+          type="button"
+          onClick={() => setIsOpen(!isOpen)}
+          className={`w-full px-3 py-2 flex items-center justify-between text-left rounded-xl transition-colors ${
+            isDark 
+              ? "hover:bg-white/5 text-gray-300" 
+              : "hover:bg-slate-100 text-slate-700"
+          }`}
+        >
+          <div className="flex items-center gap-1.5 font-medium">
+            <span>🧠</span>
+            <span>
+              {steps.length > 0 ? `${steps.length} ${t("reasoning_steps") || "adımda analiz edildi"}` : "Analiz tamamlandı"}
+            </span>
+            {typeof duration_s === "number" && (
+              <span className={`px-1.5 py-0.5 rounded text-[10px] font-mono font-semibold ${
+                isDark ? "bg-white/10 text-emerald-400" : "bg-emerald-100 text-emerald-800"
+              }`}>
+                {duration_s.toFixed(2)}s
+              </span>
+            )}
+          </div>
+          <div className="flex items-center gap-1 text-[11px] font-semibold text-emerald-500">
+            <span>{isOpen ? (t("hide_reasoning") || "Gizle") : (t("view_reasoning") || "Düşünce Adımlarını Gör")}</span>
+            <svg className={`w-3.5 h-3.5 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+        </button>
+
+        {/* Accordion Body */}
+        {isOpen && steps.length > 0 && (
+          <div className={`px-3 pb-3 pt-1 border-t space-y-1.5 ${
+            isDark ? "border-white/5" : "border-slate-200/60"
+          }`}>
+            {steps.map((step, sIdx) => (
+              <div key={sIdx} className={`p-2 rounded-lg border text-[11px] flex flex-col gap-1 ${
+                isDark ? "bg-white/[0.02] border-white/5" : "bg-white border-slate-200/80"
+              }`}>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-1.5 truncate">
+                    <span className={`font-mono text-[10px] ${isDark ? "text-gray-500" : "text-slate-400"}`}>{sIdx + 1}.</span>
+                    <span className="font-semibold text-emerald-400 truncate">{step.tool_name}</span>
+                  </div>
+                  <div className="flex items-center gap-2 flex-shrink-0">
+                    {typeof step.duration_s === "number" && (
+                      <span className={`font-mono text-[10px] ${isDark ? "text-gray-400" : "text-slate-500"}`}>
+                        {step.duration_s.toFixed(2)}s
+                      </span>
+                    )}
+                    <span className={`font-bold ${step.success !== false ? (isDark ? "text-emerald-400" : "text-emerald-600") : "text-red-500"}`}>
+                      {step.success !== false ? "✓" : "✗"}
+                    </span>
+                  </div>
+                </div>
+                {step.arguments && (
+                  <details className={`text-[10px] ${isDark ? "text-gray-500" : "text-slate-500"}`}>
+                    <summary className="cursor-pointer hover:underline">Parametreler</summary>
+                    <pre className={`mt-1 p-1.5 rounded whitespace-pre-wrap break-words font-mono ${
+                      isDark ? "bg-black/50 text-gray-400" : "bg-slate-100 text-slate-700"
+                    }`}>{step.arguments}</pre>
+                  </details>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  // Çoklu ve Tekli Grafik Görüntüleyici (Carousel / Slider Destekli)
+  const ChartCarousel = ({
+    images,
+  }: {
+    images: Array<{ src: string; alt: string; questionPrompt?: string }>;
+  }) => {
+    const [currentIndex, setCurrentIndex] = useState(images.length > 0 ? images.length - 1 : 0);
+
+    // Yeni grafik eklendiğinde veya oturum değiştiğinde en güncel grafiğe otomatik odaklan
+    useEffect(() => {
+      if (images.length > 0) {
+        setCurrentIndex(images.length - 1);
+      }
+    }, [images.length]);
+
+    if (!images || images.length === 0) return null;
+
+    const currentImg = images[currentIndex] || images[0];
+    const resolvedSrc = currentImg.src.startsWith("/static/")
+      ? `${API_BASE_URL}${currentImg.src}`
+      : currentImg.src;
+
+    return (
+      <div className={`my-3 rounded-2xl overflow-hidden border backdrop-blur-md shadow-2xl transition-all ${
+        isDark 
+          ? "border-white/10 bg-black/40 hover:border-emerald-500/30" 
+          : "border-slate-200 bg-white hover:border-emerald-500/40 shadow-slate-200"
+      }`}>
+        {/* Üst Başlık ve 1/N Sayacı */}
+        <div className={`px-4 py-2.5 flex items-center justify-between border-b text-xs font-semibold ${
+          isDark ? "border-white/10 bg-white/[0.03] text-emerald-400" : "border-slate-100 bg-slate-50 text-emerald-700"
+        }`}>
+          <div className="flex items-center gap-2 truncate pr-2">
+            <span>📊</span>
+            <span className="font-bold truncate">{currentImg.alt || t("analytics_charts")}</span>
+          </div>
+          {images.length > 1 && (
+            <div className="flex items-center gap-1.5 flex-shrink-0">
+              <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-bold ${
+                isDark ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30" : "bg-emerald-100 text-emerald-800 border border-emerald-200"
+              }`}>
+                {currentIndex + 1} / {images.length}
+              </span>
+            </div>
+          )}
+        </div>
+
+        {/* Soru Bağlamı (Eğer varsa) */}
+        {currentImg.questionPrompt && (
+          <div className={`px-4 py-1.5 border-b text-[11px] flex items-center gap-1.5 truncate ${
+            isDark ? "border-white/5 bg-white/[0.01] text-gray-400" : "border-slate-100 bg-slate-50/50 text-slate-500"
+          }`}>
+            <span className="font-semibold text-emerald-500">💬 {t("question_prefix") || "Soru"}:</span>
+            <span className="truncate italic">&quot;{currentImg.questionPrompt}&quot;</span>
+          </div>
+        )}
+
+        {/* Görsel Alanı & Sol/Sağ Butonları */}
+        <div className={`relative overflow-hidden flex items-center justify-center min-h-[240px] p-2.5 ${
+          isDark ? "bg-black/30" : "bg-slate-50"
+        }`}>
+          <img
+            src={resolvedSrc}
+            alt={currentImg.alt || "Grafik"}
+            className="w-full h-auto max-h-[500px] object-contain rounded-xl transition-transform duration-300"
+            loading="lazy"
+          />
+
+          {images.length > 1 && (
+            <>
+              {/* Sol Buton */}
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+                }}
+                className={`absolute left-3 top-1/2 -translate-y-1/2 p-2.5 rounded-full shadow-xl backdrop-blur-md transition-all ${
+                  isDark 
+                    ? "bg-black/70 hover:bg-emerald-500 text-white border border-white/20 hover:scale-110" 
+                    : "bg-white/90 hover:bg-emerald-600 hover:text-white text-slate-800 border border-slate-200 hover:scale-110 shadow-slate-300"
+                }`}
+                title="Önceki Grafik"
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+
+              {/* Sağ Buton */}
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+                }}
+                className={`absolute right-3 top-1/2 -translate-y-1/2 p-2.5 rounded-full shadow-xl backdrop-blur-md transition-all ${
+                  isDark 
+                    ? "bg-black/70 hover:bg-emerald-500 text-white border border-white/20 hover:scale-110" 
+                    : "bg-white/90 hover:bg-emerald-600 hover:text-white text-slate-800 border border-slate-200 hover:scale-110 shadow-slate-300"
+                }`}
+                title="Sonraki Grafik"
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </>
+          )}
+        </div>
+
+        {/* Alt Bilgi Çubuğu ve Dot İndikatörleri */}
+        <div className={`px-4 py-2.5 flex items-center justify-between gap-3 border-t text-xs ${
+          isDark ? "border-white/5 text-gray-400 bg-white/[0.01]" : "border-slate-100 text-slate-500 bg-white"
+        }`}>
+          <div className="flex items-center gap-2 truncate">
+            {images.length > 1 && (
+              <div className="flex items-center gap-1.5 mr-2">
+                {images.map((img, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    onClick={() => setCurrentIndex(i)}
+                    title={`${i + 1}. ${img.alt || "Grafik"}`}
+                    className={`h-2 rounded-full transition-all ${
+                      i === currentIndex 
+                        ? (isDark ? "bg-emerald-400 w-5" : "bg-emerald-600 w-5")
+                        : (isDark ? "bg-white/20 hover:bg-white/40 w-2" : "bg-slate-300 hover:bg-slate-400 w-2")
+                    }`}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <a
+              href={resolvedSrc}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`px-2.5 py-1.5 rounded-lg transition-colors flex items-center gap-1.5 font-medium ${
+                isDark 
+                  ? "bg-white/5 hover:bg-white/15 text-blue-400 hover:text-blue-300" 
+                  : "bg-blue-50 hover:bg-blue-100 text-blue-600"
+              }`}
+              title={t("open_image")}
+            >
+              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+              <span className="hidden sm:inline">{t("open_image")}</span>
+            </a>
+            <a
+              href={resolvedSrc}
+              download
+              className={`px-2.5 py-1.5 rounded-lg transition-colors flex items-center gap-1.5 font-medium ${
+                isDark 
+                  ? "bg-white/5 hover:bg-white/15 text-emerald-400 hover:text-emerald-300" 
+                  : "bg-emerald-50 hover:bg-emerald-100 text-emerald-600"
+              }`}
+              title={t("download_image")}
+            >
+              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+              </svg>
+              <span className="hidden sm:inline">{t("download_image")}</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    );
   };
 
   // ReactMarkdown için Görsel ve Tablo Kart Bileşenleri
@@ -636,72 +971,9 @@ function DashboardContent({ t }: { t: any }) {
         {children}
       </tr>
     ),
-    img: ({ src, alt, ...rest }: any) => {
+    img: ({ src, alt }: any) => {
       if (!src) return null;
-      const srcStr = typeof src === "string" ? src : "";
-      const resolvedSrc = srcStr.startsWith("/static/")
-        ? `${API_BASE_URL}${srcStr}`
-        : srcStr;
-
-      return (
-        <div className={`my-4 rounded-xl overflow-hidden border backdrop-blur-md shadow-2xl p-2 group transition-all ${
-          isDark 
-            ? "border-white/10 bg-black/40 hover:border-emerald-500/30" 
-            : "border-slate-200 bg-white hover:border-emerald-500/40 shadow-slate-200"
-        }`}>
-          <div className={`relative overflow-hidden rounded-lg flex items-center justify-center min-h-[160px] ${
-            isDark ? "bg-black/30" : "bg-slate-50"
-          }`}>
-            <img
-              src={resolvedSrc}
-              alt={alt || "Grafik"}
-              className="w-full h-auto max-h-[460px] object-contain rounded-lg transition-transform duration-300 group-hover:scale-[1.01]"
-              loading="lazy"
-              {...rest}
-            />
-          </div>
-          <div className={`mt-2.5 px-2 py-1.5 flex items-center justify-between gap-2 border-t text-xs ${
-            isDark ? "border-white/5 text-gray-400" : "border-slate-100 text-slate-500"
-          }`}>
-            <span className={`font-medium truncate max-w-[200px] sm:max-w-xs ${
-              isDark ? "text-gray-300" : "text-slate-700"
-            }`}>{alt || "Grafik / Analiz"}</span>
-            <div className="flex items-center gap-1.5 flex-shrink-0">
-              <a
-                href={resolvedSrc}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`px-2 py-1 rounded transition-colors flex items-center gap-1 font-medium ${
-                  isDark 
-                    ? "bg-white/5 hover:bg-white/15 text-blue-400 hover:text-blue-300" 
-                    : "bg-blue-50 hover:bg-blue-100 text-blue-600"
-                }`}
-                title={t("open_image")}
-              >
-                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                </svg>
-                <span className="hidden sm:inline">{t("open_image")}</span>
-              </a>
-              <a
-                href={resolvedSrc}
-                download
-                className={`px-2 py-1 rounded transition-colors flex items-center gap-1 font-medium ${
-                  isDark 
-                    ? "bg-white/5 hover:bg-white/15 text-emerald-400 hover:text-emerald-300" 
-                    : "bg-emerald-50 hover:bg-emerald-100 text-emerald-600"
-                }`}
-                title={t("download_image")}
-              >
-                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                </svg>
-                <span className="hidden sm:inline">{t("download_image")}</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      );
+      return <ChartCarousel images={[{ src, alt: alt || "Grafik" }]} />;
     }
   };
 
@@ -796,27 +1068,7 @@ function DashboardContent({ t }: { t: any }) {
                 <option value="kloudeks" className={isDark ? "bg-gray-950 text-white" : "bg-white text-slate-800"}>🏛️ Kloudeks</option>
               </select>
 
-              {/* Tema Değiştirme Butonu */}
-              <button
-                onClick={toggleTheme}
-                className={`p-1.5 sm:px-2 sm:py-1.5 rounded-md border transition-all flex items-center gap-1 ${
-                  isDark 
-                    ? "bg-white/5 hover:bg-white/10 text-amber-400 border-white/10 hover:border-amber-400/30" 
-                    : "bg-amber-50 hover:bg-amber-100 text-amber-700 border-amber-200"
-                }`}
-                title={isDark ? t("theme_light") : t("theme_dark")}
-              >
-                {isDark ? (
-                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                  </svg>
-                ) : (
-                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                  </svg>
-                )}
-              </button>
-
+              {/* Sohbeti Temizle Butonu */}
               <button 
                 onClick={clearChat}
                 className={`p-1.5 sm:px-2 sm:py-1.5 rounded-md border transition-all flex items-center gap-1 ${
@@ -827,23 +1079,6 @@ function DashboardContent({ t }: { t: any }) {
                 title="Sohbeti Temizle"
               >
                 <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-              </button>
-
-              <Link href="/tr" className={`px-2 py-1 rounded-md border transition-all text-[11px] ${
-                isDark ? "bg-white/5 hover:bg-white/10 border-white/5 text-gray-300" : "bg-slate-100 hover:bg-slate-200 border-slate-200 text-slate-700"
-              }`}>TR</Link>
-              <Link href="/en" className={`px-2 py-1 rounded-md border transition-all text-[11px] ${
-                isDark ? "bg-white/5 hover:bg-white/10 border-white/5 text-gray-300" : "bg-slate-100 hover:bg-slate-200 border-slate-200 text-slate-700"
-              }`}>EN</Link>
-
-              <button 
-                onClick={() => {
-                  devMode ? toggleDevMode(false) : signOut();
-                }} 
-                className="p-1.5 text-red-400 hover:text-white hover:bg-red-500/80 rounded-md transition-all ml-0.5"
-                title={t('logout_button')}
-              >
-                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
               </button>
             </div>
           </div>
@@ -950,15 +1185,52 @@ function DashboardContent({ t }: { t: any }) {
                     : "bg-blue-600 border border-blue-500 rounded-br-sm text-white shadow-blue-900/20"
                   }`}>
                     {msg.role === "agent" ? (
-                      <div className={`space-y-2.5 [&_p]:mb-2.5 [&_p:last-child]:mb-0 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:mb-2.5 [&_li]:mb-1.5 [&_a]:underline text-sm sm:text-[15px] ${
-                        isDark 
-                          ? "[&_strong]:text-white [&_strong]:font-bold [&_a]:text-blue-400 [&_a]:hover:text-blue-300 [&_h3]:text-base [&_h3]:font-bold [&_h3]:text-emerald-400 [&_h3]:mt-4 [&_h3]:mb-1.5 [&_table]:w-full [&_table]:border-collapse [&_table]:my-2 [&_th]:border [&_th]:border-white/20 [&_th]:p-2.5 [&_th]:bg-white/5 [&_th]:text-xs [&_td]:border [&_td]:border-white/10 [&_td]:p-2.5 [&_td]:text-xs [&_pre]:overflow-x-auto [&_pre]:p-3 [&_pre]:bg-black/50 [&_pre]:rounded-lg [&_code]:bg-white/10 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded"
-                          : "[&_strong]:text-slate-900 [&_strong]:font-bold [&_a]:text-blue-600 [&_a]:hover:text-blue-700 [&_h3]:text-base [&_h3]:font-bold [&_h3]:text-emerald-700 [&_h3]:mt-4 [&_h3]:mb-1.5 [&_table]:w-full [&_table]:border-collapse [&_table]:my-2 [&_th]:border [&_th]:border-slate-300 [&_th]:p-2.5 [&_th]:bg-slate-100 [&_th]:text-slate-800 [&_th]:text-xs [&_td]:border [&_td]:border-slate-200 [&_td]:p-2.5 [&_td]:text-slate-700 [&_td]:text-xs [&_pre]:overflow-x-auto [&_pre]:p-3 [&_pre]:bg-slate-900 [&_pre]:text-slate-100 [&_pre]:rounded-lg [&_code]:bg-slate-200 [&_code]:text-slate-800 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded"
-                      }`}>
-                        <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
-                          {formatMarkdownContent(idx === 0 && !msg.content ? t('welcome_message') : msg.content)}
-                        </ReactMarkdown>
-                      </div>
+                      (() => {
+                        const rawContent = idx === 0 && !msg.content ? t('welcome_message') : msg.content;
+                        // Mesajdaki görselleri ayıkla
+                        const imgRegex = /!\[(.*?)\]\((.*?)\)/g;
+                        const extractedImages: Array<{ src: string; alt: string }> = [];
+                        let match;
+                        while ((match = imgRegex.exec(rawContent)) !== null) {
+                          extractedImages.push({ alt: match[1] || "Grafik", src: match[2] });
+                        }
+
+                        // Sohbette metin ve tabloları temiz göster (görseller sağ panele aktarılıyor)
+                        const contentToRender = rawContent.replace(/!\[(.*?)\]\((.*?)\)/g, '').trim();
+
+                        return (
+                          <div className={`space-y-2.5 [&_p]:mb-2.5 [&_p:last-child]:mb-0 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:mb-2.5 [&_li]:mb-1.5 [&_a]:underline text-sm sm:text-[15px] ${
+                            isDark 
+                              ? "[&_strong]:text-white [&_strong]:font-bold [&_a]:text-blue-400 [&_a]:hover:text-blue-300 [&_h3]:text-base [&_h3]:font-bold [&_h3]:text-emerald-400 [&_h3]:mt-4 [&_h3]:mb-1.5 [&_table]:w-full [&_table]:border-collapse [&_table]:my-2 [&_th]:border [&_th]:border-white/20 [&_th]:p-2.5 [&_th]:bg-white/5 [&_th]:text-xs [&_td]:border [&_td]:border-white/10 [&_td]:p-2.5 [&_td]:text-xs [&_pre]:overflow-x-auto [&_pre]:p-3 [&_pre]:bg-black/50 [&_pre]:rounded-lg [&_code]:bg-white/10 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded"
+                              : "[&_strong]:text-slate-900 [&_strong]:font-bold [&_a]:text-blue-600 [&_a]:hover:text-blue-700 [&_h3]:text-base [&_h3]:font-bold [&_h3]:text-emerald-700 [&_h3]:mt-4 [&_h3]:mb-1.5 [&_table]:w-full [&_table]:border-collapse [&_table]:my-2 [&_th]:border [&_th]:border-slate-300 [&_th]:p-2.5 [&_th]:bg-slate-100 [&_th]:text-slate-800 [&_th]:text-xs [&_td]:border [&_td]:border-slate-200 [&_td]:p-2.5 [&_td]:text-slate-700 [&_td]:text-xs [&_pre]:overflow-x-auto [&_pre]:p-3 [&_pre]:bg-slate-900 [&_pre]:text-slate-100 [&_pre]:rounded-lg [&_code]:bg-slate-200 [&_code]:text-slate-800 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded"
+                          }`}>
+                            {/* Akıl Yürütme ve Düşünce Adımları Accordion */}
+                            {(msg.trace || typeof msg.duration_s === "number") && (
+                              <MessageReasoningAccordion trace={msg.trace} duration_s={msg.duration_s} />
+                            )}
+
+                            <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
+                              {formatMarkdownContent(contentToRender)}
+                            </ReactMarkdown>
+
+                            {extractedImages.length > 0 && (
+                              <div className={`mt-3 px-3.5 py-2 rounded-xl border flex items-center justify-between text-xs font-medium backdrop-blur-sm shadow-sm transition-all ${
+                                isDark 
+                                  ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-300" 
+                                  : "bg-emerald-50 border-emerald-200 text-emerald-800"
+                              }`}>
+                                <span className="flex items-center gap-2">
+                                  <span>📊</span>
+                                  <span>{extractedImages.length} {t("analytics_charts") || "Analitik Grafik"} üretildi</span>
+                                </span>
+                                <span className="text-[11px] opacity-80 flex items-center gap-1 font-semibold">
+                                  <span>Sağ Analiz Paneli&apos;nde ↗</span>
+                                </span>
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })()
                     ) : (
                       <div>
                         {msg.attachmentName && (
@@ -1154,25 +1426,75 @@ function DashboardContent({ t }: { t: any }) {
         }`}>
           
           {/* Dashboard Header */}
-          <div className={`flex justify-between items-end pb-6 border-b ${
+          <div className={`flex items-center justify-between gap-4 pb-6 border-b flex-nowrap ${
             isDark ? "border-white/10" : "border-slate-200"
           }`}>
-             <div>
-                <h2 className={`text-3xl font-black tracking-tight ${
+             <div className="min-w-0 flex-1 pr-2">
+                <h2 className={`text-2xl sm:text-3xl font-black tracking-tight truncate ${
                   isDark ? "text-white" : "text-slate-900"
                 }`}>{t('panel_title')}</h2>
-                <p className={`text-sm mt-1 ${isDark ? "text-gray-400" : "text-slate-500"}`}>Real-time Data Lakehouse & Verification Engine</p>
+                <p className={`text-xs sm:text-sm mt-0.5 truncate ${isDark ? "text-gray-400" : "text-slate-500"}`}>Real-time Data Lakehouse & Verification Engine</p>
              </div>
-             <div className="flex items-center gap-2">
+             <div className="flex items-center gap-2 flex-shrink-0">
                 <span className="relative flex h-3 w-3">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
                 </span>
-                <span className={`text-xs font-bold px-3 py-1.5 rounded-full border ${
+                <span className={`text-xs font-bold px-3 py-1.5 rounded-full border hidden sm:inline-flex ${
                   isDark 
                     ? "text-emerald-400 bg-emerald-500/10 border-emerald-500/20" 
                     : "text-emerald-700 bg-emerald-50 border-emerald-300 shadow-sm"
                 }`}>System Online</span>
+
+                {/* Tema Değiştirme Butonu */}
+                <button
+                  onClick={toggleTheme}
+                  className={`p-2 rounded-lg border transition-all flex items-center justify-center ${
+                    isDark 
+                      ? "bg-white/5 hover:bg-white/10 text-amber-400 border-white/10 hover:border-amber-400/30" 
+                      : "bg-amber-50 hover:bg-amber-100 text-amber-700 border-amber-200"
+                  }`}
+                  title={isDark ? t("theme_light") : t("theme_dark")}
+                >
+                  {isDark ? (
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                  ) : (
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    </svg>
+                  )}
+                </button>
+
+                {/* Tekli Dil Toggle Butonu */}
+                <Link
+                  href={`/${locale === "tr" ? "en" : "tr"}`}
+                  className={`px-2.5 py-1.5 rounded-lg border transition-all flex items-center gap-1.5 text-xs font-semibold ${
+                    isDark 
+                      ? "bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white border-white/10 hover:border-white/20" 
+                      : "bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 border-slate-200"
+                  }`}
+                  title={locale === "tr" ? "Switch to English (EN)" : "Türkçe'ye Geç (TR)"}
+                >
+                  <span className="text-xs">🌐</span>
+                  <span>{locale === "tr" ? "EN" : "TR"}</span>
+                </Link>
+
+                {/* Çıkış Yap Butonu */}
+                <button 
+                  onClick={() => {
+                    devMode ? toggleDevMode(false) : signOut();
+                  }} 
+                  className={`p-2 rounded-lg border transition-all flex items-center justify-center ${
+                    isDark 
+                      ? "bg-red-500/10 hover:bg-red-500/20 text-red-400 border-red-500/20" 
+                      : "bg-red-50 hover:bg-red-100 text-red-600 border-red-200"
+                  }`}
+                  title={t('logout_button')}
+                >
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+                </button>
              </div>
           </div>
           
@@ -1211,88 +1533,139 @@ function DashboardContent({ t }: { t: any }) {
             </div>
           </div>
 
-          {/* Güven Katmanı - İzlenebilirlik / Kullanılan Araçlar */}
+          {/* Güven Katmanı - İzlenebilirlik / Kullanılan Araçlar (Açılır Kapanır) */}
           {traceSteps.length > 0 && (
-            <div className={`border rounded-2xl p-6 ${
+            <div className={`border rounded-2xl overflow-hidden transition-all ${
               isDark 
                 ? "bg-white/[0.02] border-white/5" 
                 : "bg-white border-slate-200 shadow-md"
             }`}>
-              <h3 className={`font-bold text-xs uppercase tracking-wider mb-4 ${
-                isDark ? "text-gray-300" : "text-slate-700"
-              }`}>{t('trace_title')}</h3>
-              <ol className="space-y-2">
-                {traceSteps.map((step, idx) => (
-                  <li key={idx} className={`flex flex-col gap-1 text-sm border rounded-lg px-3 py-2 ${
-                    isDark 
-                      ? "bg-white/[0.02] border-white/5" 
-                      : "bg-slate-50 border-slate-200 text-slate-800"
+              <button
+                type="button"
+                onClick={() => setShowRightPanelTrace(!showRightPanelTrace)}
+                className={`w-full p-4 sm:p-5 flex items-center justify-between text-left transition-colors ${
+                  isDark ? "hover:bg-white/5" : "hover:bg-slate-50"
+                }`}
+              >
+                <div className="flex items-center gap-2">
+                  <span className="text-base">🛠️</span>
+                  <h3 className={`font-bold text-xs uppercase tracking-wider ${
+                    isDark ? "text-gray-300" : "text-slate-700"
                   }`}>
-                    <div className="flex items-center gap-2">
-                      <span className={`font-mono text-xs ${isDark ? "text-gray-500" : "text-slate-400"}`}>{idx + 1}.</span>
-                      <span className={`font-medium ${isDark ? "text-gray-200" : "text-slate-800"}`}>{step.tool_name}</span>
-                      {typeof step.duration_s === "number" && (
-                        <span className={`text-xs ${isDark ? "text-gray-500" : "text-slate-400"}`}>{step.duration_s}s</span>
-                      )}
-                      <span className={step.success ? (isDark ? "text-emerald-400" : "text-emerald-600 font-bold") : "text-red-500 font-bold"}>
-                        {step.success ? "✓" : "✗"}
-                      </span>
-                    </div>
-                    {step.arguments && (
-                      <details className={`text-xs ${isDark ? "text-gray-500" : "text-slate-500"}`}>
-                        <summary className={`cursor-pointer ${isDark ? "hover:text-gray-300" : "hover:text-slate-700"}`}>Parametreler</summary>
-                        <pre className={`mt-1 whitespace-pre-wrap break-words ${isDark ? "text-gray-400" : "text-slate-600"}`}>{step.arguments}</pre>
-                      </details>
-                    )}
-                  </li>
-                ))}
-              </ol>
+                    {t('trace_title')} ({traceSteps.length})
+                  </h3>
+                  {typeof latestAgentMsg?.duration_s === "number" && (
+                    <span className={`px-2 py-0.5 rounded-full text-[11px] font-mono font-bold ${
+                      isDark ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30" : "bg-emerald-100 text-emerald-800"
+                    }`}>
+                      {latestAgentMsg.duration_s.toFixed(2)}s
+                    </span>
+                  )}
+                </div>
+                <div className="flex items-center gap-1 text-xs font-semibold text-emerald-500">
+                  <span>{showRightPanelTrace ? (t("hide_reasoning") || "Gizle") : (t("view_reasoning") || "Genişlet")}</span>
+                  <svg className={`w-4 h-4 transition-transform duration-200 ${showRightPanelTrace ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+              </button>
+
+              {showRightPanelTrace && (
+                <div className={`px-4 pb-4 sm:px-5 sm:pb-5 pt-0 border-t ${isDark ? "border-white/5" : "border-slate-100"}`}>
+                  <ol className="space-y-2 mt-3">
+                    {traceSteps.map((step, idx) => (
+                      <li key={idx} className={`flex flex-col gap-1 text-sm border rounded-xl px-3.5 py-2.5 ${
+                        isDark 
+                          ? "bg-white/[0.02] border-white/5" 
+                          : "bg-slate-50 border-slate-200 text-slate-800"
+                      }`}>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2 truncate">
+                            <span className={`font-mono text-xs ${isDark ? "text-gray-500" : "text-slate-400"}`}>{idx + 1}.</span>
+                            <span className={`font-semibold truncate ${isDark ? "text-emerald-400" : "text-emerald-700"}`}>{step.tool_name}</span>
+                          </div>
+                          <div className="flex items-center gap-2 flex-shrink-0">
+                            {typeof step.duration_s === "number" && (
+                              <span className={`text-xs font-mono ${isDark ? "text-gray-400" : "text-slate-500"}`}>{step.duration_s.toFixed(2)}s</span>
+                            )}
+                            <span className={step.success !== false ? (isDark ? "text-emerald-400 font-bold" : "text-emerald-600 font-bold") : "text-red-500 font-bold"}>
+                              {step.success !== false ? "✓" : "✗"}
+                            </span>
+                          </div>
+                        </div>
+                        {step.arguments && (
+                          <details className={`text-xs mt-1 ${isDark ? "text-gray-500" : "text-slate-500"}`}>
+                            <summary className={`cursor-pointer ${isDark ? "hover:text-gray-300" : "hover:text-slate-700"}`}>Parametreler</summary>
+                            <pre className={`mt-1 p-2 rounded-lg whitespace-pre-wrap break-words font-mono text-[11px] ${
+                              isDark ? "bg-black/50 text-gray-400 border border-white/5" : "bg-white text-slate-600 border border-slate-200"
+                            }`}>{step.arguments}</pre>
+                          </details>
+                        )}
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              )}
             </div>
           )}
 
-          {/* Grafik Alanı (Boş Durum) */}
-          <div className={`flex-1 min-h-[400px] border rounded-3xl p-8 flex flex-col items-center justify-center relative overflow-hidden group ${
-            isDark 
-              ? "bg-white/[0.02] border-white/5" 
-              : "bg-white border-slate-200 shadow-md"
-          }`}>
-            <div className={`absolute inset-0 pointer-events-none ${
-              isDark 
-                ? "bg-gradient-to-br from-blue-900/5 to-purple-900/5" 
-                : "bg-gradient-to-br from-blue-500/5 to-emerald-500/5"
-            }`}></div>
-            
-            {/* Arkaplan Izgarası (Grid) */}
-            <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMTUwLDE1MCwxNTAsMC4wNykiLz48L3N2Zz4=')] opacity-50"></div>
-
-            <div className="z-10 flex flex-col items-center text-center max-w-md">
-              <div className={`w-20 h-20 rounded-2xl flex items-center justify-center border mb-6 group-hover:scale-110 transition-all duration-500 shadow-xl ${
-                isDark 
-                  ? "bg-white/5 border-white/10 text-gray-500 group-hover:text-blue-400 group-hover:border-blue-500/30" 
-                  : "bg-slate-100 border-slate-200 text-slate-400 group-hover:text-blue-600 group-hover:border-blue-400"
-              }`}>
-                <svg className="w-10 h-10 transition-colors duration-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                </svg>
+          {/* Analitik Grafik Kartı / Galerisi (Tüm Oturum) */}
+          {sessionImages.length > 0 ? (
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center justify-between">
+                <h3 className={`font-bold text-xs uppercase tracking-wider ${
+                  isDark ? "text-emerald-400" : "text-emerald-700"
+                }`}>
+                  📊 {t("session_charts_title") || "Oturumun Analitik Grafikleri"} ({sessionImages.length})
+                </h3>
               </div>
-              <h3 className={`text-xl font-bold mb-2 ${
-                isDark ? "text-gray-200" : "text-slate-800"
-              }`}>{t('graph_placeholder')}</h3>
-              <p className={`text-sm leading-relaxed ${
-                isDark ? "text-gray-500" : "text-slate-500"
-              }`}>{t('graph_subtext')}</p>
+              <ChartCarousel images={sessionImages} />
+            </div>
+          ) : (
+            /* Grafik Alanı (Boş Durum) */
+            <div className={`flex-1 min-h-[360px] border rounded-3xl p-8 flex flex-col items-center justify-center relative overflow-hidden group ${
+              isDark 
+                ? "bg-white/[0.02] border-white/5" 
+                : "bg-white border-slate-200 shadow-md"
+            }`}>
+              <div className={`absolute inset-0 pointer-events-none ${
+                isDark 
+                  ? "bg-gradient-to-br from-blue-900/5 to-purple-900/5" 
+                  : "bg-gradient-to-br from-blue-500/5 to-emerald-500/5"
+              }`}></div>
               
-              <div className="mt-8 flex gap-2">
-                <div className={`h-1.5 w-12 rounded-full overflow-hidden ${isDark ? "bg-white/10" : "bg-slate-200"}`}>
-                   <div className="h-full bg-blue-500/50 w-1/3 animate-pulse"></div>
+              {/* Arkaplan Izgarası (Grid) */}
+              <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMTUwLDE1MCwxNTAsMC4wNykiLz48L3N2Zz4=')] opacity-50"></div>
+
+              <div className="z-10 flex flex-col items-center text-center max-w-md">
+                <div className={`w-20 h-20 rounded-2xl flex items-center justify-center border mb-6 group-hover:scale-110 transition-all duration-500 shadow-xl ${
+                  isDark 
+                    ? "bg-white/5 border-white/10 text-gray-500 group-hover:text-blue-400 group-hover:border-blue-500/30" 
+                    : "bg-slate-100 border-slate-200 text-slate-400 group-hover:text-blue-600 group-hover:border-blue-400"
+                }`}>
+                  <svg className="w-10 h-10 transition-colors duration-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                  </svg>
                 </div>
-                <div className={`h-1.5 w-8 rounded-full ${isDark ? "bg-white/10" : "bg-slate-200"}`}></div>
-                <div className={`h-1.5 w-16 rounded-full overflow-hidden ${isDark ? "bg-white/10" : "bg-slate-200"}`}>
-                   <div className="h-full bg-emerald-500/50 w-1/2 animate-pulse delay-75"></div>
+                <h3 className={`text-xl font-bold mb-2 ${
+                  isDark ? "text-gray-200" : "text-slate-800"
+                }`}>{t('graph_placeholder')}</h3>
+                <p className={`text-sm leading-relaxed ${
+                  isDark ? "text-gray-500" : "text-slate-500"
+                }`}>{t('graph_subtext')}</p>
+                
+                <div className="mt-8 flex gap-2">
+                  <div className={`h-1.5 w-12 rounded-full overflow-hidden ${isDark ? "bg-white/10" : "bg-slate-200"}`}>
+                     <div className="h-full bg-blue-500/50 w-1/3 animate-pulse"></div>
+                  </div>
+                  <div className={`h-1.5 w-8 rounded-full ${isDark ? "bg-white/10" : "bg-slate-200"}`}></div>
+                  <div className={`h-1.5 w-16 rounded-full overflow-hidden ${isDark ? "bg-white/10" : "bg-slate-200"}`}>
+                     <div className="h-full bg-emerald-500/50 w-1/2 animate-pulse delay-75"></div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     );

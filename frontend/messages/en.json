@@ -56,6 +56,12 @@
     "remove_attachment": "Remove Attachment",
     "unsupported_file_type": "Unsupported file format. Supported: .xlsx, .xls, .csv, .pdf, .png, .jpg, .jpeg, .webp",
     "file_too_large": "File size exceeds 10 MB limit.",
-    "attached_badge": "Attached Document / Image"
+    "attached_badge": "Attached Document / Image",
+    "analytics_charts": "Analytics Charts",
+    "reasoning_steps": "steps analyzed",
+    "view_reasoning": "View Reasoning Steps",
+    "hide_reasoning": "Hide",
+    "session_charts_title": "Session Analytics Charts",
+    "question_prefix": "Question"
   }
 }

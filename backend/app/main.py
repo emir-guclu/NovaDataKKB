@@ -11,7 +11,8 @@ from backend.app.api.routes import router
 
 load_dotenv(Path(__file__).resolve().parents[2] / ".env")
 
-CHARTS_DIR = Path(__file__).resolve().parents[1] / "static" / "charts"
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+CHARTS_DIR = PROJECT_ROOT / "data" / "charts"
 CHARTS_DIR.mkdir(parents=True, exist_ok=True)
 
 

@@ -23,14 +23,18 @@ if str(PROJECT_ROOT) not in sys.path:
 from dotenv import load_dotenv
 
 from backend.app.agent.loop import run_agent
-from backend.app.agent.tool_registry import ToolRegistry
+from backend.app.agent.tool_registry import ToolRegistry, create_default_tool_registry
 from backend.app.core.llm_provider import get_default_provider
 from backend.app.tools.anomaly_detection import AnomalyDetectionTool
 from backend.app.tools.causality_check import CausalityCheckTool
 from backend.app.tools.change_detection import ChangeDetectionTool
+from backend.app.tools.elasticity_and_sensitivity_analyzer import ElasticityAndSensitivityAnalyzerTool
 from backend.app.tools.evds_tool import EvdsTool
 from backend.app.tools.lakehouse_query import LakehouseQueryTool
+from backend.app.tools.real_value_deflator import RealValueDeflatorTool
+from backend.app.tools.risk_concentration_analyzer import RiskConcentrationAnalyzerTool
 from backend.app.tools.series_catalog_search import SeriesCatalogSearchTool
+from backend.app.tools.turning_point_and_cycle_detector import TurningPointAndCycleDetectorTool
 from backend.app.tools.web_search import WebSearchTool
 from backend.app.tools.web_url_reader import WebUrlReaderTool
 
@@ -211,11 +215,33 @@ TEST_SCENARIOS = [
         "expected_tool": "evds_data_service",
         "prompt": "Reeskont kredisi iskonto faiz oranlari ile ilgili Merkez Bankasi resmi verisi nedir?",
     },
+    # 9. RealValueDeflatorTool
     {
-        "id": "8.4",
-        "tool_class": "EvdsTool",
-        "expected_tool": "evds_data_service",
-        "prompt": "Bu bddk üzerinden yayınlanan bültenlerden aylık olarak konut kredilerini görmek istiyorum?",
+        "id": "9.1",
+        "tool_class": "RealValueDeflatorTool",
+        "expected_tool": "real_value_deflator",
+        "prompt": "Konut kredilerinin TÜFE enflasyonundan arındırılmış reel büyümesini ve satın alma gücü erozyonunu analiz et.",
+    },
+    # 10. ElasticityAndSensitivityAnalyzerTool
+    {
+        "id": "10.1",
+        "tool_class": "ElasticityAndSensitivityAnalyzerTool",
+        "expected_tool": "elasticity_and_sensitivity_analyzer",
+        "prompt": "Faiz oranlarının konut kredisi talebine duyarlılığını ve esneklik katsayısını hesapla.",
+    },
+    # 11. RiskConcentrationAnalyzerTool
+    {
+        "id": "11.1",
+        "tool_class": "RiskConcentrationAnalyzerTool",
+        "expected_tool": "risk_concentration_analyzer",
+        "prompt": "İller bazında batık kredilerin (NPL) yoğunlaşmasını, CR3, CR5 ve HHI risk skorunu hesapla.",
+    },
+    # 12. TurningPointAndCycleDetectorTool
+    {
+        "id": "12.1",
+        "tool_class": "TurningPointAndCycleDetectorTool",
+        "expected_tool": "turning_point_and_cycle_detector",
+        "prompt": "Konut kredilerindeki tepe ve dip dönüm noktalarını, genişleme ve daralma döngülerini tespit et.",
     },
 ]
 
@@ -246,16 +272,7 @@ class TestCaseResult:
 
 
 def create_registry() -> ToolRegistry:
-    registry = ToolRegistry()
-    registry.register(SeriesCatalogSearchTool())
-    registry.register(EvdsTool())
-    registry.register(ChangeDetectionTool())
-    registry.register(WebSearchTool())
-    registry.register(WebUrlReaderTool())
-    registry.register(LakehouseQueryTool())
-    registry.register(CausalityCheckTool())
-    registry.register(AnomalyDetectionTool())
-    return registry
+    return create_default_tool_registry()
 
 
 def run_single_test(scenario: dict[str, str], registry: ToolRegistry, provider: KloudeksProvider) -> TestCaseResult:

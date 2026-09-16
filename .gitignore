@@ -13,6 +13,7 @@ data/bronze/
 data/silver/
 data/gold/
 data/uploads/
+data/charts
 # Environment Variables & Secrets
 .env
 .env.*

@@ -56,6 +56,12 @@
     "remove_attachment": "Eki Kaldır",
     "unsupported_file_type": "Desteklenmeyen dosya formatı. Desteklenenler: .xlsx, .xls, .csv, .pdf, .png, .jpg, .jpeg, .webp",
     "file_too_large": "Dosya boyutu 10 MB sınırını aşıyor.",
-    "attached_badge": "Ekli Belge / Görsel"
+    "attached_badge": "Ekli Belge / Görsel",
+    "analytics_charts": "Analitik Grafikler",
+    "reasoning_steps": "adımda analiz edildi",
+    "view_reasoning": "Düşünce Adımlarını Gör",
+    "hide_reasoning": "Gizle",
+    "session_charts_title": "Oturumun Analitik Grafikleri",
+    "question_prefix": "Soru"
   }
 }
