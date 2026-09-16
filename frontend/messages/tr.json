@@ -50,6 +50,12 @@
     "untitled_chat": "Yeni Sohbet",
     "theme_light": "Açık Tema",
     "theme_dark": "Karanlık Tema",
-    "toggle_theme": "Temayı Değiştir"
+    "toggle_theme": "Temayı Değiştir",
+    "attach_file": "Dosya / Görsel Ekle (.xlsx, .csv, .pdf, .png, .jpg)",
+    "uploading_file": "Dosya yükleniyor ve OCR/tablo ayrıştırması yapılıyor...",
+    "remove_attachment": "Eki Kaldır",
+    "unsupported_file_type": "Desteklenmeyen dosya formatı. Desteklenenler: .xlsx, .xls, .csv, .pdf, .png, .jpg, .jpeg, .webp",
+    "file_too_large": "Dosya boyutu 10 MB sınırını aşıyor.",
+    "attached_badge": "Ekli Belge / Görsel"
   }
 }

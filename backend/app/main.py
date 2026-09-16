@@ -16,7 +16,12 @@ CHARTS_DIR.mkdir(parents=True, exist_ok=True)
 
 
 def get_allowed_origins() -> list[str]:
-    origins = ["http://localhost:3000"]
+    origins = [
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "http://localhost:3001",
+        "http://127.0.0.1:3001",
+    ]
     frontend_origin = os.getenv("FRONTEND_ORIGIN", "").strip()
     if frontend_origin and frontend_origin not in origins:
         origins.append(frontend_origin)

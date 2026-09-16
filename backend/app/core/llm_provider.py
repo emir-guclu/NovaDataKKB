@@ -261,6 +261,36 @@ class NvidiaProvider(LLMProvider):
         )
         return response.data[0].embedding
 
+    def ocr(self, image_base64: str) -> str:
+        if not image_base64.strip():
+            raise ValueError("OCR image_base64 must not be empty")
+
+        response = self._with_rate_limit_retry(
+            lambda: self.client.chat.completions.create(
+                model=self.CHAT_MODEL,
+                messages=[
+                    {
+                        "role": "user",
+                        "content": [
+                            {
+                                "type": "text",
+                                "text": "Aşağıdaki görseldeki tüm metin, tablo ve sayısal verileri birebir Markdown formatında çıkar:",
+                            },
+                            {
+                                "type": "image_url",
+                                "image_url": {
+                                    "url": f"data:image/png;base64,{image_base64}"
+                                },
+                            },
+                        ],
+                    }
+                ],
+                max_tokens=4096,
+                temperature=0.0,
+            )
+        )
+        return response.choices[0].message.content or ""
+
 
 class DeepSeekProvider(LLMProvider):
     BASE_URL = "https://api.deepseek.com"

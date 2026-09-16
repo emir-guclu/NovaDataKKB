@@ -12,6 +12,7 @@ notlar/
 data/bronze/
 data/silver/
 data/gold/
+data/uploads/
 # Environment Variables & Secrets
 .env
 .env.*

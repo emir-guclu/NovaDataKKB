@@ -10,6 +10,7 @@ from backend.app.core.llm_provider import KloudeksProvider, LLMProvider
 from backend.app.prompts.loader import get_system_prompt
 from backend.app.prompts.sanitizer import (
     flag_suspicious_content,
+    format_attached_document,
     format_safe_user_message,
 )
 
@@ -100,12 +101,21 @@ def run_agent(
     max_iterations: int = 20,
     on_event: Callable[[str, dict[str, Any]], None] | None = None,
     history: list[dict[str, Any]] | None = None,
+    attachment_content: str | None = None,
+    attachment_name: str | None = None,
 ) -> str:
     if max_iterations < 1:
         raise ValueError("max_iterations en az 1 olmali.")
 
     flag_suspicious_content(question, source_url="user_query")
     safe_user_message = format_safe_user_message(question)
+    if attachment_content:
+        safe_attachment = format_attached_document(
+            attachment_content,
+            filename=attachment_name or "ekli_dosya",
+            doc_type="attachment",
+        )
+        safe_user_message = f"{safe_user_message}\n\n{safe_attachment}"
 
     messages: list[dict] = [{"role": "system", "content": get_system_prompt()}]
     messages.extend(_sanitize_history(history))

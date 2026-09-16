@@ -1,13 +1,16 @@
 from __future__ import annotations
 
 import asyncio
+from datetime import datetime
 import json
 import logging
 import os
+from pathlib import Path
 from typing import Any
+import uuid
 
-from fastapi import APIRouter
-from fastapi.responses import StreamingResponse
+from fastapi import APIRouter, File, UploadFile
+from fastapi.responses import JSONResponse, StreamingResponse
 from pydantic import BaseModel, Field
 
 from backend.app.agent.loop import run_agent
@@ -17,6 +20,7 @@ from backend.app.core.llm_provider import (
     get_available_providers,
     get_default_provider,
 )
+from backend.app.services.attachment_parser import parse_uploaded_file
 
 
 logger = logging.getLogger(__name__)
@@ -25,12 +29,18 @@ router = APIRouter()
 
 REQUEST_HARD_TIMEOUT_SECONDS = float(os.getenv("REQUEST_HARD_TIMEOUT_SECONDS", "900"))
 AGENT_MAX_ITERATIONS = int(os.getenv("AGENT_MAX_ITERATIONS", "12"))
+MAX_UPLOAD_BYTES = 10 * 1024 * 1024  # 10 MB
+ALLOWED_EXTENSIONS = {".xlsx", ".xls", ".csv", ".pdf", ".png", ".jpg", ".jpeg", ".webp"}
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+UPLOAD_DIR = PROJECT_ROOT / "data" / "uploads"
 
 
 class AskRequest(BaseModel):
     question: str
     history: list[dict[str, Any]] = Field(default_factory=list)
     provider: str | None = Field(default=None, description="deepseek, nvidia veya kloudeks")
+    attachment_content: str | None = Field(default=None, description="Ekli dosya/görselin Markdown ayrıştırılmış içeriği")
+    attachment_name: str | None = Field(default=None, description="Ekli dosya/görselin orijinal adı")
 
 
 registry = create_default_tool_registry()
@@ -50,6 +60,80 @@ def _resolve_provider(requested_provider: str | None = None):
 async def list_providers():
     """Mevcut LLM saglayicilarini ve durumlarini dondurur."""
     return {"providers": get_available_providers()}
+
+
+@router.post("/api/v1/upload-attachment")
+@router.post("/upload-attachment")
+async def upload_attachment(file: UploadFile = File(...)):
+    """Kullanıcının yüklediği görsel, Excel, CSV veya PDF dosyasını kaydeder ve ayrıştırır."""
+    original_filename = file.filename or "uploaded_file"
+    suffix = Path(original_filename).suffix.lower()
+
+    if suffix not in ALLOWED_EXTENSIONS:
+        return JSONResponse(
+            status_code=400,
+            content={
+                "success": False,
+                "error": f"Desteklenmeyen dosya türü: '{suffix}'. İzin verilen formatlar: {', '.join(sorted(ALLOWED_EXTENSIONS))}",
+            },
+        )
+
+    try:
+        content = await file.read()
+        if len(content) > MAX_UPLOAD_BYTES:
+            return JSONResponse(
+                status_code=400,
+                content={
+                    "success": False,
+                    "error": f"Dosya boyutu 10 MB sınırını aşıyor ({len(content) / (1024 * 1024):.1f} MB).",
+                },
+            )
+
+        UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        safe_name = f"{timestamp}_{uuid.uuid4().hex[:8]}_{Path(original_filename).name}"
+        saved_path = UPLOAD_DIR / safe_name
+        saved_path.write_bytes(content)
+
+        # Yalnızca görsel yüklemelerinde LLM / OCR provider'ı çöz
+        provider = None
+        if suffix in {".png", ".jpg", ".jpeg", ".webp"}:
+            provider = _resolve_provider()
+
+        parsed = await asyncio.to_thread(
+            parse_uploaded_file,
+            saved_path,
+            original_filename,
+            provider,
+        )
+
+        if not parsed.get("success"):
+            return JSONResponse(
+                status_code=400,
+                content={
+                    "success": False,
+                    "error": parsed.get("error", "Dosya ayrıştırılamadı."),
+                    "filename": original_filename,
+                },
+            )
+
+        return {
+            "success": True,
+            "filename": original_filename,
+            "saved_path": str(saved_path),
+            "content_type": parsed.get("content_type"),
+            "markdown_content": parsed.get("markdown_content"),
+            "metadata": parsed.get("metadata", {}),
+        }
+    except Exception as exc:
+        logger.exception("Dosya yukleme veya ayristirma sirasinda hata")
+        return JSONResponse(
+            status_code=500,
+            content={
+                "success": False,
+                "error": f"Dosya işlenirken sunucu hatası oluştu: {str(exc)}",
+            },
+        )
 
 
 @router.post("/api/v1/ask")
@@ -84,6 +168,12 @@ async def ask(request: AskRequest):
             except Exception:
                 logger.warning("trace toplama hatasi", exc_info=True)
 
+        agent_kwargs = {}
+        if request.attachment_content:
+            agent_kwargs["attachment_content"] = request.attachment_content
+        if request.attachment_name:
+            agent_kwargs["attachment_name"] = request.attachment_name
+
         answer = await asyncio.wait_for(
             asyncio.to_thread(
                 run_agent,
@@ -93,6 +183,7 @@ async def ask(request: AskRequest):
                 AGENT_MAX_ITERATIONS,
                 _collect,
                 normalized_history,
+                **agent_kwargs,
             ),
             timeout=REQUEST_HARD_TIMEOUT_SECONDS,
         )
@@ -147,9 +238,16 @@ async def ask_stream(request: AskRequest):
 
     async def gen():
         provider = _resolve_provider(request.provider)
+        agent_kwargs = {}
+        if request.attachment_content:
+            agent_kwargs["attachment_content"] = request.attachment_content
+        if request.attachment_name:
+            agent_kwargs["attachment_name"] = request.attachment_name
+
         task = asyncio.create_task(asyncio.to_thread(
             run_agent, request.question, registry, provider,
-            AGENT_MAX_ITERATIONS, on_event, normalized_history))
+            AGENT_MAX_ITERATIONS, on_event, normalized_history,
+            **agent_kwargs))
         while not task.done() or not queue.empty():
             try:
                 evt = await asyncio.wait_for(queue.get(), timeout=0.5)

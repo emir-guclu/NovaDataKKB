@@ -6,9 +6,20 @@ import { useTranslations } from 'next-intl';
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8000";
+
+function formatMarkdownContent(rawText: string): string {
+  if (!rawText) return "";
+  let text = rawText;
+  // If markdown table rows are joined on a single line like "| col | col | |---|---| | val | val |"
+  text = text.replace(/\|\s*\|\s*/g, "|\n|");
+  // Ensure table starts with newlines
+  text = text.replace(/([^\n])(\n\|[^\n]+\|\n\|[\s\-:|]+\|)/g, "$1\n\n$2");
+  return text;
+}
 
 class ApiRequestError extends Error {
   type: "validation" | "http" | "network" | "stream" | "runtime";
@@ -22,7 +33,17 @@ class ApiRequestError extends Error {
 interface ChatMessage {
   role: string;
   content: string;
+  attachmentName?: string;
+  attachmentType?: string;
   trace?: any[];
+}
+
+interface AttachedFile {
+  name: string;
+  size: number;
+  contentType: string;
+  markdownContent: string;
+  previewUrl?: string;
 }
 
 interface ChatSession {
@@ -69,6 +90,10 @@ function DashboardContent({ t }: { t: any }) {
   // Uzun süren (streaming) sorgularda gösterilen tek satırlık ilerleme durumu
   const [streamStatus, setStreamStatus] = useState<string | null>(null);
   const [activitySteps, setActivitySteps] = useState<Array<{ message: string; done: boolean }>>([]);
+  const [attachment, setAttachment] = useState<AttachedFile | null>(null);
+  const [isUploadingAttachment, setIsUploadingAttachment] = useState(false);
+  const [attachmentError, setAttachmentError] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   // İlk yüklemede localStorage'dan tema, oturumlar ve tercihleri yükleme
@@ -312,14 +337,82 @@ function DashboardContent({ t }: { t: any }) {
     return null;
   };
 
+  // Dosya Yükleme ve OCR / Tablo Ayrıştırma
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const allowedExts = [".xlsx", ".xls", ".csv", ".pdf", ".png", ".jpg", ".jpeg", ".webp"];
+    const ext = "." + file.name.split(".").pop()?.toLowerCase();
+    if (!allowedExts.includes(ext)) {
+      setAttachmentError(t("unsupported_file_type"));
+      return;
+    }
+
+    if (file.size > 10 * 1024 * 1024) {
+      setAttachmentError(t("file_too_large"));
+      return;
+    }
+
+    setAttachmentError(null);
+    setIsUploadingAttachment(true);
+
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const res = await fetch(`${API_BASE_URL}/api/v1/upload-attachment`, {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        setAttachmentError(data.error || t("error_runtime"));
+        return;
+      }
+
+      let previewUrl: string | undefined;
+      if (file.type.startsWith("image/")) {
+        previewUrl = URL.createObjectURL(file);
+      }
+
+      setAttachment({
+        name: data.filename,
+        size: file.size,
+        contentType: data.content_type,
+        markdownContent: data.markdown_content,
+        previewUrl,
+      });
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : t("error_network");
+      setAttachmentError(message || t("error_network"));
+    } finally {
+      setIsUploadingAttachment(false);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+    }
+  };
+
   // POST /api/v1/ask/stream ile SSE olaylarını okur, ilerlemeyi streamStatus'e
   // yazar ve 'done' olayındaki cevabı döndürür. EventSource POST desteklemediği
   // için fetch + response.body reader ile elle ayrıştırıyoruz.
-  const sendViaStream = async (question: string, history: Array<{ role: string; content: string }>) => {
+  const sendViaStream = async (
+    question: string,
+    history: Array<{ role: string; content: string }>,
+    attachmentData?: AttachedFile | null
+  ) => {
     const response = await fetch(`${API_BASE_URL}/api/v1/ask/stream`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ question, history, provider: selectedProvider })
+      body: JSON.stringify({
+        question,
+        history,
+        provider: selectedProvider,
+        attachment_content: attachmentData?.markdownContent || null,
+        attachment_name: attachmentData?.name || null,
+      })
     });
 
     if (response.status === 422) {
@@ -339,7 +432,7 @@ function DashboardContent({ t }: { t: any }) {
     let buffer = "";
     let finalAnswer: string | null = null;
     let streamError: string | null = null;
-    const trace: any[] = [];
+    const trace: Array<{ type: string; tool_name?: string; success?: boolean; duration_s?: number }> = [];
 
     while (true) {
       const { value, done } = await reader.read();
@@ -382,11 +475,21 @@ function DashboardContent({ t }: { t: any }) {
   };
 
   // Eski, akışsız uç noktaya (POST /api/v1/ask) düşen fallback.
-  const sendViaFallback = async (question: string, history: Array<{ role: string; content: string }>) => {
+  const sendViaFallback = async (
+    question: string,
+    history: Array<{ role: string; content: string }>,
+    attachmentData?: AttachedFile | null
+  ) => {
     const response = await fetch(`${API_BASE_URL}/api/v1/ask`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ question, history, provider: selectedProvider })
+      body: JSON.stringify({
+        question,
+        history,
+        provider: selectedProvider,
+        attachment_content: attachmentData?.markdownContent || null,
+        attachment_name: attachmentData?.name || null,
+      })
     });
 
     if (response.status === 422) {
@@ -406,9 +509,14 @@ function DashboardContent({ t }: { t: any }) {
   };
 
   const handleSend = async () => {
-    if (isLoading || !input.trim()) return;
+    if (isLoading || isUploadingAttachment || (!input.trim() && !attachment)) return;
 
-    const userMsg = input;
+    const userMsg = input.trim() || (attachment ? `${attachment.name} dosyasını analiz et.` : "");
+    const currentAttachment = attachment;
+    // Gönderim başladığında eki temizle
+    setAttachment(null);
+    setAttachmentError(null);
+
     // Yeni kullanıcı mesajı state'e eklenmeden ÖNCE geçmişi hesapla
     const history = messages
       .filter(m => m.content && m.content.trim() !== "")
@@ -427,7 +535,15 @@ function DashboardContent({ t }: { t: any }) {
       updatedTitle = userMsg.length > 28 ? userMsg.slice(0, 28) + "..." : userMsg;
     }
 
-    const newMessagesWithUser = [...messages, { role: "user", content: userMsg }];
+    const newMessagesWithUser: ChatMessage[] = [
+      ...messages,
+      {
+        role: "user",
+        content: userMsg,
+        attachmentName: currentAttachment?.name,
+        attachmentType: currentAttachment?.contentType,
+      }
+    ];
     updateCurrentSessionMessages(newMessagesWithUser, updatedTitle);
 
     setInput("");
@@ -438,7 +554,7 @@ function DashboardContent({ t }: { t: any }) {
     try {
       let result;
       try {
-        result = await sendViaStream(userMsg, history);
+        result = await sendViaStream(userMsg, history, currentAttachment);
       } catch (streamErr) {
         if (
           streamErr instanceof ApiRequestError &&
@@ -446,7 +562,7 @@ function DashboardContent({ t }: { t: any }) {
         ) {
           throw streamErr;
         }
-        result = await sendViaFallback(userMsg, history);
+        result = await sendViaFallback(userMsg, history, currentAttachment);
       }
       const newMessagesWithAgent = [
         ...newMessagesWithUser,
@@ -475,8 +591,51 @@ function DashboardContent({ t }: { t: any }) {
     }
   };
 
-  // ReactMarkdown için Görsel ve Kart Bileşeni
+  // ReactMarkdown için Görsel ve Tablo Kart Bileşenleri
   const markdownComponents = {
+    table: ({ children, ...props }: any) => (
+      <div className={`my-3.5 w-full overflow-x-auto rounded-xl border shadow-md ${
+        isDark ? "border-white/10 bg-white/[0.02]" : "border-slate-200 bg-white"
+      }`}>
+        <table className="w-full text-left text-xs border-collapse min-w-[340px]" {...props}>
+          {children}
+        </table>
+      </div>
+    ),
+    thead: ({ children, ...props }: any) => (
+      <thead className={`text-xs font-bold uppercase tracking-wider border-b ${
+        isDark 
+          ? "bg-white/10 border-white/10 text-emerald-400" 
+          : "bg-slate-100 border-slate-200 text-emerald-800"
+      }`} {...props}>
+        {children}
+      </thead>
+    ),
+    th: ({ children, ...props }: any) => (
+      <th className={`px-3.5 py-2.5 font-bold border-r last:border-r-0 ${
+        isDark ? "border-white/10 text-emerald-300" : "border-slate-200 text-slate-800"
+      }`} {...props}>
+        {children}
+      </th>
+    ),
+    td: ({ children, ...props }: any) => (
+      <td className={`px-3.5 py-2 border-t border-r last:border-r-0 font-normal leading-relaxed ${
+        isDark 
+          ? "border-white/5 text-gray-200" 
+          : "border-slate-200/70 text-slate-800"
+      }`} {...props}>
+        {children}
+      </td>
+    ),
+    tr: ({ children, ...props }: any) => (
+      <tr className={`transition-colors ${
+        isDark 
+          ? "hover:bg-white/5 even:bg-white/[0.02]" 
+          : "hover:bg-slate-50 even:bg-slate-50/50"
+      }`} {...props}>
+        {children}
+      </tr>
+    ),
     img: ({ src, alt, ...rest }: any) => {
       if (!src) return null;
       const srcStr = typeof src === "string" ? src : "";
@@ -796,12 +955,20 @@ function DashboardContent({ t }: { t: any }) {
                           ? "[&_strong]:text-white [&_strong]:font-bold [&_a]:text-blue-400 [&_a]:hover:text-blue-300 [&_h3]:text-base [&_h3]:font-bold [&_h3]:text-emerald-400 [&_h3]:mt-4 [&_h3]:mb-1.5 [&_table]:w-full [&_table]:border-collapse [&_table]:my-2 [&_th]:border [&_th]:border-white/20 [&_th]:p-2.5 [&_th]:bg-white/5 [&_th]:text-xs [&_td]:border [&_td]:border-white/10 [&_td]:p-2.5 [&_td]:text-xs [&_pre]:overflow-x-auto [&_pre]:p-3 [&_pre]:bg-black/50 [&_pre]:rounded-lg [&_code]:bg-white/10 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded"
                           : "[&_strong]:text-slate-900 [&_strong]:font-bold [&_a]:text-blue-600 [&_a]:hover:text-blue-700 [&_h3]:text-base [&_h3]:font-bold [&_h3]:text-emerald-700 [&_h3]:mt-4 [&_h3]:mb-1.5 [&_table]:w-full [&_table]:border-collapse [&_table]:my-2 [&_th]:border [&_th]:border-slate-300 [&_th]:p-2.5 [&_th]:bg-slate-100 [&_th]:text-slate-800 [&_th]:text-xs [&_td]:border [&_td]:border-slate-200 [&_td]:p-2.5 [&_td]:text-slate-700 [&_td]:text-xs [&_pre]:overflow-x-auto [&_pre]:p-3 [&_pre]:bg-slate-900 [&_pre]:text-slate-100 [&_pre]:rounded-lg [&_code]:bg-slate-200 [&_code]:text-slate-800 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded"
                       }`}>
-                        <ReactMarkdown components={markdownComponents}>
-                          {idx === 0 && !msg.content ? t('welcome_message') : msg.content}
+                        <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
+                          {formatMarkdownContent(idx === 0 && !msg.content ? t('welcome_message') : msg.content)}
                         </ReactMarkdown>
                       </div>
                     ) : (
-                      msg.content
+                      <div>
+                        {msg.attachmentName && (
+                          <div className="mb-2 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white/20 text-xs font-semibold text-white border border-white/30 w-fit backdrop-blur-sm shadow-sm">
+                            <span>📎</span>
+                            <span className="truncate max-w-[220px]">{msg.attachmentName}</span>
+                          </div>
+                        )}
+                        <div>{msg.content}</div>
+                      </div>
                     )}
                   </div>
                 </div>
@@ -863,20 +1030,106 @@ function DashboardContent({ t }: { t: any }) {
           </div>
 
           {/* Input Alanı */}
-          <div className={`p-5 border-t transition-colors duration-200 ${
+          <div className={`p-4 sm:p-5 border-t transition-colors duration-200 ${
             isDark ? "border-white/5 bg-black/40" : "border-slate-200 bg-slate-50/90"
           }`}>
+            {/* Attachment Error Alert */}
+            {attachmentError && (
+              <div className="mb-3 px-3.5 py-2 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs flex items-center justify-between">
+                <span className="flex items-center gap-1.5">
+                  <span>⚠️</span>
+                  <span>{attachmentError}</span>
+                </span>
+                <button
+                  onClick={() => setAttachmentError(null)}
+                  className="hover:text-red-300 font-bold ml-2 p-1"
+                >
+                  ✕
+                </button>
+              </div>
+            )}
+
+            {/* Uploading Progress */}
+            {isUploadingAttachment && (
+              <div className="mb-3 px-3.5 py-2 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs flex items-center gap-2 animate-pulse">
+                <div className="w-3.5 h-3.5 border-2 border-blue-400 border-t-transparent rounded-full animate-spin"></div>
+                <span>{t("uploading_file")}</span>
+              </div>
+            )}
+
+            {/* Attached File Chip / Badge */}
+            {attachment && (
+              <div className={`mb-3 px-3.5 py-2 rounded-xl border flex items-center justify-between gap-3 text-xs ${
+                isDark 
+                  ? "bg-white/10 border-blue-500/30 text-white shadow-sm" 
+                  : "bg-blue-50 border-blue-200 text-blue-900 shadow-sm"
+              }`}>
+                <div className="flex items-center gap-2 min-w-0">
+                  <span className="text-base">
+                    {attachment.contentType === "image" ? "📸" : attachment.contentType === "excel" ? "📊" : attachment.contentType === "pdf" ? "📑" : "📄"}
+                  </span>
+                  <div className="truncate">
+                    <span className="font-semibold">{attachment.name}</span>
+                    <span className={`ml-2 text-[11px] ${isDark ? "text-gray-400" : "text-slate-500"}`}>
+                      ({(attachment.size / 1024).toFixed(1)} KB)
+                    </span>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setAttachment(null)}
+                  className={`p-1 rounded-md hover:bg-red-500/20 hover:text-red-400 transition-colors flex-shrink-0 ${
+                    isDark ? "text-gray-400" : "text-slate-500"
+                  }`}
+                  title={t("remove_attachment")}
+                >
+                  ✕
+                </button>
+              </div>
+            )}
+
+            {/* Hidden File Input */}
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={handleFileUpload}
+              accept=".xlsx,.xls,.csv,.pdf,.png,.jpg,.jpeg,.webp"
+              className="hidden"
+            />
+
             <div className="relative flex items-center">
+              {/* Attachment Button */}
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                disabled={isLoading || isUploadingAttachment}
+                title={t("attach_file")}
+                className={`absolute left-2.5 p-2 rounded-lg transition-all flex items-center justify-center ${
+                  isDark
+                    ? "text-gray-400 hover:text-white hover:bg-white/10"
+                    : "text-slate-500 hover:text-slate-900 hover:bg-slate-200"
+                } disabled:opacity-40 disabled:cursor-not-allowed`}
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+                </svg>
+              </button>
+
               <input 
                 type="text" 
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => {
-                  if (e.key === "Enter" && !isLoading) handleSend();
+                  if (e.key === "Enter" && !isLoading && !isUploadingAttachment) handleSend();
                 }}
-                disabled={isLoading}
-                placeholder={isLoading ? t("chat_busy") : t('chat_placeholder')} 
-                className={`w-full pl-5 pr-14 py-4 rounded-xl text-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed ${
+                disabled={isLoading || isUploadingAttachment}
+                placeholder={
+                  isLoading
+                    ? t("chat_busy")
+                    : isUploadingAttachment
+                    ? t("uploading_file")
+                    : (attachment ? `${attachment.name} ile ilgili soru sorun...` : t('chat_placeholder'))
+                } 
+                className={`w-full pl-12 pr-14 py-4 rounded-xl text-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed ${
                   isDark 
                     ? "bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500/50 focus:bg-white/10 shadow-inner" 
                     : "bg-white border border-slate-300 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-500 shadow-sm"
@@ -884,7 +1137,7 @@ function DashboardContent({ t }: { t: any }) {
               />
               <button 
                 onClick={handleSend}
-                disabled={isLoading || !input.trim()}
+                disabled={isLoading || isUploadingAttachment || (!input.trim() && !attachment)}
                 className="absolute right-2 p-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-all disabled:opacity-30 disabled:hover:bg-blue-600 shadow-md"
               >
                 <svg className="w-5 h-5 translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" /></svg>

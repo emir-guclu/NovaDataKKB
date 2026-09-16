@@ -50,6 +50,12 @@
     "untitled_chat": "New Chat",
     "theme_light": "Light Mode",
     "theme_dark": "Dark Mode",
-    "toggle_theme": "Toggle Theme"
+    "toggle_theme": "Toggle Theme",
+    "attach_file": "Attach File / Image (.xlsx, .csv, .pdf, .png, .jpg)",
+    "uploading_file": "Uploading file and running OCR/table parsing...",
+    "remove_attachment": "Remove Attachment",
+    "unsupported_file_type": "Unsupported file format. Supported: .xlsx, .xls, .csv, .pdf, .png, .jpg, .jpeg, .webp",
+    "file_too_large": "File size exceeds 10 MB limit.",
+    "attached_badge": "Attached Document / Image"
   }
 }
