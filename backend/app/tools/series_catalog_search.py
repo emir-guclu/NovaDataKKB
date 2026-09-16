@@ -55,9 +55,9 @@ class SeriesCatalogSearchTool(BaseTool):
     name = "series_catalog_search"
     description = (
         "Lakehouse katalogundaki zaman serilerini ve gostergeleri dogal dil ile arar. "
-        "Kullanici kredi turu, faiz, sektor, il veya makroekonomik gosterge sorup tam series_id "
+        "Kullanici herhangi bir seri, gosterge, metrik, kategori veya veri kavrami sorup tam series_id "
         "bilinmediginde once bunu kullan. Ham veri getirmek icin KULLANMA; eslesen series_id ile "
-        "lakehouse_query veya change_detection kullan. Ornek query='tasit kredisi hacmi'."
+        "lakehouse_query veya change_detection kullan. Ornek query='aylik hasta sayisi'."
     )
 
     class Input(BaseModel):

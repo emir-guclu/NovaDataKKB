@@ -27,10 +27,10 @@ def test_scope_policy_in_system_prompt():
     run_agent("Herhangi bir soru", ToolRegistry(), provider, max_iterations=1)
 
     system_prompt = provider.messages[0]["content"]
-    assert "KKB'nin (Kredi Kayıt Bürosu) finansal veri analiz asistanısın" in system_prompt
-    assert "BDDK, EVDS, FinTürk" in system_prompt
+    assert "genel amaçlı, kaynaklar arası veri ve zaman serisi analiz asistanısın" in system_prompt
+    assert "BDDK, EVDS ve FinTürk" in system_prompt
     assert "hava durumu, genel sohbet, kod yazma" in system_prompt
-    assert "kapsamının dışında olduğunu belirt ve ne tür sorular sorabileceğine dair 2-3 örnek ver" in system_prompt
+    assert "kapsamının dışında olduğunu belirt ve ne tür veri ve analiz sorularını yanıtlayabileceğine dair 2-3 örnek ver" in system_prompt
     assert "web_search tool'unu kullanabilirsin" in system_prompt
 
 

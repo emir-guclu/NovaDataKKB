@@ -48,6 +48,19 @@ from app.modules.evds.transformer import (
 
 logger = logging.getLogger("evds_loader")
 
+
+def _upsert_embedding_catalog_series(**kwargs: Any) -> bool:
+    try:
+        from backend.scripts.generate_catalog_embeddings import (
+            upsert_embedding_catalog_series,
+        )
+    except ModuleNotFoundError:
+        from scripts.generate_catalog_embeddings import (
+            upsert_embedding_catalog_series,
+        )
+
+    return upsert_embedding_catalog_series(**kwargs)
+
 BACKEND_DIR = Path(__file__).resolve().parents[2]
 DEFAULT_BRONZE_DIR = BACKEND_DIR.parent / "data" / "bronze" / "evds"
 DEFAULT_SILVER_DIR = BACKEND_DIR.parent / "data" / "silver" / "evds"
@@ -55,6 +68,7 @@ DEFAULT_SILVER_DB = BACKEND_DIR.parent / "data" / "silver" / "silver.duckdb"
 DEFAULT_ALIGNED_DB = BACKEND_DIR.parent / "data" / "aligned" / "monthly" / "aligned.duckdb"
 DEFAULT_METADATA_RAW = DEFAULT_BRONZE_DIR / "metadata_raw.json"
 DEFAULT_CATALOG_PATH = DEFAULT_BRONZE_DIR / "evds_catalog.parquet"
+DEFAULT_EMBEDDING_CATALOG = BACKEND_DIR.parent / "data" / "gold" / "series_embeddings.parquet"
 
 
 def _normalize_series_code(code: str) -> str:
@@ -76,6 +90,7 @@ def load_evds_series(
     silver_db_path: Optional[Path] = None,
     aligned_db_path: Optional[Path] = None,
     metadata_raw_path: Optional[Path] = None,
+    embedding_catalog_path: Optional[Path] = None,
     context: Literal["batch", "live"] = "batch",
 ) -> Dict[str, Any]:
     """Ingests, transforms, canonicalizes, and registers a single EVDS series on-demand.
@@ -110,6 +125,7 @@ def load_evds_series(
         else (DEFAULT_ALIGNED_DB if silver_db_path is None else None)
     )
     meta_path = metadata_raw_path or DEFAULT_METADATA_RAW
+    embedding_path = embedding_catalog_path or DEFAULT_EMBEDDING_CATALOG
 
     b_dir.mkdir(parents=True, exist_ok=True)
     s_dir.mkdir(parents=True, exist_ok=True)
@@ -183,7 +199,7 @@ def load_evds_series(
 
     if pending_review and context == "batch":
         raise ValueError(
-            f"Series {series_id!r} has unclassified financial nature; "
+            f"Series {series_id!r} has unclassified series nature; "
             "cannot add it to canonical Silver."
         )
 
@@ -359,7 +375,7 @@ def load_evds_series(
         finally:
             con.close()
 
-    # 6. Update monthly aligned layer when financial semantics are known.
+    # 6. Update monthly aligned layer when series semantics are known.
     added_to_aligned = False
     if (
         add_to_silver
@@ -399,7 +415,27 @@ def load_evds_series(
             )
             raise
 
-    # 7. Build preview
+    # 7. Best-effort semantic catalog refresh.
+    # Missing embedding artifacts are intentionally not bootstrapped here;
+    # series_catalog_search can fall back to Silver metadata.
+    embedding_catalog_updated = False
+    if add_to_silver and added_to_silver:
+        try:
+            embedding_catalog_updated = _upsert_embedding_catalog_series(
+                series_id=series_id,
+                silver_db_path=db_path,
+                metadata_raw_path=meta_path,
+                output_path=embedding_path,
+            )
+        except Exception:
+            logger.warning(
+                "Silver data was updated for %s but incremental embedding "
+                "catalog refresh failed; metadata fallback remains available.",
+                series_id,
+                exc_info=True,
+            )
+
+    # 8. Build preview
     sorted_obs = sorted(canonical_obs_rows, key=lambda x: x["date"])
     preview = [
         {"date": str(o["date"]), "value": o["value"]}
@@ -409,7 +445,7 @@ def load_evds_series(
     return {
         "status": "pending_review" if pending_review else "success",
         "message": (
-            "Bu seri sisteme yeni ekleniyor, finansal sınıflandırması inceleme bekliyor. "
+            "Bu seri sisteme yeni ekleniyor, seri sınıflandırması inceleme bekliyor. "
             "Kesin analiz için sınıflandırma tamamlandıktan sonra tekrar deneyin."
             if pending_review
             else None
@@ -425,5 +461,6 @@ def load_evds_series(
         "latest_value": sorted_obs[-1]["value"],
         "added_to_silver": added_to_silver,
         "added_to_aligned": added_to_aligned,
+        "embedding_catalog_updated": embedding_catalog_updated,
         "preview": preview,
     }

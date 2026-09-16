@@ -139,7 +139,7 @@ class CanonicalSeriesMetadata(BaseModel):
     def validate_nature(cls, value: str) -> str:
         if value not in VALID_NATURES:
             raise ValueError(
-                f"Unsupported financial nature: {value!r}"
+                f"Unsupported series nature: {value!r}"
             )
         return value
 

@@ -14,8 +14,8 @@ def test_get_system_prompt_injects_today_and_contains_rules():
     prompt = get_system_prompt(today=custom_date)
 
     assert custom_date in prompt
-    assert "KKB'nin (Kredi Kayıt Bürosu) finansal veri analiz asistanısın" in prompt
-    assert "BDDK, EVDS, FinTürk" in prompt
+    assert "genel amaçlı, kaynaklar arası veri ve zaman serisi analiz asistanısın" in prompt
+    assert "BDDK, EVDS ve FinTürk" in prompt
     assert "hava durumu, genel sohbet, kod yazma" in prompt
     assert "web_search tool'unu kullanabilirsin" in prompt
     assert "URL tahmin ederek uydurma" in prompt

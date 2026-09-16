@@ -160,3 +160,83 @@ def test_aligned_failure_is_logged_loudly(tmp_path, monkeypatch, caplog):
         ).fetchone()[0] == 0
     finally:
         con.close()
+
+
+def test_evds_loader_refreshes_existing_embedding_catalog(tmp_path, monkeypatch):
+    silver_db, aligned_db = _create_dbs(tmp_path)
+    embedding_path = tmp_path / "series_embeddings.parquet"
+    embedding_path.write_bytes(b"placeholder")
+
+    calls = []
+
+    def fake_embedding_upsert(**kwargs):
+        calls.append(kwargs)
+        return True
+
+    monkeypatch.setattr(
+        evds_loader,
+        "_upsert_embedding_catalog_series",
+        fake_embedding_upsert,
+    )
+
+    result = evds_loader.load_evds_series(
+        series_code="TP.DK.USD.A.YTL",
+        client=_client(),
+        add_to_silver=True,
+        bronze_dir=tmp_path / "bronze",
+        silver_dir=tmp_path / "evds",
+        silver_db_path=silver_db,
+        aligned_db_path=aligned_db,
+        metadata_raw_path=tmp_path / "bronze" / "metadata_raw.json",
+        embedding_catalog_path=embedding_path,
+    )
+
+    assert result["added_to_silver"] is True
+    assert result["embedding_catalog_updated"] is True
+    assert len(calls) == 1
+    assert calls[0]["series_id"] == "EVDS:TP.DK.USD.A.YTL"
+    assert calls[0]["silver_db_path"] == silver_db
+    assert calls[0]["output_path"] == embedding_path
+
+
+def test_embedding_refresh_failure_does_not_break_evds_ingestion(
+    tmp_path, monkeypatch, caplog
+):
+    silver_db, aligned_db = _create_dbs(tmp_path)
+
+    def fail_embedding_upsert(**kwargs):
+        raise RuntimeError("injected embedding failure")
+
+    monkeypatch.setattr(
+        evds_loader,
+        "_upsert_embedding_catalog_series",
+        fail_embedding_upsert,
+    )
+
+    with caplog.at_level(logging.WARNING):
+        result = evds_loader.load_evds_series(
+            series_code="TP.DK.USD.A.YTL",
+            client=_client(),
+            add_to_silver=True,
+            bronze_dir=tmp_path / "bronze",
+            silver_dir=tmp_path / "evds",
+            silver_db_path=silver_db,
+            aligned_db_path=aligned_db,
+            metadata_raw_path=tmp_path / "bronze" / "metadata_raw.json",
+            embedding_catalog_path=tmp_path / "series_embeddings.parquet",
+        )
+
+    assert result["status"] == "success"
+    assert result["added_to_silver"] is True
+    assert result["added_to_aligned"] is True
+    assert result["embedding_catalog_updated"] is False
+    assert "incremental embedding catalog refresh failed" in caplog.text
+
+    con = duckdb.connect(str(silver_db))
+    try:
+        assert con.execute(
+            "SELECT COUNT(*) FROM observations WHERE series_id = ?",
+            ["EVDS:TP.DK.USD.A.YTL"],
+        ).fetchone()[0] == 3
+    finally:
+        con.close()

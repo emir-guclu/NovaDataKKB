@@ -240,6 +240,82 @@ def build_embedding_catalog(
     return len(records)
 
 
+
+def upsert_embedding_catalog_series(
+    *,
+    series_id: str,
+    silver_db_path: str | Path = DEFAULT_SILVER_DB,
+    metadata_raw_path: str | Path = DEFAULT_METADATA_RAW,
+    output_path: str | Path = DEFAULT_OUTPUT,
+    provider: LLMProvider | None = None,
+) -> bool:
+    """Incrementally upserts one series in an existing embedding catalog.
+
+    This function never bootstraps the full catalog. If the embedding
+    artifact does not already exist, it returns False so live data
+    ingestion can continue to rely on the Silver metadata fallback.
+    """
+    output = Path(output_path)
+    if not output.exists():
+        logger.info(
+            "Embedding catalog does not exist at %s; skipping incremental upsert.",
+            output,
+        )
+        return False
+
+    records = _fetch_catalog_rows(
+        Path(silver_db_path),
+        Path(metadata_raw_path),
+    )
+    target = next(
+        (record for record in records if record.get("series_id") == series_id),
+        None,
+    )
+    if target is None:
+        logger.warning(
+            "Series id %s does not exist in Silver metadata; embedding upsert skipped.",
+            series_id,
+        )
+        return False
+
+    embedding_provider = provider or KloudeksProvider()
+    _embed_records([target], embedding_provider, batch_size=1)
+
+    existing = pd.read_parquet(output)
+    if "series_id" not in existing.columns:
+        raise ValueError(
+            f"Embedding katalogunda series_id kolonu bulunamadi: {output}"
+        )
+
+    updated = pd.concat(
+        [
+            existing[existing["series_id"] != series_id],
+            pd.DataFrame([target]),
+        ],
+        ignore_index=True,
+    )
+
+    existing_columns = list(existing.columns)
+    for column in existing_columns:
+        if column not in updated.columns:
+            updated[column] = None
+
+    extra_columns = [
+        column for column in updated.columns if column not in existing_columns
+    ]
+    updated = updated[existing_columns + extra_columns]
+
+    temp_output = output.with_suffix(output.suffix + ".tmp")
+    try:
+        updated.to_parquet(temp_output, index=False)
+        temp_output.replace(output)
+    finally:
+        if temp_output.exists():
+            temp_output.unlink()
+
+    logger.info("Incrementally upserted embedding for %s.", series_id)
+    return True
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Build semantic embeddings for the series catalog.")
     parser.add_argument("--silver-db", type=Path, default=DEFAULT_SILVER_DB)
