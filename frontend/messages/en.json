@@ -40,6 +40,16 @@
     "error_network": "Could not connect to the backend. Please check the network connection.",
     "error_stream": "The live response stream ended unexpectedly.",
     "error_runtime": "An error occurred while processing the request",
-    "error_unknown": "An unexpected error occurred."
+    "error_unknown": "An unexpected error occurred.",
+    "new_chat": "New Chat",
+    "chat_sessions": "Chat History",
+    "delete_chat": "Delete Chat",
+    "download_image": "Download Image",
+    "open_image": "Expand",
+    "no_sessions": "No saved chats found.",
+    "untitled_chat": "New Chat",
+    "theme_light": "Light Mode",
+    "theme_dark": "Dark Mode",
+    "toggle_theme": "Toggle Theme"
   }
 }

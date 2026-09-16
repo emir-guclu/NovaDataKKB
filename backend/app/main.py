@@ -5,9 +5,14 @@ from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from fastapi.staticfiles import StaticFiles
+
 from backend.app.api.routes import router
 
 load_dotenv(Path(__file__).resolve().parents[2] / ".env")
+
+CHARTS_DIR = Path(__file__).resolve().parents[1] / "static" / "charts"
+CHARTS_DIR.mkdir(parents=True, exist_ok=True)
 
 
 def get_allowed_origins() -> list[str]:
@@ -30,6 +35,8 @@ app.add_middleware(
     allow_methods=["GET", "POST"],
     allow_headers=["*"],
 )
+
+app.mount("/static/charts", StaticFiles(directory=str(CHARTS_DIR)), name="charts")
 
 
 @app.get("/health")

@@ -40,6 +40,16 @@
     "error_network": "Ağ bağlantısı kurulamadı. Backend erişimini kontrol edin.",
     "error_stream": "Canlı yanıt akışı beklenmedik şekilde kesildi.",
     "error_runtime": "İşlem sırasında bir hata oluştu",
-    "error_unknown": "Beklenmeyen bir hata oluştu."
+    "error_unknown": "Beklenmeyen bir hata oluştu.",
+    "new_chat": "Yeni Sohbet",
+    "chat_sessions": "Geçmiş Sohbetler",
+    "delete_chat": "Sohbeti Sil",
+    "download_image": "Görseli İndir",
+    "open_image": "Büyüt",
+    "no_sessions": "Kayıtlı sohbet bulunamadı.",
+    "untitled_chat": "Yeni Sohbet",
+    "theme_light": "Açık Tema",
+    "theme_dark": "Karanlık Tema",
+    "toggle_theme": "Temayı Değiştir"
   }
 }
