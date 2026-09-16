@@ -19,7 +19,7 @@ WORKDIR /app
 # playwright/chromium kurulmuyor (kurulsaydı ek apt paketleri + ~300MB chromium
 # gerekirdi); eksikliğinde kod zaten "Playwright kurulu degil" uyarısıyla
 # statik HTML'e düşüyor.
-COPY requirements.txt ./
+COPY requirements.txt pytest.ini ./
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY backend ./backend

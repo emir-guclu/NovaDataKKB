@@ -12,7 +12,7 @@ COPY --from=deps /app/node_modules ./node_modules
 # Kaynak dosyalar tek tek listeleniyor (node_modules, .next, .env.local gibi
 # yerel/host'a özgü dizinleri build context'ten dışlayan bir frontend/.dockerignore
 # olmadığından, host'taki node_modules'ün burayı ezmesini engellemek için).
-COPY package.json package-lock.json next.config.ts next-env.d.ts tsconfig.json \
+COPY package.json package-lock.json next.config.ts tsconfig.json \
      postcss.config.mjs eslint.config.mjs middleware.ts ./
 COPY app ./app
 COPY i18n ./i18n
