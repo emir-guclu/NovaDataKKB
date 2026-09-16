@@ -1,11 +1,13 @@
 from __future__ import annotations
 
 import asyncio
+import json
 import logging
 import os
 from typing import Any
 
 from fastapi import APIRouter
+from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
 
 from backend.app.agent.loop import run_agent
@@ -93,3 +95,51 @@ async def ask(request: AskRequest):
             "data": None,
             "error": str(exc),
         }
+
+
+@router.post("/api/v1/ask/stream")
+async def ask_stream(request: AskRequest):
+    normalized_history = [
+        {"role": ("assistant" if t.get("role") == "agent" else t.get("role")),
+         "content": t.get("content")}
+        for t in request.history
+        if isinstance(t, dict)
+    ]
+
+    queue: asyncio.Queue = asyncio.Queue()
+    loop = asyncio.get_running_loop()
+
+    def on_event(kind: str, payload: dict) -> None:
+        try:
+            # llm_input olayı tüm mesaj geçmişini taşır — ASLA olduğu gibi
+            # yayınlama, yalnızca seçilmiş/özet alanları istemciye gönder.
+            slim = {
+                "kind": kind,
+                "tool_name": payload.get("tool_name"),
+                "iteration": payload.get("iteration"),
+                "success": payload.get("success"),
+                "duration_s": payload.get("tool_duration_s"),
+            }
+            loop.call_soon_threadsafe(queue.put_nowait, slim)
+        except Exception:
+            pass
+
+    async def gen():
+        task = asyncio.create_task(asyncio.to_thread(
+            run_agent, request.question, registry, KloudeksProvider(),
+            AGENT_MAX_ITERATIONS, on_event, normalized_history))
+        while not task.done() or not queue.empty():
+            try:
+                evt = await asyncio.wait_for(queue.get(), timeout=0.5)
+                yield f"data: {json.dumps(evt, ensure_ascii=False)}\n\n"
+            except asyncio.TimeoutError:
+                yield ": keepalive\n\n"
+        try:
+            answer = task.result()
+            yield f"data: {json.dumps({'kind': 'done', 'answer': answer}, ensure_ascii=False)}\n\n"
+        except Exception as exc:
+            yield f"data: {json.dumps({'kind': 'error', 'error': str(exc)}, ensure_ascii=False)}\n\n"
+
+    return StreamingResponse(gen(), media_type="text/event-stream",
+                              headers={"Cache-Control": "no-cache",
+                                       "X-Accel-Buffering": "no"})

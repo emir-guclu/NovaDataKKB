@@ -62,6 +62,22 @@ Arayüz: http://localhost:3000 — API: http://localhost:8000
 `data/` klasörü backend konteynerine `./data:/app/data` olarak bağlanır; Lakehouse'u
 sıfırdan üretmek için bkz. [SETUP.md](SETUP.md).
 
+### Deploy Notu — Ters Proxy Arkasında Streaming
+
+`POST /api/v1/ask/stream` uzun süren (mentör direktifine göre ~20 dakikaya kadar
+sürebilen) sorgularda ilerlemeyi Server-Sent Events (SSE) ile canlı akıtır. Bir ters
+proxy (nginx, Caddy, vb.) arkasında deploy edilirse, proxy'nin varsayılan response
+buffering'i SSE akışını kilitleyebilir ve varsayılan okuma zaman aşımı 900 saniyeden
+kısa olabilir. nginx için:
+
+```nginx
+location /api/v1/ask/stream {
+    proxy_pass         http://backend:8000;
+    proxy_buffering    off;
+    proxy_read_timeout 900s;
+}
+```
+
 ## 3. Geliştirme Kurulumu (Docker'sız)
 
 Backend ve frontend'i ayrı ayrı, hot-reload ile çalıştırmak için:

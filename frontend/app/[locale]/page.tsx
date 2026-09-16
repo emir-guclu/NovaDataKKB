@@ -23,6 +23,8 @@ function DashboardContent({ t }: { t: any }) {
     { role: "agent", content: "" } // İçerik boş, aşağıda t() ile doldurulacak
   ]);
   const [isLoading, setIsLoading] = useState(false);
+  // Uzun süren (streaming) sorgularda gösterilen tek satırlık ilerleme durumu
+  const [streamStatus, setStreamStatus] = useState<string | null>(null);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -89,9 +91,97 @@ function DashboardContent({ t }: { t: any }) {
     }
   }
 
+  // Stream olayını ("llm_decision" / "tool_output" vb.) kullanıcıya gösterilecek
+  // tek satırlık bir duruma çevirir; ilgisiz olaylar için null döner.
+  const describeStreamEvent = (evt: any): string | null => {
+    if (evt.kind === "llm_decision" && evt.tool_name) {
+      return `${evt.tool_name} çalışıyor...`;
+    }
+    if (evt.kind === "tool_output" && evt.tool_name) {
+      const durText = typeof evt.duration_s === "number" ? ` (${evt.duration_s} sn)` : "";
+      return evt.success === false
+        ? `${evt.tool_name} başarısız oldu${durText}`
+        : `${evt.tool_name} tamamlandı${durText}`;
+    }
+    if (evt.kind === "llm_input") {
+      return "Düşünüyor...";
+    }
+    return null;
+  };
+
+  // POST /api/v1/ask/stream ile SSE olaylarını okur, ilerlemeyi streamStatus'e
+  // yazar ve 'done' olayındaki cevabı döndürür. EventSource POST desteklemediği
+  // için fetch + response.body reader ile elle ayrıştırıyoruz.
+  const sendViaStream = async (question: string, history: Array<{ role: string; content: string }>) => {
+    const response = await fetch(`${API_BASE_URL}/api/v1/ask/stream`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ question, history })
+    });
+
+    if (!response.ok || !response.body) {
+      throw new Error("Stream desteklenmiyor veya başlatılamadı.");
+    }
+
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = "";
+    let finalAnswer: string | null = null;
+    let streamError: string | null = null;
+    const trace: any[] = [];
+
+    while (true) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+
+      let sepIndex;
+      while ((sepIndex = buffer.indexOf("\n\n")) !== -1) {
+        const rawEvent = buffer.slice(0, sepIndex).trim();
+        buffer = buffer.slice(sepIndex + 2);
+        if (!rawEvent.startsWith("data: ")) continue; // ": keepalive" yorum satırlarını atla
+
+        const evt = JSON.parse(rawEvent.slice(6));
+        if (evt.kind === "done") {
+          finalAnswer = evt.answer;
+        } else if (evt.kind === "error") {
+          streamError = evt.error;
+        } else {
+          if (evt.kind === "llm_decision" && evt.tool_name) {
+            trace.push({ type: "tool_call", tool_name: evt.tool_name });
+          } else if (evt.kind === "tool_output" && evt.tool_name) {
+            trace.push({ type: "tool_result", tool_name: evt.tool_name, success: evt.success, duration_s: evt.duration_s });
+          }
+          const status = describeStreamEvent(evt);
+          if (status) setStreamStatus(status);
+        }
+      }
+    }
+
+    if (streamError) throw new Error(streamError);
+    if (finalAnswer === null) throw new Error("Stream tamamlanmadan bitti.");
+    return { answer: finalAnswer, trace };
+  };
+
+  // Eski, akışsız uç noktaya (POST /api/v1/ask) düşen fallback.
+  const sendViaFallback = async (question: string, history: Array<{ role: string; content: string }>) => {
+    const response = await fetch(`${API_BASE_URL}/api/v1/ask`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ question, history })
+    });
+
+    const payload = await response.json();
+    const answerText =
+      payload?.answer ??
+      payload?.data?.answer ??
+      (payload?.error ? `Hata: ${payload.error}` : "Beklenmeyen yanıt formatı.");
+    return { answer: answerText, trace: payload?.data?.trace };
+  };
+
   const handleSend = async () => {
     if (!input.trim()) return;
-    
+
     const userMsg = input;
     // Yeni kullanıcı mesajı state'e eklenmeden ÖNCE geçmişi hesapla,
     // aksi halde son soru history içinde iki kez gider.
@@ -102,25 +192,23 @@ function DashboardContent({ t }: { t: any }) {
     setMessages(prev => [...prev, { role: "user", content: userMsg }]);
     setInput("");
     setIsLoading(true);
+    setStreamStatus(null);
 
     try {
-      // Backend'e istek atıyoruz
-      const response = await fetch(`${API_BASE_URL}/api/v1/ask`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question: userMsg, history })
-      });
-
-      const payload = await response.json();
-      const answerText =
-        payload?.answer ??
-        payload?.data?.answer ??
-        (payload?.error ? `Hata: ${payload.error}` : "Beklenmeyen yanıt formatı.");
-      setMessages(prev => [...prev, { role: "agent", content: answerText, trace: payload?.data?.trace }]);
+      let result;
+      try {
+        result = await sendViaStream(userMsg, history);
+      } catch (streamErr) {
+        // Stream hata verdi veya desteklenmiyor: eski endpoint'e düş,
+        // böylece demo sırasında SSE sorun çıkarsa sistem çalışmaya devam eder.
+        result = await sendViaFallback(userMsg, history);
+      }
+      setMessages(prev => [...prev, { role: "agent", content: result.answer, trace: result.trace }]);
     } catch (error) {
       setMessages(prev => [...prev, { role: "agent", content: "Hata: Sunucuya bağlanılamadı. Backend açık mı?" }]);
     } finally {
       setIsLoading(false);
+      setStreamStatus(null);
     }
   };
 
@@ -165,6 +253,14 @@ function DashboardContent({ t }: { t: any }) {
               </button>
             </div>
           </div>
+
+          {/* Akış Durum Çubuğu - uzun süren sorgularda canlı ilerleme */}
+          {isLoading && streamStatus && (
+            <div className="px-6 py-2 bg-blue-500/10 border-b border-blue-500/20 text-xs text-blue-300 flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse flex-shrink-0"></span>
+              <span className="truncate">{streamStatus}</span>
+            </div>
+          )}
 
           {/* Mesajlaşma Alanı */}
           <div className="flex-1 p-6 overflow-y-auto space-y-6 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-white/10 [&::-webkit-scrollbar-thumb]:rounded-full">
