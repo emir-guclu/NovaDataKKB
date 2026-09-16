@@ -62,7 +62,7 @@ class SeriesCatalogSearchTool(BaseTool):
 
     class Input(BaseModel):
         query: str = Field(description="Dogal dille aranan seri, gosterge veya veri kavrami")
-        top_k: int = Field(default=5, ge=1, le=20, description="Donulecek maksimum seri sayisi")
+        top_k: int = Field(default=5, ge=1, le=5, description="Donulecek maksimum seri sayisi (en fazla 5)")
         threshold: float = Field(default=0.45, ge=-1.0, le=1.0, description="Minimum kosinus benzerlik esigi")
 
     class Output(BaseModel):
@@ -280,7 +280,7 @@ class SeriesCatalogSearchTool(BaseTool):
                 return self.Output(success=False, error="Sorgu embedding normu sifir.", query=params.query)
 
             scores = np.dot(self._matrix, query_vec) / (self._norms * query_norm)
-            ranked_indices = np.argsort(scores)[::-1][: params.top_k]
+            ranked_indices = np.argsort(scores)[::-1][: min(params.top_k, 5)]
             best_match_score = float(scores[ranked_indices[0]]) if len(ranked_indices) else 0.0
 
             matches: list[SeriesMatch] = []

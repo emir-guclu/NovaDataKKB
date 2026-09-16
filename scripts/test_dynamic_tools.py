@@ -24,7 +24,7 @@ from dotenv import load_dotenv
 
 from backend.app.agent.loop import run_agent
 from backend.app.agent.tool_registry import ToolRegistry
-from backend.app.core.llm_provider import KloudeksProvider
+from backend.app.core.llm_provider import get_default_provider
 from backend.app.tools.anomaly_detection import AnomalyDetectionTool
 from backend.app.tools.causality_check import CausalityCheckTool
 from backend.app.tools.change_detection import ChangeDetectionTool
@@ -210,6 +210,12 @@ TEST_SCENARIOS = [
         "tool_class": "EvdsTool",
         "expected_tool": "evds_data_service",
         "prompt": "Reeskont kredisi iskonto faiz oranlari ile ilgili Merkez Bankasi resmi verisi nedir?",
+    },
+    {
+        "id": "8.4",
+        "tool_class": "EvdsTool",
+        "expected_tool": "evds_data_service",
+        "prompt": "Bu bddk üzerinden yayınlanan bültenlerden aylık olarak konut kredilerini görmek istiyorum?",
     },
 ]
 
@@ -463,13 +469,13 @@ def save_json_report(results: list[TestCaseResult], output_path: Path) -> None:
 def main() -> None:
     load_dotenv()
 
-    if not os.getenv("MIA_API_KEY"):
-        print("[ERROR] MIA_API_KEY is not set in environment or .env file.")
+    if not os.getenv("MIA_API_KEY") and not os.getenv("NVIDIA_API_KEY"):
+        print("[ERROR] Neither MIA_API_KEY nor NVIDIA_API_KEY is set in environment or .env file.")
         sys.exit(1)
 
-    print("Initializing KloudeksProvider and registering 6 Dynamic Tools...")
+    provider = get_default_provider()
+    print(f"Initializing {provider.__class__.__name__} and registering 6 Dynamic Tools...")
     registry = create_registry()
-    provider = KloudeksProvider()
 
     results: list[TestCaseResult] = []
 

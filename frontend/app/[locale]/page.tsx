@@ -32,6 +32,7 @@ function DashboardContent({ t }: { t: any }) {
     { role: "agent", content: "" } // İçerik boş, aşağıda t() ile doldurulacak
   ]);
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedProvider, setSelectedProvider] = useState<string>("deepseek");
   // Uzun süren (streaming) sorgularda gösterilen tek satırlık ilerleme durumu
   const [streamStatus, setStreamStatus] = useState<string | null>(null);
   const [activitySteps, setActivitySteps] = useState<Array<{ message: string; done: boolean }>>([]);
@@ -41,6 +42,9 @@ function DashboardContent({ t }: { t: any }) {
     if (typeof window !== 'undefined') {
       const isDev = localStorage.getItem('devMode') === 'true';
       if (isDev) setDevMode(true);
+
+      const savedProvider = localStorage.getItem('selected_provider');
+      if (savedProvider) setSelectedProvider(savedProvider);
 
       const savedChat = sessionStorage.getItem('nova_chat_messages');
       if (savedChat) {
@@ -160,7 +164,7 @@ function DashboardContent({ t }: { t: any }) {
     const response = await fetch(`${API_BASE_URL}/api/v1/ask/stream`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ question, history })
+      body: JSON.stringify({ question, history, provider: selectedProvider })
     });
 
     if (response.status === 422) {
@@ -227,7 +231,7 @@ function DashboardContent({ t }: { t: any }) {
     const response = await fetch(`${API_BASE_URL}/api/v1/ask`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ question, history })
+      body: JSON.stringify({ question, history, provider: selectedProvider })
     });
 
     if (response.status === 422) {
@@ -304,7 +308,7 @@ function DashboardContent({ t }: { t: any }) {
         <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-emerald-900/10 blur-[120px] pointer-events-none"></div>
 
         {/* Sol Panel - Chat */}
-        <div className="relative w-full md:w-[400px] lg:w-[450px] flex flex-col border-r border-white/5 bg-white/[0.02] backdrop-blur-2xl z-10 shadow-2xl">
+        <div className="relative w-full md:w-[550px] lg:w-[680px] xl:w-[780px] flex flex-col border-r border-white/5 bg-white/[0.02] backdrop-blur-2xl z-10 shadow-2xl">
           
           {/* Header */}
           <div className="px-6 py-5 border-b border-white/5 flex justify-between items-center bg-black/20">
@@ -315,9 +319,26 @@ function DashboardContent({ t }: { t: any }) {
               <h2 className="text-xl font-black bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400 tracking-tight">{t('chat_title')}</h2>
             </div>
             <div className="flex gap-2 text-xs font-semibold items-center">
+              {/* Provider Seçici */}
+              <select
+                value={selectedProvider}
+                onChange={(e) => {
+                  setSelectedProvider(e.target.value);
+                  if (typeof window !== 'undefined') {
+                    localStorage.setItem('selected_provider', e.target.value);
+                  }
+                }}
+                className="px-2.5 py-1.5 bg-white/5 hover:bg-white/10 text-emerald-400 font-medium rounded-md border border-emerald-500/30 text-xs focus:outline-none focus:border-emerald-500 cursor-pointer transition-all"
+                title="Model Sağlayıcı"
+              >
+                <option value="deepseek" className="bg-gray-950 text-white">🚀 DeepSeek-V3</option>
+                <option value="nvidia" className="bg-gray-950 text-white">⚡ NVIDIA Llama</option>
+                <option value="kloudeks" className="bg-gray-950 text-white">🏛️ Kloudeks Qwen</option>
+              </select>
+
               <button 
                 onClick={clearChat}
-                className="px-2 py-1 bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white rounded-md border border-white/5 transition-all flex items-center gap-1"
+                className="px-2.5 py-1.5 bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white rounded-md border border-white/5 transition-all flex items-center gap-1"
                 title="Sohbeti Temizle"
               >
                 <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
@@ -342,27 +363,27 @@ function DashboardContent({ t }: { t: any }) {
           <div className="flex-1 p-6 overflow-y-auto space-y-6 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-white/10 [&::-webkit-scrollbar-thumb]:rounded-full">
             {messages.map((msg, idx) => (
               <div key={idx} className={`flex flex-col ${msg.role === "agent" ? "items-start" : "items-end"} group`}>
-                <div className={`flex items-end gap-2 max-w-[85%] ${msg.role === "agent" ? "flex-row" : "flex-row-reverse"}`}>
+                <div className={`flex items-end gap-2.5 max-w-[94%] ${msg.role === "agent" ? "flex-row" : "flex-row-reverse"}`}>
                   
                   {/* Avatar */}
                   {msg.role === "agent" ? (
-                    <div className="w-7 h-7 rounded-full bg-gradient-to-br from-emerald-400 to-teal-600 flex-shrink-0 flex items-center justify-center shadow-lg shadow-emerald-500/20 mb-1">
-                      <span className="text-[10px] font-black text-white">N</span>
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-400 to-teal-600 flex-shrink-0 flex items-center justify-center shadow-lg shadow-emerald-500/20 mb-1">
+                      <span className="text-xs font-black text-white">N</span>
                     </div>
                   ) : (
-                    <div className="w-7 h-7 rounded-full bg-gradient-to-br from-gray-600 to-gray-800 flex-shrink-0 flex items-center justify-center shadow-lg mb-1 border border-white/10">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-gray-600 to-gray-800 flex-shrink-0 flex items-center justify-center shadow-lg mb-1 border border-white/10">
                       <svg className="w-4 h-4 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
                     </div>
                   )}
 
                   {/* Bubble */}
-                  <div className={`p-4 rounded-2xl text-sm leading-relaxed shadow-sm ${
+                  <div className={`p-4 sm:p-5 rounded-2xl text-[15px] leading-relaxed shadow-sm ${
                     msg.role === "agent" 
                     ? "bg-white/5 border border-white/10 rounded-bl-sm text-gray-200" 
                     : "bg-blue-600 border border-blue-500 rounded-br-sm text-white shadow-blue-900/20"
                   }`}>
                     {msg.role === "agent" ? (
-                      <div className="space-y-2 [&_p]:mb-2 [&_p:last-child]:mb-0 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:mb-2 [&_li]:mb-1 [&_strong]:text-white [&_strong]:font-bold [&_a]:text-blue-400 [&_a]:underline [&_a]:hover:text-blue-300 [&_h3]:text-base [&_h3]:font-bold [&_h3]:text-emerald-400 [&_h3]:mt-3 [&_h3]:mb-1">
+                      <div className="space-y-2.5 [&_p]:mb-2.5 [&_p:last-child]:mb-0 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:mb-2.5 [&_li]:mb-1.5 [&_strong]:text-white [&_strong]:font-bold [&_a]:text-blue-400 [&_a]:underline [&_a]:hover:text-blue-300 [&_h3]:text-base [&_h3]:font-bold [&_h3]:text-emerald-400 [&_h3]:mt-4 [&_h3]:mb-1.5 [&_table]:w-full [&_table]:border-collapse [&_table]:my-2 [&_th]:border [&_th]:border-white/20 [&_th]:p-2.5 [&_th]:bg-white/5 [&_th]:text-xs [&_td]:border [&_td]:border-white/10 [&_td]:p-2.5 [&_td]:text-xs [&_pre]:overflow-x-auto [&_pre]:p-3 [&_pre]:bg-black/50 [&_pre]:rounded-lg [&_code]:bg-white/10 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded text-sm sm:text-[15px]">
                         <ReactMarkdown>
                           {idx === 0 ? t('welcome_message') : msg.content}
                         </ReactMarkdown>

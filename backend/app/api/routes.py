@@ -12,7 +12,11 @@ from pydantic import BaseModel, Field
 
 from backend.app.agent.loop import run_agent
 from backend.app.agent.tool_registry import create_default_tool_registry
-from backend.app.core.llm_provider import KloudeksProvider
+from backend.app.core.llm_provider import (
+    KloudeksProvider,
+    get_available_providers,
+    get_default_provider,
+)
 
 
 logger = logging.getLogger(__name__)
@@ -26,16 +30,33 @@ AGENT_MAX_ITERATIONS = int(os.getenv("AGENT_MAX_ITERATIONS", "12"))
 class AskRequest(BaseModel):
     question: str
     history: list[dict[str, Any]] = Field(default_factory=list)
+    provider: str | None = Field(default=None, description="deepseek, nvidia veya kloudeks")
 
 
 registry = create_default_tool_registry()
+
+
+def _resolve_provider(requested_provider: str | None = None):
+    if requested_provider:
+        return get_default_provider(requested_provider)
+    from backend.app.core.llm_provider import KloudeksProvider as RealKloudeksProvider
+    if KloudeksProvider is not RealKloudeksProvider:
+        return KloudeksProvider()
+    return get_default_provider()
+
+
+@router.get("/api/v1/providers")
+@router.get("/providers")
+async def list_providers():
+    """Mevcut LLM saglayicilarini ve durumlarini dondurur."""
+    return {"providers": get_available_providers()}
 
 
 @router.post("/api/v1/ask")
 @router.post("/ask")
 async def ask(request: AskRequest):
     try:
-        provider = KloudeksProvider()
+        provider = _resolve_provider(request.provider)
         normalized_history = [
             {"role": ("assistant" if t.get("role") == "agent" else t.get("role")),
              "content": t.get("content")}
@@ -125,8 +146,9 @@ async def ask_stream(request: AskRequest):
             pass
 
     async def gen():
+        provider = _resolve_provider(request.provider)
         task = asyncio.create_task(asyncio.to_thread(
-            run_agent, request.question, registry, KloudeksProvider(),
+            run_agent, request.question, registry, provider,
             AGENT_MAX_ITERATIONS, on_event, normalized_history))
         while not task.done() or not queue.empty():
             try:

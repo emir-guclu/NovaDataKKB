@@ -6,7 +6,7 @@ from typing import Any, Callable
 from pydantic import ValidationError
 
 from backend.app.agent.tool_registry import ToolRegistry
-from backend.app.core.llm_provider import KloudeksProvider
+from backend.app.core.llm_provider import KloudeksProvider, LLMProvider
 from backend.app.prompts.loader import get_system_prompt
 from backend.app.prompts.sanitizer import (
     flag_suspicious_content,
@@ -96,8 +96,8 @@ def _ensure_citations_in_response(
 def run_agent(
     question: str,
     registry: ToolRegistry,
-    provider: KloudeksProvider,
-    max_iterations: int = 6,
+    provider: LLMProvider,
+    max_iterations: int = 20,
     on_event: Callable[[str, dict[str, Any]], None] | None = None,
     history: list[dict[str, Any]] | None = None,
 ) -> str:
