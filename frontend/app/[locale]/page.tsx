@@ -131,6 +131,55 @@ function DashboardContent({ t }: { t: any }) {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
+  // Sol panel (Chat) dinamik boyutlandırma
+  const DEFAULT_CHAT_WIDTH = 680;
+  const MIN_CHAT_WIDTH = 380;
+  const [chatWidth, setChatWidth] = useState<number>(DEFAULT_CHAT_WIDTH);
+  const [isResizing, setIsResizing] = useState(false);
+  const isResizingRef = useRef(false);
+
+  const startResizing = (e: React.MouseEvent) => {
+    e.preventDefault();
+    isResizingRef.current = true;
+    setIsResizing(true);
+  };
+
+  const resetChatWidth = () => {
+    setChatWidth(DEFAULT_CHAT_WIDTH);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("nova_chat_width", DEFAULT_CHAT_WIDTH.toString());
+    }
+  };
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isResizingRef.current) return;
+      const maxAllowed = Math.min(window.innerWidth * 0.75, window.innerWidth - 380);
+      const newWidth = Math.max(MIN_CHAT_WIDTH, Math.min(e.clientX, maxAllowed));
+      setChatWidth(newWidth);
+    };
+
+    const handleMouseUp = () => {
+      if (isResizingRef.current) {
+        isResizingRef.current = false;
+        setIsResizing(false);
+        setChatWidth((current) => {
+          if (typeof window !== "undefined") {
+            localStorage.setItem("nova_chat_width", current.toString());
+          }
+          return current;
+        });
+      }
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseup", handleMouseUp);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, []);
+
   // İlk yüklemede localStorage'dan tema, oturumlar ve tercihleri yükleme
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -144,6 +193,14 @@ function DashboardContent({ t }: { t: any }) {
 
       const savedProvider = localStorage.getItem('selected_provider');
       if (savedProvider) setSelectedProvider(savedProvider);
+
+      const savedWidth = localStorage.getItem('nova_chat_width');
+      if (savedWidth) {
+        const parsedWidth = parseInt(savedWidth, 10);
+        if (!isNaN(parsedWidth) && parsedWidth >= MIN_CHAT_WIDTH) {
+          setChatWidth(parsedWidth);
+        }
+      }
 
       // Oturumları yükle
       let loadedSessions: ChatSession[] = [];
@@ -994,7 +1051,7 @@ function DashboardContent({ t }: { t: any }) {
     return (
       <div className={`flex h-full w-full font-sans overflow-hidden relative transition-colors duration-200 ${
         isDark ? "bg-[#050505] text-gray-200 selection:bg-blue-500/30" : "bg-slate-100 text-slate-800 selection:bg-blue-200"
-      }`}>
+      } ${isResizing ? "cursor-col-resize select-none" : ""}`}>
         {/* Arka Plan Efektleri */}
         <div className={`absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full blur-[120px] pointer-events-none transition-all ${
           isDark ? "bg-blue-900/20" : "bg-blue-400/20"
@@ -1004,7 +1061,9 @@ function DashboardContent({ t }: { t: any }) {
         }`}></div>
 
         {/* Sol Panel - Chat & Oturumlar */}
-        <div className={`relative w-full md:w-[550px] lg:w-[680px] xl:w-[780px] flex flex-col z-10 shadow-2xl transition-colors duration-200 ${
+        <div 
+          style={{ width: `${chatWidth}px` }}
+          className={`relative w-full md:w-auto flex-shrink-0 flex flex-col z-10 shadow-2xl transition-colors duration-200 ${
           isDark 
             ? "border-r border-white/5 bg-white/[0.02] backdrop-blur-2xl" 
             : "border-r border-slate-200 bg-white/90 backdrop-blur-2xl"
@@ -1431,8 +1490,38 @@ function DashboardContent({ t }: { t: any }) {
           </div>
         </div>
 
+        {/* Ayırıcı / Yeniden Boyutlandırma Çizgisi (Draggable Splitter) */}
+        <div
+          onMouseDown={startResizing}
+          onDoubleClick={resetChatWidth}
+          className={`relative hidden md:flex items-center justify-center w-2 -mx-1 z-30 cursor-col-resize group select-none transition-colors ${
+            isResizing ? "bg-blue-500/30" : "hover:bg-blue-500/10"
+          }`}
+          title="Sürükleyerek yeniden boyutlandırın (Çift tık: Sıfırla)"
+        >
+          {/* İnce dikey çizgi */}
+          <div className={`w-[2px] h-full transition-colors ${
+            isResizing
+              ? (isDark ? "bg-blue-400" : "bg-blue-600")
+              : (isDark ? "bg-white/10 group-hover:bg-blue-400/80" : "bg-slate-300 group-hover:bg-blue-500/80")
+          }`} />
+
+          {/* Orta tutamaç hapı */}
+          <div className={`absolute w-4 h-9 rounded-full flex flex-col items-center justify-center gap-0.5 border shadow-md transition-all opacity-0 group-hover:opacity-100 ${
+            isResizing ? "!opacity-100 scale-105" : ""
+          } ${
+            isDark 
+              ? "bg-[#111] border-white/20 text-gray-400 group-hover:text-white shadow-black/40" 
+              : "bg-white border-slate-300 text-slate-400 group-hover:text-slate-700 shadow-slate-300"
+          }`}>
+            <div className="w-1 h-1 rounded-full bg-current"></div>
+            <div className="w-1 h-1 rounded-full bg-current"></div>
+            <div className="w-1 h-1 rounded-full bg-current"></div>
+          </div>
+        </div>
+
         {/* Sağ Panel - Dashboard */}
-        <div className={`flex-1 p-8 md:p-12 flex flex-col gap-8 overflow-y-auto relative z-10 ${
+        <div className={`flex-1 min-w-0 p-8 md:p-12 flex flex-col gap-8 overflow-y-auto relative z-10 ${
           isDark 
             ? "[&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:bg-white/10 [&::-webkit-scrollbar-thumb]:rounded-full" 
             : "[&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:bg-slate-300 [&::-webkit-scrollbar-thumb]:rounded-full"
