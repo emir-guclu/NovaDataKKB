@@ -1,0 +1,156 @@
+[
+  {
+    "Tarih": "2021-Q1",
+    "TP_BK_IZMIR": "18.81000000",
+    "UNIXTIME": {
+      "$numberLong": "1609455600"
+    }
+  },
+  {
+    "Tarih": "2021-Q2",
+    "TP_BK_IZMIR": "19.66000000",
+    "UNIXTIME": {
+      "$numberLong": "1617224400"
+    }
+  },
+  {
+    "Tarih": "2021-Q3",
+    "TP_BK_IZMIR": "21.71000000",
+    "UNIXTIME": {
+      "$numberLong": "1625086800"
+    }
+  },
+  {
+    "Tarih": "2021-Q4",
+    "TP_BK_IZMIR": "24.95000000",
+    "UNIXTIME": {
+      "$numberLong": "1633035600"
+    }
+  },
+  {
+    "Tarih": "2022-Q1",
+    "TP_BK_IZMIR": "32.42000000",
+    "UNIXTIME": {
+      "$numberLong": "1640984400"
+    }
+  },
+  {
+    "Tarih": "2022-Q2",
+    "TP_BK_IZMIR": "39.66000000",
+    "UNIXTIME": {
+      "$numberLong": "1648760400"
+    }
+  },
+  {
+    "Tarih": "2022-Q3",
+    "TP_BK_IZMIR": "51.33000000",
+    "UNIXTIME": {
+      "$numberLong": "1656622800"
+    }
+  },
+  {
+    "Tarih": "2022-Q4",
+    "TP_BK_IZMIR": "62.33000000",
+    "UNIXTIME": {
+      "$numberLong": "1664571600"
+    }
+  },
+  {
+    "Tarih": "2023-Q1",
+    "TP_BK_IZMIR": "74.73000000",
+    "UNIXTIME": {
+      "$numberLong": "1672520400"
+    }
+  },
+  {
+    "Tarih": "2023-Q2",
+    "TP_BK_IZMIR": "88.69000000",
+    "UNIXTIME": {
+      "$numberLong": "1680296400"
+    }
+  },
+  {
+    "Tarih": "2023-Q3",
+    "TP_BK_IZMIR": "110.13000000",
+    "UNIXTIME": {
+      "$numberLong": "1688158800"
+    }
+  },
+  {
+    "Tarih": "2023-Q4",
+    "TP_BK_IZMIR": "127.81000000",
+    "UNIXTIME": {
+      "$numberLong": "1696107600"
+    }
+  },
+  {
+    "Tarih": "2024-Q1",
+    "TP_BK_IZMIR": "133.63000000",
+    "UNIXTIME": {
+      "$numberLong": "1704056400"
+    }
+  },
+  {
+    "Tarih": "2024-Q2",
+    "TP_BK_IZMIR": "151.44000000",
+    "UNIXTIME": {
+      "$numberLong": "1711918800"
+    }
+  },
+  {
+    "Tarih": "2024-Q3",
+    "TP_BK_IZMIR": "167.19000000",
+    "UNIXTIME": {
+      "$numberLong": "1719781200"
+    }
+  },
+  {
+    "Tarih": "2024-Q4",
+    "TP_BK_IZMIR": "190.55000000",
+    "UNIXTIME": {
+      "$numberLong": "1727730000"
+    }
+  },
+  {
+    "Tarih": "2025-Q1",
+    "TP_BK_IZMIR": "202.69000000",
+    "UNIXTIME": {
+      "$numberLong": "1735678800"
+    }
+  },
+  {
+    "Tarih": "2025-Q2",
+    "TP_BK_IZMIR": "217.97000000",
+    "UNIXTIME": {
+      "$numberLong": "1743454800"
+    }
+  },
+  {
+    "Tarih": "2025-Q3",
+    "TP_BK_IZMIR": "239.34000000",
+    "UNIXTIME": {
+      "$numberLong": "1751317200"
+    }
+  },
+  {
+    "Tarih": "2025-Q4",
+    "TP_BK_IZMIR": "252.18000000",
+    "UNIXTIME": {
+      "$numberLong": "1759266000"
+    }
+  },
+  {
+    "Tarih": "2026-Q1",
+    "TP_BK_IZMIR": "265.79000000",
+    "UNIXTIME": {
+      "$numberLong": "1767214800"
+    }
+  },
+  {
+    "Tarih": "2026-Q2",
+    "TP_BK_IZMIR": "285.62000000",
+    "UNIXTIME": {
+      "$numberLong": "1774990800"
+    }
+  }
+]

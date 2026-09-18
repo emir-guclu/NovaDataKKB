@@ -1,0 +1,464 @@
+[
+  {
+    "Tarih": "2021-1",
+    "TP_KFE_TR41": "17.47000000",
+    "UNIXTIME": {
+      "$numberLong": "1609455600"
+    }
+  },
+  {
+    "Tarih": "2021-2",
+    "TP_KFE_TR41": "17.74000000",
+    "UNIXTIME": {
+      "$numberLong": "1612134000"
+    }
+  },
+  {
+    "Tarih": "2021-3",
+    "TP_KFE_TR41": "17.95000000",
+    "UNIXTIME": {
+      "$numberLong": "1614553200"
+    }
+  },
+  {
+    "Tarih": "2021-4",
+    "TP_KFE_TR41": "18.70000000",
+    "UNIXTIME": {
+      "$numberLong": "1617224400"
+    }
+  },
+  {
+    "Tarih": "2021-5",
+    "TP_KFE_TR41": "18.84000000",
+    "UNIXTIME": {
+      "$numberLong": "1619816400"
+    }
+  },
+  {
+    "Tarih": "2021-6",
+    "TP_KFE_TR41": "19.51000000",
+    "UNIXTIME": {
+      "$numberLong": "1622494800"
+    }
+  },
+  {
+    "Tarih": "2021-7",
+    "TP_KFE_TR41": "20.31000000",
+    "UNIXTIME": {
+      "$numberLong": "1625086800"
+    }
+  },
+  {
+    "Tarih": "2021-8",
+    "TP_KFE_TR41": "20.70000000",
+    "UNIXTIME": {
+      "$numberLong": "1627765200"
+    }
+  },
+  {
+    "Tarih": "2021-9",
+    "TP_KFE_TR41": "21.67000000",
+    "UNIXTIME": {
+      "$numberLong": "1630443600"
+    }
+  },
+  {
+    "Tarih": "2021-10",
+    "TP_KFE_TR41": "22.38000000",
+    "UNIXTIME": {
+      "$numberLong": "1633035600"
+    }
+  },
+  {
+    "Tarih": "2021-11",
+    "TP_KFE_TR41": "23.69000000",
+    "UNIXTIME": {
+      "$numberLong": "1635714000"
+    }
+  },
+  {
+    "Tarih": "2021-12",
+    "TP_KFE_TR41": "27.02000000",
+    "UNIXTIME": {
+      "$numberLong": "1638306000"
+    }
+  },
+  {
+    "Tarih": "2022-1",
+    "TP_KFE_TR41": "30.73000000",
+    "UNIXTIME": {
+      "$numberLong": "1640984400"
+    }
+  },
+  {
+    "Tarih": "2022-2",
+    "TP_KFE_TR41": "32.94000000",
+    "UNIXTIME": {
+      "$numberLong": "1643662800"
+    }
+  },
+  {
+    "Tarih": "2022-3",
+    "TP_KFE_TR41": "35.52000000",
+    "UNIXTIME": {
+      "$numberLong": "1646082000"
+    }
+  },
+  {
+    "Tarih": "2022-4",
+    "TP_KFE_TR41": "39.47000000",
+    "UNIXTIME": {
+      "$numberLong": "1648760400"
+    }
+  },
+  {
+    "Tarih": "2022-5",
+    "TP_KFE_TR41": "44.31000000",
+    "UNIXTIME": {
+      "$numberLong": "1651352400"
+    }
+  },
+  {
+    "Tarih": "2022-6",
+    "TP_KFE_TR41": "48.30000000",
+    "UNIXTIME": {
+      "$numberLong": "1654030800"
+    }
+  },
+  {
+    "Tarih": "2022-7",
+    "TP_KFE_TR41": "51.64000000",
+    "UNIXTIME": {
+      "$numberLong": "1656622800"
+    }
+  },
+  {
+    "Tarih": "2022-8",
+    "TP_KFE_TR41": "55.73000000",
+    "UNIXTIME": {
+      "$numberLong": "1659301200"
+    }
+  },
+  {
+    "Tarih": "2022-9",
+    "TP_KFE_TR41": "58.45000000",
+    "UNIXTIME": {
+      "$numberLong": "1661979600"
+    }
+  },
+  {
+    "Tarih": "2022-10",
+    "TP_KFE_TR41": "61.65000000",
+    "UNIXTIME": {
+      "$numberLong": "1664571600"
+    }
+  },
+  {
+    "Tarih": "2022-11",
+    "TP_KFE_TR41": "62.87000000",
+    "UNIXTIME": {
+      "$numberLong": "1667250000"
+    }
+  },
+  {
+    "Tarih": "2022-12",
+    "TP_KFE_TR41": "67.43000000",
+    "UNIXTIME": {
+      "$numberLong": "1669842000"
+    }
+  },
+  {
+    "Tarih": "2023-1",
+    "TP_KFE_TR41": "73.49000000",
+    "UNIXTIME": {
+      "$numberLong": "1672520400"
+    }
+  },
+  {
+    "Tarih": "2023-2",
+    "TP_KFE_TR41": "77.63000000",
+    "UNIXTIME": {
+      "$numberLong": "1675198800"
+    }
+  },
+  {
+    "Tarih": "2023-3",
+    "TP_KFE_TR41": "83.12000000",
+    "UNIXTIME": {
+      "$numberLong": "1677618000"
+    }
+  },
+  {
+    "Tarih": "2023-4",
+    "TP_KFE_TR41": "87.12000000",
+    "UNIXTIME": {
+      "$numberLong": "1680296400"
+    }
+  },
+  {
+    "Tarih": "2023-5",
+    "TP_KFE_TR41": "91.06000000",
+    "UNIXTIME": {
+      "$numberLong": "1682888400"
+    }
+  },
+  {
+    "Tarih": "2023-6",
+    "TP_KFE_TR41": "94.64000000",
+    "UNIXTIME": {
+      "$numberLong": "1685566800"
+    }
+  },
+  {
+    "Tarih": "2023-7",
+    "TP_KFE_TR41": "102.25000000",
+    "UNIXTIME": {
+      "$numberLong": "1688158800"
+    }
+  },
+  {
+    "Tarih": "2023-8",
+    "TP_KFE_TR41": "110.47000000",
+    "UNIXTIME": {
+      "$numberLong": "1690837200"
+    }
+  },
+  {
+    "Tarih": "2023-9",
+    "TP_KFE_TR41": "116.34000000",
+    "UNIXTIME": {
+      "$numberLong": "1693515600"
+    }
+  },
+  {
+    "Tarih": "2023-10",
+    "TP_KFE_TR41": "120.71000000",
+    "UNIXTIME": {
+      "$numberLong": "1696107600"
+    }
+  },
+  {
+    "Tarih": "2023-11",
+    "TP_KFE_TR41": "119.87000000",
+    "UNIXTIME": {
+      "$numberLong": "1698786000"
+    }
+  },
+  {
+    "Tarih": "2023-12",
+    "TP_KFE_TR41": "123.30000000",
+    "UNIXTIME": {
+      "$numberLong": "1701378000"
+    }
+  },
+  {
+    "Tarih": "2024-1",
+    "TP_KFE_TR41": "128.70000000",
+    "UNIXTIME": {
+      "$numberLong": "1704056400"
+    }
+  },
+  {
+    "Tarih": "2024-2",
+    "TP_KFE_TR41": "133.92000000",
+    "UNIXTIME": {
+      "$numberLong": "1706734800"
+    }
+  },
+  {
+    "Tarih": "2024-3",
+    "TP_KFE_TR41": "133.21000000",
+    "UNIXTIME": {
+      "$numberLong": "1709240400"
+    }
+  },
+  {
+    "Tarih": "2024-4",
+    "TP_KFE_TR41": "134.01000000",
+    "UNIXTIME": {
+      "$numberLong": "1711918800"
+    }
+  },
+  {
+    "Tarih": "2024-5",
+    "TP_KFE_TR41": "139.60000000",
+    "UNIXTIME": {
+      "$numberLong": "1714510800"
+    }
+  },
+  {
+    "Tarih": "2024-6",
+    "TP_KFE_TR41": "140.87000000",
+    "UNIXTIME": {
+      "$numberLong": "1717189200"
+    }
+  },
+  {
+    "Tarih": "2024-7",
+    "TP_KFE_TR41": "140.69000000",
+    "UNIXTIME": {
+      "$numberLong": "1719781200"
+    }
+  },
+  {
+    "Tarih": "2024-8",
+    "TP_KFE_TR41": "146.89000000",
+    "UNIXTIME": {
+      "$numberLong": "1722459600"
+    }
+  },
+  {
+    "Tarih": "2024-9",
+    "TP_KFE_TR41": "147.36000000",
+    "UNIXTIME": {
+      "$numberLong": "1725138000"
+    }
+  },
+  {
+    "Tarih": "2024-10",
+    "TP_KFE_TR41": "151.92000000",
+    "UNIXTIME": {
+      "$numberLong": "1727730000"
+    }
+  },
+  {
+    "Tarih": "2024-11",
+    "TP_KFE_TR41": "154.31000000",
+    "UNIXTIME": {
+      "$numberLong": "1730408400"
+    }
+  },
+  {
+    "Tarih": "2024-12",
+    "TP_KFE_TR41": "158.73000000",
+    "UNIXTIME": {
+      "$numberLong": "1733000400"
+    }
+  },
+  {
+    "Tarih": "2025-1",
+    "TP_KFE_TR41": "167.70000000",
+    "UNIXTIME": {
+      "$numberLong": "1735678800"
+    }
+  },
+  {
+    "Tarih": "2025-2",
+    "TP_KFE_TR41": "170.90000000",
+    "UNIXTIME": {
+      "$numberLong": "1738357200"
+    }
+  },
+  {
+    "Tarih": "2025-3",
+    "TP_KFE_TR41": "173.43000000",
+    "UNIXTIME": {
+      "$numberLong": "1740776400"
+    }
+  },
+  {
+    "Tarih": "2025-4",
+    "TP_KFE_TR41": "174.37000000",
+    "UNIXTIME": {
+      "$numberLong": "1743454800"
+    }
+  },
+  {
+    "Tarih": "2025-5",
+    "TP_KFE_TR41": "183.35000000",
+    "UNIXTIME": {
+      "$numberLong": "1746046800"
+    }
+  },
+  {
+    "Tarih": "2025-6",
+    "TP_KFE_TR41": "183.02000000",
+    "UNIXTIME": {
+      "$numberLong": "1748725200"
+    }
+  },
+  {
+    "Tarih": "2025-7",
+    "TP_KFE_TR41": "186.97000000",
+    "UNIXTIME": {
+      "$numberLong": "1751317200"
+    }
+  },
+  {
+    "Tarih": "2025-8",
+    "TP_KFE_TR41": "191.48000000",
+    "UNIXTIME": {
+      "$numberLong": "1753995600"
+    }
+  },
+  {
+    "Tarih": "2025-9",
+    "TP_KFE_TR41": "194.35000000",
+    "UNIXTIME": {
+      "$numberLong": "1756674000"
+    }
+  },
+  {
+    "Tarih": "2025-10",
+    "TP_KFE_TR41": "198.43000000",
+    "UNIXTIME": {
+      "$numberLong": "1759266000"
+    }
+  },
+  {
+    "Tarih": "2025-11",
+    "TP_KFE_TR41": "201.02000000",
+    "UNIXTIME": {
+      "$numberLong": "1761944400"
+    }
+  },
+  {
+    "Tarih": "2025-12",
+    "TP_KFE_TR41": "203.04000000",
+    "UNIXTIME": {
+      "$numberLong": "1764536400"
+    }
+  },
+  {
+    "Tarih": "2026-1",
+    "TP_KFE_TR41": "209.99000000",
+    "UNIXTIME": {
+      "$numberLong": "1767214800"
+    }
+  },
+  {
+    "Tarih": "2026-2",
+    "TP_KFE_TR41": "212.29000000",
+    "UNIXTIME": {
+      "$numberLong": "1769893200"
+    }
+  },
+  {
+    "Tarih": "2026-3",
+    "TP_KFE_TR41": "213.89000000",
+    "UNIXTIME": {
+      "$numberLong": "1772312400"
+    }
+  },
+  {
+    "Tarih": "2026-4",
+    "TP_KFE_TR41": "219.58000000",
+    "UNIXTIME": {
+      "$numberLong": "1774990800"
+    }
+  },
+  {
+    "Tarih": "2026-5",
+    "TP_KFE_TR41": "224.14000000",
+    "UNIXTIME": {
+      "$numberLong": "1777582800"
+    }
+  },
+  {
+    "Tarih": "2026-6",
+    "TP_KFE_TR41": "227.71000000",
+    "UNIXTIME": {
+      "$numberLong": "1780261200"
+    }
+  }
+]

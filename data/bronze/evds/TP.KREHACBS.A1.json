@@ -1,0 +1,464 @@
+[
+  {
+    "Tarih": "2021-1",
+    "TP_KREHACBS_A1": "3367674148.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1609455600"
+    }
+  },
+  {
+    "Tarih": "2021-2",
+    "TP_KREHACBS_A1": "3409947842.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1612134000"
+    }
+  },
+  {
+    "Tarih": "2021-3",
+    "TP_KREHACBS_A1": "3571494729.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1614553200"
+    }
+  },
+  {
+    "Tarih": "2021-4",
+    "TP_KREHACBS_A1": "3596013921.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1617224400"
+    }
+  },
+  {
+    "Tarih": "2021-5",
+    "TP_KREHACBS_A1": "3631026914.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1619816400"
+    }
+  },
+  {
+    "Tarih": "2021-6",
+    "TP_KREHACBS_A1": "3689852823.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1622494800"
+    }
+  },
+  {
+    "Tarih": "2021-7",
+    "TP_KREHACBS_A1": "3664672082.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1625086800"
+    }
+  },
+  {
+    "Tarih": "2021-8",
+    "TP_KREHACBS_A1": "3702472385.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1627765200"
+    }
+  },
+  {
+    "Tarih": "2021-9",
+    "TP_KREHACBS_A1": "3819613813.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1630443600"
+    }
+  },
+  {
+    "Tarih": "2021-10",
+    "TP_KREHACBS_A1": "3947261340.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1633035600"
+    }
+  },
+  {
+    "Tarih": "2021-11",
+    "TP_KREHACBS_A1": "4478344378.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1635714000"
+    }
+  },
+  {
+    "Tarih": "2021-12",
+    "TP_KREHACBS_A1": "4581566225.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1638306000"
+    }
+  },
+  {
+    "Tarih": "2022-1",
+    "TP_KREHACBS_A1": "4647619295.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1640984400"
+    }
+  },
+  {
+    "Tarih": "2022-2",
+    "TP_KREHACBS_A1": "4844988183.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1643662800"
+    }
+  },
+  {
+    "Tarih": "2022-3",
+    "TP_KREHACBS_A1": "5156511964.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1646082000"
+    }
+  },
+  {
+    "Tarih": "2022-4",
+    "TP_KREHACBS_A1": "5303954590.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1648760400"
+    }
+  },
+  {
+    "Tarih": "2022-5",
+    "TP_KREHACBS_A1": "5703667832.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1651352400"
+    }
+  },
+  {
+    "Tarih": "2022-6",
+    "TP_KREHACBS_A1": "5891319939.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1654030800"
+    }
+  },
+  {
+    "Tarih": "2022-7",
+    "TP_KREHACBS_A1": "6100698859.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1656622800"
+    }
+  },
+  {
+    "Tarih": "2022-8",
+    "TP_KREHACBS_A1": "6247731509.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1659301200"
+    }
+  },
+  {
+    "Tarih": "2022-9",
+    "TP_KREHACBS_A1": "6418912632.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1661979600"
+    }
+  },
+  {
+    "Tarih": "2022-10",
+    "TP_KREHACBS_A1": "6611919663.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1664571600"
+    }
+  },
+  {
+    "Tarih": "2022-11",
+    "TP_KREHACBS_A1": "6849306969.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1667250000"
+    }
+  },
+  {
+    "Tarih": "2022-12",
+    "TP_KREHACBS_A1": "7142995333.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1669842000"
+    }
+  },
+  {
+    "Tarih": "2023-1",
+    "TP_KREHACBS_A1": "7405687152.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1672520400"
+    }
+  },
+  {
+    "Tarih": "2023-2",
+    "TP_KREHACBS_A1": "7615526907.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1675198800"
+    }
+  },
+  {
+    "Tarih": "2023-3",
+    "TP_KREHACBS_A1": "8076260701.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1677618000"
+    }
+  },
+  {
+    "Tarih": "2023-4",
+    "TP_KREHACBS_A1": "8456804664.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1680296400"
+    }
+  },
+  {
+    "Tarih": "2023-5",
+    "TP_KREHACBS_A1": "8767589018.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1682888400"
+    }
+  },
+  {
+    "Tarih": "2023-6",
+    "TP_KREHACBS_A1": "9425773505.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1685566800"
+    }
+  },
+  {
+    "Tarih": "2023-7",
+    "TP_KREHACBS_A1": "9726145950.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1688158800"
+    }
+  },
+  {
+    "Tarih": "2023-8",
+    "TP_KREHACBS_A1": "9868022396.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1690837200"
+    }
+  },
+  {
+    "Tarih": "2023-9",
+    "TP_KREHACBS_A1": "10125492523.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1693515600"
+    }
+  },
+  {
+    "Tarih": "2023-10",
+    "TP_KREHACBS_A1": "10391864118.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1696107600"
+    }
+  },
+  {
+    "Tarih": "2023-11",
+    "TP_KREHACBS_A1": "10716920089.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1698786000"
+    }
+  },
+  {
+    "Tarih": "2023-12",
+    "TP_KREHACBS_A1": "11053486547.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1701378000"
+    }
+  },
+  {
+    "Tarih": "2024-1",
+    "TP_KREHACBS_A1": "11302679917.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1704056400"
+    }
+  },
+  {
+    "Tarih": "2024-2",
+    "TP_KREHACBS_A1": "11727480432.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1706734800"
+    }
+  },
+  {
+    "Tarih": "2024-3",
+    "TP_KREHACBS_A1": "12271269744.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1709240400"
+    }
+  },
+  {
+    "Tarih": "2024-4",
+    "TP_KREHACBS_A1": "12493647282.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1711918800"
+    }
+  },
+  {
+    "Tarih": "2024-5",
+    "TP_KREHACBS_A1": "12867983950.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1714510800"
+    }
+  },
+  {
+    "Tarih": "2024-6",
+    "TP_KREHACBS_A1": "13186150979.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1717189200"
+    }
+  },
+  {
+    "Tarih": "2024-7",
+    "TP_KREHACBS_A1": "13450254002.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1719781200"
+    }
+  },
+  {
+    "Tarih": "2024-8",
+    "TP_KREHACBS_A1": "13931078336.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1722459600"
+    }
+  },
+  {
+    "Tarih": "2024-9",
+    "TP_KREHACBS_A1": "14296960087.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1725138000"
+    }
+  },
+  {
+    "Tarih": "2024-10",
+    "TP_KREHACBS_A1": "14430900864.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1727730000"
+    }
+  },
+  {
+    "Tarih": "2024-11",
+    "TP_KREHACBS_A1": "14772906447.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1730408400"
+    }
+  },
+  {
+    "Tarih": "2024-12",
+    "TP_KREHACBS_A1": "15338446687.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1733000400"
+    }
+  },
+  {
+    "Tarih": "2025-1",
+    "TP_KREHACBS_A1": "15652328706.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1735678800"
+    }
+  },
+  {
+    "Tarih": "2025-2",
+    "TP_KREHACBS_A1": "16134078376.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1738357200"
+    }
+  },
+  {
+    "Tarih": "2025-3",
+    "TP_KREHACBS_A1": "16857621638.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1740776400"
+    }
+  },
+  {
+    "Tarih": "2025-4",
+    "TP_KREHACBS_A1": "17561645445.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1743454800"
+    }
+  },
+  {
+    "Tarih": "2025-5",
+    "TP_KREHACBS_A1": "18117047620.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1746046800"
+    }
+  },
+  {
+    "Tarih": "2025-6",
+    "TP_KREHACBS_A1": "18718189657.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1748725200"
+    }
+  },
+  {
+    "Tarih": "2025-7",
+    "TP_KREHACBS_A1": "19216146597.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1751317200"
+    }
+  },
+  {
+    "Tarih": "2025-8",
+    "TP_KREHACBS_A1": "19760194074.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1753995600"
+    }
+  },
+  {
+    "Tarih": "2025-9",
+    "TP_KREHACBS_A1": "20356507099.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1756674000"
+    }
+  },
+  {
+    "Tarih": "2025-10",
+    "TP_KREHACBS_A1": "20693847142.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1759266000"
+    }
+  },
+  {
+    "Tarih": "2025-11",
+    "TP_KREHACBS_A1": "21262514197.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1761944400"
+    }
+  },
+  {
+    "Tarih": "2025-12",
+    "TP_KREHACBS_A1": "22181315641.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1764536400"
+    }
+  },
+  {
+    "Tarih": "2026-1",
+    "TP_KREHACBS_A1": "22669630542.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1767214800"
+    }
+  },
+  {
+    "Tarih": "2026-2",
+    "TP_KREHACBS_A1": "23229564041.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1769893200"
+    }
+  },
+  {
+    "Tarih": "2026-3",
+    "TP_KREHACBS_A1": "23907863348.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1772312400"
+    }
+  },
+  {
+    "Tarih": "2026-4",
+    "TP_KREHACBS_A1": "24523384251.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1774990800"
+    }
+  },
+  {
+    "Tarih": "2026-5",
+    "TP_KREHACBS_A1": "25024974520.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1777582800"
+    }
+  },
+  {
+    "Tarih": "2026-6",
+    "TP_KREHACBS_A1": "25729299092.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1780261200"
+    }
+  }
+]

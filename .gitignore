@@ -9,9 +9,6 @@ Thumbs.db
 Desktop.ini
 
 notlar/
-data/bronze/
-data/silver/
-data/gold/
 data/uploads/
 data/charts
 # Environment Variables & Secrets
@@ -91,7 +88,6 @@ pnpm-debug.log*
 tmp/
 temp/
 scratch/
-data/aligned/
 
 # Reports & Benchmarks
 reports/*.json

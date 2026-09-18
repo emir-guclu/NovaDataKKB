@@ -1,0 +1,156 @@
+[
+  {
+    "Tarih": "2021-Q1",
+    "TP_BK_ANKARA": "11.53000000",
+    "UNIXTIME": {
+      "$numberLong": "1609455600"
+    }
+  },
+  {
+    "Tarih": "2021-Q2",
+    "TP_BK_ANKARA": "12.38000000",
+    "UNIXTIME": {
+      "$numberLong": "1617224400"
+    }
+  },
+  {
+    "Tarih": "2021-Q3",
+    "TP_BK_ANKARA": "13.51000000",
+    "UNIXTIME": {
+      "$numberLong": "1625086800"
+    }
+  },
+  {
+    "Tarih": "2021-Q4",
+    "TP_BK_ANKARA": "15.84000000",
+    "UNIXTIME": {
+      "$numberLong": "1633035600"
+    }
+  },
+  {
+    "Tarih": "2022-Q1",
+    "TP_BK_ANKARA": "21.11000000",
+    "UNIXTIME": {
+      "$numberLong": "1640984400"
+    }
+  },
+  {
+    "Tarih": "2022-Q2",
+    "TP_BK_ANKARA": "26.78000000",
+    "UNIXTIME": {
+      "$numberLong": "1648760400"
+    }
+  },
+  {
+    "Tarih": "2022-Q3",
+    "TP_BK_ANKARA": "34.47000000",
+    "UNIXTIME": {
+      "$numberLong": "1656622800"
+    }
+  },
+  {
+    "Tarih": "2022-Q4",
+    "TP_BK_ANKARA": "40.71000000",
+    "UNIXTIME": {
+      "$numberLong": "1664571600"
+    }
+  },
+  {
+    "Tarih": "2023-Q1",
+    "TP_BK_ANKARA": "49.75000000",
+    "UNIXTIME": {
+      "$numberLong": "1672520400"
+    }
+  },
+  {
+    "Tarih": "2023-Q2",
+    "TP_BK_ANKARA": "61.04000000",
+    "UNIXTIME": {
+      "$numberLong": "1680296400"
+    }
+  },
+  {
+    "Tarih": "2023-Q3",
+    "TP_BK_ANKARA": "82.22000000",
+    "UNIXTIME": {
+      "$numberLong": "1688158800"
+    }
+  },
+  {
+    "Tarih": "2023-Q4",
+    "TP_BK_ANKARA": "94.76000000",
+    "UNIXTIME": {
+      "$numberLong": "1696107600"
+    }
+  },
+  {
+    "Tarih": "2024-Q1",
+    "TP_BK_ANKARA": "103.20000000",
+    "UNIXTIME": {
+      "$numberLong": "1704056400"
+    }
+  },
+  {
+    "Tarih": "2024-Q2",
+    "TP_BK_ANKARA": "115.37000000",
+    "UNIXTIME": {
+      "$numberLong": "1711918800"
+    }
+  },
+  {
+    "Tarih": "2024-Q3",
+    "TP_BK_ANKARA": "130.53000000",
+    "UNIXTIME": {
+      "$numberLong": "1719781200"
+    }
+  },
+  {
+    "Tarih": "2024-Q4",
+    "TP_BK_ANKARA": "147.09000000",
+    "UNIXTIME": {
+      "$numberLong": "1727730000"
+    }
+  },
+  {
+    "Tarih": "2025-Q1",
+    "TP_BK_ANKARA": "164.24000000",
+    "UNIXTIME": {
+      "$numberLong": "1735678800"
+    }
+  },
+  {
+    "Tarih": "2025-Q2",
+    "TP_BK_ANKARA": "178.71000000",
+    "UNIXTIME": {
+      "$numberLong": "1743454800"
+    }
+  },
+  {
+    "Tarih": "2025-Q3",
+    "TP_BK_ANKARA": "197.65000000",
+    "UNIXTIME": {
+      "$numberLong": "1751317200"
+    }
+  },
+  {
+    "Tarih": "2025-Q4",
+    "TP_BK_ANKARA": "210.07000000",
+    "UNIXTIME": {
+      "$numberLong": "1759266000"
+    }
+  },
+  {
+    "Tarih": "2026-Q1",
+    "TP_BK_ANKARA": "224.01000000",
+    "UNIXTIME": {
+      "$numberLong": "1767214800"
+    }
+  },
+  {
+    "Tarih": "2026-Q2",
+    "TP_BK_ANKARA": "239.24000000",
+    "UNIXTIME": {
+      "$numberLong": "1774990800"
+    }
+  }
+]
