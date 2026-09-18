@@ -107,3 +107,28 @@ def test_stream_done_event_carries_grounding_and_slim_events_stay_slim(monkeypat
     assert done["answer"].startswith("Değer 1.250,5")
     assert done["grounding"]["checked"] == 3
     assert done["grounding"]["ungrounded"] == ["999.999"]
+
+
+def test_attachment_content_is_used_as_document_grounding_source(monkeypatch):
+    monkeypatch.setattr(routes, "KloudeksProvider", DummyProvider)
+    monkeypatch.setattr(routes, "run_agent", lambda *args, **kwargs: "Belgedeki değer 8.765,4; uydurma 111,1.")
+
+    request = routes.AskRequest(
+        question="soru",
+        attachment_content="| Gün | Fiyat |\n|---|---|\n| 1 | 8.765,4 |",
+        attachment_name="fiyat.xlsx",
+    )
+    result = asyncio.run(routes.ask(request))
+
+    grounding = result["data"]["grounding"]
+    assert grounding["sources"] == {"tool": 0, "document": 1}
+    assert grounding["ungrounded"] == ["111,1"]
+
+
+def test_without_attachment_document_source_count_is_zero(monkeypatch):
+    monkeypatch.setattr(routes, "KloudeksProvider", DummyProvider)
+    monkeypatch.setattr(routes, "run_agent", _fake_run_agent)
+
+    result = asyncio.run(routes.ask(routes.AskRequest(question="soru")))
+
+    assert result["data"]["grounding"]["sources"] == {"tool": 2, "document": 0}

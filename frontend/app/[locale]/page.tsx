@@ -57,6 +57,7 @@ interface Grounding {
   grounded: number;
   ungrounded: string[];
   ratio: number;
+  sources?: { tool: number; document: number };
 }
 
 interface ChatMessage {
@@ -1564,12 +1565,26 @@ function DashboardContent({ t }: { t: any }) {
               }`}>
                 {lastGrounding.ungrounded.length === 0 ? "✅ " : "⚠️ "}
                 {lastGrounding.ungrounded.length === 0
-                  ? t('grounding_ok', { checked: lastGrounding.checked })
-                  : t('grounding_partial', {
-                      checked: lastGrounding.checked,
-                      grounded: lastGrounding.grounded,
-                      n: lastGrounding.ungrounded.length,
-                    })}
+                  ? ((lastGrounding.sources?.document ?? 0) > 0
+                      ? t('grounding_ok_document', {
+                          checked: lastGrounding.checked,
+                          tool: lastGrounding.sources?.tool ?? 0,
+                          document: lastGrounding.sources?.document ?? 0,
+                        })
+                      : t('grounding_ok', { checked: lastGrounding.checked }))
+                  : ((lastGrounding.sources?.document ?? 0) > 0
+                      ? t('grounding_partial_document', {
+                          checked: lastGrounding.checked,
+                          grounded: lastGrounding.grounded,
+                          tool: lastGrounding.sources?.tool ?? 0,
+                          document: lastGrounding.sources?.document ?? 0,
+                          n: lastGrounding.ungrounded.length,
+                        })
+                      : t('grounding_partial', {
+                          checked: lastGrounding.checked,
+                          grounded: lastGrounding.grounded,
+                          n: lastGrounding.ungrounded.length,
+                        }))}
                 {lastGrounding.ungrounded.length > 0 && (
                   <span className="font-mono">{`: ${lastGrounding.ungrounded.join(" · ")}`}</span>
                 )}

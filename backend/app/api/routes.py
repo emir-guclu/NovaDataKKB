@@ -47,13 +47,18 @@ class AskRequest(BaseModel):
 registry = create_default_tool_registry()
 
 
-def _safe_grounding(answer: str, tool_outputs: list[str]) -> dict | None:
+def _safe_grounding(answer: str, tool_outputs: list[str], extra_sources: list[str] | None = None) -> dict | None:
     """Doğruluk kontrolü yalnızca ölçer; hesap patlarsa istek yine de başarılı döner."""
     try:
-        return check_grounding(answer, tool_outputs)
+        return check_grounding(answer, tool_outputs, extra_sources)
     except Exception:
         logger.warning("grounding hesabi basarisiz", exc_info=True)
         return None
+
+
+def _grounding_extras(request: "AskRequest") -> list[str]:
+    """Yüklenen belge içeriği, doğruluk kontrolünde ikinci (belge) havuzu olarak kullanılır."""
+    return [request.attachment_content] if request.attachment_content else []
 
 
 def _resolve_provider(requested_provider: str | None = None):
@@ -204,7 +209,7 @@ async def ask(request: AskRequest):
         return {
             "success": True,
             "answer": answer,
-            "data": {"answer": answer, "trace": trace, "grounding": _safe_grounding(answer, tool_outputs)},
+            "data": {"answer": answer, "trace": trace, "grounding": _safe_grounding(answer, tool_outputs, _grounding_extras(request))},
             "error": None,
         }
     except asyncio.TimeoutError:
@@ -286,7 +291,7 @@ async def ask_stream(request: AskRequest):
                 yield ": keepalive\n\n"
         try:
             answer = task.result()
-            grounding = _safe_grounding(answer, tool_outputs)
+            grounding = _safe_grounding(answer, tool_outputs, _grounding_extras(request))
             yield f"data: {json.dumps({'kind': 'done', 'answer': answer, 'grounding': grounding}, ensure_ascii=False)}\n\n"
         except Exception as exc:
             yield f"data: {json.dumps({'kind': 'error', 'error': str(exc)}, ensure_ascii=False)}\n\n"

@@ -51,7 +51,7 @@ def test_dates_are_not_counted_as_numbers():
 def test_small_integers_are_skipped_such_as_list_numbers():
     answer = "1. Birinci madde\n2. İkinci madde\n3. Üçüncü madde\nToplam 12 ay."
     result = check_grounding(answer, ['{"value": 999}'])
-    assert result == {"checked": 0, "grounded": 0, "ungrounded": [], "ratio": 1.0}
+    assert result == {"checked": 0, "grounded": 0, "ungrounded": [], "ratio": 1.0, "sources": {"tool": 0, "document": 0}}
 
 
 def test_markdown_table_alignment_rows_are_ignored():
@@ -73,7 +73,7 @@ def test_sign_and_range_handling():
 
 def test_empty_tool_outputs_with_numbers_are_ungrounded_but_nothing_to_check_without_numbers():
     assert check_grounding("Sayı içermeyen cevap.", []) == {
-        "checked": 0, "grounded": 0, "ungrounded": [], "ratio": 1.0,
+        "checked": 0, "grounded": 0, "ungrounded": [], "ratio": 1.0, "sources": {"tool": 0, "document": 0},
     }
     result = check_grounding("Değer 345,6.", [])
     assert result["checked"] == 1
@@ -88,9 +88,43 @@ def test_empty_tool_outputs_and_empty_answer_gives_checked_zero():
 
 
 def test_malformed_input_never_raises():
-    expected = {"checked": 0, "grounded": 0, "ungrounded": [], "ratio": 1.0}
+    expected = {"checked": 0, "grounded": 0, "ungrounded": [], "ratio": 1.0, "sources": {"tool": 0, "document": 0}}
     assert check_grounding(None, None) == expected  # type: ignore[arg-type]
     assert check_grounding(123, ["x"]) == expected  # type: ignore[arg-type]
     assert check_grounding("42,5", "yanlış tip") == expected  # type: ignore[arg-type]
     result = check_grounding("42,5", [None, 5, b"x", '{"v": 42.5}'])  # type: ignore[list-item]
     assert result["grounded"] == 1
+
+
+DOCUMENT = "| Ay | Değer |\n|---|---|\n| Mart | 1.234,5 |\n| Nisan | 67,8 |"
+
+
+def test_extra_sources_ground_numbers_missing_from_tool_outputs():
+    result = check_grounding("Mart değeri 1.234,5, Nisan 67,8.", [], [DOCUMENT])
+    assert result["checked"] == 2
+    assert result["grounded"] == 2
+    assert result["ungrounded"] == []
+    assert result["sources"] == {"tool": 0, "document": 2}
+
+
+def test_source_split_counts_number_in_both_as_tool():
+    answer = "Mart 1.234,5 ve Nisan 67,8; ayrıca uydurma 555,5."
+    result = check_grounding(answer, ['{"v": 1234.5}'], [DOCUMENT])
+    assert result["checked"] == 3
+    assert result["grounded"] == 2
+    assert result["ungrounded"] == ["555,5"]
+    assert result["sources"] == {"tool": 1, "document": 1}
+
+
+def test_two_argument_call_still_works_and_reports_all_from_tool():
+    result = check_grounding("Değer 42,1.", ['{"value": 42.13}'])
+    assert result["grounded"] == 1
+    assert result["sources"] == {"tool": 1, "document": 0}
+    assert check_grounding("Değer 42,1.", ['{"value": 42.13}'], None) == result
+
+
+def test_malformed_extra_sources_do_not_raise():
+    result = check_grounding("Değer 345,6.", [], "yanlış tip")  # type: ignore[arg-type]
+    assert result["ungrounded"] == ["345,6"]
+    result = check_grounding("Değer 345,6.", [], [None, 7, "değer 345,6"])  # type: ignore[list-item]
+    assert result["sources"] == {"tool": 0, "document": 1}

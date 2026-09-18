@@ -20,6 +20,8 @@
     "grounding_title": "Accuracy Check",
     "grounding_ok": "{checked} numbers checked · all matched tool outputs",
     "grounding_partial": "{checked} numbers checked · {grounded} matched · {n} unmatched",
+    "grounding_ok_document": "{checked} numbers checked · {tool} matched tool outputs, {document} matched the uploaded document",
+    "grounding_partial_document": "{checked} numbers checked · {grounded} matched ({tool} tool output, {document} uploaded document) · {n} unmatched",
     "activity_title": "Live analysis",
     "activity_initial": "Analyzing your question...",
     "activity_planning": "Planning the required data sources...",

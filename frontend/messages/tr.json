@@ -20,6 +20,8 @@
     "grounding_title": "Doğruluk Kontrolü",
     "grounding_ok": "{checked} sayı kontrol edildi · hepsi araç çıktısıyla eşleşti",
     "grounding_partial": "{checked} sayı kontrol edildi · {grounded} eşleşti · {n} eşleşmedi",
+    "grounding_ok_document": "{checked} sayı kontrol edildi · {tool} araç çıktısıyla, {document} yüklenen belgeyle eşleşti",
+    "grounding_partial_document": "{checked} sayı kontrol edildi · {grounded} eşleşti ({tool} araç çıktısı, {document} yüklenen belge) · {n} eşleşmedi",
     "activity_title": "Canlı analiz",
     "activity_initial": "Sorunuz analiz ediliyor...",
     "activity_planning": "Sorunuz için gerekli veri kaynakları planlanıyor...",
