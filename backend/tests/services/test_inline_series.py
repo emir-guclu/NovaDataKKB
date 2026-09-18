@@ -4,7 +4,7 @@ from __future__ import annotations
 import pytest
 
 from backend.app.prompts.loader import get_system_prompt
-from backend.app.services.inline_series import parse_inline_observations
+from backend.app.services.inline_series import _detect_dot_role, parse_inline_observations
 
 
 def _rows(values, start_month=1):
@@ -121,3 +121,49 @@ def test_system_prompt_documents_inline_observations_and_still_renders():
     assert "LAKEHOUSE DIŞI VERİYİ ANALİZ ETME" in prompt
     assert '[{"date": "YYYY-MM-DD", "value": 123.4}, ...]' in prompt
     assert prompt.index("LAKEHOUSE DIŞI VERİYİ") < prompt.index("İLERİ DÜZEY ANALİTİK ARAÇLAR")
+
+
+def _col(values):
+    return [{"date": f"2024-{i + 1:02d}-01", "value": v} for i, v in enumerate(values)]
+
+
+THOUSANDS_WARNING = "Sütun formatı algılandı: tek nokta binlik ayraç olarak yorumlandı (örn. 1.234 → 1234)."
+
+
+def test_single_dot_column_with_three_digit_tails_is_thousands():
+    data, warnings = parse_inline_observations(_col(["1.234", "5.678", "9.012"]))
+    assert [v for _, v in data] == [1234.0, 5678.0, 9012.0]
+    assert THOUSANDS_WARNING in warnings
+
+
+def test_single_dot_column_with_short_tails_is_decimal():
+    data, warnings = parse_inline_observations(_col(["1.23", "4.56", "7.89"]))
+    assert [v for _, v in data] == [1.23, 4.56, 7.89]
+    assert THOUSANDS_WARNING not in warnings
+
+
+def test_mixed_dot_and_comma_format_is_unchanged():
+    data, warnings = parse_inline_observations(_col(["2.345,67", "1.234,56", "10"]))
+    assert [v for _, v in data] == [2345.67, 1234.56, 10.0]
+    assert THOUSANDS_WARNING not in warnings
+
+
+def test_mixed_column_with_three_quarters_three_digit_tails_selects_thousands():
+    values = ["1.234", "5.6", "7.890", "2.345"]
+    assert _detect_dot_role(values) == "thousands"
+    data, warnings = parse_inline_observations(_col(values))
+    assert [v for _, v in data] == [1234.0, 5.6, 7890.0, 2345.0]  # 3 haneli olmayan kuyruk binlik olamaz
+    assert THOUSANDS_WARNING in warnings
+
+
+def test_detect_dot_role_edge_cases_do_not_crash():
+    assert _detect_dot_role([]) == "decimal"
+    assert _detect_dot_role(["1.234"]) == "thousands"
+    assert _detect_dot_role(["1.23"]) == "decimal"
+    assert _detect_dot_role(["42", "1,5", "1.234,5", "1.234.567"]) == "decimal"  # incelenecek değer yok
+
+
+def test_column_without_string_values_uses_numbers_as_is():
+    data, warnings = parse_inline_observations(_col([1.234, 5.678, 9.012]))
+    assert [v for _, v in data] == [1.234, 5.678, 9.012]
+    assert warnings == []

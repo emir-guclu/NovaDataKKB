@@ -14,6 +14,7 @@ SUPPORTED_INLINE_METRICS = ("value", "mom_pct_change")
 MIN_OBSERVATIONS = 3
 MIN_PARSE_RATIO = 0.5
 MAX_ROW_WARNINGS = 5
+DOT_THOUSANDS_RATIO = 0.7
 
 SERIES_ID_DESCRIPTION = "Lakehouse'taki seri ID'si. observations verilmişse boş bırakılır."
 OBSERVATIONS_DESCRIPTION = (
@@ -75,7 +76,27 @@ def _parse_date(raw) -> date | None:
     return None
 
 
-def _parse_value(raw) -> float | None:
+def _clean_numeric_text(raw: str) -> str:
+    return re.sub(r"[\s\u00a0%]", "", raw)
+
+
+def _detect_dot_role(raw_values: list[str]) -> str:
+    """Tek noktalı sayılarda noktanın rolünü sütun geneline bakarak belirler.
+
+    Döndürür: "thousands" | "decimal"
+    """
+    candidates = []
+    for raw in raw_values:
+        text = _clean_numeric_text(raw)
+        if text.count(".") == 1 and "," not in text:
+            candidates.append(text.split(".")[1])
+    if not candidates:
+        return "decimal"
+    three_digit = sum(1 for tail in candidates if len(tail) == 3 and tail.isdigit())
+    return "thousands" if three_digit / len(candidates) >= DOT_THOUSANDS_RATIO else "decimal"
+
+
+def _parse_value(raw, dot_role: str = "decimal") -> float | None:
     if isinstance(raw, bool):
         return None
     if isinstance(raw, (int, float)):
@@ -90,6 +111,11 @@ def _parse_value(raw) -> float | None:
         elif text.count(".") > 1:
             # "1.234.567" -> binlik ayraç. Tek nokta ondalık kabul edilir.
             text = text.replace(".", "")
+        elif dot_role == "thousands" and text.count(".") == 1:
+            # Sütun genelinde binlik ayraç algılandı; yalnızca tam 3 haneli kuyruk binlik olabilir.
+            tail = text.split(".")[1]
+            if len(tail) == 3 and tail.isdigit():
+                text = text.replace(".", "")
         try:
             number = float(text)
         except ValueError:
@@ -117,6 +143,15 @@ def parse_inline_observations(
         raise ValueError(f"Satır içi seri için en az {MIN_OBSERVATIONS} gözlem gerekir; liste boş.")
 
     warnings: list[str] = []
+    raw_strings = [
+        raw for row in observations
+        if isinstance(row, dict) and isinstance(raw := _pick(row, _VALUE_KEYS), str)
+    ]
+    dot_role = _detect_dot_role(raw_strings)
+    if dot_role == "thousands":
+        warnings.append(
+            "Sütun formatı algılandı: tek nokta binlik ayraç olarak yorumlandı (örn. 1.234 → 1234)."
+        )
     skipped = 0
     parsed: dict[date, float] = {}
     duplicates = 0
@@ -128,7 +163,7 @@ def parse_inline_observations(
             reason = "öğe bir nesne ({'date':..., 'value':...}) değil"
         else:
             row_date = _parse_date(_pick(row, _DATE_KEYS))
-            row_value = _parse_value(_pick(row, _VALUE_KEYS))
+            row_value = _parse_value(_pick(row, _VALUE_KEYS), dot_role)
             if row_date is None:
                 reason = "tarih ayrıştırılamadı (YYYY-MM-DD, YYYY-MM, DD.MM.YYYY, DD/MM/YYYY beklenir)"
             elif row_value is None:
