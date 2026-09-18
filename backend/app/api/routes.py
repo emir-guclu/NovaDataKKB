@@ -15,6 +15,7 @@ from pydantic import BaseModel, Field
 
 from backend.app.agent.loop import run_agent
 from backend.app.agent.tool_registry import create_default_tool_registry
+from backend.app.services.grounding import check_grounding
 from backend.app.core.llm_provider import (
     KloudeksProvider,
     get_available_providers,
@@ -44,6 +45,15 @@ class AskRequest(BaseModel):
 
 
 registry = create_default_tool_registry()
+
+
+def _safe_grounding(answer: str, tool_outputs: list[str]) -> dict | None:
+    """Doğruluk kontrolü yalnızca ölçer; hesap patlarsa istek yine de başarılı döner."""
+    try:
+        return check_grounding(answer, tool_outputs)
+    except Exception:
+        logger.warning("grounding hesabi basarisiz", exc_info=True)
+        return None
 
 
 def _resolve_provider(requested_provider: str | None = None):
@@ -149,6 +159,7 @@ async def ask(request: AskRequest):
         ]
 
         trace: list[dict] = []
+        tool_outputs: list[str] = []  # yalnızca sunucu tarafı; istemciye gitmez
 
         def _collect(event_type: str, payload: dict) -> None:
             try:
@@ -165,6 +176,9 @@ async def ask(request: AskRequest):
                         "success": payload.get("success"),
                         "duration_s": round(float(payload.get("tool_duration_s") or 0), 2),
                     })
+                    raw = payload.get("result")
+                    if isinstance(raw, str) and payload.get("success"):
+                        tool_outputs.append(raw)
             except Exception:
                 logger.warning("trace toplama hatasi", exc_info=True)
 
@@ -190,7 +204,7 @@ async def ask(request: AskRequest):
         return {
             "success": True,
             "answer": answer,
-            "data": {"answer": answer, "trace": trace},
+            "data": {"answer": answer, "trace": trace, "grounding": _safe_grounding(answer, tool_outputs)},
             "error": None,
         }
     except asyncio.TimeoutError:
@@ -220,6 +234,7 @@ async def ask_stream(request: AskRequest):
 
     queue: asyncio.Queue = asyncio.Queue()
     loop = asyncio.get_running_loop()
+    tool_outputs: list[str] = []  # slim'e EKLENMEZ; yalnızca doğruluk kontrolü için
 
     def on_event(kind: str, payload: dict) -> None:
         try:
@@ -234,6 +249,10 @@ async def ask_stream(request: AskRequest):
             }
             if kind == "llm_decision":
                 slim["arguments"] = payload.get("arguments")
+            if kind == "tool_output":
+                raw = payload.get("result")
+                if isinstance(raw, str) and payload.get("success"):
+                    tool_outputs.append(raw)
             loop.call_soon_threadsafe(queue.put_nowait, slim)
         except Exception:
             pass
@@ -267,7 +286,8 @@ async def ask_stream(request: AskRequest):
                 yield ": keepalive\n\n"
         try:
             answer = task.result()
-            yield f"data: {json.dumps({'kind': 'done', 'answer': answer}, ensure_ascii=False)}\n\n"
+            grounding = _safe_grounding(answer, tool_outputs)
+            yield f"data: {json.dumps({'kind': 'done', 'answer': answer, 'grounding': grounding}, ensure_ascii=False)}\n\n"
         except Exception as exc:
             yield f"data: {json.dumps({'kind': 'error', 'error': str(exc)}, ensure_ascii=False)}\n\n"
 

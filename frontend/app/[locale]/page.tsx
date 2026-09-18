@@ -52,12 +52,20 @@ class ApiRequestError extends Error {
   }
 }
 
+interface Grounding {
+  checked: number;
+  grounded: number;
+  ungrounded: string[];
+  ratio: number;
+}
+
 interface ChatMessage {
   role: string;
   content: string;
   attachmentName?: string;
   attachmentType?: string;
   trace?: any[];
+  grounding?: Grounding | null;
   duration_s?: number;
   activitySteps?: Array<{ message: string; done: boolean }>;
 }
@@ -302,6 +310,7 @@ function DashboardContent({ t }: { t: any }) {
   // Sağ paneldeki güven/izlenebilirlik bölümü için son agent mesajının trace'i
   const latestAgentMsg = [...messages].reverse().find(m => m.role === "agent" && m.content);
   const lastAgentTrace = latestAgentMsg?.trace;
+  const lastGrounding = latestAgentMsg?.grounding;
 
   // Sağ panelde gösterilecek analitik grafikler (tüm oturum boyunca üretilenlerin tamamı)
   const sessionImages: Array<{ src: string; alt: string; messageIndex: number; questionPrompt?: string }> = [];
@@ -477,6 +486,7 @@ function DashboardContent({ t }: { t: any }) {
     let buffer = "";
     let finalAnswer: string | null = null;
     let streamError: string | null = null;
+    let grounding: Grounding | null = null;
     const trace: Array<{ type: string; tool_name?: string; success?: boolean; duration_s?: number }> = [];
 
     while (true) {
@@ -493,6 +503,7 @@ function DashboardContent({ t }: { t: any }) {
         const evt = JSON.parse(rawEvent.slice(6));
         if (evt.kind === "done") {
           finalAnswer = evt.answer;
+          grounding = evt.grounding ?? null;
         } else if (evt.kind === "error") {
           streamError = evt.error;
         } else {
@@ -516,7 +527,7 @@ function DashboardContent({ t }: { t: any }) {
 
     if (streamError) throw new ApiRequestError("runtime", `${t("error_runtime")}: ${streamError}`);
     if (finalAnswer === null) throw new ApiRequestError("stream", t("error_stream"));
-    return { answer: finalAnswer, trace };
+    return { answer: finalAnswer, trace, grounding };
   };
 
   // Eski, akışsız uç noktaya (POST /api/v1/ask) düşen fallback.
@@ -550,7 +561,7 @@ function DashboardContent({ t }: { t: any }) {
       payload?.answer ??
       payload?.data?.answer ??
       (payload?.error ? `${t("error_runtime")}: ${payload.error}` : t("error_unknown"));
-    return { answer: answerText, trace: payload?.data?.trace };
+    return { answer: answerText, trace: payload?.data?.trace, grounding: (payload?.data?.grounding ?? null) as Grounding | null };
   };
 
   const handleSend = async () => {
@@ -617,6 +628,7 @@ function DashboardContent({ t }: { t: any }) {
           role: "agent",
           content: result.answer,
           trace: result.trace,
+          grounding: result.grounding,
           duration_s: duration_s,
         }
       ];
@@ -1532,6 +1544,38 @@ function DashboardContent({ t }: { t: any }) {
               }`}>{t('sources')}</p>
             </div>
           </div>
+
+          {/* Güven Katmanı - Doğruluk Kontrolü (cevaptaki sayıların araç çıktılarıyla eşleşmesi) */}
+          {lastGrounding && lastGrounding.checked > 0 && (
+            <div className={`border rounded-2xl p-4 sm:p-5 transition-all ${
+              lastGrounding.ungrounded.length === 0
+                ? (isDark ? "bg-emerald-500/5 border-emerald-500/20" : "bg-emerald-50 border-emerald-200 shadow-md")
+                : (isDark ? "bg-amber-500/5 border-amber-500/30" : "bg-amber-50 border-amber-300 shadow-md")
+            }`}>
+              <h3 className={`font-bold text-xs uppercase tracking-wider mb-2 ${
+                isDark ? "text-gray-300" : "text-slate-700"
+              }`}>
+                {t('grounding_title')}
+              </h3>
+              <p className={`text-sm font-medium leading-relaxed ${
+                lastGrounding.ungrounded.length === 0
+                  ? (isDark ? "text-emerald-300" : "text-emerald-700")
+                  : (isDark ? "text-amber-300" : "text-amber-800")
+              }`}>
+                {lastGrounding.ungrounded.length === 0 ? "✅ " : "⚠️ "}
+                {lastGrounding.ungrounded.length === 0
+                  ? t('grounding_ok', { checked: lastGrounding.checked })
+                  : t('grounding_partial', {
+                      checked: lastGrounding.checked,
+                      grounded: lastGrounding.grounded,
+                      n: lastGrounding.ungrounded.length,
+                    })}
+                {lastGrounding.ungrounded.length > 0 && (
+                  <span className="font-mono">{`: ${lastGrounding.ungrounded.join(" · ")}`}</span>
+                )}
+              </p>
+            </div>
+          )}
 
           {/* Güven Katmanı - İzlenebilirlik / Kullanılan Araçlar (Açılır Kapanır) */}
           {traceSteps.length > 0 && (
