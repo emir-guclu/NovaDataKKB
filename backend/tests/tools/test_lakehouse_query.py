@@ -1,4 +1,15 @@
 import pytest
+from pathlib import Path
+
+LAKEHOUSE_DATA = [
+    Path(__file__).resolve().parents[3] / "data" / "lakehouse.duckdb",
+    Path(__file__).resolve().parents[3] / "data" / "gold" / "gold_housing_credit_market.parquet",
+]
+pytestmark = pytest.mark.skipif(
+    not all(p.exists() for p in LAKEHOUSE_DATA),
+    reason="Lakehouse verisi yok (data/lakehouse.duckdb, data/gold). SETUP.md'deki pipeline ile üretilir."
+)
+
 from pydantic import ValidationError
 
 from backend.app.tools.lakehouse_query import LakehouseQueryTool

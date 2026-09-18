@@ -1,4 +1,12 @@
 import pytest
+from pathlib import Path
+
+GOLD_PARQUET = Path(__file__).resolve().parents[3] / "data" / "gold" / "gold_periodic_change.parquet"
+pytestmark = pytest.mark.skipif(
+    not GOLD_PARQUET.exists(),
+    reason="Lakehouse verisi yok (data/gold). SETUP.md'deki pipeline ile üretilir."
+)
+
 from pydantic import ValidationError
 
 from backend.app.tools.anomaly_detection import AnomalyDetectionTool

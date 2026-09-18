@@ -1,13 +1,22 @@
 """Tests for lakehouse_query security defenses (read-only enforcement & keyword validation)."""
 from __future__ import annotations
 
+from pathlib import Path
+
 import duckdb
 import pytest
 
 from backend.app.tools.lakehouse_query import (
     FORBIDDEN_KEYWORDS,
     LakehouseQueryTool,
+    _connect_lakehouse,
     validate_query_safety,
+)
+
+_LAKEHOUSE_DB = Path(__file__).resolve().parents[3] / "data" / "lakehouse.duckdb"
+_requires_lakehouse = pytest.mark.skipif(
+    not _LAKEHOUSE_DB.exists(),
+    reason="Lakehouse verisi yok (data/lakehouse.duckdb). SETUP.md'deki pipeline ile üretilir.",
 )
 
 
@@ -74,3 +83,45 @@ def test_validate_query_safety_allows_columns_containing_keywords():
         is_safe, error = validate_query_safety(sql)
         assert is_safe is True, f"Yanlış pozitif: {sql} -> {error}"
         assert error is None
+
+
+# --- Kökteki tests/tools/test_lakehouse_query_security.py dosyasından birleştirilen testler ---
+@_requires_lakehouse
+def test_connect_lakehouse_is_readonly():
+    con = _connect_lakehouse()
+    try:
+        with pytest.raises(duckdb.Error):
+            con.execute("CREATE TABLE security_test_tbl (id INT)")
+    finally:
+        con.close()
+
+
+@_requires_lakehouse
+def test_lakehouse_query_tool_blocks_injection_attempt():
+    tool = LakehouseQueryTool()
+    # Tablo adı veya kolon alanında injection denemesi
+    malicious_input = LakehouseQueryTool.Input(
+        table="gold_housing_credit_market'; DROP TABLE gold_housing_credit_market; --",
+        columns=["date"],
+    )
+    result = tool.run(malicious_input)
+    assert result.success is False
+    assert "bulunamadi" in result.error.lower() or "desteklenmiyor" in result.error.lower()
+
+
+@_requires_lakehouse
+def test_lakehouse_query_tool_legitimate_query():
+    tool = LakehouseQueryTool()
+    # Mevcut bir gold view/table sorgusu
+    valid_input = LakehouseQueryTool.Input(
+        table="gold_housing_credit_market",
+        columns=["date"],
+        limit=2,
+    )
+    result = tool.run(valid_input)
+    if result.success:
+        assert len(result.rows) <= 2
+        assert result.table == "gold_housing_credit_market"
+    else:
+        # Eğer test ortamında lakehouse db henüz oluşturulmamışsa 'bulunamadi' dönebilir ama SQL/syntax hatası olmamalı
+        assert "Lakehouse bulunamadi" in result.error
