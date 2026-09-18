@@ -26,7 +26,7 @@ _DATE_RE = re.compile(r"\b\d{4}-\d{1,2}(?:-\d{1,2})?\b|\b\d{1,2}[./]\d{1,2}[./]\
 
 
 def _empty() -> dict:
-    return {"checked": 0, "grounded": 0, "ungrounded": [], "ratio": 1.0}
+    return {"checked": 0, "grounded": 0, "ungrounded": [], "ratio": 1.0, "sources": {"tool": 0, "document": 0}}
 
 
 def _candidates(raw: str) -> list[float]:
@@ -122,28 +122,41 @@ def _matches(value: float, pool: list[float]) -> bool:
     )
 
 
-def check_grounding(answer: str, tool_outputs: list[str]) -> dict:
-    """Cevaptaki sayıları tool çıktılarındaki sayılarla karşılaştırır."""
+def check_grounding(
+    answer: str,
+    tool_outputs: list[str],
+    extra_sources: list[str] | None = None,
+) -> dict:
+    """Cevaptaki sayıları tool çıktılarındaki (ve varsa yüklenen belgedeki) sayılarla karşılaştırır.
+
+    Bir sayı hem tool çıktısında hem belgede varsa "tool" sayılır.
+    """
     try:
         if not isinstance(answer, str) or not isinstance(tool_outputs, list):
             return _empty()
         numbers = _extract_answer_numbers(answer)
         if not numbers:
             return _empty()
-        pool = _build_pool(tool_outputs)  # işaret duyarsız karşılaştırma için mutlak değer havuzu
+        tool_pool = _build_pool(tool_outputs)  # işaret duyarsız karşılaştırma için mutlak değer havuzu
+        document_pool = _build_pool(extra_sources) if isinstance(extra_sources, list) else []
         ungrounded: list[str] = []
-        grounded = 0
+        from_tool = from_document = 0
         for raw in numbers:
-            if any(_matches(candidate, pool) for candidate in _candidates(raw)):
-                grounded += 1
+            candidates = _candidates(raw)
+            if any(_matches(candidate, tool_pool) for candidate in candidates):
+                from_tool += 1
+            elif any(_matches(candidate, document_pool) for candidate in candidates):
+                from_document += 1
             else:
                 ungrounded.append(raw)
         checked = len(numbers)
+        grounded = from_tool + from_document
         return {
             "checked": checked,
             "grounded": grounded,
             "ungrounded": ungrounded,
             "ratio": grounded / checked if checked else 1.0,
+            "sources": {"tool": from_tool, "document": from_document},
         }
     except Exception:
         return _empty()
