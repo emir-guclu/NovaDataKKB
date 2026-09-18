@@ -1,5 +1,8 @@
 # NovaData KKB — NOVA Analytics Agent
 
+**🌐 Canlı Sistem:** _(20 Eylül'de eklenecek)_  
+**🎬 Demo Videosu:** _(20 Eylül'de eklenecek)_
+
 Türkiye finans/kredi verilerini (EVDS, BDDK) tek bir Lakehouse'ta toplayıp, kaynağı izlenebilir ve araç-çıktılarına dayalı cevaplar üreten bir LLM ajanı ve API/arayüzü.
 
 ---
@@ -50,17 +53,18 @@ Türkiye finans/kredi verilerini (EVDS, BDDK) tek bir Lakehouse'ta toplayıp, ka
 ## 2. Hızlı Başlangıç (Docker)
 
 ```bash
-cp .env.example .env
-# .env içine en az EVDS_API_KEY ve MIA_API_KEY değerlerini doldurun.
-
+git clone <repo> && cd NovaDataKKB
+cp .env.example .env    # MIA_API_KEY ve EVDS_API_KEY doldurun
 docker compose up -d --build
-curl -f http://localhost:8000/health
 ```
 
-Arayüz: http://localhost:3000 — API: http://localhost:8000
+Arayüz: http://localhost:3000 · API: http://localhost:8000
 
-`data/` klasörü backend konteynerine `./data:/app/data` olarak bağlanır; Lakehouse'u
-sıfırdan üretmek için bkz. [SETUP.md](SETUP.md).
+### Veri
+
+Tüm veri katmanları (Bronze/Silver/Aligned/Gold, ~146 MB) repoda mevcuttur; ek kurulum
+gerekmez. Veriyi kaynaklardan sıfırdan üretmek için [SETUP.md](SETUP.md)'deki pipeline
+sırasını izleyin. `data/` klasörü backend konteynerine `./data:/app/data` olarak bağlanır.
 
 ### Deploy Notu — Ters Proxy Arkasında Streaming
 
@@ -95,7 +99,7 @@ cd frontend && npm install && npm run dev
 Veri pipeline'ının (Bronze → Silver → Aligned → Gold) sıfırdan nasıl üretileceği,
 katman katman [SETUP.md](SETUP.md) içinde anlatılmıştır.
 
-## 4. Veri Katmanları
+## 4. Veri Mimarisi
 
 | Katman  | İçerik                                           | Üretim scripti (özet)                          |
 |---------|---------------------------------------------------|-------------------------------------------------|
@@ -117,6 +121,17 @@ Gold katmanındaki tablolar (bkz. [backend/app/models/lakehouse_models.py](backe
 | `gold_precious_metal_ratios_monthly`        | Aylık Altın/Gümüş rasyosu ve momentum (MoM değişim)              |
 | `gold_finturk_province_credit_quality`      | İl bazlı kredi hacmi ve NPL (takibe dönüşüm) oranı               |
 | `gold_series_evidence`                      | Her gold kolonunun hangi ham seriden, hangi yöntemle türediğini gösteren lineage/kanıt tablosu |
+
+Sistemin omurgası `gold_periodic_change` tablosudur: kaynaktan bağımsız,
+uzun formatlı tek bir tablo (series_id, date, dims, value, MoM/YoY).
+Tüm analiz araçlarımız yalnızca bu tablo üzerinde çalışır; hiçbiri
+belirli bir veri kaynağına özel değildir.
+
+Geniş Gold tabloları (gold_housing_credit_market vb.) sık sorulan
+kesişimler için önceden hesaplanmış görünümlerdir. Her kolonun hangi
+kaynak seriden, hangi filtreyle, hangi hizalama yöntemiyle türetildiği
+`gold_series_evidence` tablosunda kayıtlıdır. Sistem bu görünümler
+olmadan da çalışır.
 
 Ayrıca `lakehouse_data_catalog` (tüm tabloların haritası) ve `data/gold/series_embeddings.parquet`
 (doğal dil ile seri arama için embedding kataloğu, `series_catalog_search` tool'u tarafından kullanılır).
@@ -147,22 +162,20 @@ servisine yapılan hiçbir çağrı yoktur.
 
 ## 7. Testler
 
-```bash
-PYTHONPATH=backend python -m pytest --import-mode=importlib
-```
+319 test, tek komutla koşar: `pytest` (veya Docker içinde
+`docker compose run --rm --entrypoint "" backend python -m pytest`).
+Canlı servis gerektiren 5 test MIA_API_KEY yoksa atlanır.
 
-Bu repoda toplam **277 test** bulunur. Bronze/Silver/Aligned/Gold veri katmanları
-yerelde üretilmeden (bkz. [SETUP.md](SETUP.md)) çalıştırıldığında **227'si geçer**,
-gerçek Gold/Aligned/Silver parquet çıktılarına ihtiyaç duyan **38'i veri eksikliğinden
-başarısız olur** ve **12'si atlanır (skip)**. Tam pipeline üretildikten sonra tüm
-testlerin geçmesi beklenir.
+## 8. Dokümantasyon
 
-## 8. Daha Fazla Doküman
-
-- [SETUP.md](SETUP.md) — veri pipeline'ının sıfırdan kurulumu ve doğrulanmış sonuçları
+- [docs/architecture.md](docs/architecture.md) — mimari ve ajan akışı (veri akışı + ajan döngüsü diyagramları)
+- [docs/database_schema.md](docs/database_schema.md) — veritabanı tanımları (koddan otomatik üretilir)
+- [SETUP.md](SETUP.md) — veri pipeline'ını sıfırdan çalıştırma
+- [docs/decisions/adr/](docs/decisions/adr/) — mimari kararlar
+- [notes/](notes/) — Araştırma ve karar notlarımız: kümülatif veri incelemesi
+  ([cumulative_inspection.md](notes/cumulative_inspection.md)), hizalama semantiği
+  ([aligned_layer_semantics.md](notes/aligned_layer_semantics.md)), nature sınıflandırma
+  kapsamı ([nature_classification_coverage.md](notes/nature_classification_coverage.md)) vb.
 - [docs/api_contract.md](docs/api_contract.md) — API sözleşmesi
-- [docs/decisions/](docs/decisions/) — mimari kararlar (ADR'ler) ve açık/kapalı kararlar
 - [docs/features/features_inventory.md](docs/features/features_inventory.md) — özellik envanteri
 - [docs/binding_rules/](docs/binding_rules/) — backend/frontend/sistem/test kuralları
-- [notes/](notes/) — geliştirme sürecindeki teknik notlar (alignment semantiği, gold
-  kolon isimlendirme, deploy timeout kararları, e2e test sonuçları vb.)
