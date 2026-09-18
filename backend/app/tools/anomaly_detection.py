@@ -8,8 +8,16 @@ from pathlib import Path
 from typing import Any, Literal
 
 import duckdb
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 
+from backend.app.services.inline_series import (
+    DIMENSION_IGNORED_WARNING,
+    EXACTLY_ONE_SOURCE_ERROR,
+    OBSERVATIONS_DESCRIPTION,
+    SERIES_ID_DESCRIPTION,
+    SeriesLoadError,
+    parse_inline_observations,
+)
 from backend.app.tools.base import BaseTool
 
 logger = logging.getLogger(__name__)
@@ -47,7 +55,8 @@ class AnomalyDetectionTool(BaseTool):
     )
 
     class Input(BaseModel):
-        series_id: str = Field(description="Gold katmanindaki tam series_id")
+        series_id: str | None = Field(default=None, description=SERIES_ID_DESCRIPTION)
+        observations: list[dict] | None = Field(default=None, description=OBSERVATIONS_DESCRIPTION)
         dimension: str | None = Field(
             default=None,
             description="Orn. Toplam, TP veya YP. Bos birakilirsa guvenli ise otomatik secilir.",
@@ -61,6 +70,12 @@ class AnomalyDetectionTool(BaseTool):
         z_threshold: float = Field(default=2.0, gt=0, description="Mutlak z-score esigi")
         max_results: int = Field(default=20, ge=1, le=100, description="Donulecek maksimum anomali sayisi")
 
+        @model_validator(mode="after")
+        def _exactly_one_source(self):
+            if bool(self.series_id) == bool(self.observations):
+                raise ValueError(EXACTLY_ONE_SOURCE_ERROR)
+            return self
+
     class Output(BaseModel):
         success: bool
         error: str | None = None
@@ -70,95 +85,110 @@ class AnomalyDetectionTool(BaseTool):
         stddev: float | None = None
         n_observations: int = 0
         anomalies: list[dict[str, Any]] = Field(default_factory=list)
+        data_source: str | None = None
+        warnings: list[str] = Field(default_factory=list)
+
+    def _load_series(self, params: Input) -> tuple[list[tuple[Any, float]], str | None, str, list[str]]:
+        """Seriyi lakehouse'tan veya satır içi gözlemlerden yükler.
+
+        Döndürür: (satırlar[(tarih, değer)], seçilen dimension, data_source, uyarılar)
+        """
+        if params.observations:
+            warnings: list[str] = []
+            if params.dimension:
+                warnings.append(DIMENSION_IGNORED_WARNING)
+            try:
+                rows, parse_warnings = parse_inline_observations(
+                    params.observations, params.metric, params.start_date, params.end_date
+                )
+            except ValueError as exc:
+                raise SeriesLoadError(str(exc), data_source="inline") from exc
+            return rows, None, "inline", warnings + parse_warnings
+
+        if not GOLD_PARQUET.exists():
+            raise SeriesLoadError(f"Gold parquet bulunamadi: {GOLD_PARQUET}")
+
+        supported_metrics = {"value", "mom_abs_change", "mom_pct_change", "yoy_abs_change", "yoy_pct_change"}
+        if params.metric not in supported_metrics:
+            raise SeriesLoadError(f"Metrik desteklenmiyor: {params.metric}")
+
+        if bool(params.start_date) != bool(params.end_date):
+            raise SeriesLoadError("start_date ve end_date birlikte verilmelidir.")
+
+        con = duckdb.connect()
+        try:
+            series_rows = con.execute(
+                "SELECT DISTINCT series_id FROM read_parquet(?)",
+                [str(GOLD_PARQUET)],
+            ).fetchall()
+            matched_series_id = next(
+                (
+                    series_id
+                    for (series_id,) in series_rows
+                    if _canonical_identifier(series_id) == _canonical_identifier(params.series_id)
+                ),
+                None,
+            )
+
+            if matched_series_id is None:
+                raise SeriesLoadError(f"Seri bulunamadi: {params.series_id}")
+
+            dims_rows = con.execute(
+                """
+                SELECT DISTINCT json_extract_string(dims, '$.variable') AS dimension
+                FROM read_parquet(?)
+                WHERE series_id = ?
+                ORDER BY dimension
+                """,
+                [str(GOLD_PARQUET), matched_series_id],
+            ).fetchall()
+            available_dims = [row[0] for row in dims_rows if row[0] is not None]
+
+            dimension = params.dimension
+            if dimension is None and available_dims:
+                if len(available_dims) == 1:
+                    dimension = available_dims[0]
+                elif "Toplam" in available_dims:
+                    dimension = "Toplam"
+                else:
+                    raise SeriesLoadError(f"Seri birden fazla dimension iceriyor. dimension belirtin: {available_dims}")
+
+            if dimension is not None and dimension not in available_dims:
+                raise SeriesLoadError(f"Dimension bulunamadi: {dimension}. Mevcut dimensionlar: {available_dims}")
+
+            where_clauses = ["series_id = ?", f"{params.metric} IS NOT NULL"]
+            query_params: list[str] = [matched_series_id]
+            if dimension is None:
+                where_clauses.append("json_extract_string(dims, '$.variable') IS NULL")
+            else:
+                where_clauses.append("json_extract_string(dims, '$.variable') = ?")
+                query_params.append(dimension)
+            if params.start_date and params.end_date:
+                where_clauses.append("date BETWEEN ? AND ?")
+                query_params.extend([params.start_date, params.end_date])
+
+            cursor = con.execute(
+                f"""
+                SELECT date, {params.metric} AS value
+                FROM read_parquet(?)
+                WHERE {' AND '.join(where_clauses)}
+                ORDER BY date
+                """,
+                [str(GOLD_PARQUET), *query_params],
+            )
+            rows = cursor.fetchall()
+        finally:
+            con.close()
+        return rows, dimension, "lakehouse", []
 
     def run(self, params: Input) -> Output:
         try:
-            if not GOLD_PARQUET.exists():
-                return self.Output(success=False, error=f"Gold parquet bulunamadi: {GOLD_PARQUET}")
-
-            supported_metrics = {"value", "mom_abs_change", "mom_pct_change", "yoy_abs_change", "yoy_pct_change"}
-            if params.metric not in supported_metrics:
-                return self.Output(success=False, error=f"Metrik desteklenmiyor: {params.metric}", metric=params.metric)
-
-            if bool(params.start_date) != bool(params.end_date):
-                return self.Output(success=False, error="start_date ve end_date birlikte verilmelidir.", metric=params.metric)
-
-            con = duckdb.connect()
             try:
-                series_rows = con.execute(
-                    "SELECT DISTINCT series_id FROM read_parquet(?)",
-                    [str(GOLD_PARQUET)],
-                ).fetchall()
-                matched_series_id = next(
-                    (
-                        series_id
-                        for (series_id,) in series_rows
-                        if _canonical_identifier(series_id) == _canonical_identifier(params.series_id)
-                    ),
-                    None,
+                rows, dimension, data_source, warnings = self._load_series(params)
+            except SeriesLoadError as exc:
+                return self.Output(
+                    success=False, error=str(exc), metric=params.metric, data_source=exc.data_source
                 )
-
-                if matched_series_id is None:
-                    return self.Output(
-                        success=False,
-                        error=f"Seri bulunamadi: {params.series_id}",
-                        metric=params.metric,
-                    )
-
-                dims_rows = con.execute(
-                    """
-                    SELECT DISTINCT json_extract_string(dims, '$.variable') AS dimension
-                    FROM read_parquet(?)
-                    WHERE series_id = ?
-                    ORDER BY dimension
-                    """,
-                    [str(GOLD_PARQUET), matched_series_id],
-                ).fetchall()
-                available_dims = [row[0] for row in dims_rows if row[0] is not None]
-
-                dimension = params.dimension
-                if dimension is None and available_dims:
-                    if len(available_dims) == 1:
-                        dimension = available_dims[0]
-                    elif "Toplam" in available_dims:
-                        dimension = "Toplam"
-                    else:
-                        return self.Output(
-                            success=False,
-                            error=f"Seri birden fazla dimension iceriyor. dimension belirtin: {available_dims}",
-                            metric=params.metric,
-                        )
-
-                if dimension is not None and dimension not in available_dims:
-                    return self.Output(
-                        success=False,
-                        error=f"Dimension bulunamadi: {dimension}. Mevcut dimensionlar: {available_dims}",
-                        metric=params.metric,
-                    )
-
-                where_clauses = ["series_id = ?", f"{params.metric} IS NOT NULL"]
-                query_params: list[str] = [matched_series_id]
-                if dimension is None:
-                    where_clauses.append("json_extract_string(dims, '$.variable') IS NULL")
-                else:
-                    where_clauses.append("json_extract_string(dims, '$.variable') = ?")
-                    query_params.append(dimension)
-                if params.start_date and params.end_date:
-                    where_clauses.append("date BETWEEN ? AND ?")
-                    query_params.extend([params.start_date, params.end_date])
-
-                cursor = con.execute(
-                    f"""
-                    SELECT date, {params.metric} AS value
-                    FROM read_parquet(?)
-                    WHERE {' AND '.join(where_clauses)}
-                    ORDER BY date
-                    """,
-                    [str(GOLD_PARQUET), *query_params],
-                )
-                rows = cursor.fetchall()
-            finally:
-                con.close()
 
             n = len(rows)
             if n < 2:
@@ -168,6 +198,8 @@ class AnomalyDetectionTool(BaseTool):
                     metric=params.metric,
                     selected_dimension=dimension,
                     n_observations=n,
+                    data_source=data_source,
+                    warnings=warnings,
                 )
 
             values = [row[1] for row in rows]
@@ -182,6 +214,8 @@ class AnomalyDetectionTool(BaseTool):
                     mean=mean,
                     stddev=stddev,
                     n_observations=n,
+                    data_source=data_source,
+                    warnings=warnings,
                 )
 
             anomalies = []
@@ -206,6 +240,8 @@ class AnomalyDetectionTool(BaseTool):
                 stddev=stddev,
                 n_observations=n,
                 anomalies=anomalies[: params.max_results],
+                data_source=data_source,
+                warnings=warnings,
             )
         except Exception as exc:
             logger.exception("anomaly_detection failed")

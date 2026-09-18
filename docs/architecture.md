@@ -8,10 +8,6 @@ Lakehouse'ta toplar ve bu veri üzerinde **araç çağıran (tool-calling) bir L
 - Veri pipeline'ı adım adım: [../SETUP.md](../SETUP.md)
 - Mimari kararlar: [decisions/adr/](decisions/adr/)
 
-> **Sayılar hakkında not.** Aşağıdaki gözlem/seri sayıları repodaki `data/` klasöründen
-> ölçülmüştür. SETUP.md'nin ilk doğrulama bölümü daha eski bir veri sürümünü
-> (canonical 433.801 gözlem / 863 seri, aligned 305.283 gözlem / 817 seri) anar.
-
 ---
 
 ## 1. Veri Akışı

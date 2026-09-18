@@ -7,9 +7,17 @@ from typing import Any
 
 import duckdb
 import numpy as np
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 
 from backend.app.services.chart_generator import generate_cycle_chart
+from backend.app.services.inline_series import (
+    DIMENSION_IGNORED_WARNING,
+    EXACTLY_ONE_SOURCE_ERROR,
+    OBSERVATIONS_DESCRIPTION,
+    SERIES_ID_DESCRIPTION,
+    SeriesLoadError,
+    parse_inline_observations,
+)
 from backend.app.tools.base import BaseTool
 
 logger = logging.getLogger(__name__)
@@ -51,12 +59,19 @@ class TurningPointAndCycleDetectorTool(BaseTool):
     )
 
     class Input(BaseModel):
-        series_id: str = Field(description="Zaman serisi ID'si")
+        series_id: str | None = Field(default=None, description=SERIES_ID_DESCRIPTION)
+        observations: list[dict] | None = Field(default=None, description=OBSERVATIONS_DESCRIPTION)
         dimension: str | None = Field(default=None, description="Seri boyutu (örn. Toplam)")
         smoothing_window: int = Field(default=3, ge=1, le=12, description="Yumuşatma penceresi (ay)")
         min_cycle_length: int = Field(default=4, ge=2, le=24, description="Minimum döngü uzunluğu (ay)")
         start_date: str | None = Field(default=None, description="Başlangıç tarihi (YYYY-MM-DD)")
         end_date: str | None = Field(default=None, description="Bitiş tarihi (YYYY-MM-DD)")
+
+        @model_validator(mode="after")
+        def _exactly_one_source(self):
+            if bool(self.series_id) == bool(self.observations):
+                raise ValueError(EXACTLY_ONE_SOURCE_ERROR)
+            return self
 
     class Output(BaseModel):
         success: bool
@@ -68,64 +83,91 @@ class TurningPointAndCycleDetectorTool(BaseTool):
         duration_months: int = 0
         max_drawdown_pct: float | None = None
         chart_url: str | None = None
+        data_source: str | None = None
+        warnings: list[str] = Field(default_factory=list)
+
+    def _load_rows(self, params: Input) -> tuple[list[tuple[str, float | None]], str | None, str, list[str], str | None]:
+        """Seriyi aligned parquet'ten veya satır içi gözlemlerden yükler.
+
+        Döndürür: (satırlar[(tarih, değer)], seçilen dimension, data_source, uyarılar, çözülen series_id)
+        """
+        if params.observations:
+            warnings: list[str] = []
+            if params.dimension:
+                warnings.append(DIMENSION_IGNORED_WARNING)
+            try:
+                rows, parse_warnings = parse_inline_observations(
+                    params.observations, "value", params.start_date, params.end_date
+                )
+            except ValueError as exc:
+                raise SeriesLoadError(str(exc), data_source="inline") from exc
+            return rows, None, "inline", warnings + parse_warnings, None
+
+        if not ALIGNED_PARQUET.exists():
+            raise SeriesLoadError(f"Aligned parquet bulunamadi: {ALIGNED_PARQUET}")
+
+        con = duckdb.connect()
+        try:
+            matched_id = _resolve_series_id(con, params.series_id)
+            if not matched_id:
+                raise SeriesLoadError(f"Seri bulunamadi: {params.series_id}")
+
+            dim_rows = con.execute(
+                """
+                SELECT DISTINCT json_extract_string(dims, '$.variable') AS dimension
+                FROM read_parquet(?)
+                WHERE series_id = ?
+                """,
+                [str(ALIGNED_PARQUET), matched_id],
+            ).fetchall()
+            available_dims = [r[0] for r in dim_rows if r[0] is not None]
+
+            dimension = params.dimension
+            if dimension is None:
+                if len(available_dims) == 1:
+                    dimension = available_dims[0]
+                elif "Toplam" in available_dims:
+                    dimension = "Toplam"
+                elif available_dims:
+                    dimension = available_dims[0]
+
+            where_clauses = ["series_id = ?"]
+            query_params: list[Any] = [matched_id]
+            if dimension:
+                where_clauses.append("json_extract_string(dims, '$.variable') = ?")
+                query_params.append(dimension)
+
+            if params.start_date:
+                where_clauses.append("date >= ?")
+                query_params.append(params.start_date)
+            if params.end_date:
+                where_clauses.append("date <= ?")
+                query_params.append(params.end_date)
+
+            sql = f"""
+                SELECT strftime(date, '%Y-%m-%d') as dt, value
+                FROM read_parquet(?)
+                WHERE {" AND ".join(where_clauses)}
+                ORDER BY date
+            """
+            rows = con.execute(sql, [str(ALIGNED_PARQUET), *query_params]).fetchall()
+        finally:
+            con.close()
+        return rows, dimension, "lakehouse", [], matched_id
 
     def run(self, params: Input) -> Output:
         try:
-            if not ALIGNED_PARQUET.exists():
-                return self.Output(success=False, error=f"Aligned parquet bulunamadi: {ALIGNED_PARQUET}")
-
-            con = duckdb.connect()
             try:
-                matched_id = _resolve_series_id(con, params.series_id)
-                if not matched_id:
-                    return self.Output(success=False, error=f"Seri bulunamadi: {params.series_id}")
-
-                dim_rows = con.execute(
-                    """
-                    SELECT DISTINCT json_extract_string(dims, '$.variable') AS dimension
-                    FROM read_parquet(?)
-                    WHERE series_id = ?
-                    """,
-                    [str(ALIGNED_PARQUET), matched_id],
-                ).fetchall()
-                available_dims = [r[0] for r in dim_rows if r[0] is not None]
-
-                dimension = params.dimension
-                if dimension is None:
-                    if len(available_dims) == 1:
-                        dimension = available_dims[0]
-                    elif "Toplam" in available_dims:
-                        dimension = "Toplam"
-                    elif available_dims:
-                        dimension = available_dims[0]
-
-                where_clauses = ["series_id = ?"]
-                query_params: list[Any] = [matched_id]
-                if dimension:
-                    where_clauses.append("json_extract_string(dims, '$.variable') = ?")
-                    query_params.append(dimension)
-
-                if params.start_date:
-                    where_clauses.append("date >= ?")
-                    query_params.append(params.start_date)
-                if params.end_date:
-                    where_clauses.append("date <= ?")
-                    query_params.append(params.end_date)
-
-                sql = f"""
-                    SELECT strftime(date, '%Y-%m-%d') as dt, value
-                    FROM read_parquet(?)
-                    WHERE {" AND ".join(where_clauses)}
-                    ORDER BY date
-                """
-                rows = con.execute(sql, [str(ALIGNED_PARQUET), *query_params]).fetchall()
-            finally:
-                con.close()
+                rows, _dimension, data_source, warnings, matched_id = self._load_rows(params)
+            except SeriesLoadError as exc:
+                return self.Output(success=False, error=str(exc), data_source=exc.data_source)
 
             if len(rows) < 6:
                 return self.Output(
                     success=False,
                     error=f"Döngü analizi için en az 6 gözlem gereklidir (bulunan: {len(rows)}).",
+                    data_source=data_source,
+                    warnings=warnings,
                 )
 
             dates = [r[0] for r in rows if r[1] is not None]
@@ -205,7 +247,7 @@ class TurningPointAndCycleDetectorTool(BaseTool):
                 values=values,
                 peaks_indices=peaks_idx,
                 troughs_indices=troughs_idx,
-                title=f"{matched_id.split(':')[-1]} Döngü ve Dönüm Noktaları Analizi",
+                title=f"{(matched_id or 'Satır İçi Seri').split(':')[-1]} Döngü ve Dönüm Noktaları Analizi",
             )
 
             return self.Output(
@@ -217,6 +259,8 @@ class TurningPointAndCycleDetectorTool(BaseTool):
                 duration_months=duration_months,
                 max_drawdown_pct=round(max_dd, 2),
                 chart_url=chart_url,
+                data_source=data_source,
+                warnings=warnings,
             )
 
         except Exception as exc:
