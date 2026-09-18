@@ -9,36 +9,25 @@ import duckdb
 from pydantic import BaseModel, Field
 
 from backend.app.services.chart_generator import generate_deflator_chart
+from backend.app.services.series_data_resolver import (
+    ALIGNED_PARQUET,
+    SILVER_DB,
+    canonical_identifier,
+    fetch_series_observations,
+    resolve_series_location,
+)
 from backend.app.tools.base import BaseTool
 
 logger = logging.getLogger(__name__)
 
-PROJECT_ROOT = Path(__file__).resolve().parents[3]
-ALIGNED_PARQUET = PROJECT_ROOT / "data" / "aligned" / "monthly" / "observations.parquet"
-SERIES_METADATA_PARQUET = PROJECT_ROOT / "data" / "aligned" / "monthly" / "series_metadata.parquet"
-
 
 def _canonical_identifier(value: str) -> str:
-    translation = str.maketrans({
-        "ı": "i", "İ": "I", "ş": "s", "Ş": "S",
-        "ğ": "g", "Ğ": "G", "ü": "u", "Ü": "U",
-        "ö": "o", "Ö": "O", "ç": "c", "Ç": "C",
-    })
-    normalized = value.translate(translation)
-    return unicodedata.normalize("NFKC", normalized).casefold()
+    return canonical_identifier(value)
 
 
 def _resolve_series_id(con: duckdb.DuckDBPyConnection, input_id: str) -> str | None:
-    canonical = _canonical_identifier(input_id)
-    rows = con.execute("SELECT DISTINCT series_id FROM read_parquet(?)", [str(ALIGNED_PARQUET)]).fetchall()
-    all_ids = [r[0] for r in rows]
-
-    for sid in all_ids:
-        if _canonical_identifier(sid) == canonical:
-            return sid
-        if sid.endswith(input_id) or input_id.endswith(sid):
-            return sid
-    return None
+    sid, _ = resolve_series_location(con, input_id, ALIGNED_PARQUET, SILVER_DB)
+    return sid
 
 
 class RealValueDeflatorTool(BaseTool):
@@ -88,78 +77,33 @@ class RealValueDeflatorTool(BaseTool):
 
             con = duckdb.connect()
             try:
-                nom_id = _resolve_series_id(con, params.nominal_series_id)
-                if not nom_id:
-                    return self.Output(success=False, error=f"Nominal seri bulunamadi: {params.nominal_series_id}")
+                nom_dict, nom_id, dimension, nom_err = fetch_series_observations(
+                    con, params.nominal_series_id, params.dimension,
+                    start_date=params.start_date, end_date=params.end_date,
+                    parquet_path=ALIGNED_PARQUET, silver_db_path=SILVER_DB,
+                )
+                if nom_err or not nom_dict:
+                    return self.Output(
+                        success=False,
+                        error=f"Nominal seri bulunamadi: {params.nominal_series_id}"
+                        if not nom_err or "Seri bulunamadi" in nom_err
+                        else nom_err,
+                    )
 
-                def_id = _resolve_series_id(con, params.deflator_series_id)
-                if not def_id:
-                    return self.Output(success=False, error=f"Deflatör serisi bulunamadi: {params.deflator_series_id}")
-
-                # Dimension belirleme
-                dim_rows = con.execute(
-                    """
-                    SELECT DISTINCT json_extract_string(dims, '$.variable') AS dimension
-                    FROM read_parquet(?)
-                    WHERE series_id = ?
-                    """,
-                    [str(ALIGNED_PARQUET), nom_id],
-                ).fetchall()
-                available_dims = [r[0] for r in dim_rows if r[0] is not None]
-
-                dimension = params.dimension
-                if dimension is None:
-                    if len(available_dims) == 1:
-                        dimension = available_dims[0]
-                    elif "Toplam" in available_dims:
-                        dimension = "Toplam"
-                    elif available_dims:
-                        dimension = available_dims[0]
-
-                where_clauses = ["series_id = ?"]
-                query_params: list[Any] = [nom_id]
-                if dimension:
-                    where_clauses.append("json_extract_string(dims, '$.variable') = ?")
-                    query_params.append(dimension)
-
-                if params.start_date:
-                    where_clauses.append("date >= ?")
-                    query_params.append(params.start_date)
-                if params.end_date:
-                    where_clauses.append("date <= ?")
-                    query_params.append(params.end_date)
-
-                sql_nom = f"""
-                    SELECT strftime(date, '%Y-%m-%d') as dt, value
-                    FROM read_parquet(?)
-                    WHERE {" AND ".join(where_clauses)}
-                    ORDER BY date
-                """
-                nom_rows = con.execute(sql_nom, [str(ALIGNED_PARQUET), *query_params]).fetchall()
-
-                # Deflator verisini çek
-                def_where = ["series_id = ?"]
-                def_params: list[Any] = [def_id]
-                if params.start_date:
-                    def_where.append("date >= ?")
-                    def_params.append(params.start_date)
-                if params.end_date:
-                    def_where.append("date <= ?")
-                    def_params.append(params.end_date)
-
-                sql_def = f"""
-                    SELECT strftime(date, '%Y-%m-%d') as dt, value
-                    FROM read_parquet(?)
-                    WHERE {" AND ".join(def_where)}
-                    ORDER BY date
-                """
-                def_rows = con.execute(sql_def, [str(ALIGNED_PARQUET), *def_params]).fetchall()
-
+                def_dict, def_id, _, def_err = fetch_series_observations(
+                    con, params.deflator_series_id,
+                    start_date=params.start_date, end_date=params.end_date,
+                    parquet_path=ALIGNED_PARQUET, silver_db_path=SILVER_DB,
+                )
+                if def_err or not def_dict:
+                    return self.Output(
+                        success=False,
+                        error=f"Deflatör serisi bulunamadi: {params.deflator_series_id}"
+                        if not def_err or "Seri bulunamadi" in def_err
+                        else def_err,
+                    )
             finally:
                 con.close()
-
-            nom_dict = {r[0]: float(r[1]) for r in nom_rows if r[1] is not None}
-            def_dict = {r[0]: float(r[1]) for r in def_rows if r[1] is not None}
 
             common_dates = sorted(set(nom_dict.keys()) & set(def_dict.keys()))
             if len(common_dates) < 2:

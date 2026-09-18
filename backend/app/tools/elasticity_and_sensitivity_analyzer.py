@@ -10,35 +10,25 @@ import numpy as np
 from pydantic import BaseModel, Field
 
 from backend.app.services.chart_generator import generate_elasticity_chart
+from backend.app.services.series_data_resolver import (
+    ALIGNED_PARQUET,
+    SILVER_DB,
+    canonical_identifier,
+    fetch_series_observations,
+    resolve_series_location,
+)
 from backend.app.tools.base import BaseTool
 
 logger = logging.getLogger(__name__)
 
-PROJECT_ROOT = Path(__file__).resolve().parents[3]
-ALIGNED_PARQUET = PROJECT_ROOT / "data" / "aligned" / "monthly" / "observations.parquet"
-
 
 def _canonical_identifier(value: str) -> str:
-    translation = str.maketrans({
-        "ı": "i", "İ": "I", "ş": "s", "Ş": "S",
-        "ğ": "g", "Ğ": "G", "ü": "u", "Ü": "U",
-        "ö": "o", "Ö": "O", "ç": "c", "Ç": "C",
-    })
-    normalized = value.translate(translation)
-    return unicodedata.normalize("NFKC", normalized).casefold()
+    return canonical_identifier(value)
 
 
 def _resolve_series_id(con: duckdb.DuckDBPyConnection, input_id: str) -> str | None:
-    canonical = _canonical_identifier(input_id)
-    rows = con.execute("SELECT DISTINCT series_id FROM read_parquet(?)", [str(ALIGNED_PARQUET)]).fetchall()
-    all_ids = [r[0] for r in rows]
-
-    for sid in all_ids:
-        if _canonical_identifier(sid) == canonical:
-            return sid
-        if sid.endswith(input_id) or input_id.endswith(sid):
-            return sid
-    return None
+    sid, _ = resolve_series_location(con, input_id, ALIGNED_PARQUET, SILVER_DB)
+    return sid
 
 
 class ElasticityAndSensitivityAnalyzerTool(BaseTool):
@@ -84,51 +74,29 @@ class ElasticityAndSensitivityAnalyzerTool(BaseTool):
 
             con = duckdb.connect()
             try:
-                dep_id = _resolve_series_id(con, params.dependent_series_id)
-                if not dep_id:
-                    return self.Output(success=False, error=f"Bagimli seri bulunamadi: {params.dependent_series_id}")
+                dep_data, dep_id, dep_dim, dep_err = fetch_series_observations(
+                    con, params.dependent_series_id, params.dependent_dimension,
+                    parquet_path=ALIGNED_PARQUET, silver_db_path=SILVER_DB,
+                )
+                if dep_err or not dep_data:
+                    return self.Output(
+                        success=False,
+                        error=f"Bagimli seri bulunamadi: {params.dependent_series_id}"
+                        if not dep_err or "Seri bulunamadi" in dep_err
+                        else dep_err,
+                    )
 
-                indep_id = _resolve_series_id(con, params.independent_series_id)
-                if not indep_id:
-                    return self.Output(success=False, error=f"Bagimsiz seri bulunamadi: {params.independent_series_id}")
-
-                def _fetch_series(series_id: str, dim: str | None) -> dict[str, float]:
-                    dim_rows = con.execute(
-                        """
-                        SELECT DISTINCT json_extract_string(dims, '$.variable') AS dimension
-                        FROM read_parquet(?)
-                        WHERE series_id = ?
-                        """,
-                        [str(ALIGNED_PARQUET), series_id],
-                    ).fetchall()
-                    avail_dims = [r[0] for r in dim_rows if r[0] is not None]
-
-                    selected_dim = dim
-                    if selected_dim is None:
-                        if len(avail_dims) == 1:
-                            selected_dim = avail_dims[0]
-                        elif "Toplam" in avail_dims:
-                            selected_dim = "Toplam"
-                        elif avail_dims:
-                            selected_dim = avail_dims[0]
-
-                    clauses = ["series_id = ?"]
-                    qp: list[Any] = [series_id]
-                    if selected_dim:
-                        clauses.append("json_extract_string(dims, '$.variable') = ?")
-                        qp.append(selected_dim)
-
-                    sql = f"""
-                        SELECT strftime(date, '%Y-%m-%d') as dt, value
-                        FROM read_parquet(?)
-                        WHERE {" AND ".join(clauses)}
-                        ORDER BY date
-                    """
-                    rows = con.execute(sql, [str(ALIGNED_PARQUET), *qp]).fetchall()
-                    return {r[0]: float(r[1]) for r in rows if r[1] is not None}
-
-                dep_data = _fetch_series(dep_id, params.dependent_dimension)
-                indep_data = _fetch_series(indep_id, params.independent_dimension)
+                indep_data, indep_id, indep_dim, indep_err = fetch_series_observations(
+                    con, params.independent_series_id, params.independent_dimension,
+                    parquet_path=ALIGNED_PARQUET, silver_db_path=SILVER_DB,
+                )
+                if indep_err or not indep_data:
+                    return self.Output(
+                        success=False,
+                        error=f"Bagimsiz seri bulunamadi: {params.independent_series_id}"
+                        if not indep_err or "Seri bulunamadi" in indep_err
+                        else indep_err,
+                    )
             finally:
                 con.close()
 

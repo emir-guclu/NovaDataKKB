@@ -9,78 +9,41 @@ from typing import Literal
 import duckdb
 from pydantic import BaseModel, Field
 
+from backend.app.services.series_data_resolver import (
+    GOLD_PARQUET,
+    SILVER_DB,
+    canonical_identifier,
+    create_silver_periodic_view,
+    get_available_dimensions,
+    resolve_dimension,
+    resolve_series_location,
+)
 from backend.app.tools.base import BaseTool
 
 logger = logging.getLogger(__name__)
 
-PROJECT_ROOT = Path(__file__).resolve().parents[3]
-GOLD_PARQUET = PROJECT_ROOT / "data" / "gold" / "gold_periodic_change.parquet"
 SUPPORTED_METRICS = {"value", "mom_abs_change", "mom_pct_change", "yoy_abs_change", "yoy_pct_change"}
 
 
 def _canonical_identifier(value: str) -> str:
-    translation = str.maketrans({
-        "ı": "i", "İ": "I", "ş": "s", "Ş": "S",
-        "ğ": "g", "Ğ": "G", "ü": "u", "Ü": "U",
-        "ö": "o", "Ö": "O", "ç": "c", "Ç": "C",
-    })
-    normalized = value.translate(translation)
-    return unicodedata.normalize("NFKC", normalized).casefold()
+    return canonical_identifier(value)
 
 
 def _resolve_series_and_dimension(
     con: duckdb.DuckDBPyConnection,
     requested_series_id: str,
     requested_dimension: str | None,
-) -> tuple[str | None, str | None, str | None]:
-    series_rows = con.execute(
-        "SELECT DISTINCT series_id FROM read_parquet(?)",
-        [str(GOLD_PARQUET)],
-    ).fetchall()
-    matched_series_id = next(
-        (
-            series_id
-            for (series_id,) in series_rows
-            if _canonical_identifier(series_id) == _canonical_identifier(requested_series_id)
-        ),
-        None,
-    )
-    if matched_series_id is None:
-        return None, None, f"Seri bulunamadi: {requested_series_id}"
+) -> tuple[str | None, str | None, str | None, str | None]:
+    matched_id, source = resolve_series_location(con, requested_series_id, GOLD_PARQUET, SILVER_DB)
+    if not matched_id or not source:
+        return None, None, None, f"Seri bulunamadi: {requested_series_id}"
 
-    dims_rows = con.execute(
-        """
-        SELECT DISTINCT json_extract_string(dims, '$.variable') AS dimension
-        FROM read_parquet(?)
-        WHERE series_id = ?
-        ORDER BY dimension
-        """,
-        [str(GOLD_PARQUET), matched_series_id],
-    ).fetchall()
-    available_dims = [row[0] for row in dims_rows]
+    available_dims = get_available_dimensions(con, matched_id, source, GOLD_PARQUET)
+    dimension, dim_err = resolve_dimension(available_dims, requested_dimension)
+    if dim_err:
+        return matched_id, None, source, dim_err
 
-    dimension = requested_dimension
-    non_null_dims = [dim for dim in available_dims if dim is not None]
-    if dimension is None and non_null_dims:
-        if len(non_null_dims) == 1:
-            dimension = non_null_dims[0]
-        elif "Toplam" in non_null_dims:
-            dimension = "Toplam"
-        else:
-            return (
-                matched_series_id,
-                None,
-                f"Seri birden fazla dimension iceriyor. dimension belirtin: {non_null_dims}",
-            )
-
-    if dimension is not None and dimension not in non_null_dims:
-        return (
-            matched_series_id,
-            None,
-            f"Dimension bulunamadi: {dimension}. Mevcut dimensionlar: {non_null_dims}",
-        )
-
-    return matched_series_id, dimension, None
+    return matched_id, dimension, source, None
 
 
 class CausalityCheckTool(BaseTool):
@@ -126,58 +89,65 @@ class CausalityCheckTool(BaseTool):
 
             con = duckdb.connect()
             try:
-                series_a, dimension_a, error = _resolve_series_and_dimension(
+                series_a, dimension_a, source_a, error = _resolve_series_and_dimension(
                     con, params.series_id_a, params.dimension_a
                 )
                 if error:
                     return self.Output(success=False, error=error, metric=params.metric)
 
-                series_b, dimension_b, error = _resolve_series_and_dimension(
+                series_b, dimension_b, source_b, error = _resolve_series_and_dimension(
                     con, params.series_id_b, params.dimension_b
                 )
                 if error:
                     return self.Output(success=False, error=error, metric=params.metric)
 
-                where_a = ["series_id = ?"]
-                where_b = ["series_id = ?"]
-                params_a: list[str | None] = [series_a]
-                params_b: list[str | None] = [series_b]
+                def _build_source_cte(series_id: str, dimension: str | None, source: str, alias: str) -> tuple[str, list[Any]]:
+                    where = []
+                    qparams: list[Any] = []
+                    if source == "silver":
+                        view_name = f"view_{alias}"
+                        create_silver_periodic_view(con, view_name, series_id, dimension)
+                        cte_sql = f"SELECT CAST(date AS DATE) AS date, {params.metric} AS value_{alias} FROM {view_name}"
+                        if params.start_date and params.end_date:
+                            where.append("date BETWEEN ? AND ?")
+                            qparams.extend([params.start_date, params.end_date])
+                        if where:
+                            cte_sql += f" WHERE {' AND '.join(where)}"
+                        return cte_sql, qparams
+                    else:
+                        where.append("series_id = ?")
+                        qparams.append(series_id)
+                        if dimension is None:
+                            where.append("json_extract_string(dims, '$.variable') IS NULL")
+                        else:
+                            where.append("json_extract_string(dims, '$.variable') = ?")
+                            qparams.append(dimension)
+                        if params.start_date and params.end_date:
+                            where.append("CAST(date AS DATE) BETWEEN ? AND ?")
+                            qparams.extend([params.start_date, params.end_date])
+                        cte_sql = f"""
+                            SELECT CAST(date AS DATE) AS date, {params.metric} AS value_{alias}
+                            FROM read_parquet(?)
+                            WHERE {' AND '.join(where)}
+                        """
+                        return cte_sql, [str(GOLD_PARQUET), *qparams]
 
-                if dimension_a is None:
-                    where_a.append("json_extract_string(dims, '$.variable') IS NULL")
-                else:
-                    where_a.append("json_extract_string(dims, '$.variable') = ?")
-                    params_a.append(dimension_a)
-
-                if dimension_b is None:
-                    where_b.append("json_extract_string(dims, '$.variable') IS NULL")
-                else:
-                    where_b.append("json_extract_string(dims, '$.variable') = ?")
-                    params_b.append(dimension_b)
-
-                if params.start_date and params.end_date:
-                    where_a.append("date BETWEEN ? AND ?")
-                    where_b.append("date BETWEEN ? AND ?")
-                    params_a.extend([params.start_date, params.end_date])
-                    params_b.extend([params.start_date, params.end_date])
+                cte_a_sql, params_a = _build_source_cte(series_a, dimension_a, source_a, "a")
+                cte_b_sql, params_b = _build_source_cte(series_b, dimension_b, source_b, "b")
 
                 sql = f"""
                     WITH a AS (
-                        SELECT date, {params.metric} AS value_a
-                        FROM read_parquet(?)
-                        WHERE {' AND '.join(where_a)}
+                        {cte_a_sql}
                     ),
                     b AS (
-                        SELECT date, {params.metric} AS value_b
-                        FROM read_parquet(?)
-                        WHERE {' AND '.join(where_b)}
+                        {cte_b_sql}
                     )
                     SELECT value_a, value_b
                     FROM a JOIN b USING (date)
                     WHERE value_a IS NOT NULL AND value_b IS NOT NULL
                     ORDER BY date
                 """
-                rows = con.execute(sql, [str(GOLD_PARQUET), *params_a, str(GOLD_PARQUET), *params_b]).fetchall()
+                rows = con.execute(sql, [*params_a, *params_b]).fetchall()
             finally:
                 con.close()
 

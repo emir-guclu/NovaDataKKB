@@ -18,22 +18,22 @@ from backend.app.services.inline_series import (
     SeriesLoadError,
     parse_inline_observations,
 )
+from backend.app.services.series_data_resolver import (
+    GOLD_PARQUET,
+    SILVER_DB,
+    canonical_identifier,
+    create_silver_periodic_view,
+    get_available_dimensions,
+    resolve_dimension,
+    resolve_series_location,
+)
 from backend.app.tools.base import BaseTool
 
 logger = logging.getLogger(__name__)
 
-PROJECT_ROOT = Path(__file__).resolve().parents[3]
-GOLD_PARQUET = PROJECT_ROOT / "data" / "gold" / "gold_periodic_change.parquet"
-
 
 def _canonical_identifier(value: str) -> str:
-    translation = str.maketrans({
-        "ı": "i", "İ": "I", "ş": "s", "Ş": "S",
-        "ğ": "g", "Ğ": "G", "ü": "u", "Ü": "U",
-        "ö": "o", "Ö": "O", "ç": "c", "Ç": "C",
-    })
-    normalized = value.translate(translation)
-    return unicodedata.normalize("NFKC", normalized).casefold()
+    return canonical_identifier(value)
 
 
 def _json_ready(value: Any) -> Any:
@@ -47,9 +47,10 @@ def _json_ready(value: Any) -> Any:
 class AnomalyDetectionTool(BaseTool):
     name = "anomaly_detection"
     description = (
-        "Tek bir finansal zaman serisinde z-score tabanli olagan disi yukselis "
-        "veya dususleri bulur. Iki seri arasindaki iliski/korelasyon sorularinda "
-        "KULLANMA; onun icin causality_check kullan. Ornek: "
+        "Zaman serisindeki istatistiksel uclari (aylik/yillik soklar veya "
+        "mevsimsellik disi hareketler) IQR ve z-score hibrit yontemi ile tespit eder. "
+        "Genel trend veya ham veri okumak icin KULLANMA; onun icin change_detection "
+        "kullan. Ornek: konut kredisi aylik degisim soklari icin "
         "series_id='BDDK_MONTHLY:tuketici_kredileri:tuketici_kredileri_konut', "
         "dimension='Toplam', metric='mom_pct_change'."
     )
@@ -63,7 +64,7 @@ class AnomalyDetectionTool(BaseTool):
         )
         metric: Literal["value", "mom_abs_change", "mom_pct_change", "yoy_abs_change", "yoy_pct_change"] | str = Field(
             default="mom_pct_change",
-            description="Anomali aranacak metrik",
+            description="Anomali tespiti yapilacak metrik",
         )
         start_date: str | None = Field(default=None, description="Opsiyonel baslangic tarihi, YYYY-MM-DD")
         end_date: str | None = Field(default=None, description="Opsiyonel bitis tarihi, YYYY-MM-DD")
@@ -117,66 +118,56 @@ class AnomalyDetectionTool(BaseTool):
 
         con = duckdb.connect()
         try:
-            series_rows = con.execute(
-                "SELECT DISTINCT series_id FROM read_parquet(?)",
-                [str(GOLD_PARQUET)],
-            ).fetchall()
-            matched_series_id = next(
-                (
-                    series_id
-                    for (series_id,) in series_rows
-                    if _canonical_identifier(series_id) == _canonical_identifier(params.series_id)
-                ),
-                None,
+            matched_series_id, source = resolve_series_location(
+                con, params.series_id, GOLD_PARQUET, SILVER_DB
             )
-
-            if matched_series_id is None:
+            if not matched_series_id or not source:
                 raise SeriesLoadError(f"Seri bulunamadi: {params.series_id}")
 
-            dims_rows = con.execute(
-                """
-                SELECT DISTINCT json_extract_string(dims, '$.variable') AS dimension
-                FROM read_parquet(?)
-                WHERE series_id = ?
-                ORDER BY dimension
-                """,
-                [str(GOLD_PARQUET), matched_series_id],
-            ).fetchall()
-            available_dims = [row[0] for row in dims_rows if row[0] is not None]
+            available_dims = get_available_dimensions(con, matched_series_id, source, GOLD_PARQUET)
+            dimension, dim_err = resolve_dimension(available_dims, params.dimension)
+            if dim_err:
+                raise SeriesLoadError(dim_err)
 
-            dimension = params.dimension
-            if dimension is None and available_dims:
-                if len(available_dims) == 1:
-                    dimension = available_dims[0]
-                elif "Toplam" in available_dims:
-                    dimension = "Toplam"
-                else:
-                    raise SeriesLoadError(f"Seri birden fazla dimension iceriyor. dimension belirtin: {available_dims}")
-
-            if dimension is not None and dimension not in available_dims:
-                raise SeriesLoadError(f"Dimension bulunamadi: {dimension}. Mevcut dimensionlar: {available_dims}")
-
-            where_clauses = ["series_id = ?", f"{params.metric} IS NOT NULL"]
-            query_params: list[str] = [matched_series_id]
-            if dimension is None:
-                where_clauses.append("json_extract_string(dims, '$.variable') IS NULL")
+            if source == "silver":
+                create_silver_periodic_view(con, "silver_anomaly_view", matched_series_id, dimension)
+                where_clauses = [f"{params.metric} IS NOT NULL"]
+                query_params: list[Any] = []
+                if params.start_date and params.end_date:
+                    where_clauses.append("date BETWEEN ? AND ?")
+                    query_params.extend([params.start_date, params.end_date])
+                cursor = con.execute(
+                    f"""
+                    SELECT date, {params.metric} AS value
+                    FROM silver_anomaly_view
+                    WHERE {' AND '.join(where_clauses)}
+                    ORDER BY date
+                    """,
+                    query_params,
+                )
+                rows = cursor.fetchall()
             else:
-                where_clauses.append("json_extract_string(dims, '$.variable') = ?")
-                query_params.append(dimension)
-            if params.start_date and params.end_date:
-                where_clauses.append("date BETWEEN ? AND ?")
-                query_params.extend([params.start_date, params.end_date])
+                where_clauses = ["series_id = ?", f"{params.metric} IS NOT NULL"]
+                query_params: list[str] = [matched_series_id]
+                if dimension is None:
+                    where_clauses.append("json_extract_string(dims, '$.variable') IS NULL")
+                else:
+                    where_clauses.append("json_extract_string(dims, '$.variable') = ?")
+                    query_params.append(dimension)
+                if params.start_date and params.end_date:
+                    where_clauses.append("date BETWEEN ? AND ?")
+                    query_params.extend([params.start_date, params.end_date])
 
-            cursor = con.execute(
-                f"""
-                SELECT date, {params.metric} AS value
-                FROM read_parquet(?)
-                WHERE {' AND '.join(where_clauses)}
-                ORDER BY date
-                """,
-                [str(GOLD_PARQUET), *query_params],
-            )
-            rows = cursor.fetchall()
+                cursor = con.execute(
+                    f"""
+                    SELECT date, {params.metric} AS value
+                    FROM read_parquet(?)
+                    WHERE {' AND '.join(where_clauses)}
+                    ORDER BY date
+                    """,
+                    [str(GOLD_PARQUET), *query_params],
+                )
+                rows = cursor.fetchall()
         finally:
             con.close()
         return rows, dimension, "lakehouse", []

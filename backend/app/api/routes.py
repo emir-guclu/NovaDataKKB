@@ -29,7 +29,7 @@ logger = logging.getLogger(__name__)
 router = APIRouter()
 
 REQUEST_HARD_TIMEOUT_SECONDS = float(os.getenv("REQUEST_HARD_TIMEOUT_SECONDS", "900"))
-AGENT_MAX_ITERATIONS = int(os.getenv("AGENT_MAX_ITERATIONS", "12"))
+AGENT_MAX_ITERATIONS = int(os.getenv("AGENT_MAX_ITERATIONS", "15"))
 MAX_UPLOAD_BYTES = 10 * 1024 * 1024  # 10 MB
 ALLOWED_EXTENSIONS = {".xlsx", ".xls", ".csv", ".pdf", ".png", ".jpg", ".jpeg", ".webp"}
 PROJECT_ROOT = Path(__file__).resolve().parents[3]

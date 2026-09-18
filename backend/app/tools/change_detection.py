@@ -16,23 +16,22 @@ from backend.app.services.inline_series import (
     SeriesLoadError,
     parse_inline_observations,
 )
+from backend.app.services.series_data_resolver import (
+    GOLD_PARQUET,
+    SILVER_DB,
+    canonical_identifier,
+    create_silver_periodic_view,
+    get_available_dimensions,
+    resolve_dimension,
+    resolve_series_location,
+)
 from backend.app.tools.base import BaseTool
 
 logger = logging.getLogger(__name__)
 
 
 def _canonical_identifier(value: str) -> str:
-    translation = str.maketrans({
-        "ı": "i", "İ": "I", "ş": "s", "Ş": "S",
-        "ğ": "g", "Ğ": "G", "ü": "u", "Ü": "U",
-        "ö": "o", "Ö": "O", "ç": "c", "Ç": "C",
-    })
-    normalized = value.translate(translation)
-    return unicodedata.normalize("NFKC", normalized).casefold()
-
-
-PROJECT_ROOT = Path(__file__).resolve().parents[3]
-GOLD_PARQUET = PROJECT_ROOT / "data" / "gold" / "gold_periodic_change.parquet"
+    return canonical_identifier(value)
 
 
 class ChangeDetectionTool(BaseTool):
@@ -113,81 +112,62 @@ class ChangeDetectionTool(BaseTool):
 
         con = duckdb.connect()
         try:
-            series_rows = con.execute(
-                "SELECT DISTINCT series_id FROM read_parquet(?)",
-                [str(GOLD_PARQUET)],
-            ).fetchall()
-            available_series = [row[0] for row in series_rows]
-
-            canonical_requested = _canonical_identifier(params.series_id)
-            matched_series_id = next(
-                (
-                    series_id
-                    for series_id in available_series
-                    if _canonical_identifier(series_id) == canonical_requested
-                ),
-                None,
+            matched_series_id, source = resolve_series_location(
+                con, params.series_id, GOLD_PARQUET, SILVER_DB
             )
-
-            if matched_series_id is None:
+            if not matched_series_id or not source:
                 raise SeriesLoadError(f"Seri bulunamadi: {params.series_id}")
 
-            dims_rows = con.execute(
-                """
-                SELECT DISTINCT json_extract_string(dims, '$.variable') AS dimension
-                FROM read_parquet(?)
-                WHERE series_id = ?
-                ORDER BY dimension
-                """,
-                [str(GOLD_PARQUET), matched_series_id],
-            ).fetchall()
+            available_dims = get_available_dimensions(con, matched_series_id, source, GOLD_PARQUET)
+            dimension, dim_err = resolve_dimension(available_dims, params.dimension)
+            if dim_err:
+                raise SeriesLoadError(dim_err)
 
-            available_dims = [row[0] for row in dims_rows if row[0] is not None]
-            if not available_dims:
-                raise SeriesLoadError(f"Seri bulunamadi: {params.series_id}")
-
-            dimension = params.dimension
-            if dimension is None:
-                if len(available_dims) == 1:
-                    dimension = available_dims[0]
-                elif "Toplam" in available_dims:
-                    dimension = "Toplam"
-                else:
-                    raise SeriesLoadError(
-                        "Seri birden fazla dimension iceriyor. "
-                        f"dimension belirtin: {available_dims}"
-                    )
-
-            if dimension not in available_dims:
-                raise SeriesLoadError(
-                    f"Dimension bulunamadi: {dimension}. "
-                    f"Mevcut dimensionlar: {available_dims}"
-                )
-
-            if params.start_date and params.end_date:
-                sql = """
+            if source == "silver":
+                create_silver_periodic_view(con, "silver_change_view", matched_series_id, dimension)
+                where = []
+                query_params: list[Any] = []
+                if params.start_date and params.end_date:
+                    where.append("date BETWEEN ? AND ?")
+                    query_params.extend([params.start_date, params.end_date])
+                where_clause = f"WHERE {' AND '.join(where)}" if where else ""
+                order_limit = "ORDER BY date" if (params.start_date and params.end_date) else "ORDER BY date DESC LIMIT 1"
+                sql = f"""
                     SELECT date, value, mom_abs_change, mom_pct_change,
                            yoy_abs_change, yoy_pct_change, source, nature, unit, dims
-                    FROM read_parquet(?)
-                    WHERE series_id = ?
-                      AND json_extract_string(dims, '$.variable') = ?
-                      AND date BETWEEN ? AND ?
-                    ORDER BY date
+                    FROM silver_change_view
+                    {where_clause}
+                    {order_limit}
                 """
-                query_params = [str(GOLD_PARQUET), matched_series_id, dimension, params.start_date, params.end_date]
+                cursor = con.execute(sql, query_params)
             else:
-                sql = """
-                    SELECT date, value, mom_abs_change, mom_pct_change,
-                           yoy_abs_change, yoy_pct_change, source, nature, unit, dims
-                    FROM read_parquet(?)
-                    WHERE series_id = ?
-                      AND json_extract_string(dims, '$.variable') = ?
-                    ORDER BY date DESC
-                    LIMIT 1
-                """
-                query_params = [str(GOLD_PARQUET), matched_series_id, dimension]
+                dim_filter = "json_extract_string(dims, '$.variable') = ?" if dimension else "json_extract_string(dims, '$.variable') IS NULL"
+                dim_params = [dimension] if dimension else []
+                if params.start_date and params.end_date:
+                    sql = f"""
+                        SELECT date, value, mom_abs_change, mom_pct_change,
+                               yoy_abs_change, yoy_pct_change, source, nature, unit, dims
+                        FROM read_parquet(?)
+                        WHERE series_id = ?
+                          AND {dim_filter}
+                          AND date BETWEEN ? AND ?
+                        ORDER BY date
+                    """
+                    query_params = [str(GOLD_PARQUET), matched_series_id, *dim_params, params.start_date, params.end_date]
+                else:
+                    sql = f"""
+                        SELECT date, value, mom_abs_change, mom_pct_change,
+                               yoy_abs_change, yoy_pct_change, source, nature, unit, dims
+                        FROM read_parquet(?)
+                        WHERE series_id = ?
+                          AND {dim_filter}
+                        ORDER BY date DESC
+                        LIMIT 1
+                    """
+                    query_params = [str(GOLD_PARQUET), matched_series_id, *dim_params]
 
-            cursor = con.execute(sql, query_params)
+                cursor = con.execute(sql, query_params)
+
             columns = [col[0] for col in cursor.description]
             raw_rows = cursor.fetchall()
         finally:
