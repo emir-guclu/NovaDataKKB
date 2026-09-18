@@ -25,6 +25,7 @@ from dotenv import load_dotenv
 from backend.app.agent.loop import run_agent
 from backend.app.agent.tool_registry import ToolRegistry, create_default_tool_registry
 from backend.app.core.llm_provider import get_default_provider
+from backend.app.tools.analysis_planner import AnalysisPlannerTool
 from backend.app.tools.anomaly_detection import AnomalyDetectionTool
 from backend.app.tools.causality_check import CausalityCheckTool
 from backend.app.tools.change_detection import ChangeDetectionTool
@@ -242,6 +243,25 @@ TEST_SCENARIOS = [
         "tool_class": "TurningPointAndCycleDetectorTool",
         "expected_tool": "turning_point_and_cycle_detector",
         "prompt": "Konut kredilerindeki tepe ve dip dönüm noktalarını, genişleme ve daralma döngülerini tespit et.",
+    },
+    # 13. AnalysisPlannerTool (Planlama ve Negatif Kontrol Senaryoları)
+    {
+        "id": "13.1",
+        "tool_class": "AnalysisPlannerTool",
+        "expected_tool": "analysis_planner",
+        "prompt": "2024 yılında konut kredisi faizleri, TÜFE enflasyonu ve takipteki krediler arasındaki ilişkiyi karşılaştır.",
+    },
+    {
+        "id": "13.2",
+        "tool_class": "AnalysisPlannerTool",
+        "expected_tool": "analysis_planner",
+        "prompt": "Mevduat faizlerindeki artışın bireysel kredi kartı borçlarına ve batık kredi riskine etkisini çok boyutlu analiz et.",
+    },
+    {
+        "id": "13.3",
+        "tool_class": "AnalysisPlannerTool (Negatif Kontrol - Basit Tekil Soru)",
+        "expected_tool": "series_catalog_search",
+        "prompt": "Konut kredisi faiz oranının en güncel son değeri nedir?",
     },
 ]
 

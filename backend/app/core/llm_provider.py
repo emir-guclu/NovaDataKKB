@@ -33,6 +33,8 @@ class LLMProvider(ABC):
         self,
         messages: list[dict[str, Any]],
         tools: list[dict[str, Any]] | None = None,
+        temperature: float | None = None,
+        response_format: dict[str, Any] | None = None,
     ) -> LLMResponse:
         raise NotImplementedError
 
@@ -83,12 +85,18 @@ class KloudeksProvider(LLMProvider):
         self,
         messages: list[dict[str, Any]],
         tools: list[dict[str, Any]] | None = None,
+        temperature: float | None = None,
+        response_format: dict[str, Any] | None = None,
     ) -> LLMResponse:
         kwargs: dict[str, Any] = {
             "model": self.CHAT_MODEL,
             "messages": messages,
         }
 
+        if temperature is not None:
+            kwargs["temperature"] = temperature
+        if response_format is not None:
+            kwargs["response_format"] = response_format
         if tools:
             kwargs["tools"] = tools
             kwargs["tool_choice"] = "auto"
@@ -213,15 +221,19 @@ class NvidiaProvider(LLMProvider):
         self,
         messages: list[dict[str, Any]],
         tools: list[dict[str, Any]] | None = None,
+        temperature: float | None = None,
+        response_format: dict[str, Any] | None = None,
     ) -> LLMResponse:
         kwargs: dict[str, Any] = {
             "model": self.CHAT_MODEL,
             "messages": messages,
-            "temperature": 0.2,
+            "temperature": 0.2 if temperature is None else temperature,
             "top_p": 0.7,
             "max_tokens": 4096,
         }
 
+        if response_format is not None:
+            kwargs["response_format"] = response_format
         if tools:
             kwargs["tools"] = tools
             kwargs["tool_choice"] = "auto"
@@ -337,13 +349,17 @@ class DeepSeekProvider(LLMProvider):
         self,
         messages: list[dict[str, Any]],
         tools: list[dict[str, Any]] | None = None,
+        temperature: float | None = None,
+        response_format: dict[str, Any] | None = None,
     ) -> LLMResponse:
         kwargs: dict[str, Any] = {
             "model": self.CHAT_MODEL,
             "messages": messages,
-            "temperature": 0.2,
+            "temperature": 0.2 if temperature is None else temperature,
         }
 
+        if response_format is not None:
+            kwargs["response_format"] = response_format
         if tools:
             kwargs["tools"] = tools
             kwargs["tool_choice"] = "auto"

@@ -57,6 +57,7 @@ class ToolRegistry:
 
 
 def create_default_tool_registry() -> ToolRegistry:
+    from backend.app.tools.analysis_planner import AnalysisPlannerTool
     from backend.app.tools.anomaly_detection import AnomalyDetectionTool
     from backend.app.tools.causality_check import CausalityCheckTool
     from backend.app.tools.change_detection import ChangeDetectionTool
@@ -71,6 +72,7 @@ def create_default_tool_registry() -> ToolRegistry:
     from backend.app.tools.web_url_reader import WebUrlReaderTool
 
     registry = ToolRegistry()
+    registry.register(AnalysisPlannerTool())
     registry.register(SeriesCatalogSearchTool())
     registry.register(EvdsTool())
     registry.register(ChangeDetectionTool())

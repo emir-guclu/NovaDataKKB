@@ -2819,5 +2819,32 @@
     "BIRIMI": null,
     "NOTE": null,
     "TAG": []
+  },
+  "TP.FE25.OKTG01": {
+    "SERIE_CODE": "TP.FE25.OKTG01",
+    "SERIE_NAME": "TP.FE25.OKTG01",
+    "FREQUENCY_STR": "AYLIK",
+    "DATAGROUP_NAME": "Genel",
+    "BIRIMI": null,
+    "NOTE": null,
+    "TAG": []
+  },
+  "TP.FE.OKTG01": {
+    "SERIE_CODE": "TP.FE.OKTG01",
+    "SERIE_NAME": "TP.FE.OKTG01",
+    "FREQUENCY_STR": "AYLIK",
+    "DATAGROUP_NAME": "Genel",
+    "BIRIMI": null,
+    "NOTE": null,
+    "TAG": []
+  },
+  "TP.TRY.MT02.S": {
+    "SERIE_CODE": "TP.TRY.MT02.S",
+    "SERIE_NAME": "TP.TRY.MT02.S",
+    "FREQUENCY_STR": "AYLIK",
+    "DATAGROUP_NAME": "Genel",
+    "BIRIMI": null,
+    "NOTE": null,
+    "TAG": []
   }
 }

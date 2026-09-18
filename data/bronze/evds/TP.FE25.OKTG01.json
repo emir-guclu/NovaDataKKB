@@ -1,0 +1,86 @@
+[
+  {
+    "Tarih": "2024-1",
+    "TP_FE25_OKTG01": "62.32727500",
+    "UNIXTIME": {
+      "$numberLong": "1704056400"
+    }
+  },
+  {
+    "Tarih": "2024-2",
+    "TP_FE25_OKTG01": "65.15019500",
+    "UNIXTIME": {
+      "$numberLong": "1706734800"
+    }
+  },
+  {
+    "Tarih": "2024-3",
+    "TP_FE25_OKTG01": "67.21068100",
+    "UNIXTIME": {
+      "$numberLong": "1709240400"
+    }
+  },
+  {
+    "Tarih": "2024-4",
+    "TP_FE25_OKTG01": "69.34781900",
+    "UNIXTIME": {
+      "$numberLong": "1711918800"
+    }
+  },
+  {
+    "Tarih": "2024-5",
+    "TP_FE25_OKTG01": "71.68349700",
+    "UNIXTIME": {
+      "$numberLong": "1714510800"
+    }
+  },
+  {
+    "Tarih": "2024-6",
+    "TP_FE25_OKTG01": "72.85966200",
+    "UNIXTIME": {
+      "$numberLong": "1717189200"
+    }
+  },
+  {
+    "Tarih": "2024-7",
+    "TP_FE25_OKTG01": "75.20979100",
+    "UNIXTIME": {
+      "$numberLong": "1719781200"
+    }
+  },
+  {
+    "Tarih": "2024-8",
+    "TP_FE25_OKTG01": "77.07079400",
+    "UNIXTIME": {
+      "$numberLong": "1722459600"
+    }
+  },
+  {
+    "Tarih": "2024-9",
+    "TP_FE25_OKTG01": "79.35840800",
+    "UNIXTIME": {
+      "$numberLong": "1725138000"
+    }
+  },
+  {
+    "Tarih": "2024-10",
+    "TP_FE25_OKTG01": "81.64382300",
+    "UNIXTIME": {
+      "$numberLong": "1727730000"
+    }
+  },
+  {
+    "Tarih": "2024-11",
+    "TP_FE25_OKTG01": "83.47592500",
+    "UNIXTIME": {
+      "$numberLong": "1730408400"
+    }
+  },
+  {
+    "Tarih": "2024-12",
+    "TP_FE25_OKTG01": "84.33417300",
+    "UNIXTIME": {
+      "$numberLong": "1733000400"
+    }
+  }
+]

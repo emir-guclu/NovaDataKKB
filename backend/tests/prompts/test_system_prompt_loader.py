@@ -22,6 +22,17 @@ def test_get_system_prompt_injects_today_and_contains_rules():
     assert "evds_data_service" in prompt
 
 
+def test_system_prompt_contains_context_aware_planner_rule():
+    prompt = get_system_prompt(today="2026-10-15")
+
+    assert "analysis_planner" in prompt
+    assert "tek bir seri" in prompt
+    assert "series_catalog_search" in prompt
+    assert "birden fazla seri" in prompt
+    assert "focus_query" in prompt
+    assert "nedensellik" in prompt
+
+
 def test_get_system_prompt_default_today():
     prompt = get_system_prompt()
     assert date.today().isoformat() in prompt

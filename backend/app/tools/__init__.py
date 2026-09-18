@@ -1,6 +1,7 @@
 """LLM agent tools and function calling interfaces."""
 
 from backend.app.tools.anomaly_detection import AnomalyDetectionTool
+from backend.app.tools.analysis_planner import AnalysisPlannerTool
 from backend.app.tools.base import BaseTool
 from backend.app.tools.causality_check import CausalityCheckTool
 from backend.app.tools.change_detection import ChangeDetectionTool
@@ -16,6 +17,7 @@ from backend.app.tools.web_url_reader import WebUrlReaderTool
 
 __all__ = [
     "BaseTool",
+    "AnalysisPlannerTool",
     "AnomalyDetectionTool",
     "CausalityCheckTool",
     "ChangeDetectionTool",

@@ -13,6 +13,12 @@ def test_default_tool_registry_includes_evds_data_service_tool():
     assert registry.get("evds_data_service") is not None
 
 
+def test_default_tool_registry_includes_analysis_planner_tool():
+    registry = create_default_tool_registry()
+
+    assert registry.get("analysis_planner") is not None
+
+
 def test_default_tool_registry_includes_analytical_tools():
     registry = create_default_tool_registry()
 
