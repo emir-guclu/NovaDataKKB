@@ -92,3 +92,7 @@ scratch/
 # Reports & Benchmarks
 reports/*.json
 
+
+# Analiz araci (repoya girmemeli)
+dump_repo.py
+repo_dump.md
