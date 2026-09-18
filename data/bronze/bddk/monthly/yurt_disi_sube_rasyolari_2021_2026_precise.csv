@@ -1,0 +1,793 @@
+﻿date,year,month,tablo_no,category,row_index,row_no,item,taraf,variable,value_raw,value,currency,source
+2021-01-01,2021,1,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2021-01-01,2021,1,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2021-01-01,2021,1,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2021-01-01,2021,1,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,4.462678,4.462678,TL,BDDK Aylık Bülten - Excel
+2021-01-01,2021,1,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2021-01-01,2021,1,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2021-01-01,2021,1,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2021-01-01,2021,1,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,4.979718,4.979718,TL,BDDK Aylık Bülten - Excel
+2021-01-01,2021,1,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2021-01-01,2021,1,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2021-01-01,2021,1,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2021-01-01,2021,1,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,0.863078,0.863078,TL,BDDK Aylık Bülten - Excel
+2021-02-01,2021,2,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2021-02-01,2021,2,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2021-02-01,2021,2,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2021-02-01,2021,2,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,4.471276,4.471276,TL,BDDK Aylık Bülten - Excel
+2021-02-01,2021,2,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2021-02-01,2021,2,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2021-02-01,2021,2,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2021-02-01,2021,2,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,5.016931,5.016931,TL,BDDK Aylık Bülten - Excel
+2021-02-01,2021,2,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2021-02-01,2021,2,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2021-02-01,2021,2,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2021-02-01,2021,2,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,0.870097,0.870097,TL,BDDK Aylık Bülten - Excel
+2021-03-01,2021,3,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2021-03-01,2021,3,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2021-03-01,2021,3,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2021-03-01,2021,3,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,4.631945,4.631945,TL,BDDK Aylık Bülten - Excel
+2021-03-01,2021,3,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2021-03-01,2021,3,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2021-03-01,2021,3,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2021-03-01,2021,3,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,5.152177,5.152177,TL,BDDK Aylık Bülten - Excel
+2021-03-01,2021,3,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2021-03-01,2021,3,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2021-03-01,2021,3,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2021-03-01,2021,3,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,0.900823,0.900823,TL,BDDK Aylık Bülten - Excel
+2021-04-01,2021,4,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2021-04-01,2021,4,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2021-04-01,2021,4,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2021-04-01,2021,4,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,4.623827,4.623827,TL,BDDK Aylık Bülten - Excel
+2021-04-01,2021,4,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2021-04-01,2021,4,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2021-04-01,2021,4,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2021-04-01,2021,4,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,5.158046,5.158046,TL,BDDK Aylık Bülten - Excel
+2021-04-01,2021,4,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2021-04-01,2021,4,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2021-04-01,2021,4,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2021-04-01,2021,4,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,0.993713,0.993713,TL,BDDK Aylık Bülten - Excel
+2021-05-01,2021,5,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2021-05-01,2021,5,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2021-05-01,2021,5,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2021-05-01,2021,5,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,5.022837,5.022837,TL,BDDK Aylık Bülten - Excel
+2021-05-01,2021,5,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2021-05-01,2021,5,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2021-05-01,2021,5,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2021-05-01,2021,5,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,5.294687,5.294687,TL,BDDK Aylık Bülten - Excel
+2021-05-01,2021,5,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2021-05-01,2021,5,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2021-05-01,2021,5,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2021-05-01,2021,5,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,1.001493,1.001493,TL,BDDK Aylık Bülten - Excel
+2021-06-01,2021,6,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2021-06-01,2021,6,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2021-06-01,2021,6,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2021-06-01,2021,6,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,4.94959,4.94959,TL,BDDK Aylık Bülten - Excel
+2021-06-01,2021,6,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2021-06-01,2021,6,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2021-06-01,2021,6,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2021-06-01,2021,6,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,5.327386,5.327386,TL,BDDK Aylık Bülten - Excel
+2021-06-01,2021,6,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2021-06-01,2021,6,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2021-06-01,2021,6,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2021-06-01,2021,6,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,0.960251,0.960251,TL,BDDK Aylık Bülten - Excel
+2021-07-01,2021,7,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2021-07-01,2021,7,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2021-07-01,2021,7,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2021-07-01,2021,7,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,4.798045,4.798045,TL,BDDK Aylık Bülten - Excel
+2021-07-01,2021,7,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2021-07-01,2021,7,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2021-07-01,2021,7,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2021-07-01,2021,7,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,5.14443,5.14443,TL,BDDK Aylık Bülten - Excel
+2021-07-01,2021,7,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2021-07-01,2021,7,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2021-07-01,2021,7,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2021-07-01,2021,7,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,0.922778,0.922778,TL,BDDK Aylık Bülten - Excel
+2021-08-01,2021,8,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2021-08-01,2021,8,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2021-08-01,2021,8,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2021-08-01,2021,8,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,4.526346,4.526346,TL,BDDK Aylık Bülten - Excel
+2021-08-01,2021,8,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2021-08-01,2021,8,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2021-08-01,2021,8,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2021-08-01,2021,8,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,4.927069,4.927069,TL,BDDK Aylık Bülten - Excel
+2021-08-01,2021,8,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2021-08-01,2021,8,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2021-08-01,2021,8,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2021-08-01,2021,8,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,0.902483,0.902483,TL,BDDK Aylık Bülten - Excel
+2021-09-01,2021,9,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2021-09-01,2021,9,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2021-09-01,2021,9,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2021-09-01,2021,9,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,4.610686,4.610686,TL,BDDK Aylık Bülten - Excel
+2021-09-01,2021,9,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2021-09-01,2021,9,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2021-09-01,2021,9,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2021-09-01,2021,9,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,5.0002,5.0002,TL,BDDK Aylık Bülten - Excel
+2021-09-01,2021,9,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2021-09-01,2021,9,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2021-09-01,2021,9,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2021-09-01,2021,9,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,0.880435,0.880435,TL,BDDK Aylık Bülten - Excel
+2021-10-01,2021,10,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2021-10-01,2021,10,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2021-10-01,2021,10,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2021-10-01,2021,10,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,4.779984,4.779984,TL,BDDK Aylık Bülten - Excel
+2021-10-01,2021,10,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2021-10-01,2021,10,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2021-10-01,2021,10,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2021-10-01,2021,10,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,5.152815,5.152815,TL,BDDK Aylık Bülten - Excel
+2021-10-01,2021,10,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2021-10-01,2021,10,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2021-10-01,2021,10,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2021-10-01,2021,10,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,0.887741,0.887741,TL,BDDK Aylık Bülten - Excel
+2021-11-01,2021,11,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2021-11-01,2021,11,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2021-11-01,2021,11,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2021-11-01,2021,11,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,5.501735,5.501735,TL,BDDK Aylık Bülten - Excel
+2021-11-01,2021,11,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2021-11-01,2021,11,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2021-11-01,2021,11,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2021-11-01,2021,11,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,5.501924,5.501924,TL,BDDK Aylık Bülten - Excel
+2021-11-01,2021,11,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2021-11-01,2021,11,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2021-11-01,2021,11,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2021-11-01,2021,11,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,0.975499,0.975499,TL,BDDK Aylık Bülten - Excel
+2021-12-01,2021,12,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2021-12-01,2021,12,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2021-12-01,2021,12,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2021-12-01,2021,12,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,5.568277,5.568277,TL,BDDK Aylık Bülten - Excel
+2021-12-01,2021,12,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2021-12-01,2021,12,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2021-12-01,2021,12,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2021-12-01,2021,12,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,5.50071,5.50071,TL,BDDK Aylık Bülten - Excel
+2021-12-01,2021,12,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2021-12-01,2021,12,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2021-12-01,2021,12,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2021-12-01,2021,12,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,0.962087,0.962087,TL,BDDK Aylık Bülten - Excel
+2022-01-01,2022,1,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2022-01-01,2022,1,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2022-01-01,2022,1,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2022-01-01,2022,1,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,5.452505,5.452505,TL,BDDK Aylık Bülten - Excel
+2022-01-01,2022,1,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2022-01-01,2022,1,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2022-01-01,2022,1,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2022-01-01,2022,1,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,5.631674,5.631674,TL,BDDK Aylık Bülten - Excel
+2022-01-01,2022,1,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2022-01-01,2022,1,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2022-01-01,2022,1,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2022-01-01,2022,1,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,0.945357,0.945357,TL,BDDK Aylık Bülten - Excel
+2022-02-01,2022,2,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2022-02-01,2022,2,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2022-02-01,2022,2,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2022-02-01,2022,2,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,5.376995,5.376995,TL,BDDK Aylık Bülten - Excel
+2022-02-01,2022,2,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2022-02-01,2022,2,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2022-02-01,2022,2,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2022-02-01,2022,2,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,5.445831,5.445831,TL,BDDK Aylık Bülten - Excel
+2022-02-01,2022,2,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2022-02-01,2022,2,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2022-02-01,2022,2,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2022-02-01,2022,2,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,0.90183,0.90183,TL,BDDK Aylık Bülten - Excel
+2022-03-01,2022,3,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2022-03-01,2022,3,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2022-03-01,2022,3,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2022-03-01,2022,3,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,5.378276,5.378276,TL,BDDK Aylık Bülten - Excel
+2022-03-01,2022,3,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2022-03-01,2022,3,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2022-03-01,2022,3,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2022-03-01,2022,3,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,5.337495,5.337495,TL,BDDK Aylık Bülten - Excel
+2022-03-01,2022,3,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2022-03-01,2022,3,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2022-03-01,2022,3,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2022-03-01,2022,3,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,0.839393,0.839393,TL,BDDK Aylık Bülten - Excel
+2022-04-01,2022,4,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2022-04-01,2022,4,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2022-04-01,2022,4,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2022-04-01,2022,4,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,5.207365,5.207365,TL,BDDK Aylık Bülten - Excel
+2022-04-01,2022,4,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2022-04-01,2022,4,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2022-04-01,2022,4,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2022-04-01,2022,4,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,5.280705,5.280705,TL,BDDK Aylık Bülten - Excel
+2022-04-01,2022,4,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2022-04-01,2022,4,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2022-04-01,2022,4,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2022-04-01,2022,4,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,0.845385,0.845385,TL,BDDK Aylık Bülten - Excel
+2022-05-01,2022,5,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2022-05-01,2022,5,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2022-05-01,2022,5,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2022-05-01,2022,5,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,5.280445,5.280445,TL,BDDK Aylık Bülten - Excel
+2022-05-01,2022,5,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2022-05-01,2022,5,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2022-05-01,2022,5,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2022-05-01,2022,5,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,5.356012,5.356012,TL,BDDK Aylık Bülten - Excel
+2022-05-01,2022,5,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2022-05-01,2022,5,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2022-05-01,2022,5,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2022-05-01,2022,5,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,0.932941,0.932941,TL,BDDK Aylık Bülten - Excel
+2022-06-01,2022,6,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2022-06-01,2022,6,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2022-06-01,2022,6,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2022-06-01,2022,6,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,5.302188,5.302188,TL,BDDK Aylık Bülten - Excel
+2022-06-01,2022,6,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2022-06-01,2022,6,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2022-06-01,2022,6,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2022-06-01,2022,6,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,5.3294,5.3294,TL,BDDK Aylık Bülten - Excel
+2022-06-01,2022,6,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2022-06-01,2022,6,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2022-06-01,2022,6,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2022-06-01,2022,6,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,1.035306,1.035306,TL,BDDK Aylık Bülten - Excel
+2022-07-01,2022,7,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2022-07-01,2022,7,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2022-07-01,2022,7,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2022-07-01,2022,7,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,5.42324,5.42324,TL,BDDK Aylık Bülten - Excel
+2022-07-01,2022,7,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2022-07-01,2022,7,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2022-07-01,2022,7,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2022-07-01,2022,7,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,5.291692,5.291692,TL,BDDK Aylık Bülten - Excel
+2022-07-01,2022,7,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2022-07-01,2022,7,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2022-07-01,2022,7,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2022-07-01,2022,7,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,0.963045,0.963045,TL,BDDK Aylık Bülten - Excel
+2022-08-01,2022,8,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2022-08-01,2022,8,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2022-08-01,2022,8,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2022-08-01,2022,8,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,5.337722,5.337722,TL,BDDK Aylık Bülten - Excel
+2022-08-01,2022,8,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2022-08-01,2022,8,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2022-08-01,2022,8,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2022-08-01,2022,8,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,5.188178,5.188178,TL,BDDK Aylık Bülten - Excel
+2022-08-01,2022,8,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2022-08-01,2022,8,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2022-08-01,2022,8,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2022-08-01,2022,8,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,0.992252,0.992252,TL,BDDK Aylık Bülten - Excel
+2022-09-01,2022,9,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2022-09-01,2022,9,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2022-09-01,2022,9,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2022-09-01,2022,9,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,5.248905,5.248905,TL,BDDK Aylık Bülten - Excel
+2022-09-01,2022,9,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2022-09-01,2022,9,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2022-09-01,2022,9,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2022-09-01,2022,9,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,5.07161,5.07161,TL,BDDK Aylık Bülten - Excel
+2022-09-01,2022,9,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2022-09-01,2022,9,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2022-09-01,2022,9,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2022-09-01,2022,9,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,0.891691,0.891691,TL,BDDK Aylık Bülten - Excel
+2022-10-01,2022,10,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2022-10-01,2022,10,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2022-10-01,2022,10,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2022-10-01,2022,10,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,5.188868,5.188868,TL,BDDK Aylık Bülten - Excel
+2022-10-01,2022,10,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2022-10-01,2022,10,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2022-10-01,2022,10,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2022-10-01,2022,10,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,5.048594,5.048594,TL,BDDK Aylık Bülten - Excel
+2022-10-01,2022,10,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2022-10-01,2022,10,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2022-10-01,2022,10,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2022-10-01,2022,10,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,0.957181,0.957181,TL,BDDK Aylık Bülten - Excel
+2022-11-01,2022,11,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2022-11-01,2022,11,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2022-11-01,2022,11,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2022-11-01,2022,11,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,5.033866,5.033866,TL,BDDK Aylık Bülten - Excel
+2022-11-01,2022,11,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2022-11-01,2022,11,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2022-11-01,2022,11,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2022-11-01,2022,11,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,4.912633,4.912633,TL,BDDK Aylık Bülten - Excel
+2022-11-01,2022,11,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2022-11-01,2022,11,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2022-11-01,2022,11,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2022-11-01,2022,11,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,0.934261,0.934261,TL,BDDK Aylık Bülten - Excel
+2022-12-01,2022,12,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2022-12-01,2022,12,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2022-12-01,2022,12,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2022-12-01,2022,12,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,4.977247,4.977247,TL,BDDK Aylık Bülten - Excel
+2022-12-01,2022,12,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2022-12-01,2022,12,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2022-12-01,2022,12,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2022-12-01,2022,12,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,4.668055,4.668055,TL,BDDK Aylık Bülten - Excel
+2022-12-01,2022,12,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2022-12-01,2022,12,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2022-12-01,2022,12,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2022-12-01,2022,12,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,0.885012,0.885012,TL,BDDK Aylık Bülten - Excel
+2023-01-01,2023,1,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2023-01-01,2023,1,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2023-01-01,2023,1,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2023-01-01,2023,1,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,4.874091,4.874091,TL,BDDK Aylık Bülten - Excel
+2023-01-01,2023,1,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2023-01-01,2023,1,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2023-01-01,2023,1,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2023-01-01,2023,1,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,4.646681,4.646681,TL,BDDK Aylık Bülten - Excel
+2023-01-01,2023,1,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2023-01-01,2023,1,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2023-01-01,2023,1,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2023-01-01,2023,1,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,0.880179,0.880179,TL,BDDK Aylık Bülten - Excel
+2023-02-01,2023,2,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2023-02-01,2023,2,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2023-02-01,2023,2,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2023-02-01,2023,2,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,4.691927,4.691927,TL,BDDK Aylık Bülten - Excel
+2023-02-01,2023,2,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2023-02-01,2023,2,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2023-02-01,2023,2,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2023-02-01,2023,2,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,4.579027,4.579027,TL,BDDK Aylık Bülten - Excel
+2023-02-01,2023,2,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2023-02-01,2023,2,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2023-02-01,2023,2,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2023-02-01,2023,2,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,0.853971,0.853971,TL,BDDK Aylık Bülten - Excel
+2023-03-01,2023,3,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2023-03-01,2023,3,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2023-03-01,2023,3,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2023-03-01,2023,3,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,4.577542,4.577542,TL,BDDK Aylık Bülten - Excel
+2023-03-01,2023,3,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2023-03-01,2023,3,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2023-03-01,2023,3,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2023-03-01,2023,3,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,4.515645,4.515645,TL,BDDK Aylık Bülten - Excel
+2023-03-01,2023,3,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2023-03-01,2023,3,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2023-03-01,2023,3,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2023-03-01,2023,3,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,0.861641,0.861641,TL,BDDK Aylık Bülten - Excel
+2023-04-01,2023,4,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2023-04-01,2023,4,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2023-04-01,2023,4,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2023-04-01,2023,4,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,4.496222,4.496222,TL,BDDK Aylık Bülten - Excel
+2023-04-01,2023,4,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2023-04-01,2023,4,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2023-04-01,2023,4,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2023-04-01,2023,4,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,4.474116,4.474116,TL,BDDK Aylık Bülten - Excel
+2023-04-01,2023,4,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2023-04-01,2023,4,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2023-04-01,2023,4,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2023-04-01,2023,4,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,0.830863,0.830863,TL,BDDK Aylık Bülten - Excel
+2023-05-01,2023,5,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2023-05-01,2023,5,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2023-05-01,2023,5,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2023-05-01,2023,5,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,4.479816,4.479816,TL,BDDK Aylık Bülten - Excel
+2023-05-01,2023,5,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2023-05-01,2023,5,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2023-05-01,2023,5,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2023-05-01,2023,5,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,4.52041,4.52041,TL,BDDK Aylık Bülten - Excel
+2023-05-01,2023,5,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2023-05-01,2023,5,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2023-05-01,2023,5,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2023-05-01,2023,5,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,0.95003,0.95003,TL,BDDK Aylık Bülten - Excel
+2023-06-01,2023,6,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2023-06-01,2023,6,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2023-06-01,2023,6,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2023-06-01,2023,6,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,5.155344,5.155344,TL,BDDK Aylık Bülten - Excel
+2023-06-01,2023,6,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2023-06-01,2023,6,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2023-06-01,2023,6,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2023-06-01,2023,6,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,5.172838,5.172838,TL,BDDK Aylık Bülten - Excel
+2023-06-01,2023,6,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2023-06-01,2023,6,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2023-06-01,2023,6,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2023-06-01,2023,6,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,1.070148,1.070148,TL,BDDK Aylık Bülten - Excel
+2023-07-01,2023,7,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2023-07-01,2023,7,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2023-07-01,2023,7,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2023-07-01,2023,7,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,5.104907,5.104907,TL,BDDK Aylık Bülten - Excel
+2023-07-01,2023,7,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2023-07-01,2023,7,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2023-07-01,2023,7,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2023-07-01,2023,7,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,5.120441,5.120441,TL,BDDK Aylık Bülten - Excel
+2023-07-01,2023,7,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2023-07-01,2023,7,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2023-07-01,2023,7,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2023-07-01,2023,7,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,1.062587,1.062587,TL,BDDK Aylık Bülten - Excel
+2023-08-01,2023,8,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2023-08-01,2023,8,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2023-08-01,2023,8,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2023-08-01,2023,8,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,4.918225,4.918225,TL,BDDK Aylık Bülten - Excel
+2023-08-01,2023,8,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2023-08-01,2023,8,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2023-08-01,2023,8,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2023-08-01,2023,8,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,5.050665,5.050665,TL,BDDK Aylık Bülten - Excel
+2023-08-01,2023,8,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2023-08-01,2023,8,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2023-08-01,2023,8,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2023-08-01,2023,8,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,1.032973,1.032973,TL,BDDK Aylık Bülten - Excel
+2023-09-01,2023,9,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2023-09-01,2023,9,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2023-09-01,2023,9,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2023-09-01,2023,9,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,4.822616,4.822616,TL,BDDK Aylık Bülten - Excel
+2023-09-01,2023,9,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2023-09-01,2023,9,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2023-09-01,2023,9,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2023-09-01,2023,9,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,4.9388,4.9388,TL,BDDK Aylık Bülten - Excel
+2023-09-01,2023,9,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2023-09-01,2023,9,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2023-09-01,2023,9,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2023-09-01,2023,9,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,1.009426,1.009426,TL,BDDK Aylık Bülten - Excel
+2023-10-01,2023,10,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2023-10-01,2023,10,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2023-10-01,2023,10,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2023-10-01,2023,10,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,4.848621,4.848621,TL,BDDK Aylık Bülten - Excel
+2023-10-01,2023,10,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2023-10-01,2023,10,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2023-10-01,2023,10,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2023-10-01,2023,10,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,4.955409,4.955409,TL,BDDK Aylık Bülten - Excel
+2023-10-01,2023,10,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2023-10-01,2023,10,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2023-10-01,2023,10,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2023-10-01,2023,10,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,1.018924,1.018924,TL,BDDK Aylık Bülten - Excel
+2023-11-01,2023,11,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2023-11-01,2023,11,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2023-11-01,2023,11,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2023-11-01,2023,11,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,4.769373,4.769373,TL,BDDK Aylık Bülten - Excel
+2023-11-01,2023,11,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2023-11-01,2023,11,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2023-11-01,2023,11,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2023-11-01,2023,11,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,5.0007,5.0007,TL,BDDK Aylık Bülten - Excel
+2023-11-01,2023,11,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2023-11-01,2023,11,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2023-11-01,2023,11,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2023-11-01,2023,11,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,1.049059,1.049059,TL,BDDK Aylık Bülten - Excel
+2023-12-01,2023,12,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2023-12-01,2023,12,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2023-12-01,2023,12,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2023-12-01,2023,12,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,4.71685,4.71685,TL,BDDK Aylık Bülten - Excel
+2023-12-01,2023,12,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2023-12-01,2023,12,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2023-12-01,2023,12,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2023-12-01,2023,12,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,5.044466,5.044466,TL,BDDK Aylık Bülten - Excel
+2023-12-01,2023,12,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2023-12-01,2023,12,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2023-12-01,2023,12,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2023-12-01,2023,12,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,1.049004,1.049004,TL,BDDK Aylık Bülten - Excel
+2024-01-01,2024,1,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2024-01-01,2024,1,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2024-01-01,2024,1,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2024-01-01,2024,1,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,4.708396,4.708396,TL,BDDK Aylık Bülten - Excel
+2024-01-01,2024,1,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2024-01-01,2024,1,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2024-01-01,2024,1,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2024-01-01,2024,1,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,5.053558,5.053558,TL,BDDK Aylık Bülten - Excel
+2024-01-01,2024,1,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2024-01-01,2024,1,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2024-01-01,2024,1,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2024-01-01,2024,1,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,1.05153,1.05153,TL,BDDK Aylık Bülten - Excel
+2024-02-01,2024,2,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2024-02-01,2024,2,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2024-02-01,2024,2,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2024-02-01,2024,2,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,4.561601,4.561601,TL,BDDK Aylık Bülten - Excel
+2024-02-01,2024,2,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2024-02-01,2024,2,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2024-02-01,2024,2,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2024-02-01,2024,2,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,5.030249,5.030249,TL,BDDK Aylık Bülten - Excel
+2024-02-01,2024,2,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2024-02-01,2024,2,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2024-02-01,2024,2,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2024-02-01,2024,2,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,1.054243,1.054243,TL,BDDK Aylık Bülten - Excel
+2024-03-01,2024,3,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2024-03-01,2024,3,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2024-03-01,2024,3,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2024-03-01,2024,3,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,4.520239,4.520239,TL,BDDK Aylık Bülten - Excel
+2024-03-01,2024,3,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2024-03-01,2024,3,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2024-03-01,2024,3,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2024-03-01,2024,3,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,5.107377,5.107377,TL,BDDK Aylık Bülten - Excel
+2024-03-01,2024,3,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2024-03-01,2024,3,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2024-03-01,2024,3,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2024-03-01,2024,3,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,1.094868,1.094868,TL,BDDK Aylık Bülten - Excel
+2024-04-01,2024,4,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2024-04-01,2024,4,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2024-04-01,2024,4,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2024-04-01,2024,4,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,4.413018,4.413018,TL,BDDK Aylık Bülten - Excel
+2024-04-01,2024,4,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2024-04-01,2024,4,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2024-04-01,2024,4,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2024-04-01,2024,4,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,5.13852,5.13852,TL,BDDK Aylık Bülten - Excel
+2024-04-01,2024,4,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2024-04-01,2024,4,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2024-04-01,2024,4,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2024-04-01,2024,4,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,1.091476,1.091476,TL,BDDK Aylık Bülten - Excel
+2024-05-01,2024,5,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2024-05-01,2024,5,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2024-05-01,2024,5,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2024-05-01,2024,5,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,4.262334,4.262334,TL,BDDK Aylık Bülten - Excel
+2024-05-01,2024,5,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2024-05-01,2024,5,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2024-05-01,2024,5,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2024-05-01,2024,5,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,5.387292,5.387292,TL,BDDK Aylık Bülten - Excel
+2024-05-01,2024,5,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2024-05-01,2024,5,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2024-05-01,2024,5,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2024-05-01,2024,5,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,1.069493,1.069493,TL,BDDK Aylık Bülten - Excel
+2024-06-01,2024,6,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2024-06-01,2024,6,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2024-06-01,2024,6,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2024-06-01,2024,6,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,4.224899,4.224899,TL,BDDK Aylık Bülten - Excel
+2024-06-01,2024,6,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2024-06-01,2024,6,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2024-06-01,2024,6,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2024-06-01,2024,6,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,5.416079,5.416079,TL,BDDK Aylık Bülten - Excel
+2024-06-01,2024,6,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2024-06-01,2024,6,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2024-06-01,2024,6,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2024-06-01,2024,6,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,1.108741,1.108741,TL,BDDK Aylık Bülten - Excel
+2024-07-01,2024,7,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2024-07-01,2024,7,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2024-07-01,2024,7,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2024-07-01,2024,7,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,4.267794,4.267794,TL,BDDK Aylık Bülten - Excel
+2024-07-01,2024,7,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2024-07-01,2024,7,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2024-07-01,2024,7,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2024-07-01,2024,7,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,5.282633,5.282633,TL,BDDK Aylık Bülten - Excel
+2024-07-01,2024,7,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2024-07-01,2024,7,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2024-07-01,2024,7,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2024-07-01,2024,7,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,1.139452,1.139452,TL,BDDK Aylık Bülten - Excel
+2024-08-01,2024,8,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2024-08-01,2024,8,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2024-08-01,2024,8,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2024-08-01,2024,8,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,4.284391,4.284391,TL,BDDK Aylık Bülten - Excel
+2024-08-01,2024,8,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2024-08-01,2024,8,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2024-08-01,2024,8,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2024-08-01,2024,8,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,5.175258,5.175258,TL,BDDK Aylık Bülten - Excel
+2024-08-01,2024,8,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2024-08-01,2024,8,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2024-08-01,2024,8,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2024-08-01,2024,8,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,1.170918,1.170918,TL,BDDK Aylık Bülten - Excel
+2024-09-01,2024,9,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2024-09-01,2024,9,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2024-09-01,2024,9,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2024-09-01,2024,9,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,4.238608,4.238608,TL,BDDK Aylık Bülten - Excel
+2024-09-01,2024,9,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2024-09-01,2024,9,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2024-09-01,2024,9,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2024-09-01,2024,9,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,5.271916,5.271916,TL,BDDK Aylık Bülten - Excel
+2024-09-01,2024,9,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2024-09-01,2024,9,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2024-09-01,2024,9,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2024-09-01,2024,9,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,1.107838,1.107838,TL,BDDK Aylık Bülten - Excel
+2024-10-01,2024,10,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2024-10-01,2024,10,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2024-10-01,2024,10,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2024-10-01,2024,10,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,4.165236,4.165236,TL,BDDK Aylık Bülten - Excel
+2024-10-01,2024,10,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2024-10-01,2024,10,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2024-10-01,2024,10,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2024-10-01,2024,10,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,5.116148,5.116148,TL,BDDK Aylık Bülten - Excel
+2024-10-01,2024,10,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2024-10-01,2024,10,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2024-10-01,2024,10,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2024-10-01,2024,10,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,1.056769,1.056769,TL,BDDK Aylık Bülten - Excel
+2024-11-01,2024,11,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2024-11-01,2024,11,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2024-11-01,2024,11,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2024-11-01,2024,11,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,3.914939,3.914939,TL,BDDK Aylık Bülten - Excel
+2024-11-01,2024,11,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2024-11-01,2024,11,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2024-11-01,2024,11,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2024-11-01,2024,11,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,4.979421,4.979421,TL,BDDK Aylık Bülten - Excel
+2024-11-01,2024,11,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2024-11-01,2024,11,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2024-11-01,2024,11,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2024-11-01,2024,11,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,1.0421,1.0421,TL,BDDK Aylık Bülten - Excel
+2024-12-01,2024,12,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2024-12-01,2024,12,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2024-12-01,2024,12,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2024-12-01,2024,12,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,3.919742,3.919742,TL,BDDK Aylık Bülten - Excel
+2024-12-01,2024,12,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2024-12-01,2024,12,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2024-12-01,2024,12,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2024-12-01,2024,12,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,4.929097,4.929097,TL,BDDK Aylık Bülten - Excel
+2024-12-01,2024,12,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2024-12-01,2024,12,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2024-12-01,2024,12,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2024-12-01,2024,12,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,1.059984,1.059984,TL,BDDK Aylık Bülten - Excel
+2025-01-01,2025,1,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2025-01-01,2025,1,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2025-01-01,2025,1,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2025-01-01,2025,1,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,3.892155,3.892155,TL,BDDK Aylık Bülten - Excel
+2025-01-01,2025,1,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2025-01-01,2025,1,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2025-01-01,2025,1,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2025-01-01,2025,1,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,4.753706,4.753706,TL,BDDK Aylık Bülten - Excel
+2025-01-01,2025,1,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2025-01-01,2025,1,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2025-01-01,2025,1,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2025-01-01,2025,1,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,1.036788,1.036788,TL,BDDK Aylık Bülten - Excel
+2025-02-01,2025,2,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2025-02-01,2025,2,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2025-02-01,2025,2,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2025-02-01,2025,2,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,3.830198,3.830198,TL,BDDK Aylık Bülten - Excel
+2025-02-01,2025,2,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2025-02-01,2025,2,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2025-02-01,2025,2,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2025-02-01,2025,2,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,4.672133,4.672133,TL,BDDK Aylık Bülten - Excel
+2025-02-01,2025,2,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2025-02-01,2025,2,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2025-02-01,2025,2,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2025-02-01,2025,2,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,1.029898,1.029898,TL,BDDK Aylık Bülten - Excel
+2025-03-01,2025,3,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2025-03-01,2025,3,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2025-03-01,2025,3,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2025-03-01,2025,3,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,3.898954,3.898954,TL,BDDK Aylık Bülten - Excel
+2025-03-01,2025,3,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2025-03-01,2025,3,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2025-03-01,2025,3,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2025-03-01,2025,3,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,4.859523,4.859523,TL,BDDK Aylık Bülten - Excel
+2025-03-01,2025,3,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2025-03-01,2025,3,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2025-03-01,2025,3,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2025-03-01,2025,3,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,1.004785,1.004785,TL,BDDK Aylık Bülten - Excel
+2025-04-01,2025,4,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2025-04-01,2025,4,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2025-04-01,2025,4,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2025-04-01,2025,4,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,4.032195,4.032195,TL,BDDK Aylık Bülten - Excel
+2025-04-01,2025,4,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2025-04-01,2025,4,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2025-04-01,2025,4,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2025-04-01,2025,4,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,4.287648,4.287648,TL,BDDK Aylık Bülten - Excel
+2025-04-01,2025,4,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2025-04-01,2025,4,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2025-04-01,2025,4,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2025-04-01,2025,4,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,1.086396,1.086396,TL,BDDK Aylık Bülten - Excel
+2025-05-01,2025,5,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2025-05-01,2025,5,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2025-05-01,2025,5,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2025-05-01,2025,5,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,3.869873,3.869873,TL,BDDK Aylık Bülten - Excel
+2025-05-01,2025,5,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2025-05-01,2025,5,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2025-05-01,2025,5,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2025-05-01,2025,5,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,4.264845,4.264845,TL,BDDK Aylık Bülten - Excel
+2025-05-01,2025,5,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2025-05-01,2025,5,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2025-05-01,2025,5,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2025-05-01,2025,5,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,1.115158,1.115158,TL,BDDK Aylık Bülten - Excel
+2025-06-01,2025,6,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2025-06-01,2025,6,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2025-06-01,2025,6,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2025-06-01,2025,6,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,3.789348,3.789348,TL,BDDK Aylık Bülten - Excel
+2025-06-01,2025,6,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2025-06-01,2025,6,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2025-06-01,2025,6,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2025-06-01,2025,6,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,4.386439,4.386439,TL,BDDK Aylık Bülten - Excel
+2025-06-01,2025,6,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2025-06-01,2025,6,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2025-06-01,2025,6,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2025-06-01,2025,6,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,1.10339,1.10339,TL,BDDK Aylık Bülten - Excel
+2025-07-01,2025,7,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2025-07-01,2025,7,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2025-07-01,2025,7,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2025-07-01,2025,7,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,3.717752,3.717752,TL,BDDK Aylık Bülten - Excel
+2025-07-01,2025,7,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2025-07-01,2025,7,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2025-07-01,2025,7,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2025-07-01,2025,7,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,4.162518,4.162518,TL,BDDK Aylık Bülten - Excel
+2025-07-01,2025,7,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2025-07-01,2025,7,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2025-07-01,2025,7,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2025-07-01,2025,7,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,1.072544,1.072544,TL,BDDK Aylık Bülten - Excel
+2025-08-01,2025,8,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2025-08-01,2025,8,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2025-08-01,2025,8,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2025-08-01,2025,8,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,3.752076,3.752076,TL,BDDK Aylık Bülten - Excel
+2025-08-01,2025,8,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2025-08-01,2025,8,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2025-08-01,2025,8,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2025-08-01,2025,8,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,4.120162,4.120162,TL,BDDK Aylık Bülten - Excel
+2025-08-01,2025,8,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2025-08-01,2025,8,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2025-08-01,2025,8,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2025-08-01,2025,8,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,1.087077,1.087077,TL,BDDK Aylık Bülten - Excel
+2025-09-01,2025,9,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2025-09-01,2025,9,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2025-09-01,2025,9,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2025-09-01,2025,9,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,3.706505,3.706505,TL,BDDK Aylık Bülten - Excel
+2025-09-01,2025,9,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2025-09-01,2025,9,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2025-09-01,2025,9,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2025-09-01,2025,9,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,4.176971,4.176971,TL,BDDK Aylık Bülten - Excel
+2025-09-01,2025,9,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2025-09-01,2025,9,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2025-09-01,2025,9,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2025-09-01,2025,9,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,1.080345,1.080345,TL,BDDK Aylık Bülten - Excel
+2025-10-01,2025,10,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2025-10-01,2025,10,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2025-10-01,2025,10,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2025-10-01,2025,10,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,3.693738,3.693738,TL,BDDK Aylık Bülten - Excel
+2025-10-01,2025,10,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2025-10-01,2025,10,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2025-10-01,2025,10,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2025-10-01,2025,10,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,3.977827,3.977827,TL,BDDK Aylık Bülten - Excel
+2025-10-01,2025,10,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2025-10-01,2025,10,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2025-10-01,2025,10,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2025-10-01,2025,10,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,1.062295,1.062295,TL,BDDK Aylık Bülten - Excel
+2025-11-01,2025,11,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2025-11-01,2025,11,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2025-11-01,2025,11,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2025-11-01,2025,11,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,3.64997,3.64997,TL,BDDK Aylık Bülten - Excel
+2025-11-01,2025,11,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2025-11-01,2025,11,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2025-11-01,2025,11,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2025-11-01,2025,11,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,3.955848,3.955848,TL,BDDK Aylık Bülten - Excel
+2025-11-01,2025,11,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2025-11-01,2025,11,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2025-11-01,2025,11,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2025-11-01,2025,11,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,1.085912,1.085912,TL,BDDK Aylık Bülten - Excel
+2025-12-01,2025,12,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2025-12-01,2025,12,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2025-12-01,2025,12,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2025-12-01,2025,12,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,3.640749,3.640749,TL,BDDK Aylık Bülten - Excel
+2025-12-01,2025,12,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2025-12-01,2025,12,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2025-12-01,2025,12,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2025-12-01,2025,12,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,4.039014,4.039014,TL,BDDK Aylık Bülten - Excel
+2025-12-01,2025,12,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2025-12-01,2025,12,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2025-12-01,2025,12,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2025-12-01,2025,12,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,1.037961,1.037961,TL,BDDK Aylık Bülten - Excel
+2026-01-01,2026,1,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2026-01-01,2026,1,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2026-01-01,2026,1,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2026-01-01,2026,1,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,3.678405,3.678405,TL,BDDK Aylık Bülten - Excel
+2026-01-01,2026,1,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2026-01-01,2026,1,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2026-01-01,2026,1,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2026-01-01,2026,1,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,3.935068,3.935068,TL,BDDK Aylık Bülten - Excel
+2026-01-01,2026,1,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2026-01-01,2026,1,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2026-01-01,2026,1,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2026-01-01,2026,1,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,1.051272,1.051272,TL,BDDK Aylık Bülten - Excel
+2026-02-01,2026,2,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2026-02-01,2026,2,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2026-02-01,2026,2,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2026-02-01,2026,2,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,3.639845,3.639845,TL,BDDK Aylık Bülten - Excel
+2026-02-01,2026,2,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2026-02-01,2026,2,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2026-02-01,2026,2,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2026-02-01,2026,2,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,3.996175,3.996175,TL,BDDK Aylık Bülten - Excel
+2026-02-01,2026,2,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2026-02-01,2026,2,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2026-02-01,2026,2,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2026-02-01,2026,2,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,1.070419,1.070419,TL,BDDK Aylık Bülten - Excel
+2026-03-01,2026,3,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2026-03-01,2026,3,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2026-03-01,2026,3,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2026-03-01,2026,3,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,3.581944,3.581944,TL,BDDK Aylık Bülten - Excel
+2026-03-01,2026,3,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2026-03-01,2026,3,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2026-03-01,2026,3,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2026-03-01,2026,3,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,4.296412,4.296412,TL,BDDK Aylık Bülten - Excel
+2026-03-01,2026,3,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2026-03-01,2026,3,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2026-03-01,2026,3,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2026-03-01,2026,3,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,1.099856,1.099856,TL,BDDK Aylık Bülten - Excel
+2026-04-01,2026,4,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2026-04-01,2026,4,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2026-04-01,2026,4,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2026-04-01,2026,4,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,3.621912,3.621912,TL,BDDK Aylık Bülten - Excel
+2026-04-01,2026,4,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2026-04-01,2026,4,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2026-04-01,2026,4,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2026-04-01,2026,4,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,4.131522,4.131522,TL,BDDK Aylık Bülten - Excel
+2026-04-01,2026,4,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2026-04-01,2026,4,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2026-04-01,2026,4,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2026-04-01,2026,4,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,1.063185,1.063185,TL,BDDK Aylık Bülten - Excel
+2026-05-01,2026,5,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2026-05-01,2026,5,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2026-05-01,2026,5,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2026-05-01,2026,5,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,3.503224,3.503224,TL,BDDK Aylık Bülten - Excel
+2026-05-01,2026,5,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2026-05-01,2026,5,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2026-05-01,2026,5,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2026-05-01,2026,5,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,4.144693,4.144693,TL,BDDK Aylık Bülten - Excel
+2026-05-01,2026,5,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2026-05-01,2026,5,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2026-05-01,2026,5,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2026-05-01,2026,5,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,1.087239,1.087239,TL,BDDK Aylık Bülten - Excel
+2026-06-01,2026,6,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2026-06-01,2026,6,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Unnamed: 1,1,1.0,TL,BDDK Aylık Bülten - Excel
+2026-06-01,2026,6,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,TL,BDDK Aylık Bülten - Excel
+2026-06-01,2026,6,17,Yurt Dışı Şube Rasyoları,1,,Yurt Dışı Şubeler Kredileri / Toplam Krediler,,Rasyo,3.534201,3.534201,TL,BDDK Aylık Bülten - Excel
+2026-06-01,2026,6,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2026-06-01,2026,6,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Unnamed: 1,2,2.0,TL,BDDK Aylık Bülten - Excel
+2026-06-01,2026,6,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,TL,BDDK Aylık Bülten - Excel
+2026-06-01,2026,6,17,Yurt Dışı Şube Rasyoları,2,,Yurt Dışı Şubeler Aktifleri / Toplam Aktifler,,Rasyo,4.166967,4.166967,TL,BDDK Aylık Bülten - Excel
+2026-06-01,2026,6,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 0,Sektör,,TL,BDDK Aylık Bülten - Excel
+2026-06-01,2026,6,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Unnamed: 1,3,3.0,TL,BDDK Aylık Bülten - Excel
+2026-06-01,2026,6,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Yurt Dışı Şube Rasyoları,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,TL,BDDK Aylık Bülten - Excel
+2026-06-01,2026,6,17,Yurt Dışı Şube Rasyoları,3,,Yurt Dışı Şubeler Mevduatı (Fon) / Toplam Mevduat (Fon),,Rasyo,1.105138,1.105138,TL,BDDK Aylık Bülten - Excel

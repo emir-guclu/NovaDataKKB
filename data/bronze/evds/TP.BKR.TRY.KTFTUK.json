@@ -1,0 +1,37 @@
+[
+  {
+    "Tarih": "2023-9",
+    "TP_BKR_TRY_KTFTUK": "29.34000000",
+    "UNIXTIME": {
+      "$numberLong": "1693515600"
+    }
+  },
+  {
+    "Tarih": "2023-10",
+    "TP_BKR_TRY_KTFTUK": "31.11000000",
+    "UNIXTIME": {
+      "$numberLong": "1696107600"
+    }
+  },
+  {
+    "Tarih": "2023-11",
+    "TP_BKR_TRY_KTFTUK": "32.78000000",
+    "UNIXTIME": {
+      "$numberLong": "1698786000"
+    }
+  },
+  {
+    "Tarih": "2023-12",
+    "TP_BKR_TRY_KTFTUK": "34.67000000",
+    "UNIXTIME": {
+      "$numberLong": "1701378000"
+    }
+  },
+  {
+    "Tarih": "2024-1",
+    "TP_BKR_TRY_KTFTUK": "36.61000000",
+    "UNIXTIME": {
+      "$numberLong": "1704056400"
+    }
+  }
+]

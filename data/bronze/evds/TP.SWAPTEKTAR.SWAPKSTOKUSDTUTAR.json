@@ -1,0 +1,527 @@
+[
+  {
+    "Tarih": "01-06-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1780261200"
+    }
+  },
+  {
+    "Tarih": "02-06-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1780347600"
+    }
+  },
+  {
+    "Tarih": "03-06-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1780434000"
+    }
+  },
+  {
+    "Tarih": "04-06-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1780520400"
+    }
+  },
+  {
+    "Tarih": "05-06-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1780606800"
+    }
+  },
+  {
+    "Tarih": "08-06-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1780866000"
+    }
+  },
+  {
+    "Tarih": "09-06-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1780952400"
+    }
+  },
+  {
+    "Tarih": "10-06-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1781038800"
+    }
+  },
+  {
+    "Tarih": "11-06-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1781125200"
+    }
+  },
+  {
+    "Tarih": "12-06-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1781211600"
+    }
+  },
+  {
+    "Tarih": "15-06-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1781470800"
+    }
+  },
+  {
+    "Tarih": "16-06-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1781557200"
+    }
+  },
+  {
+    "Tarih": "17-06-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1781643600"
+    }
+  },
+  {
+    "Tarih": "18-06-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1781730000"
+    }
+  },
+  {
+    "Tarih": "19-06-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1781816400"
+    }
+  },
+  {
+    "Tarih": "22-06-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1782075600"
+    }
+  },
+  {
+    "Tarih": "23-06-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1782162000"
+    }
+  },
+  {
+    "Tarih": "24-06-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1782248400"
+    }
+  },
+  {
+    "Tarih": "25-06-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1782334800"
+    }
+  },
+  {
+    "Tarih": "26-06-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1782421200"
+    }
+  },
+  {
+    "Tarih": "29-06-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1782680400"
+    }
+  },
+  {
+    "Tarih": "30-06-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1782766800"
+    }
+  },
+  {
+    "Tarih": "01-07-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1782853200"
+    }
+  },
+  {
+    "Tarih": "02-07-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1782939600"
+    }
+  },
+  {
+    "Tarih": "03-07-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1783026000"
+    }
+  },
+  {
+    "Tarih": "06-07-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1783285200"
+    }
+  },
+  {
+    "Tarih": "07-07-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1783371600"
+    }
+  },
+  {
+    "Tarih": "08-07-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1783458000"
+    }
+  },
+  {
+    "Tarih": "09-07-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1783544400"
+    }
+  },
+  {
+    "Tarih": "10-07-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1783630800"
+    }
+  },
+  {
+    "Tarih": "13-07-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1783890000"
+    }
+  },
+  {
+    "Tarih": "14-07-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1783976400"
+    }
+  },
+  {
+    "Tarih": "15-07-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": null,
+    "UNIXTIME": {
+      "$numberLong": "1784062800"
+    }
+  },
+  {
+    "Tarih": "16-07-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1784149200"
+    }
+  },
+  {
+    "Tarih": "17-07-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1784235600"
+    }
+  },
+  {
+    "Tarih": "20-07-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1784494800"
+    }
+  },
+  {
+    "Tarih": "21-07-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1784581200"
+    }
+  },
+  {
+    "Tarih": "22-07-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1784667600"
+    }
+  },
+  {
+    "Tarih": "23-07-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1784754000"
+    }
+  },
+  {
+    "Tarih": "24-07-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1784840400"
+    }
+  },
+  {
+    "Tarih": "27-07-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1785099600"
+    }
+  },
+  {
+    "Tarih": "28-07-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1785186000"
+    }
+  },
+  {
+    "Tarih": "29-07-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1785272400"
+    }
+  },
+  {
+    "Tarih": "30-07-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1785358800"
+    }
+  },
+  {
+    "Tarih": "31-07-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1785445200"
+    }
+  },
+  {
+    "Tarih": "03-08-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1785704400"
+    }
+  },
+  {
+    "Tarih": "04-08-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1785790800"
+    }
+  },
+  {
+    "Tarih": "05-08-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1785877200"
+    }
+  },
+  {
+    "Tarih": "06-08-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1785963600"
+    }
+  },
+  {
+    "Tarih": "07-08-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1786050000"
+    }
+  },
+  {
+    "Tarih": "10-08-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1786309200"
+    }
+  },
+  {
+    "Tarih": "11-08-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1786395600"
+    }
+  },
+  {
+    "Tarih": "12-08-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1786482000"
+    }
+  },
+  {
+    "Tarih": "13-08-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1786568400"
+    }
+  },
+  {
+    "Tarih": "14-08-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1786654800"
+    }
+  },
+  {
+    "Tarih": "17-08-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1786914000"
+    }
+  },
+  {
+    "Tarih": "18-08-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1787000400"
+    }
+  },
+  {
+    "Tarih": "19-08-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1787086800"
+    }
+  },
+  {
+    "Tarih": "20-08-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1787173200"
+    }
+  },
+  {
+    "Tarih": "21-08-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1787259600"
+    }
+  },
+  {
+    "Tarih": "24-08-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1787518800"
+    }
+  },
+  {
+    "Tarih": "25-08-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1787605200"
+    }
+  },
+  {
+    "Tarih": "26-08-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1787691600"
+    }
+  },
+  {
+    "Tarih": "27-08-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1787778000"
+    }
+  },
+  {
+    "Tarih": "28-08-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1787864400"
+    }
+  },
+  {
+    "Tarih": "31-08-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1788123600"
+    }
+  },
+  {
+    "Tarih": "01-09-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1788210000"
+    }
+  },
+  {
+    "Tarih": "02-09-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1788296400"
+    }
+  },
+  {
+    "Tarih": "03-09-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1788382800"
+    }
+  },
+  {
+    "Tarih": "04-09-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1788469200"
+    }
+  },
+  {
+    "Tarih": "07-09-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1788728400"
+    }
+  },
+  {
+    "Tarih": "08-09-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1788814800"
+    }
+  },
+  {
+    "Tarih": "09-09-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1788901200"
+    }
+  },
+  {
+    "Tarih": "10-09-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1788987600"
+    }
+  },
+  {
+    "Tarih": "11-09-2026",
+    "TP_SWAPTEKTAR_SWAPKSTOKUSDTUTAR": "0.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1789074000"
+    }
+  }
+]
