@@ -12,15 +12,11 @@ WORKDIR /app
 # gerektiren bir bağımlılık YOK: pypdf saf Python'dır, OCR
 # backend/app/services/url_content_extractor.py içinde yerel tesseract değil,
 # KloudeksProvider.ocr() üzerinden uzak bir LLM çağrısıyla yapılıyor.
-# url_content_extractor.py'deki tarayıcı fallback'i (`_fetch_with_browser`)
-# `playwright.sync_api` kullanıyor, ANCAK bu import try/except ImportError ile
-# opsiyonel bırakılmış ve playwright requirements.txt'te YOK — yani bilinçli
-# olarak devre dışı bırakılmış bir "yumuşak" bağımlılık. Bu yüzden burada da
-# playwright/chromium kurulmuyor (kurulsaydı ek apt paketleri + ~300MB chromium
-# gerekirdi); eksikliğinde kod zaten "Playwright kurulu degil" uyarısıyla
-# statik HTML'e düşüyor.
+# playwright requirements.txt'te kurulu; url_content_extractor.py'deki dinamik
+# sayfa render'ı (render_js) için chromium ve sistem bağımlılıkları gerekiyor.
 COPY requirements.txt pytest.ini ./
 RUN pip install --no-cache-dir -r requirements.txt
+RUN playwright install --with-deps chromium
 
 COPY backend ./backend
 

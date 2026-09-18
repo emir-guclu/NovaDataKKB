@@ -232,6 +232,8 @@ async def ask_stream(request: AskRequest):
                 "success": payload.get("success"),
                 "duration_s": payload.get("tool_duration_s"),
             }
+            if kind == "llm_decision":
+                slim["arguments"] = payload.get("arguments")
             loop.call_soon_threadsafe(queue.put_nowait, slim)
         except Exception:
             pass
@@ -248,7 +250,16 @@ async def ask_stream(request: AskRequest):
             run_agent, request.question, registry, provider,
             AGENT_MAX_ITERATIONS, on_event, normalized_history,
             **agent_kwargs))
+        deadline = loop.time() + REQUEST_HARD_TIMEOUT_SECONDS
+
         while not task.done() or not queue.empty():
+            if loop.time() > deadline:
+                # to_thread altındaki thread iptal edilemez; amaç thread'i durdurmak değil,
+                # istemciye hata döndürüp sonsuz keepalive akışını bitirmek.
+                task.cancel()
+                logger.warning("Stream timeout: %s", request.question[:100])
+                yield f"data: {json.dumps({'kind': 'error', 'error': 'İstek zaman aşımına uğradı, lütfen tekrar deneyin veya soruyu sadeleştirin.'}, ensure_ascii=False)}\n\n"
+                return
             try:
                 evt = await asyncio.wait_for(queue.get(), timeout=0.5)
                 yield f"data: {json.dumps(evt, ensure_ascii=False)}\n\n"
