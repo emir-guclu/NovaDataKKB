@@ -175,8 +175,8 @@ Temel kurallar:
 
 Doğrulanmış mevcut build sonucu:
 
-    433,801 observation
-    863 seri
+    451,700 observation
+    963 seri
     0 duplicate observation key
     0 metadata'sız observation
     0 orphan metadata
@@ -250,9 +250,9 @@ Bu sayede olmayan aylık veri yapay olarak üretilmez.
 
 Doğrulanmış mevcut alignment sonucu:
 
-    305,283 observation
-    817 seri
-    197 explicit D/W alignment policy
+    311,678 observation
+    917 seri
+    212 explicit D/W alignment policy
     0 duplicate key
     0 imputed row
 
@@ -268,9 +268,7 @@ Canonical Silver ve BDDK regression testlerini çalıştırmak için:
       backend/tests/modules/bddk \
       -v
 
-Doğrulanmış sonuç:
-
-    72 passed
+Tüm süit: `pytest` → 319 test (314 geçer, 5 atlanır).
 
 ---
 
@@ -284,9 +282,7 @@ Alignment servislerini ve gerçek aligned DuckDB çıktısını test etmek için
       backend/tests/services/test_aligned_monthly_duckdb.py \
       -v
 
-Doğrulanmış sonuç:
-
-    20 passed
+Tüm süit: `pytest` → 319 test (314 geçer, 5 atlanır).
 
 Bu testler şu durumları kontrol eder:
 
@@ -343,9 +339,7 @@ Ardından full test suite çalıştırılmalıdır:
 
     PYTHONPATH=backend python -m pytest -v
 
-Doğrulanmış full test sonucu (Gold katmanı dâhil):
-
-    122 passed
+Tüm süit (Gold katmanı dâhil): `pytest` → 319 test (314 geçer, 5 atlanır; atlananlar MIA_API_KEY gerektiren canlı servis testleri ve opt-in canlı web testidir).
 
 ---
 
