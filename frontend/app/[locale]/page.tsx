@@ -845,6 +845,8 @@ function DashboardContent({ t }: { t: any }) {
       ? `${API_BASE_URL}${currentImg.src}`
       : currentImg.src;
 
+    const downloadUrl = `/api/download-image?url=${encodeURIComponent(currentImg.src)}&name=${encodeURIComponent(currentImg.alt || "analitik_grafik")}`;
+
     return (
       <div className={`my-3 rounded-2xl overflow-hidden border backdrop-blur-md shadow-2xl transition-all ${
         isDark 
@@ -976,9 +978,9 @@ function DashboardContent({ t }: { t: any }) {
               <span className="hidden sm:inline">{t("open_image")}</span>
             </a>
             <a
-              href={resolvedSrc}
+              href={downloadUrl}
               download
-              className={`px-2.5 py-1.5 rounded-lg transition-colors flex items-center gap-1.5 font-medium ${
+              className={`px-2.5 py-1.5 rounded-lg transition-colors flex items-center gap-1.5 font-medium cursor-pointer ${
                 isDark 
                   ? "bg-white/5 hover:bg-white/15 text-emerald-400 hover:text-emerald-300" 
                   : "bg-emerald-50 hover:bg-emerald-100 text-emerald-600"

@@ -35,6 +35,8 @@ def test_causality_check_success_with_real_gold_data():
     assert result.correlation_coefficient == pytest.approx(0.2291482971709595)
     assert "korelasyon" in result.interpretation.lower()
     assert "nedensellik" in result.interpretation.lower()
+    assert "nedensellik ispatı değildir" in result.caveat
+    assert "üçüncü faktör" in result.caveat
 
 
 def test_causality_check_missing_series_returns_structured_error():
