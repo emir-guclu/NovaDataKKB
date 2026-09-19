@@ -193,19 +193,24 @@ async def ask(request: AskRequest):
         if request.attachment_name:
             agent_kwargs["attachment_name"] = request.attachment_name
 
-        answer = await asyncio.wait_for(
-            asyncio.to_thread(
-                run_agent,
-                request.question,
-                registry,
-                provider,
-                AGENT_MAX_ITERATIONS,
-                _collect,
-                normalized_history,
-                **agent_kwargs,
-            ),
-            timeout=REQUEST_HARD_TIMEOUT_SECONDS,
+        agent_task = asyncio.to_thread(
+            run_agent,
+            request.question,
+            registry,
+            provider,
+            AGENT_MAX_ITERATIONS,
+            _collect,
+            normalized_history,
+            **agent_kwargs,
         )
+
+        if REQUEST_HARD_TIMEOUT_SECONDS > 0:
+            answer = await asyncio.wait_for(
+                agent_task,
+                timeout=REQUEST_HARD_TIMEOUT_SECONDS,
+            )
+        else:
+            answer = await agent_task
         return {
             "success": True,
             "answer": answer,
@@ -274,10 +279,14 @@ async def ask_stream(request: AskRequest):
             run_agent, request.question, registry, provider,
             AGENT_MAX_ITERATIONS, on_event, normalized_history,
             **agent_kwargs))
-        deadline = loop.time() + REQUEST_HARD_TIMEOUT_SECONDS
+        deadline = (
+            loop.time() + REQUEST_HARD_TIMEOUT_SECONDS
+            if REQUEST_HARD_TIMEOUT_SECONDS > 0
+            else None
+        )
 
         while not task.done() or not queue.empty():
-            if loop.time() > deadline:
+            if deadline is not None and loop.time() > deadline:
                 # to_thread altındaki thread iptal edilemez; amaç thread'i durdurmak değil,
                 # istemciye hata döndürüp sonsuz keepalive akışını bitirmek.
                 task.cancel()

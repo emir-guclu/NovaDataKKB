@@ -10,6 +10,7 @@ import duckdb
 from pydantic import BaseModel, Field
 
 from backend.app.tools.base import BaseTool
+from backend.app.models.lakehouse_models import lakehouse_metadata
 
 logger = logging.getLogger(__name__)
 
@@ -91,6 +92,21 @@ def _connect_lakehouse() -> duckdb.DuckDBPyConnection:
     return con
 
 
+def _column_units(table_name: str, columns: list[str]) -> dict[str, str]:
+    table = lakehouse_metadata.tables.get(table_name)
+    if table is None:
+        return {}
+
+    result: dict[str, str] = {}
+    for column_name in columns:
+        if column_name not in table.c:
+            continue
+        unit = table.c[column_name].info.get("unit")
+        if unit:
+            result[column_name] = str(unit)
+    return result
+
+
 class LakehouseQueryTool(BaseTool):
     name = "lakehouse_query"
     description = (
@@ -120,6 +136,7 @@ class LakehouseQueryTool(BaseTool):
         error: str | None = None
         table: str | None = None
         row_count: int = 0
+        column_units: dict[str, str] = Field(default_factory=dict)
         rows: list[dict[str, Any]] = Field(default_factory=list)
 
     def run(self, params: Input) -> Output:
@@ -202,6 +219,7 @@ class LakehouseQueryTool(BaseTool):
                 success=True,
                 table=params.table,
                 row_count=len(rows),
+                column_units=_column_units(params.table, params.columns),
                 rows=rows,
             )
         except Exception as exc:

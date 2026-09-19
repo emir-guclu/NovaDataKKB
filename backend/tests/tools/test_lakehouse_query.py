@@ -69,3 +69,30 @@ def test_lakehouse_query_validation_error():
 
     with pytest.raises(ValidationError):
         tool.Input(table="gold_housing_credit_market")
+
+
+def test_lakehouse_query_finturk_preserves_column_units():
+    tool = LakehouseQueryTool()
+    result = tool.run(
+        tool.Input(
+            table="gold_finturk_province_credit_quality",
+            columns=[
+                "date",
+                "province",
+                "total_cash_loans",
+                "nonperforming_receivables",
+                "npl_ratio",
+            ],
+            filters={"province": "İstanbul"},
+            order_by="date",
+            order_direction="desc",
+            limit=1,
+        )
+    )
+
+    assert result.success is True
+    assert result.row_count == 1
+    assert result.column_units["total_cash_loans"] == "bin TL"
+    assert result.column_units["nonperforming_receivables"] == "bin TL"
+    assert result.column_units["npl_ratio"] == "ratio"
+    assert result.rows[0]["total_cash_loans"] == pytest.approx(9037199663.0)

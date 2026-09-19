@@ -9,6 +9,7 @@ from pydantic import BaseModel, Field
 
 from backend.app.services.chart_generator import generate_concentration_chart
 from backend.app.tools.base import BaseTool
+from backend.app.models.lakehouse_models import lakehouse_metadata
 
 logger = logging.getLogger(__name__)
 
@@ -43,6 +44,14 @@ def _connect_lakehouse() -> duckdb.DuckDBPyConnection:
                 f"AS SELECT * FROM read_parquet('{parquet_sql_path}')"
             )
     return con
+
+
+def _metric_unit(table_name: str, metric_column: str) -> str | None:
+    table = lakehouse_metadata.tables.get(table_name)
+    if table is None or metric_column not in table.c:
+        return None
+    unit = table.c[metric_column].info.get("unit")
+    return str(unit) if unit else None
 
 
 class RiskConcentrationAnalyzerTool(BaseTool):
@@ -81,6 +90,7 @@ class RiskConcentrationAnalyzerTool(BaseTool):
         table_name: str | None = None
         dimension_column: str | None = None
         metric_column: str | None = None
+        metric_unit: str | None = None
         date_analyzed: str | None = None
         total_risk_amount: float | None = None
         cr3_share_pct: float | None = None
@@ -208,6 +218,7 @@ class RiskConcentrationAnalyzerTool(BaseTool):
                 table_name=resolved_table,
                 dimension_column=params.dimension_column,
                 metric_column=params.metric_column,
+                metric_unit=_metric_unit(resolved_table, params.metric_column),
                 date_analyzed=selected_date,
                 total_risk_amount=round(total_metric_sum, 2),
                 cr3_share_pct=round(cr3_pct, 2),

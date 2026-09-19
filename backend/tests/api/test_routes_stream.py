@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import time
 
 from fastapi.testclient import TestClient
 
@@ -82,3 +83,26 @@ def test_ask_stream_does_not_leak_full_message_history(monkeypatch):
     assert "messages" not in llm_input_events[0]
     assert "tools" not in llm_input_events[0]
     assert "question" not in llm_input_events[0]
+
+
+def test_ask_stream_with_zero_timeout_does_not_emit_timeout(monkeypatch):
+    monkeypatch.setattr(routes, "KloudeksProvider", DummyProvider)
+    monkeypatch.setattr(routes, "REQUEST_HARD_TIMEOUT_SECONDS", 0)
+
+    def slow_run_agent(question, registry, provider, max_iterations, on_event, history):
+        time.sleep(0.05)
+        return "gec de olsa cevap"
+
+    monkeypatch.setattr(routes, "run_agent", slow_run_agent)
+
+    with TestClient(app) as client:
+        response = client.post(
+            "/api/v1/ask/stream",
+            json={"question": "uzun analiz"},
+        )
+
+    events = _parse_sse_events(response.text)
+
+    assert not any(event.get("kind") == "error" for event in events)
+    assert events[-1]["kind"] == "done"
+    assert events[-1]["answer"] == "gec de olsa cevap"

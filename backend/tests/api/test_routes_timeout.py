@@ -43,3 +43,23 @@ def test_ask_times_out_cleandy(monkeypatch):
     assert result["data"] is None
     assert "zaman aşımı" in result["error"].lower()
     assert elapsed < 0.09
+
+
+def test_ask_with_zero_timeout_waits_until_agent_finishes(monkeypatch):
+    monkeypatch.setattr(routes, "KloudeksProvider", DummyProvider)
+    monkeypatch.setattr(routes, "REQUEST_HARD_TIMEOUT_SECONDS", 0)
+
+    def slow_agent(*args):
+        time.sleep(0.05)
+        return "finished"
+
+    monkeypatch.setattr(routes, "run_agent", slow_agent)
+
+    start = time.perf_counter()
+    result = asyncio.run(routes.ask(routes.AskRequest(question="slow but allowed")))
+    elapsed = time.perf_counter() - start
+
+    assert result["success"] is True
+    assert result["data"]["answer"] == "finished"
+    assert result["error"] is None
+    assert elapsed >= 0.04

@@ -88,10 +88,10 @@ gold_finturk_province_credit_quality = Table(
     Column('province', String, primary_key=True, comment="İl Adı (geo_level=province)"),
     Column('geo_level', String, comment="Coğrafi kırılım seviyesi (province, country vb.)"),
     Column('plate_code', String, comment="İl plaka kodu"),
-    Column('total_cash_loans', Float, comment="İldeki toplam nakdi krediler hacmi (Milyon TL)"),
-    Column('nonperforming_receivables', Float, comment="İldeki toplam takipteki alacaklar (NPL) hacmi (Milyon TL)"),
-    Column('npl_ratio', Float, comment="Takibe dönüşüm oranı (NPL Ratio = Takipteki Alacaklar / Toplam Nakdi Kredi + Takipteki Alacaklar)"),
-    Column('housing_loans', Float, comment="İldeki konut kredisi hacmi (Milyon TL, veri mevcutsa)"),
+    Column('total_cash_loans', Float, comment="İldeki toplam nakdi krediler hacmi (Bin TL)", info={"unit": "bin TL"}),
+    Column('nonperforming_receivables', Float, comment="İldeki toplam takipteki alacaklar (NPL) hacmi (Bin TL)", info={"unit": "bin TL"}),
+    Column('npl_ratio', Float, comment="Takibe dönüşüm oranı (NPL Ratio = Takipteki Alacaklar / (Toplam Nakdi Kredi + Takipteki Alacaklar))", info={"unit": "ratio"}),
+    Column('housing_loans', Float, comment="İldeki konut kredisi hacmi (Bin TL, veri mevcutsa)", info={"unit": "bin TL"}),
     comment="BDDK FinTürk verisinden derlenen, il bazlı kredi hacmi ve risk (NPL) oranlarını çeyreklik bazda sunan coğrafi tablo."
 )
 

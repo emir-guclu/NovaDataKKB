@@ -14,6 +14,7 @@ def test_risk_concentration_analyzer_finturk():
     )
 
     assert result.success is True
+    assert result.metric_unit == "bin TL"
     assert result.cr3_share_pct is not None
     assert result.cr5_share_pct is not None
     assert result.hhi_score is not None

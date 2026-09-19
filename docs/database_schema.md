@@ -40,10 +40,10 @@ BDDK FinTürk verisinden derlenen, il bazlı kredi hacmi ve risk (NPL) oranları
 | `province` 🔑 | VARCHAR | İl Adı (geo_level=province) |
 | `geo_level` | VARCHAR | Coğrafi kırılım seviyesi (province, country vb.) |
 | `plate_code` | VARCHAR | İl plaka kodu |
-| `total_cash_loans` | FLOAT | İldeki toplam nakdi krediler hacmi (Milyon TL) |
-| `nonperforming_receivables` | FLOAT | İldeki toplam takipteki alacaklar (NPL) hacmi (Milyon TL) |
-| `npl_ratio` | FLOAT | Takibe dönüşüm oranı (NPL Ratio = Takipteki Alacaklar / Toplam Nakdi Kredi + Takipteki Alacaklar) |
-| `housing_loans` | FLOAT | İldeki konut kredisi hacmi (Milyon TL, veri mevcutsa) |
+| `total_cash_loans` | FLOAT | İldeki toplam nakdi krediler hacmi (Bin TL) |
+| `nonperforming_receivables` | FLOAT | İldeki toplam takipteki alacaklar (NPL) hacmi (Bin TL) |
+| `npl_ratio` | FLOAT | Takibe dönüşüm oranı (NPL Ratio = Takipteki Alacaklar / (Toplam Nakdi Kredi + Takipteki Alacaklar)) |
+| `housing_loans` | FLOAT | İldeki konut kredisi hacmi (Bin TL, veri mevcutsa) |
 
 ### `gold_housing_credit_market`
 
