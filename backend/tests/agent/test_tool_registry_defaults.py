@@ -26,3 +26,4 @@ def test_default_tool_registry_includes_analytical_tools():
     assert registry.get("elasticity_and_sensitivity_analyzer") is not None
     assert registry.get("risk_concentration_analyzer") is not None
     assert registry.get("turning_point_and_cycle_detector") is not None
+    assert registry.get("data_health_report") is not None

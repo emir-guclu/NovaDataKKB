@@ -5,6 +5,7 @@ from backend.app.tools.analysis_planner import AnalysisPlannerTool
 from backend.app.tools.base import BaseTool
 from backend.app.tools.causality_check import CausalityCheckTool
 from backend.app.tools.change_detection import ChangeDetectionTool
+from backend.app.tools.data_health_report import DataHealthReportTool
 from backend.app.tools.elasticity_and_sensitivity_analyzer import ElasticityAndSensitivityAnalyzerTool
 from backend.app.tools.evds_tool import EvdsTool
 from backend.app.tools.lakehouse_query import LakehouseQueryTool
@@ -21,6 +22,7 @@ __all__ = [
     "AnomalyDetectionTool",
     "CausalityCheckTool",
     "ChangeDetectionTool",
+    "DataHealthReportTool",
     "ElasticityAndSensitivityAnalyzerTool",
     "EvdsTool",
     "LakehouseQueryTool",
@@ -31,3 +33,4 @@ __all__ = [
     "WebSearchTool",
     "WebUrlReaderTool",
 ]
+

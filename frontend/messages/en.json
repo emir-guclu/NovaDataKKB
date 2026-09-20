@@ -31,6 +31,7 @@
     "activity_change": "Calculating period changes and structural breaks...",
     "activity_anomaly": "Examining unusual movements and anomalies...",
     "activity_causality": "Analyzing relationships between indicators...",
+    "activity_data_health": "Calculating data health report and quality metrics...",
     "activity_web_search": "Searching current external sources...",
     "activity_web_reader": "Reading the relevant web source...",
     "activity_working": "Working with the required data source...",
@@ -67,6 +68,14 @@
     "view_reasoning": "View Reasoning Steps",
     "hide_reasoning": "Hide",
     "session_charts_title": "Session Analytics Charts",
-    "question_prefix": "Question"
+    "question_prefix": "Question",
+    "data_health_title": "Data Health Report",
+    "data_health_badge": "Quality Assurance",
+    "data_health_score": "Health Score",
+    "data_health_missing": "Missing Data",
+    "data_health_obs": "Observation Count",
+    "data_health_lineage": "Data Lineage",
+    "data_health_alignment": "Alignment Policy",
+    "data_health_range": "Date Range"
   }
 }

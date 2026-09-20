@@ -61,6 +61,7 @@ def create_default_tool_registry() -> ToolRegistry:
     from backend.app.tools.anomaly_detection import AnomalyDetectionTool
     from backend.app.tools.causality_check import CausalityCheckTool
     from backend.app.tools.change_detection import ChangeDetectionTool
+    from backend.app.tools.data_health_report import DataHealthReportTool
     from backend.app.tools.elasticity_and_sensitivity_analyzer import ElasticityAndSensitivityAnalyzerTool
     from backend.app.tools.evds_tool import EvdsTool
     from backend.app.tools.lakehouse_query import LakehouseQueryTool
@@ -76,6 +77,7 @@ def create_default_tool_registry() -> ToolRegistry:
     registry.register(SeriesCatalogSearchTool())
     registry.register(EvdsTool())
     registry.register(ChangeDetectionTool())
+    registry.register(DataHealthReportTool())
     registry.register(WebSearchTool())
     registry.register(WebUrlReaderTool())
     registry.register(LakehouseQueryTool())

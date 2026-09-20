@@ -31,9 +31,11 @@
     "activity_change": "Dönemsel değişimler ve kırılmalar hesaplanıyor...",
     "activity_anomaly": "Olağandışı hareketler ve anomaliler inceleniyor...",
     "activity_causality": "Göstergeler arasındaki ilişkiler analiz ediliyor...",
+    "activity_data_health": "Veri sağlık karnesi ve kalite metrikleri hesaplanıyor...",
     "activity_web_search": "Güncel harici kaynaklar taranıyor...",
     "activity_web_reader": "İlgili web kaynağı okunuyor...",
     "activity_working": "Gerekli veri kaynağı üzerinde çalışılıyor...",
+
     "activity_alternative": "Bir veri kaynağı sonuç vermedi, alternatif yöntem deneniyor...",
     "activity_evaluating": "Elde edilen sonuçlar değerlendiriliyor...",
     "activity_analyzing": "Elde edilen veriler analiz ediliyor...",
@@ -67,6 +69,14 @@
     "view_reasoning": "Düşünce Adımlarını Gör",
     "hide_reasoning": "Gizle",
     "session_charts_title": "Oturumun Analitik Grafikleri",
-    "question_prefix": "Soru"
+    "question_prefix": "Soru",
+    "data_health_title": "Veri Sağlık Karnesi",
+    "data_health_badge": "Kalite Güvencesi",
+    "data_health_score": "Sağlık Skoru",
+    "data_health_missing": "Eksik Veri",
+    "data_health_obs": "Gözlem Sayısı",
+    "data_health_lineage": "Veri Hattı (Lineage)",
+    "data_health_alignment": "Hizalama Politikası",
+    "data_health_range": "Zaman Aralığı"
   }
 }

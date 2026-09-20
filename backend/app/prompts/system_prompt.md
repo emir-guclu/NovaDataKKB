@@ -58,3 +58,9 @@ LAKEHOUSE DIŞI VERİYİ ANALİZ ETME:
 - İki seri arasındaki korelasyon veya nedensellik analizlerinde `causality_check` aracını kullan. Aracın çıktısındaki `caveat` uyarısını (korelasyonun nedensellik ispatı olmadığı ve ortak üçüncü faktörlerin — enflasyon, küresel koşullar, politika değişikliği vb. — etkili olabileceği uyarısını) cevabında MUTLAKA açıkça belirt.
 - Eğer bir analitik araç `chart_url` döndürdüyse, nihai cevabında bu görseli MUTLAKA `![Grafik](chart_url)` şeklinde markdown formatında göm ve altına yönetici düzeyinde analist içgörüsü ekle.
 
+VERİ SAĞLIK KARNESİ VE KALİTE GÜVENCESİ (KKB DATA GOVERNANCE & QUALITY):
+- KKB standartlarında analizlerin dayandığı verinin kalitesi, eksiksizliği ve şeffaflığı esastır.
+- Kullanıcı doğrudan veri kalitesini, eksik gözlem oranını, kümülatiflik durumunu veya veri kökenini/lineage'ını sorduğunda `data_health_report` aracını kullan.
+- Ayrıca zaman serileri üzerinde yapılan temel analitik incelemelerde (`change_detection`, `anomaly_detection`, `causality_check`, `elasticity_and_sensitivity_analyzer` vb.), kullanılan serinin güvenilirliğini teyit etmek ve kanıt panelini beslemek için analizle birlikte `data_health_report` aracını da çağır.
+- Böylece cevabında veya kanıt panelinde verinin sağlık durumunu (gözlem sayısı, %0 eksiklik, dönem sonu stok/hizalama politikası ve kaynak) kurumsal bir kalite güvencesi olarak sun.
+

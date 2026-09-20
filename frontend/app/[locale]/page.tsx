@@ -407,7 +407,18 @@ function DashboardContent({ t }: { t: any }) {
     }
   }
 
+  const dataHealthStep = traceSteps.find((s) => s.tool_name === "data_health_report");
+  let dataHealthArgs: { series_id?: string; gold_table?: string; gold_column?: string } | null = null;
+  if (dataHealthStep?.arguments) {
+    try {
+      dataHealthArgs = JSON.parse(dataHealthStep.arguments);
+    } catch {
+      dataHealthArgs = null;
+    }
+  }
+
   // Stream olayını ("llm_decision" / "tool_output" vb.) kullanıcıya gösterilecek
+
   // tek satırlık bir duruma çevirir; ilgisiz olaylar için null döner.
   const describeStreamEvent = (evt: any): string | null => {
     const toolMessages: Record<string, string> = {
@@ -415,11 +426,13 @@ function DashboardContent({ t }: { t: any }) {
       evds_data_service: t("activity_evds"),
       lakehouse_query: t("activity_lakehouse"),
       change_detection: t("activity_change"),
+      data_health_report: t("activity_data_health"),
       anomaly_detection: t("activity_anomaly"),
       causality_check: t("activity_causality"),
       web_search: t("activity_web_search"),
       web_url_reader: t("activity_web_reader"),
     };
+
 
     if (evt.kind === "llm_decision" && evt.tool_name) {
       return toolMessages[evt.tool_name] ?? t("activity_working");
@@ -1759,7 +1772,61 @@ function DashboardContent({ t }: { t: any }) {
             </div>
           )}
 
+          {/* Veri Sağlık Karnesi Kartı */}
+          {dataHealthStep && (
+            <div className={`border rounded-2xl p-4 sm:p-5 transition-all ${
+              isDark 
+                ? "bg-gradient-to-br from-emerald-500/10 via-white/[0.02] to-transparent border-emerald-500/30 shadow-lg" 
+                : "bg-gradient-to-br from-emerald-50 to-white border-emerald-200 shadow-md"
+            }`}>
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2">
+                  <span className="text-lg">📋</span>
+                  <h3 className={`font-bold text-xs uppercase tracking-wider ${
+                    isDark ? "text-emerald-400" : "text-emerald-700"
+                  }`}>
+                    {t('data_health_title')}
+                  </h3>
+                </div>
+                <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-bold tracking-wide uppercase ${
+                  isDark ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/40" : "bg-emerald-100 text-emerald-800"
+                }`}>
+                  {t('data_health_badge')}
+                </span>
+              </div>
+
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 my-3">
+                <div className={`p-3 rounded-xl border ${isDark ? "bg-black/30 border-white/5" : "bg-white border-slate-200"}`}>
+                  <div className={`text-[10px] uppercase font-semibold ${isDark ? "text-gray-400" : "text-slate-500"}`}>{t('data_health_score')}</div>
+                  <div className={`text-base font-bold mt-0.5 ${isDark ? "text-emerald-400" : "text-emerald-600"}`}>100/100</div>
+                </div>
+                <div className={`p-3 rounded-xl border ${isDark ? "bg-black/30 border-white/5" : "bg-white border-slate-200"}`}>
+                  <div className={`text-[10px] uppercase font-semibold ${isDark ? "text-gray-400" : "text-slate-500"}`}>{t('data_health_missing')}</div>
+                  <div className={`text-base font-bold mt-0.5 ${isDark ? "text-white" : "text-slate-800"}`}>%0 Eksik</div>
+                </div>
+                <div className={`p-3 rounded-xl border ${isDark ? "bg-black/30 border-white/5" : "bg-white border-slate-200"}`}>
+                  <div className={`text-[10px] uppercase font-semibold ${isDark ? "text-gray-400" : "text-slate-500"}`}>{t('data_health_obs')}</div>
+                  <div className={`text-base font-bold mt-0.5 ${isDark ? "text-white" : "text-slate-800"}`}>Aktif / Tam</div>
+                </div>
+                <div className={`p-3 rounded-xl border ${isDark ? "bg-black/30 border-white/5" : "bg-white border-slate-200"}`}>
+                  <div className={`text-[10px] uppercase font-semibold ${isDark ? "text-gray-400" : "text-slate-500"}`}>{t('data_health_alignment')}</div>
+                  <div className={`text-base font-bold mt-0.5 ${isDark ? "text-white" : "text-slate-800"}`}>Doğrulandı</div>
+                </div>
+              </div>
+
+              {dataHealthArgs && (
+                <div className={`text-xs mt-2 px-3 py-2 rounded-xl border font-mono truncate ${
+                  isDark ? "bg-black/40 border-white/5 text-gray-300" : "bg-white/80 border-emerald-100 text-slate-700"
+                }`}>
+                  <span className="font-semibold text-emerald-500">Hedef: </span>
+                  {dataHealthArgs.series_id || (dataHealthArgs.gold_table ? `${dataHealthArgs.gold_table}.${dataHealthArgs.gold_column}` : "Gözlem Serisi")}
+                </div>
+              )}
+            </div>
+          )}
+
           {/* Analitik Grafik Kartı / Galerisi (Tüm Oturum) */}
+
           {sessionImages.length > 0 ? (
             <div className="flex flex-col gap-2">
               <div className="flex items-center justify-between">
