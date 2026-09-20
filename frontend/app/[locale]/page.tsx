@@ -293,6 +293,7 @@ function DashboardContent({ t }: { t: any }) {
 
   // Yeni Sohbet Başlat
   const handleNewChat = () => {
+    setShowSessionsSidebar(false);
     const newSession = createDefaultSession(t("untitled_chat"));
     const updated = [newSession, ...sessions];
     setSessions(updated);
@@ -309,6 +310,7 @@ function DashboardContent({ t }: { t: any }) {
 
   // Bir Sohbet Oturumunu Seç
   const handleSelectSession = (sessionItem: ChatSession) => {
+    setShowSessionsSidebar(false);
     if (sessionItem.id === currentSessionId) return;
     setCurrentSessionId(sessionItem.id);
     setMessages(sessionItem.messages);
@@ -1344,72 +1346,113 @@ function DashboardContent({ t }: { t: any }) {
             </div>
           </div>
 
-          {/* Sohbet Oturumları Çekmecesi (Drawer / Dropdown Overlay) */}
+          {/* Sohbet Oturumları Çekmecesi (Soldan Açılan Drawer / Slide-Over) */}
           {showSessionsSidebar && (
-            <div className={`border-b p-4 max-h-[320px] overflow-y-auto space-y-2 z-20 shadow-2xl animate-in fade-in duration-200 ${
-              isDark 
-                ? "bg-black/80 backdrop-blur-xl border-white/10 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-white/10 [&::-webkit-scrollbar-thumb]:rounded-full" 
-                : "bg-white/95 backdrop-blur-xl border-slate-200 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-slate-300 [&::-webkit-scrollbar-thumb]:rounded-full"
-            }`}>
-              <div className="flex justify-between items-center mb-2 px-1">
-                <span className={`text-xs font-bold uppercase tracking-wider ${isDark ? "text-gray-400" : "text-slate-500"}`}>{t("chat_sessions")} ({sessions.length})</span>
-                <button
-                  onClick={handleNewChat}
-                  className={`text-xs font-semibold flex items-center gap-1 transition-colors ${
-                    isDark ? "text-emerald-400 hover:text-emerald-300" : "text-emerald-600 hover:text-emerald-700"
-                  }`}
-                >
-                  <span>+ {t("new_chat")}</span>
-                </button>
-              </div>
+            <>
+              {/* Arka plan karartma / Backdrop */}
+              <div 
+                onClick={() => setShowSessionsSidebar(false)}
+                className="absolute inset-0 bg-black/50 backdrop-blur-xs z-30 transition-opacity animate-in fade-in duration-200"
+              />
 
-              {sessions.map(s => {
-                const isActive = s.id === currentSessionId;
-                const dateStr = new Date(s.updatedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                return (
-                  <div
-                    key={s.id}
-                    onClick={() => handleSelectSession(s)}
-                    className={`group/session flex items-center justify-between p-2.5 rounded-xl cursor-pointer border transition-all ${
-                      isActive
-                        ? (isDark 
-                            ? "bg-emerald-500/15 border-emerald-500/40 text-white shadow-md shadow-emerald-950/40" 
-                            : "bg-emerald-50 border-emerald-300 text-emerald-900 shadow-sm")
-                        : (isDark 
-                            ? "bg-white/[0.03] border-white/5 text-gray-300 hover:bg-white/[0.08] hover:border-white/15" 
-                            : "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100")
-                    }`}
-                  >
-                    <div className="flex items-center gap-2.5 min-w-0 pr-2">
-                      <div className={`w-2 h-2 rounded-full flex-shrink-0 ${
-                        isActive 
-                          ? (isDark ? "bg-emerald-400 shadow-sm shadow-emerald-400" : "bg-emerald-500 shadow-sm shadow-emerald-400") 
-                          : (isDark ? "bg-gray-600" : "bg-slate-300")
-                      }`}></div>
-                      <div className="flex flex-col min-w-0">
-                        <span className="text-xs font-medium truncate">{s.title || t("untitled_chat")}</span>
-                        <div className={`flex items-center gap-2 text-[10px] ${isDark ? "text-gray-500" : "text-slate-400"}`}>
-                          <span>{dateStr}</span>
-                          <span>•</span>
-                          <span>{s.messages.filter(m => m.content).length} msgs</span>
-                        </div>
-                      </div>
-                    </div>
+              {/* Soldan Açılan Çekmece */}
+              <div className={`absolute top-0 bottom-0 left-0 w-[280px] sm:w-[320px] flex flex-col z-40 border-r shadow-2xl transition-all duration-300 animate-in slide-in-from-left ${
+                isDark 
+                  ? "bg-[#0b0c10]/95 backdrop-blur-2xl border-white/10 text-white" 
+                  : "bg-white/95 backdrop-blur-2xl border-slate-200 text-slate-900"
+              }`}>
+                {/* Drawer Header */}
+                <div className={`p-4 border-b flex justify-between items-center ${
+                  isDark ? "border-white/10 bg-white/[0.02]" : "border-slate-100 bg-slate-50"
+                }`}>
+                  <div className="flex items-center gap-2">
+                    <span className="text-base">💬</span>
+                    <span className="text-xs font-bold uppercase tracking-wider">
+                      {t("chat_sessions")} ({sessions.length})
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-1">
                     <button
-                      onClick={(e) => handleDeleteSession(s.id, e)}
-                      className={`p-1.5 rounded-lg opacity-60 hover:opacity-100 hover:bg-red-500/20 hover:text-red-500 transition-all flex-shrink-0 ${
-                        isDark ? "text-gray-400" : "text-slate-400"
+                      onClick={handleNewChat}
+                      className={`p-1.5 rounded-lg text-xs font-semibold flex items-center gap-1 transition-colors ${
+                        isDark ? "hover:bg-white/10 text-emerald-400" : "hover:bg-slate-200 text-emerald-600"
                       }`}
-                      title={t("delete_chat")}
+                      title={t("new_chat")}
                     >
                       <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
+                      </svg>
+                      <span className="text-xs">{t("new_chat")}</span>
+                    </button>
+                    <button
+                      onClick={() => setShowSessionsSidebar(false)}
+                      className={`p-1.5 rounded-lg transition-colors ${
+                        isDark ? "hover:bg-white/10 text-gray-400 hover:text-white" : "hover:bg-slate-200 text-slate-500 hover:text-slate-800"
+                      }`}
+                      title="Kapat"
+                    >
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                       </svg>
                     </button>
                   </div>
-                );
-              })}
-            </div>
+                </div>
+
+                {/* Drawer List */}
+                <div className={`flex-1 p-3 overflow-y-auto space-y-2 ${
+                  isDark 
+                    ? "[&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-white/10 [&::-webkit-scrollbar-thumb]:rounded-full" 
+                    : "[&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-slate-300 [&::-webkit-scrollbar-thumb]:rounded-full"
+                }`}>
+                  {sessions.map(s => {
+                    const isActive = s.id === currentSessionId;
+                    const dateStr = new Date(s.updatedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                    return (
+                      <div
+                        key={s.id}
+                        onClick={() => handleSelectSession(s)}
+                        className={`group/session flex items-center justify-between p-2.5 rounded-xl cursor-pointer border transition-all ${
+                          isActive
+                            ? (isDark 
+                                ? "bg-emerald-500/15 border-emerald-500/40 text-white shadow-md shadow-emerald-950/40" 
+                                : "bg-emerald-50 border-emerald-300 text-emerald-900 shadow-sm")
+                            : (isDark 
+                                ? "bg-white/[0.03] border-white/5 text-gray-300 hover:bg-white/[0.08] hover:border-white/15" 
+                                : "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100")
+                        }`}
+                      >
+                        <div className="flex items-center gap-2.5 min-w-0 pr-2">
+                          <div className={`w-2 h-2 rounded-full flex-shrink-0 ${
+                            isActive 
+                              ? (isDark ? "bg-emerald-400 shadow-sm shadow-emerald-400" : "bg-emerald-500 shadow-sm shadow-emerald-400") 
+                              : (isDark ? "bg-gray-600" : "bg-slate-300")
+                          }`}></div>
+                          <div className="flex flex-col min-w-0">
+                            <span className="text-xs font-medium truncate">{s.title || t("untitled_chat")}</span>
+                            <div className={`flex items-center gap-2 text-[10px] ${isDark ? "text-gray-500" : "text-slate-400"}`}>
+                              <span>{dateStr}</span>
+                              <span>•</span>
+                              <span>{s.messages.filter(m => m.content).length} msgs</span>
+                            </div>
+                          </div>
+                        </div>
+                        <button
+                          onClick={(e) => handleDeleteSession(s.id, e)}
+                          className={`p-1.5 rounded-lg opacity-60 hover:opacity-100 hover:bg-red-500/20 hover:text-red-500 transition-all flex-shrink-0 ${
+                            isDark ? "text-gray-400" : "text-slate-400"
+                          }`}
+                          title={t("delete_chat")}
+                        >
+                          <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                          </svg>
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </>
           )}
 
           {/* Mesajlaşma Alanı */}
