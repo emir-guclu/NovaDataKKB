@@ -358,21 +358,42 @@ def main():
         f"{len(policies):,}",
     )
 
+    supported_freqs = {"D", "W", "M", "Q"}
+
+    alignment_observations = observations[
+        observations["freq"].isin(supported_freqs)
+    ].copy()
+
+    alignment_metadata = metadata[
+        metadata["freq"].isin(supported_freqs)
+    ].copy()
+
+    skipped_freqs = sorted(
+        set(metadata["freq"].dropna())
+        - supported_freqs
+    )
+
+    if skipped_freqs:
+        print(
+            "Skipping unsupported source frequencies "
+            f"for monthly alignment: {', '.join(skipped_freqs)}"
+        )
+
     aligned = align_to_monthly(
-        observations,
-        metadata,
+        alignment_observations,
+        alignment_metadata,
         policies,
         quarterly_policy="sparse",
     )
 
     validate_aligned(
         aligned,
-        metadata,
+        alignment_metadata,
     )
 
     aligned_metadata = build_metadata(
         aligned,
-        metadata,
+        alignment_metadata,
     )
 
     write_outputs(

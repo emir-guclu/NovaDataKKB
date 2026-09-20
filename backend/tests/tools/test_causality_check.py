@@ -31,8 +31,10 @@ def test_causality_check_success_with_real_gold_data():
     assert result.success is True
     assert result.error is None
     assert result.metric == "value"
-    assert result.n_observations == 42
-    assert result.correlation_coefficient == pytest.approx(0.2291482971709595)
+    # TP.KTF12 currently overlaps with the housing-credit volume series
+    # for 13 monthly observations in the requested window.
+    assert result.n_observations == 13
+    assert result.correlation_coefficient == pytest.approx(-0.5720389636140677)
     assert "korelasyon" in result.interpretation.lower()
     assert "nedensellik" in result.interpretation.lower()
     assert "nedensellik ispatı değildir" in result.caveat

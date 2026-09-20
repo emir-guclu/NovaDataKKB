@@ -1,0 +1,706 @@
+[
+  {
+    "id": "single_01",
+    "category": "single_metric",
+    "question": "2024 yılında Türkiye'deki toplam hastane yatağı sayısı kaçtır? Kaynağı ve birimi de belirt.",
+    "expected_tools": [
+      "series_catalog_search"
+    ],
+    "database": "silver",
+    "ground_truth_query": "\nSELECT value\nFROM observations\nWHERE series_id='HEALTH_MOH:hospital_beds_total'\n  AND date='2024-12-31'\n",
+    "must_contain_numbers": [
+      268359.0
+    ],
+    "must_contain_text": [
+      "HEALTH_MOH",
+      "adet"
+    ],
+    "verification_mode": "ground_truth",
+    "notes": ""
+  },
+  {
+    "id": "single_02",
+    "category": "single_metric",
+    "question": "BDDK aylık tüketici kredileri içindeki TP konut kredileri serisine göre 2026 Haziran ayında toplam konut kredisi hacmi kaç milyon TL idi?",
+    "expected_tools": [
+      "lakehouse_query"
+    ],
+    "database": "lakehouse",
+    "ground_truth_query": "\n    SELECT konut_kredisi_hacmi_tp\n    FROM gold_housing_credit_market\n    WHERE date='2026-06-30'\n    ",
+    "must_contain_numbers": [
+      801375.536
+    ],
+    "must_contain_text": [],
+    "verification_mode": "ground_truth",
+    "notes": ""
+  },
+  {
+    "id": "single_03",
+    "category": "single_metric",
+    "question": "2026 Haziran ayında konut kredisi faiz oranı kaçtı?",
+    "expected_tools": [
+      "lakehouse_query"
+    ],
+    "database": "lakehouse",
+    "ground_truth_query": "\n    SELECT konut_kredisi_faiz_orani\n    FROM gold_housing_credit_market\n    WHERE date='2026-06-30'\n    ",
+    "must_contain_numbers": [],
+    "must_contain_text": [],
+    "verification_mode": "ground_truth",
+    "notes": ""
+  },
+  {
+    "id": "single_04",
+    "category": "single_metric",
+    "question": "EVDS TP.KFE.TR Türkiye Konut Fiyat Endeksi serisine göre 2026 Haziran değeri kaçtır?",
+    "expected_tools": [
+      "lakehouse_query"
+    ],
+    "database": "lakehouse",
+    "ground_truth_query": "\n    SELECT konut_fiyat_endeksi\n    FROM gold_housing_credit_market\n    WHERE date='2026-06-30'\n    ",
+    "must_contain_numbers": [
+      231.34
+    ],
+    "must_contain_text": [],
+    "verification_mode": "ground_truth",
+    "notes": ""
+  },
+  {
+    "id": "single_05",
+    "category": "single_metric",
+    "question": "2026 Haziran ayında toplam konut satışı kaç adetti?",
+    "expected_tools": [
+      "lakehouse_query"
+    ],
+    "database": "lakehouse",
+    "ground_truth_query": "\n    SELECT toplam_konut_satisi\n    FROM gold_housing_credit_market\n    WHERE date='2026-06-30'\n    ",
+    "must_contain_numbers": [
+      129979.0
+    ],
+    "must_contain_text": [],
+    "verification_mode": "ground_truth",
+    "notes": ""
+  },
+  {
+    "id": "single_06",
+    "category": "single_metric",
+    "question": "2026 Haziran ayında bankacılık sektörünün toplam kredi hacmi kaç milyon TL idi?",
+    "expected_tools": [
+      "lakehouse_query"
+    ],
+    "database": "lakehouse",
+    "ground_truth_query": "\nSELECT toplam_kredi_hacmi\nFROM gold_credit_market\nWHERE date='2026-06-30'\n",
+    "must_contain_numbers": [
+      26783571.945
+    ],
+    "must_contain_text": [],
+    "verification_mode": "ground_truth",
+    "notes": ""
+  },
+  {
+    "id": "single_07",
+    "category": "single_metric",
+    "question": "2026 Haziran ayında ticari kredi faiz oranı kaçtı?",
+    "expected_tools": [
+      "lakehouse_query"
+    ],
+    "database": "lakehouse",
+    "ground_truth_query": "\nSELECT ticari_kredi_faiz_orani\nFROM gold_credit_market\nWHERE date='2026-06-30'\n",
+    "must_contain_numbers": [
+      54.58
+    ],
+    "must_contain_text": [],
+    "verification_mode": "ground_truth",
+    "notes": ""
+  },
+  {
+    "id": "single_08",
+    "category": "single_metric",
+    "question": "Lakehouse'taki gold_precious_metal_ratios_monthly tablosuna göre 2026 Haziran gold_silver_ratio değeri kaçtır?",
+    "expected_tools": [
+      "lakehouse_query"
+    ],
+    "database": "lakehouse",
+    "ground_truth_query": "\nSELECT gold_silver_ratio\nFROM gold_precious_metal_ratios_monthly\nWHERE date='2026-06-30'\n",
+    "must_contain_numbers": [
+      59.640479360852204
+    ],
+    "must_contain_text": [],
+    "verification_mode": "ground_truth",
+    "notes": ""
+  },
+  {
+    "id": "trend_01",
+    "category": "trend_change",
+    "question": "BDDK aylık tüketici kredileri içindeki TP konut kredileri serisine göre 2026 Ocak-Haziran arasında konut kredisi hacmi ne kadar değişti? Başlangıç, bitiş ve yüzde değişimi ver.",
+    "expected_tools": [
+      "lakehouse_query"
+    ],
+    "database": "lakehouse",
+    "ground_truth_query": "\n    WITH x AS (\n      SELECT\n        MAX(CASE WHEN date='2026-01-31' THEN konut_kredisi_hacmi_tp END) AS start_value,\n        MAX(CASE WHEN date='2026-06-30' THEN konut_kredisi_hacmi_tp END) AS end_value\n      FROM gold_housing_credit_market\n    )\n    SELECT\n      start_value,\n      end_value,\n      ((end_value / start_value) - 1) * 100 AS pct_change\n    FROM x\n    ",
+    "must_contain_numbers": [
+      691281.674,
+      801375.536,
+      15.926049559936683
+    ],
+    "must_contain_text": [],
+    "verification_mode": "ground_truth",
+    "notes": ""
+  },
+  {
+    "id": "trend_02",
+    "category": "trend_change",
+    "question": "EVDS TP.KFE.TR Türkiye Konut Fiyat Endeksi serisine göre 2026 Ocak-Haziran arasında endeks ne kadar değişti?",
+    "expected_tools": [
+      "series_catalog_search",
+      "change_detection"
+    ],
+    "database": "lakehouse",
+    "ground_truth_query": "\n    WITH x AS (\n      SELECT\n        MAX(CASE WHEN date='2026-01-31' THEN konut_fiyat_endeksi END) AS start_value,\n        MAX(CASE WHEN date='2026-06-30' THEN konut_fiyat_endeksi END) AS end_value\n      FROM gold_housing_credit_market\n    )\n    SELECT\n      start_value,\n      end_value,\n      ((end_value / start_value) - 1) * 100 AS pct_change\n    FROM x\n    ",
+    "must_contain_numbers": [
+      211.73,
+      231.34,
+      9.261795683181418
+    ],
+    "must_contain_text": [],
+    "verification_mode": "ground_truth",
+    "notes": ""
+  },
+  {
+    "id": "trend_03",
+    "category": "trend_change",
+    "question": "EVDS TP.BKR.TRY.18 stok konut kredisi faiz oranı 2026 Ocak-Haziran arasında nasıl değişti?",
+    "expected_tools": [
+      "series_catalog_search",
+      "change_detection"
+    ],
+    "database": "silver",
+    "ground_truth_query": "\n        WITH x AS (\n          SELECT\n            MAX(CASE WHEN date='2026-01-31' THEN value END) AS start_value,\n            MAX(CASE WHEN date='2026-06-30' THEN value END) AS end_value\n          FROM observations\n          WHERE series_id='EVDS:TP.BKR.TRY.18'\n        )\n        SELECT\n          start_value,\n          end_value,\n          ((end_value / start_value) - 1) * 100 AS pct_change\n        FROM x\n        ",
+    "must_contain_numbers": [
+      31.01,
+      32.21,
+      3.869719445340203
+    ],
+    "must_contain_text": [
+      "TP.BKR.TRY.18"
+    ],
+    "verification_mode": "ground_truth",
+    "notes": ""
+  },
+  {
+    "id": "trend_04",
+    "category": "trend_change",
+    "question": "2026 Ocak-Haziran arasında toplam kredi hacmi ne kadar değişti?",
+    "expected_tools": [
+      "lakehouse_query"
+    ],
+    "database": "lakehouse",
+    "ground_truth_query": "\n    WITH x AS (\n      SELECT\n        MAX(CASE WHEN date='2026-01-31' THEN toplam_kredi_hacmi END) AS start_value,\n        MAX(CASE WHEN date='2026-06-30' THEN toplam_kredi_hacmi END) AS end_value\n      FROM gold_credit_market\n    )\n    SELECT\n      start_value,\n      end_value,\n      ((end_value / start_value) - 1) * 100 AS pct_change\n    FROM x\n    ",
+    "must_contain_numbers": [
+      23640215.322,
+      26783571.945,
+      13.296649713992824
+    ],
+    "must_contain_text": [],
+    "verification_mode": "ground_truth",
+    "notes": ""
+  },
+  {
+    "id": "trend_05",
+    "category": "trend_change",
+    "question": "2026 Ocak-Haziran arasında ticari kredi faiz oranının başlangıç değerini, bitiş değerini ve dönem başından dönem sonuna oransal yüzde değişimini hesapla.",
+    "expected_tools": [
+      "lakehouse_query"
+    ],
+    "database": "lakehouse",
+    "ground_truth_query": "\n    WITH x AS (\n      SELECT\n        MAX(CASE WHEN date='2026-01-31' THEN ticari_kredi_faiz_orani END) AS start_value,\n        MAX(CASE WHEN date='2026-06-30' THEN ticari_kredi_faiz_orani END) AS end_value\n      FROM gold_credit_market\n    )\n    SELECT\n      start_value,\n      end_value,\n      ((end_value / start_value) - 1) * 100 AS pct_change\n    FROM x\n    ",
+    "must_contain_numbers": [
+      50.556,
+      54.58,
+      7.959490466017893
+    ],
+    "must_contain_text": [],
+    "verification_mode": "ground_truth",
+    "notes": ""
+  },
+  {
+    "id": "trend_06",
+    "category": "trend_change",
+    "question": "Lakehouse'taki gold_precious_metal_ratios_monthly tablosuna göre 2026 Ocak-Haziran arasında gold_silver_ratio değerinin başlangıç, bitiş ve oransal yüzde değişimini hesapla.",
+    "expected_tools": [
+      "lakehouse_query"
+    ],
+    "database": "lakehouse",
+    "ground_truth_query": "\n    WITH x AS (\n      SELECT\n        MAX(CASE WHEN date='2026-01-31' THEN gold_silver_ratio END) AS start_value,\n        MAX(CASE WHEN date='2026-06-30' THEN gold_silver_ratio END) AS end_value\n      FROM gold_precious_metal_ratios_monthly\n    )\n    SELECT\n      start_value,\n      end_value,\n      ((end_value / start_value) - 1) * 100 AS pct_change\n    FROM x\n    ",
+    "must_contain_numbers": [
+      53.17459574306785,
+      59.640479360852204,
+      12.15972312986937
+    ],
+    "must_contain_text": [],
+    "verification_mode": "ground_truth",
+    "notes": ""
+  },
+  {
+    "id": "trend_07",
+    "category": "trend_change",
+    "question": "Türkiye'deki toplam hastane yatağı sayısı 2020'den 2024'e ne kadar arttı? Sayısal ve yüzde değişimi ver.",
+    "expected_tools": [
+      "series_catalog_search",
+      "change_detection"
+    ],
+    "database": "silver",
+    "ground_truth_query": "\nWITH x AS (\n  SELECT\n    MAX(CASE WHEN date='2020-12-31' THEN value END) AS start_value,\n    MAX(CASE WHEN date='2024-12-31' THEN value END) AS end_value\n  FROM observations\n  WHERE series_id='HEALTH_MOH:hospital_beds_total'\n)\nSELECT\n  start_value,\n  end_value,\n  ((end_value / start_value)-1)*100 AS pct_change\nFROM x\n",
+    "must_contain_numbers": [
+      251182.0,
+      268359.0,
+      6.838467724598107
+    ],
+    "must_contain_text": [
+      "HEALTH_MOH"
+    ],
+    "verification_mode": "ground_truth",
+    "notes": ""
+  },
+  {
+    "id": "relation_01",
+    "category": "cross_market",
+    "question": "2026 Ocak-Haziran döneminde BDDK TP konut kredisi hacmi ile EVDS TP.BKR.TRY.18 stok konut kredisi faiz oranı arasındaki Pearson korelasyonu nedir?",
+    "expected_tools": [
+      "series_catalog_search",
+      "causality_check"
+    ],
+    "database": "silver",
+    "ground_truth_query": "\nWITH housing AS (\n  SELECT date, value AS housing_volume\n  FROM observations\n  WHERE series_id='BDDK_MONTHLY:tuketici_kredileri:tuketici_kredileri_konut'\n    AND json_extract_string(dims, '$.variable')='TP'\n    AND date BETWEEN '2026-01-31' AND '2026-06-30'\n),\nrate AS (\n  SELECT date, value AS housing_rate\n  FROM observations\n  WHERE series_id='EVDS:TP.BKR.TRY.18'\n    AND date BETWEEN '2026-01-31' AND '2026-06-30'\n)\nSELECT corr(housing_volume, housing_rate)\nFROM housing\nJOIN rate USING (date)\n",
+    "must_contain_numbers": [
+      0.9767566554502095
+    ],
+    "must_contain_text": [],
+    "verification_mode": "ground_truth",
+    "notes": ""
+  },
+  {
+    "id": "relation_02",
+    "category": "cross_market",
+    "question": "2024-2026 döneminde BDDK TP konut kredisi hacmi ile EVDS TP.KFE.TR konut fiyat endeksi arasındaki Pearson korelasyonu nedir?",
+    "expected_tools": [
+      "lakehouse_query",
+      "causality_check"
+    ],
+    "database": "lakehouse",
+    "ground_truth_query": "\n    SELECT corr(konut_kredisi_hacmi_tp, konut_fiyat_endeksi)\n    FROM gold_housing_credit_market\n    WHERE date BETWEEN '2024-01-31' AND '2026-06-30'\n      AND konut_kredisi_hacmi_tp IS NOT NULL\n      AND konut_fiyat_endeksi IS NOT NULL\n    ",
+    "must_contain_numbers": [
+      0.9860751605940683
+    ],
+    "must_contain_text": [],
+    "verification_mode": "ground_truth",
+    "notes": ""
+  },
+  {
+    "id": "relation_03",
+    "category": "cross_market",
+    "question": "2024-2026 döneminde BDDK TP konut kredisi hacmi ile EVDS TP.AKONUTSAT1.KTRTOPLAM toplam konut satışları arasındaki Pearson korelasyonu nedir?",
+    "expected_tools": [
+      "lakehouse_query",
+      "causality_check"
+    ],
+    "database": "lakehouse",
+    "ground_truth_query": "\n    SELECT corr(konut_kredisi_hacmi_tp, toplam_konut_satisi)\n    FROM gold_housing_credit_market\n    WHERE date BETWEEN '2024-01-31' AND '2026-06-30'\n      AND konut_kredisi_hacmi_tp IS NOT NULL\n      AND toplam_konut_satisi IS NOT NULL\n    ",
+    "must_contain_numbers": [
+      0.15286484505319622
+    ],
+    "must_contain_text": [],
+    "verification_mode": "ground_truth",
+    "notes": ""
+  },
+  {
+    "id": "relation_04",
+    "category": "cross_market",
+    "question": "2024-2026 döneminde toplam kredi hacmi ile ticari kredi faiz oranı arasındaki korelasyon nedir?",
+    "expected_tools": [
+      "lakehouse_query",
+      "causality_check"
+    ],
+    "database": "lakehouse",
+    "ground_truth_query": "\nSELECT corr(toplam_kredi_hacmi, ticari_kredi_faiz_orani)\nFROM gold_credit_market\nWHERE date BETWEEN '2024-01-31' AND '2026-06-30'\n",
+    "must_contain_numbers": [
+      -0.6488759344741152
+    ],
+    "must_contain_text": [],
+    "verification_mode": "ground_truth",
+    "notes": ""
+  },
+  {
+    "id": "relation_05",
+    "category": "cross_market",
+    "question": "2024-2026 döneminde BDDK TP konut kredisi hacminin EVDS TP.KFE.TR konut fiyat endeksine göre log-log esnekliğini yaklaşık hesapla.",
+    "expected_tools": [
+      "lakehouse_query",
+      "elasticity_and_sensitivity_analyzer"
+    ],
+    "database": "lakehouse",
+    "ground_truth_query": "\nSELECT regr_slope(\n    ln(konut_kredisi_hacmi_tp),\n    ln(konut_fiyat_endeksi)\n)\nFROM gold_housing_credit_market\nWHERE date BETWEEN '2024-01-31' AND '2026-06-30'\n  AND konut_kredisi_hacmi_tp > 0\n  AND konut_fiyat_endeksi > 0\n",
+    "must_contain_numbers": [
+      1.0295527385394783
+    ],
+    "must_contain_text": [],
+    "verification_mode": "ground_truth",
+    "notes": ""
+  },
+  {
+    "id": "relation_06",
+    "category": "cross_market",
+    "question": "Lakehouse'taki gold_precious_metal_ratios_monthly tablosunda 2021-2026 dönemindeki gold_mom_pct_change ve silver_mom_pct_change kolonlarının Pearson korelasyonu nedir?",
+    "expected_tools": [
+      "lakehouse_query",
+      "causality_check"
+    ],
+    "database": "lakehouse",
+    "ground_truth_query": "\nSELECT corr(gold_mom_pct_change, silver_mom_pct_change)\nFROM gold_precious_metal_ratios_monthly\nWHERE date BETWEEN '2021-01-31' AND '2026-06-30'\n",
+    "must_contain_numbers": [
+      0.647823438010594
+    ],
+    "must_contain_text": [],
+    "verification_mode": "ground_truth",
+    "notes": ""
+  },
+  {
+    "id": "finturk_01",
+    "category": "finturk_geo",
+    "question": "2026 Haziran sonunda Ankara'nın takipteki alacak oranı (Gold tablodaki npl_ratio metriği) nedir?",
+    "expected_tools": [
+      "lakehouse_query"
+    ],
+    "database": "lakehouse",
+    "ground_truth_query": "\nSELECT npl_ratio * 100\nFROM gold_finturk_province_credit_quality\nWHERE date='2026-06-30' AND province='Ankara'\n",
+    "must_contain_numbers": [
+      1.70715346836749
+    ],
+    "must_contain_text": [
+      "Ankara"
+    ],
+    "verification_mode": "ground_truth",
+    "notes": ""
+  },
+  {
+    "id": "finturk_02",
+    "category": "finturk_geo",
+    "question": "2026 Haziran sonunda Ankara'daki toplam nakdi kredi tutarı nedir? Birimi koru.",
+    "expected_tools": [
+      "lakehouse_query"
+    ],
+    "database": "lakehouse",
+    "ground_truth_query": "\nSELECT total_cash_loans\nFROM gold_finturk_province_credit_quality\nWHERE date='2026-06-30' AND province='Ankara'\n",
+    "must_contain_numbers": [
+      3649355488.0
+    ],
+    "must_contain_text": [
+      "Ankara"
+    ],
+    "verification_mode": "ground_truth",
+    "notes": ""
+  },
+  {
+    "id": "finturk_03",
+    "category": "finturk_geo",
+    "question": "2026 Haziran sonunda İstanbul'un Gold tablodaki npl_ratio metriği nedir?",
+    "expected_tools": [
+      "lakehouse_query"
+    ],
+    "database": "lakehouse",
+    "ground_truth_query": "\nSELECT npl_ratio * 100\nFROM gold_finturk_province_credit_quality\nWHERE date='2026-06-30' AND province='İstanbul'\n",
+    "must_contain_numbers": [
+      2.4879213805662372
+    ],
+    "must_contain_text": [
+      "İstanbul"
+    ],
+    "verification_mode": "ground_truth",
+    "notes": ""
+  },
+  {
+    "id": "finturk_04",
+    "category": "finturk_geo",
+    "question": "2026 Haziran sonunda Gold tablodaki npl_ratio metriği en yüksek il hangisidir ve oran kaçtır?",
+    "expected_tools": [
+      "lakehouse_query",
+      "risk_concentration_analyzer"
+    ],
+    "database": "lakehouse",
+    "ground_truth_query": "\nSELECT province, npl_ratio * 100 AS npl_pct\nFROM gold_finturk_province_credit_quality\nWHERE date='2026-06-30' AND geo_level='province'\nORDER BY npl_ratio DESC\nLIMIT 1\n",
+    "must_contain_numbers": [
+      9.29304379943734
+    ],
+    "must_contain_text": [
+      "Mardin"
+    ],
+    "verification_mode": "ground_truth",
+    "notes": ""
+  },
+  {
+    "id": "finturk_05",
+    "category": "finturk_geo",
+    "question": "2026 Haziran sonunda Gold tablodaki npl_ratio metriği en düşük il hangisidir ve oran kaçtır?",
+    "expected_tools": [
+      "lakehouse_query"
+    ],
+    "database": "lakehouse",
+    "ground_truth_query": "\nSELECT province, npl_ratio * 100 AS npl_pct\nFROM gold_finturk_province_credit_quality\nWHERE date='2026-06-30'\n  AND geo_level='province'\n  AND npl_ratio IS NOT NULL\nORDER BY npl_ratio ASC\nLIMIT 1\n",
+    "must_contain_numbers": [
+      1.5623147065945286
+    ],
+    "must_contain_text": [
+      "Kırşehir"
+    ],
+    "verification_mode": "ground_truth",
+    "notes": ""
+  },
+  {
+    "id": "finturk_06",
+    "category": "finturk_geo",
+    "question": "2026 Haziran sonunda toplam nakdi kredi hacmi en yüksek il hangisidir ve tutar nedir?",
+    "expected_tools": [
+      "lakehouse_query",
+      "risk_concentration_analyzer"
+    ],
+    "database": "lakehouse",
+    "ground_truth_query": "\nSELECT province, total_cash_loans\nFROM gold_finturk_province_credit_quality\nWHERE date='2026-06-30' AND geo_level='province'\nORDER BY total_cash_loans DESC\nLIMIT 1\n",
+    "must_contain_numbers": [
+      9037199663.0
+    ],
+    "must_contain_text": [
+      "İstanbul"
+    ],
+    "verification_mode": "ground_truth",
+    "notes": ""
+  },
+  {
+    "id": "anomaly_01",
+    "category": "anomaly_shock",
+    "question": "BDDK TP konut kredisi hacminde 2021-2026 arasında en büyük aylık yüzde artış hangi ayda gerçekleşti ve oran kaçtı?",
+    "expected_tools": [
+      "lakehouse_query",
+      "anomaly_detection"
+    ],
+    "database": "lakehouse",
+    "ground_truth_query": "\n    WITH x AS (\n      SELECT\n        date,\n        konut_kredisi_hacmi_tp,\n        LAG(konut_kredisi_hacmi_tp) OVER (ORDER BY date) AS prev_value\n      FROM gold_housing_credit_market\n    ),\n    c AS (\n      SELECT\n        date,\n        ((konut_kredisi_hacmi_tp/prev_value)-1)*100 AS pct_change\n      FROM x\n      WHERE prev_value IS NOT NULL AND prev_value <> 0\n    )\n    SELECT\n      EXTRACT(YEAR FROM date) AS year,\n      EXTRACT(MONTH FROM date) AS month,\n      pct_change\n    FROM c\n    ORDER BY ABS(pct_change) DESC\n    LIMIT 1\n    ",
+    "must_contain_numbers": [
+      2023.0,
+      3.0,
+      6.495541523863224
+    ],
+    "must_contain_text": [],
+    "verification_mode": "ground_truth",
+    "notes": ""
+  },
+  {
+    "id": "anomaly_02",
+    "category": "anomaly_shock",
+    "question": "Toplam kredi hacminde 2021-2026 arasında en büyük aylık yüzde artış hangi ayda gerçekleşti ve oran kaçtı?",
+    "expected_tools": [
+      "lakehouse_query",
+      "anomaly_detection"
+    ],
+    "database": "lakehouse",
+    "ground_truth_query": "\n    WITH x AS (\n      SELECT\n        date,\n        toplam_kredi_hacmi,\n        LAG(toplam_kredi_hacmi) OVER (ORDER BY date) AS prev_value\n      FROM gold_credit_market\n    ),\n    c AS (\n      SELECT\n        date,\n        ((toplam_kredi_hacmi/prev_value)-1)*100 AS pct_change\n      FROM x\n      WHERE prev_value IS NOT NULL AND prev_value <> 0\n    )\n    SELECT\n      EXTRACT(YEAR FROM date) AS year,\n      EXTRACT(MONTH FROM date) AS month,\n      pct_change\n    FROM c\n    ORDER BY ABS(pct_change) DESC\n    LIMIT 1\n    ",
+    "must_contain_numbers": [
+      2021.0,
+      14.473711467828476
+    ],
+    "must_contain_text": [
+      "Kasım"
+    ],
+    "verification_mode": "ground_truth",
+    "notes": ""
+  },
+  {
+    "id": "anomaly_03",
+    "category": "anomaly_shock",
+    "question": "Konut fiyat endeksinde 2021-2026 arasında en büyük aylık yüzde değişim hangi ayda gerçekleşti?",
+    "expected_tools": [
+      "lakehouse_query",
+      "anomaly_detection"
+    ],
+    "database": "lakehouse",
+    "ground_truth_query": "\n    WITH x AS (\n      SELECT\n        date,\n        konut_fiyat_endeksi,\n        LAG(konut_fiyat_endeksi) OVER (ORDER BY date) AS prev_value\n      FROM gold_housing_credit_market\n    ),\n    c AS (\n      SELECT\n        date,\n        ((konut_fiyat_endeksi/prev_value)-1)*100 AS pct_change\n      FROM x\n      WHERE prev_value IS NOT NULL AND prev_value <> 0\n    )\n    SELECT\n      EXTRACT(YEAR FROM date) AS year,\n      EXTRACT(MONTH FROM date) AS month,\n      pct_change\n    FROM c\n    ORDER BY ABS(pct_change) DESC\n    LIMIT 1\n    ",
+    "must_contain_numbers": [
+      2021.0,
+      14.298018949181746
+    ],
+    "must_contain_text": [
+      "Aralık"
+    ],
+    "verification_mode": "ground_truth",
+    "notes": ""
+  },
+  {
+    "id": "anomaly_04",
+    "category": "anomaly_shock",
+    "question": "Konut satışlarında 2021-2026 arasında mutlak olarak en sert aylık yüzde hareket hangi ayda gerçekleşti?",
+    "expected_tools": [
+      "lakehouse_query",
+      "anomaly_detection"
+    ],
+    "database": "lakehouse",
+    "ground_truth_query": "\n    WITH x AS (\n      SELECT\n        date,\n        toplam_konut_satisi,\n        LAG(toplam_konut_satisi) OVER (ORDER BY date) AS prev_value\n      FROM gold_housing_credit_market\n    ),\n    c AS (\n      SELECT\n        date,\n        ((toplam_konut_satisi/prev_value)-1)*100 AS pct_change\n      FROM x\n      WHERE prev_value IS NOT NULL AND prev_value <> 0\n    )\n    SELECT\n      EXTRACT(YEAR FROM date) AS year,\n      EXTRACT(MONTH FROM date) AS month,\n      pct_change\n    FROM c\n    ORDER BY ABS(pct_change) DESC\n    LIMIT 1\n    ",
+    "must_contain_numbers": [
+      2021.0,
+      6.0,
+      121.76130204436846
+    ],
+    "must_contain_text": [],
+    "verification_mode": "ground_truth",
+    "notes": ""
+  },
+  {
+    "id": "anomaly_05",
+    "category": "anomaly_shock",
+    "question": "Lakehouse'taki gold_precious_metal_ratios_monthly tablosunda 2021-2026 döneminde gold_silver_ratio_pct_change kolonunun mutlak değerce en sert aylık değişimi hangi ayda gerçekleşti?",
+    "expected_tools": [
+      "lakehouse_query",
+      "anomaly_detection"
+    ],
+    "database": "lakehouse",
+    "ground_truth_query": "\n    WITH x AS (\n      SELECT\n        date,\n        gold_silver_ratio,\n        LAG(gold_silver_ratio) OVER (ORDER BY date) AS prev_value\n      FROM gold_precious_metal_ratios_monthly\n    ),\n    c AS (\n      SELECT\n        date,\n        ((gold_silver_ratio/prev_value)-1)*100 AS pct_change\n      FROM x\n      WHERE prev_value IS NOT NULL AND prev_value <> 0\n    )\n    SELECT\n      EXTRACT(YEAR FROM date) AS year,\n      EXTRACT(MONTH FROM date) AS month,\n      pct_change\n    FROM c\n    ORDER BY ABS(pct_change) DESC\n    LIMIT 1\n    ",
+    "must_contain_numbers": [
+      2025.0,
+      -19.52228888048272
+    ],
+    "must_contain_text": [
+      "Aralık"
+    ],
+    "verification_mode": "ground_truth",
+    "notes": ""
+  },
+  {
+    "id": "live_01",
+    "category": "live_evds",
+    "question": "EVDS üzerinde güncel USD/TL döviz kuru serisini bul ve en güncel mevcut gözlemi getir. Tarihi ve kaynağı açıkça yaz.",
+    "expected_tools": [
+      "series_catalog_search",
+      "evds_data_service"
+    ],
+    "database": "live",
+    "ground_truth_query": null,
+    "must_contain_numbers": [],
+    "must_contain_text": [
+      "EVDS"
+    ],
+    "verification_mode": "live_tool",
+    "notes": "Canlı EVDS değeri koşu tarihine göre değişebilir; sayı sabitlenmez."
+  },
+  {
+    "id": "live_02",
+    "category": "live_evds",
+    "question": "EVDS üzerinden konut fiyat endeksi serisini bul ve en güncel mevcut değeri getir.",
+    "expected_tools": [
+      "series_catalog_search",
+      "evds_data_service"
+    ],
+    "database": "live",
+    "ground_truth_query": null,
+    "must_contain_numbers": [],
+    "must_contain_text": [
+      "EVDS"
+    ],
+    "verification_mode": "live_tool",
+    "notes": "Canlı EVDS değeri koşu tarihine göre değişebilir; sayı sabitlenmez."
+  },
+  {
+    "id": "live_03",
+    "category": "live_evds",
+    "question": "EVDS üzerinden tüketici fiyat endeksi (TÜFE) serisini bul ve en güncel mevcut değeri getir.",
+    "expected_tools": [
+      "series_catalog_search",
+      "evds_data_service"
+    ],
+    "database": "live",
+    "ground_truth_query": null,
+    "must_contain_numbers": [],
+    "must_contain_text": [
+      "EVDS"
+    ],
+    "verification_mode": "live_tool",
+    "notes": "Canlı EVDS değeri koşu tarihine göre değişebilir; sayı sabitlenmez."
+  },
+  {
+    "id": "edge_01",
+    "category": "edge_case",
+    "question": "HEALTH_MOH:hospital_beds_total serisinin veri sağlığını değerlendir. Kaç gözlem var, kaç gözlem bekleniyor ve eksik oranı nedir?",
+    "expected_tools": [
+      "data_health_report"
+    ],
+    "database": "silver",
+    "ground_truth_query": null,
+    "must_contain_numbers": [
+      6.0,
+      23.0,
+      17.0,
+      73.91
+    ],
+    "must_contain_text": [
+      "WARNING"
+    ],
+    "verification_mode": "static_contract",
+    "notes": ""
+  },
+  {
+    "id": "edge_02",
+    "category": "edge_case",
+    "question": "HEALTH_MOH:hospital_beds_total için 2025 yılı değerini ver. Veri yoksa sayı uydurma ve mevcut olmadığını açıkça söyle.",
+    "expected_tools": [
+      "series_catalog_search"
+    ],
+    "database": "silver",
+    "ground_truth_query": "\n    SELECT COUNT(*)\n    FROM observations\n    WHERE series_id='HEALTH_MOH:hospital_beds_total'\n      AND date='2025-12-31'\n    ",
+    "must_contain_numbers": [],
+    "must_contain_text": [
+      "mevcut değil"
+    ],
+    "verification_mode": "ground_truth",
+    "notes": "Amaç gelecekte/veri kapsamı dışında değer uydurulmamasını ölçmek."
+  },
+  {
+    "id": "edge_03",
+    "category": "edge_case",
+    "question": "BDDK FinTürk nakdi kredi verisinin birimini aynen belirt; milyon TL'ye kendiliğinden dönüştürme.",
+    "expected_tools": [
+      "series_catalog_search"
+    ],
+    "database": "silver",
+    "ground_truth_query": null,
+    "must_contain_numbers": [],
+    "must_contain_text": [
+      "bin TL"
+    ],
+    "verification_mode": "static_contract",
+    "notes": ""
+  },
+  {
+    "id": "edge_04",
+    "category": "edge_case",
+    "question": "Veri kataloğunda 'kredi' araması yap. Birden fazla seri varsa tek bir seriyi keyfi olarak doğru kabul etme; uygun adayları belirt.",
+    "expected_tools": [
+      "series_catalog_search"
+    ],
+    "database": "silver",
+    "ground_truth_query": null,
+    "must_contain_numbers": [],
+    "must_contain_text": [],
+    "verification_mode": "behavioral",
+    "notes": ""
+  },
+  {
+    "id": "edge_05",
+    "category": "edge_case",
+    "question": "NovaData veri kataloğunda 'mars nüfusu bankacılık kredisi' adlı bir seri var mı? Yoksa varmış gibi veri üretme.",
+    "expected_tools": [
+      "series_catalog_search"
+    ],
+    "database": "silver",
+    "ground_truth_query": null,
+    "must_contain_numbers": [],
+    "must_contain_text": [],
+    "verification_mode": "behavioral",
+    "notes": ""
+  }
+]

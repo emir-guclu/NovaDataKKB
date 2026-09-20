@@ -33,7 +33,9 @@ def test_lakehouse_query_success_with_real_gold_data():
     assert result.row_count == 1
     assert result.rows[0]["date"].startswith("2026-06-30")
     assert result.rows[0]["konut_kredisi_hacmi_tp"] == pytest.approx(801375.536)
-    assert result.rows[0]["konut_kredisi_faiz_orani"] == pytest.approx(39.33)
+    # TP.KTF12 no longer has a valid observation for 2026-06.
+    # Gold preserves the missing value instead of carrying stale data forward.
+    assert result.rows[0]["konut_kredisi_faiz_orani"] is None
 
 
 def test_lakehouse_query_missing_table_returns_structured_error():

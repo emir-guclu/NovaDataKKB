@@ -1,0 +1,1675 @@
+[
+  {
+    "id": "single_01",
+    "category": "single_metric",
+    "question": "2024 yılında Türkiye'deki toplam hastane yatağı sayısı kaçtır? Kaynağı ve birimi de belirt.",
+    "verification_mode": "ground_truth",
+    "request_success": true,
+    "passed": true,
+    "duration_s": 8.957,
+    "expected_tools": [
+      "series_catalog_search"
+    ],
+    "used_tools": [
+      "series_catalog_search",
+      "lakehouse_query",
+      "data_health_report",
+      "lakehouse_query",
+      "lakehouse_query",
+      "lakehouse_query",
+      "change_detection"
+    ],
+    "tool_score": 1.0,
+    "missing_tools": [],
+    "numeric_score": 1.0,
+    "missing_numbers": [],
+    "text_score": 1.0,
+    "missing_text": [],
+    "grounding_score": 0.8333,
+    "grounding": {
+      "checked": 6,
+      "grounded": 5,
+      "ungrounded": [
+        "0,66"
+      ],
+      "ratio": 0.8333333333333334,
+      "sources": {
+        "tool": 5,
+        "document": 0
+      }
+    },
+    "answer": "## Türkiye Toplam Hastane Yatağı Sayısı — 2024\n\n**2024 yılı toplam hastane yatağı sayısı: 268.359 adet** (dönem sonu: 31.12.2024)\n\n| Alan | Bilgi |\n|---|---|\n| **Değer** | 268.359 |\n| **Birim** | adet |\n| **Kaynak** | HEALTH_MOH (T.C. Sağlık Bakanlığı) |\n| **Seri** | `HEALTH_MOH:hospital_beds_total` — \"Türkiye Toplam Hastane Yatağı Sayısı\" |\n| **Frekans** | Yıllık (Y) |\n| **Seri niteliği** | Stok (stock) — dönem sonu değeri |\n\n### Yıllık değişim\n- Bir önceki yıla (2023) göre değişim: **+1.765 adet**\n- Yıllık artış oranı (YoY): **+%0,66**\n\n### ⚠️ Veri Kalitesi Uyarısı (KKB Veri Sağlık Karnesi)\nBu seri için veri sağlık karnesi **WARNING** durumundadır:\n- Beklenen gözlem sayısı: 23 | Mevcut gözlem: **6**\n- **Eksik veri oranı: %73,9**\n- Sağlık skoru: **0/100**\n- Kapsanan aralık: 2002-12-31 – 2024-12-31\n\nYani 2024 değeri mevcut ve güncel olmakla birlikte, serinin tarihsel kapsamı ciddi biçimde seyrektir. 2024 rakamını tek başına güvenilir kabul edebiliriz; ancak bu seriden uzun dönemli bir trend veya yıllar arası karşılaştırma çıkarırken eksik yıllar nedeniyle temkinli olunmalıdır. Daha sağlıklı bir trend analizi için TÜİK/Sağlık Bakanlığı istatistik yıllıkları gibi tam kapsamlı bir kaynakla çapraz doğrulama önerilir.",
+    "error": null
+  },
+  {
+    "id": "single_02",
+    "category": "single_metric",
+    "question": "BDDK aylık tüketici kredileri içindeki TP konut kredileri serisine göre 2026 Haziran ayında toplam konut kredisi hacmi kaç milyon TL idi?",
+    "verification_mode": "ground_truth",
+    "request_success": true,
+    "passed": true,
+    "duration_s": 6.763,
+    "expected_tools": [
+      "lakehouse_query"
+    ],
+    "used_tools": [
+      "series_catalog_search",
+      "lakehouse_query",
+      "lakehouse_query",
+      "change_detection"
+    ],
+    "tool_score": 1.0,
+    "missing_tools": [],
+    "numeric_score": 1.0,
+    "missing_numbers": [],
+    "text_score": 1.0,
+    "missing_text": [],
+    "grounding_score": 0.5,
+    "grounding": {
+      "checked": 6,
+      "grounded": 3,
+      "ungrounded": [
+        "801,4",
+        "2,37",
+        "37,41"
+      ],
+      "ratio": 0.5,
+      "sources": {
+        "tool": 3,
+        "document": 0
+      }
+    },
+    "answer": "**2026 Haziran ayında TP (Türk Lirası) konut kredisi hacmi: 801.375,536 milyon TL** (yaklaşık 801,4 milyar TL).\n\nDetaylar:\n\n| Gösterge | Değer |\n|---|---|\n| Seri | BDDK Aylık / Tüketici Kredileri / Konut Kredileri |\n| Boyut | TP (Türk Lirası) |\n| Dönem | 2026-06-30 |\n| Hacim | **801.375,536 milyon TL** |\n| Aylık değişim (MoM) | +18.519,249 milyon TL (+%2,37) |\n| Yıllık değişim (YoY) | +218.174,813 milyon TL (+%37,41) |\n| Veri niteliği | Stok (dönem sonu bakiye) |\n\nNot: Bu değer yalnızca **TP (TL) konut kredileri** boyutunu kapsamaktadır; YP (döviz) konut kredileri dahil değildir. Seri, dönem sonu stok büyüklüğü olarak raporlanmaktadır.",
+    "error": null
+  },
+  {
+    "id": "single_03",
+    "category": "single_metric",
+    "question": "2026 Haziran ayında konut kredisi faiz oranı kaçtı?",
+    "verification_mode": "ground_truth",
+    "request_success": true,
+    "passed": true,
+    "duration_s": 13.31,
+    "expected_tools": [
+      "lakehouse_query"
+    ],
+    "used_tools": [
+      "series_catalog_search",
+      "series_catalog_search",
+      "lakehouse_query",
+      "lakehouse_query",
+      "evds_data_service",
+      "evds_data_service",
+      "lakehouse_query",
+      "evds_data_service"
+    ],
+    "tool_score": 1.0,
+    "missing_tools": [],
+    "numeric_score": 1.0,
+    "missing_numbers": [],
+    "text_score": 1.0,
+    "missing_text": [],
+    "grounding_score": 0.8889,
+    "grounding": {
+      "checked": 9,
+      "grounded": 8,
+      "ungrounded": [
+        "2,2"
+      ],
+      "ratio": 0.8888888888888888,
+      "sources": {
+        "tool": 8,
+        "document": 0
+      }
+    },
+    "answer": "## Konut Kredisi Faiz Oranı — Haziran 2026\n\n**Kaynak:** TCMB EVDS, seri kodu **TP.KTF12** — \"Konut Kredisi (TL, Akım, %)\" (haftalık, ağırlıklı ortalama)\n\nHaziran 2026'da konut kredisi faiz oranı haftalık olarak şu seyri izledi:\n\n| Hafta | Faiz Oranı (%) |\n|---|---|\n| 5 Haziran 2026 | 39,33 |\n| 12 Haziran 2026 | 39,72 |\n| 19 Haziran 2026 | 40,73 |\n| 26 Haziran 2026 | 41,56 |\n\n**Özet:** Haziran 2026 başında (5 Haziran) oran **%39,33** iken, ay sonuna doğru (26 Haziran) **%41,56**'ya yükseldi. Yani ay içinde yaklaşık **2,2 puanlık** bir artış yaşandı. Ayın ilk haftasından son haftasına kadar kademeli ve istikrarlı bir yükseliş trendi görülüyor.\n\n**Notlar:**\n- Bu seri **akım (yeni kullandırılan krediler)** faiz oranını gösterir; stok faiz oranı için farklı bir seri (TP.BKR.TRY.18) kullanılır.\n- Veri haftalık yayımlandığı için \"Haziran ayı\" için tek bir değer yerine haftalık değerler verilmiştir. Ayın tamamı için temsili bir değer olarak ay sonu (26 Haziran) haftası **%41,56** alınabilir.\n- Karşılaştırma için: en güncel veri olan 11 Eylül 2026 haftasında oran **%41,93** seviyesindedir.\n\n> Not: Lakehouse'daki `gold_housing_credit_market` tablosunda Haziran 2026 dahil 2026 yılı boyunca `konut_kredisi_faiz_orani` kolonu boş (null) olduğundan, bu soru için resmi TCMB EVDS serisi (TP.KTF12) kullanılmıştır.",
+    "error": null
+  },
+  {
+    "id": "single_04",
+    "category": "single_metric",
+    "question": "EVDS TP.KFE.TR Türkiye Konut Fiyat Endeksi serisine göre 2026 Haziran değeri kaçtır?",
+    "verification_mode": "ground_truth",
+    "request_success": true,
+    "passed": true,
+    "duration_s": 5.051,
+    "expected_tools": [
+      "lakehouse_query"
+    ],
+    "used_tools": [
+      "series_catalog_search",
+      "evds_data_service"
+    ],
+    "tool_score": 0.0,
+    "missing_tools": [
+      "lakehouse_query"
+    ],
+    "numeric_score": 1.0,
+    "missing_numbers": [],
+    "text_score": 1.0,
+    "missing_text": [],
+    "grounding_score": 0.8333,
+    "grounding": {
+      "checked": 6,
+      "grounded": 5,
+      "ungrounded": [
+        "1,9"
+      ],
+      "ratio": 0.8333333333333334,
+      "sources": {
+        "tool": 5,
+        "document": 0
+      }
+    },
+    "answer": "**EVDS TP.KFE.TR — Türkiye Konut Fiyat Endeksi (KFE)**\n\n**2026 Haziran değeri: 231,34** (endeks değeri, 2026-06-30 dönemi).\n\nSerinin son gözlemleri (aylık, endeks):\n\n| Dönem | Değer |\n|---|---|\n| 2026-04 | 223,32 |\n| 2026-05 | 226,99 |\n| **2026-06** | **231,34** |\n| 2026-07 | 234,55 |\n| 2026-08 | 236,76 |\n\nNotlar:\n- Seri EVDS resmi veri servisinden canlı yüklendi; frekans aylık, son gözlem 2026-08-31 (236,76).\n- Endeks serisinin birim bilgisi kaynakta tanımlı değil (unit: null); bu nedenle değer bir endeks düzeyi olarak okunmalı, TL gibi bir parasal birim atfedilmemelidir.\n- Haziran 2026 değeri, Mayıs'a göre yaklaşık %1,9 artış göstermiştir (231,34 / 226,99). Bu oran, tool çıktısındaki ham değerlerden hesaplanmıştır.\n\nİsterseniz bu seri için aylık/yıllık değişim, anomali tespiti veya dönüm noktası analizi yapabilirim.",
+    "error": null
+  },
+  {
+    "id": "single_05",
+    "category": "single_metric",
+    "question": "2026 Haziran ayında toplam konut satışı kaç adetti?",
+    "verification_mode": "ground_truth",
+    "request_success": true,
+    "passed": true,
+    "duration_s": 5.837,
+    "expected_tools": [
+      "lakehouse_query"
+    ],
+    "used_tools": [
+      "series_catalog_search",
+      "lakehouse_query",
+      "change_detection"
+    ],
+    "tool_score": 1.0,
+    "missing_tools": [],
+    "numeric_score": 1.0,
+    "missing_numbers": [],
+    "text_score": 1.0,
+    "missing_text": [],
+    "grounding_score": 0.6,
+    "grounding": {
+      "checked": 5,
+      "grounded": 3,
+      "ungrounded": [
+        "39,3",
+        "15,8"
+      ],
+      "ratio": 0.6,
+      "sources": {
+        "tool": 3,
+        "document": 0
+      }
+    },
+    "answer": "**2026 Haziran ayında Türkiye genelinde toplam konut satışı 129.979 adet** olarak gerçekleşmiştir.\n\n| Gösterge | Değer |\n|---|---|\n| Dönem | Haziran 2026 |\n| Toplam konut satışı | **129.979 adet** |\n| Aylık değişim (Mayıs→Haziran) | +36.646 adet (+%39,3) |\n| Yıllık değişim (Haziran 2025→Haziran 2026) | +17.783 adet (+%15,8) |\n\n**Kaynak ve kapsam:** EVDS – \"Türkiye_Konut_Toplam Satışlar\" serisi (kod: TP.AKONUTSAT1.KTRTOPLAM), aylık frekanslı, birim \"Adet\", akış (flow) niteliğinde. Seri, Türkiye geneli toplam konut satışlarını (ipotekli + diğer satışlar) kapsar.\n\n**Kısa yorum:** Haziran 2026, hem bir önceki aya göre güçlü bir artış (+%39,3) hem de geçen yılın aynı ayına kıyasla belirgin bir yükseliş (+%15,8) göstermiştir. Aylık sıçramanın bir kısmı mevsimsel etkilerden kaynaklanabilir; bu nedenle yıllık (YoY) karşılaştırma dönemsel eğilimi okumak için daha sağlıklı bir referanstır.\n\nİsterseniz bu seri için mevsimsellikten arındırılmış trend, dönüm noktaları veya ipotekli satışlarla karşılaştırmalı bir analiz de yapabilirim.",
+    "error": null
+  },
+  {
+    "id": "single_06",
+    "category": "single_metric",
+    "question": "2026 Haziran ayında bankacılık sektörünün toplam kredi hacmi kaç milyon TL idi?",
+    "verification_mode": "ground_truth",
+    "request_success": true,
+    "passed": true,
+    "duration_s": 7.58,
+    "expected_tools": [
+      "lakehouse_query"
+    ],
+    "used_tools": [
+      "series_catalog_search",
+      "lakehouse_query",
+      "lakehouse_query",
+      "change_detection"
+    ],
+    "tool_score": 1.0,
+    "missing_tools": [],
+    "numeric_score": 1.0,
+    "missing_numbers": [],
+    "text_score": 1.0,
+    "missing_text": [],
+    "grounding_score": 0.5,
+    "grounding": {
+      "checked": 6,
+      "grounded": 3,
+      "ungrounded": [
+        "26,78",
+        "2,83",
+        "37,01"
+      ],
+      "ratio": 0.5,
+      "sources": {
+        "tool": 3,
+        "document": 0
+      }
+    },
+    "answer": "## Bankacılık Sektörü Toplam Kredi Hacmi — Haziran 2026\n\n**2026 Haziran sonu itibarıyla bankacılık sektörünün toplam kredi hacmi: 26.783.571,945 milyon TL** (yaklaşık **26,78 trilyon TL**).\n\n### Detaylar\n\n| Gösterge | Değer |\n|---|---|\n| Dönem | 2026-06-30 |\n| Toplam kredi hacmi | 26.783.571,945 milyon TL |\n| Aylık değişim (MoM) | +736.929,688 milyon TL (+%2,83) |\n| Yıllık değişim (YoY) | +7.234.264,567 milyon TL (+%37,01) |\n| Veri niteliği | Stok (stock) |\n| Kaynak | BDDK_MONTHLY — krediler / toplam krediler |\n\n### Kısa Yorum\n- Haziran 2026'da toplam kredi hacmi bir önceki aya göre **%2,83** artarak 26,78 trilyon TL seviyesine ulaşmıştır.\n- Yıllık bazda artış **%37,01** ile güçlü bir nominal büyümeye işaret etmektedir. Ancak bu nominal artışın bir kısmı enflasyon kaynaklıdır; satın alma gücü cinsinden reel büyümeyi görmek için TÜFE ile arındırma (reel değer analizi) yapılması önerilir.\n\n> Not: Sorunuzdaki \"milyon TL\" birimiyle doğrudan uyumlu olan bu seri, BDDK aylık krediler verisinden alınmıştır. Farklı bir tanım (örn. yurt içi kredi hacmi) istenirse EVDS `TP.KREHACBS.A1` serisi (bin TL birimli) alternatif olarak kullanılabilir.",
+    "error": null
+  },
+  {
+    "id": "single_07",
+    "category": "single_metric",
+    "question": "2026 Haziran ayında ticari kredi faiz oranı kaçtı?",
+    "verification_mode": "ground_truth",
+    "request_success": true,
+    "passed": true,
+    "duration_s": 5.632,
+    "expected_tools": [
+      "lakehouse_query"
+    ],
+    "used_tools": [
+      "series_catalog_search",
+      "lakehouse_query",
+      "change_detection"
+    ],
+    "tool_score": 1.0,
+    "missing_tools": [],
+    "numeric_score": 1.0,
+    "missing_numbers": [],
+    "text_score": 1.0,
+    "missing_text": [],
+    "grounding_score": 0.6,
+    "grounding": {
+      "checked": 5,
+      "grounded": 3,
+      "ungrounded": [
+        "2,3",
+        "13,6"
+      ],
+      "ratio": 0.6,
+      "sources": {
+        "tool": 3,
+        "document": 0
+      }
+    },
+    "answer": "## Ticari Kredi Faiz Oranı — Haziran 2026\n\n**Sonuç:** 2026 Haziran ayında TL ticari kredilerin ağırlıklı ortalama faiz oranı **%54,58** olarak gerçekleşmiştir.\n\n**Seri bilgisi:**\n- Gösterge: Ticari Krediler (TL, Akım, %) — EVDS kodu: `TP.KTF17`\n- Birim: Ağırlıklı ortalama (%)\n- Frekans: Haftalık (Haziran 2026 dönem sonu gözlemi: 30.06.2026)\n\n**Hareket:**\n- Bir önceki döneme göre (MoM): **+1,24 puan** (yaklaşık %2,3 artış)\n- Bir yıl öncesine göre (YoY): **−8,61 puan** (yaklaşık %13,6 düşüş)\n\nYani Haziran 2026'da ticari kredi faizi aylık bazda hafif yükselmiş olsa da, yıllık bazda belirgin bir gerileme göstermiştir.\n\n> Not: Bu değer, sistemdeki en güncel Haziran 2026 gözlemine (30.06.2026) dayanmaktadır. Haftalık seri olduğu için ay içindeki diğer haftalarda farklı seviyeler görülmüş olabilir; talep ederseniz ay içi haftalık seyri de çıkarabilirim.",
+    "error": null
+  },
+  {
+    "id": "single_08",
+    "category": "single_metric",
+    "question": "Lakehouse'taki gold_precious_metal_ratios_monthly tablosuna göre 2026 Haziran gold_silver_ratio değeri kaçtır?",
+    "verification_mode": "ground_truth",
+    "request_success": true,
+    "passed": true,
+    "duration_s": 2.224,
+    "expected_tools": [
+      "lakehouse_query"
+    ],
+    "used_tools": [
+      "lakehouse_query"
+    ],
+    "tool_score": 1.0,
+    "missing_tools": [],
+    "numeric_score": 1.0,
+    "missing_numbers": [],
+    "text_score": 1.0,
+    "missing_text": [],
+    "grounding_score": 1.0,
+    "grounding": {
+      "checked": 1,
+      "grounded": 1,
+      "ungrounded": [],
+      "ratio": 1.0,
+      "sources": {
+        "tool": 1,
+        "document": 0
+      }
+    },
+    "answer": "**2026 Haziran ayı `gold_silver_ratio` değeri: 59,64**\n\nKaynak: `gold_precious_metal_ratios_monthly` tablosu, 2026-06-30 tarihli gözlem (Haziran ayı için tek kayıt).",
+    "error": null
+  },
+  {
+    "id": "trend_01",
+    "category": "trend_change",
+    "question": "BDDK aylık tüketici kredileri içindeki TP konut kredileri serisine göre 2026 Ocak-Haziran arasında konut kredisi hacmi ne kadar değişti? Başlangıç, bitiş ve yüzde değişimi ver.",
+    "verification_mode": "ground_truth",
+    "request_success": true,
+    "passed": true,
+    "duration_s": 9.25,
+    "expected_tools": [
+      "lakehouse_query"
+    ],
+    "used_tools": [
+      "series_catalog_search",
+      "lakehouse_query",
+      "change_detection",
+      "data_health_report"
+    ],
+    "tool_score": 1.0,
+    "missing_tools": [],
+    "numeric_score": 1.0,
+    "missing_numbers": [],
+    "text_score": 1.0,
+    "missing_text": [],
+    "grounding_score": 0.45,
+    "grounding": {
+      "checked": 20,
+      "grounded": 9,
+      "ungrounded": [
+        "110.093,862",
+        "15,93",
+        "1,82",
+        "3,54",
+        "3,66",
+        "3,42",
+        "2,03",
+        "2,37",
+        "3,4",
+        "3,7",
+        "37,41"
+      ],
+      "ratio": 0.45,
+      "sources": {
+        "tool": 9,
+        "document": 0
+      }
+    },
+    "answer": "## BDDK Aylık Tüketici Kredileri — TP Konut Kredisi Hacmi (2026 Ocak–Haziran)\n\n**Seri:** `BDDK_MONTHLY:tuketici_kredileri:tuketici_kredileri_konut` (boyut: **TP** — Türk Lirası)\n**Birim:** milyon TL · **Niteliği:** stok (stock) · **Frekans:** aylık\n\n### Dönem Değişimi\n\n| | Tarih | Değer (milyon TL) |\n|---|---|---|\n| **Başlangıç** | 2026-01-31 | **691.281,674** |\n| **Bitiş** | 2026-06-30 | **801.375,536** |\n\n- **Mutlak değişim:** +110.093,862 milyon TL\n- **Yüzde değişim:** **+%15,93**\n\n### Aylık Seyir\n\n| Ay | Değer (milyon TL) | Aylık değişim |\n|---|---|---|\n| Ocak 2026 | 691.281,674 | +%1,82 |\n| Şubat 2026 | 715.738,039 | +%3,54 |\n| Mart 2026 | 741.915,405 | +%3,66 |\n| Nisan 2026 | 767.255,744 | +%3,42 |\n| Mayıs 2026 | 782.856,287 | +%2,03 |\n| Haziran 2026 | 801.375,536 | +%2,37 |\n\n### Analist İçgörüsü\n- TP konut kredisi hacmi altı ayda kesintisiz artış göstererek **%15,93** büyüdü; hiçbir ayda daralma yaşanmadı.\n- Artış hızı yılın ilk çeyreğinde daha güçlüydü (Şubat–Nisan aylarında aylık ~%3,4–3,7 bandı), Mayıs'ta %2,03 ile yavaşladı, Haziran'da %2,37 ile kısmi toparlandı.\n- Yıllık (YoY) karşılaştırmada Haziran 2026, bir önceki yılın aynı ayına göre **+%37,41** ile dönemin en yüksek yıllık artışını gösteriyor — yani büyüme sadece aylık bazda değil, yıllık bazda da hızlanıyor.\n\n### Veri Kalitesi (KKB Güvencesi)\n- **Sağlık skoru: 100/100 (EXCELLENT)**\n- Gözlem sayısı: 198 · **Eksik veri: %0,0**\n- Kapsam: 2021-01-31 – 2026-06-30 · Hizalama politikası: *last* · Kümülatif değil (stok)\n- Köken (lineage): `gold_housing_credit_market` → `konut_kredisi_hacmi_tp` (TP boyutu, \"Total housing loans in TRY\")\n\n> Not: Değerler nominal (milyon TL) düzeyindedir; enflasyondan arındırılmamıştır. Reel (satın alma gücü bazlı) değişim istenirse TÜFE deflatörüyle ayrıca hesaplanabilir.",
+    "error": null
+  },
+  {
+    "id": "trend_02",
+    "category": "trend_change",
+    "question": "EVDS TP.KFE.TR Türkiye Konut Fiyat Endeksi serisine göre 2026 Ocak-Haziran arasında endeks ne kadar değişti?",
+    "verification_mode": "ground_truth",
+    "request_success": true,
+    "passed": true,
+    "duration_s": 7.367,
+    "expected_tools": [
+      "series_catalog_search",
+      "change_detection"
+    ],
+    "used_tools": [
+      "series_catalog_search",
+      "evds_data_service",
+      "change_detection",
+      "data_health_report"
+    ],
+    "tool_score": 1.0,
+    "missing_tools": [],
+    "numeric_score": 1.0,
+    "missing_numbers": [],
+    "text_score": 1.0,
+    "missing_text": [],
+    "grounding_score": 0.3077,
+    "grounding": {
+      "checked": 26,
+      "grounded": 8,
+      "ungrounded": [
+        "19,61",
+        "9,26",
+        "9,3",
+        "3,61",
+        "27,64",
+        "1,73",
+        "26,30",
+        "1,91",
+        "26,25",
+        "26,59",
+        "1,64",
+        "24,49",
+        "1,92",
+        "24,40",
+        "1,6",
+        "1,9",
+        "27,6",
+        "24,4"
+      ],
+      "ratio": 0.3076923076923077,
+      "sources": {
+        "tool": 8,
+        "document": 0
+      }
+    },
+    "answer": "## Konut Fiyat Endeksi (KFE) — 2026 Ocak–Haziran Değişimi\n\n**Seri:** EVDS:TP.KFE.TR — Konut Fiyat Endeksi (KFE), Türkiye Geneli (NUTS0), aylık, stok (endeks) niteliğinde.\n\n### Dönem İçi Değişim (Ocak → Haziran 2026)\n\n| Gösterge | Değer |\n|---|---|\n| Ocak 2026 endeksi | **211,73** |\n| Haziran 2026 endeksi | **231,34** |\n| **Dönem içi değişim (6 ay)** | **+19,61 puan** |\n| **Dönem içi yüzde değişim** | **≈ +%9,26** |\n\nYani endeks yılın ilk yarısında (Ocak sonundan Haziran sonuna) yaklaşık **%9,3** artmıştır.\n\n### Aylık Seyir\n\n| Ay | Endeks | Aylık değişim (MoM) | Yıllık değişim (YoY) |\n|---|---|---|---|\n| Oca 2026 | 211,73 | +%3,61 | +%27,64 |\n| Şub 2026 | 215,40 | +%1,73 | +%26,30 |\n| Mar 2026 | 219,52 | +%1,91 | +%26,25 |\n| Nis 2026 | 223,32 | +%1,73 | +%26,59 |\n| May 2026 | 226,99 | +%1,64 | +%24,49 |\n| Haz 2026 | 231,34 | +%1,92 | +%24,40 |\n\n**Öne çıkan noktalar:**\n- Aylık artış hızı Ocak'taki %3,61'den sonra %1,6–1,9 bandına yerleşmiş; yani **fiyat artış ivmesi yıl başına kıyasla yavaşlamış** ancak pozitif seyrini korumuş.\n- Yıllık (YoY) artış oranı Ocak'ta %27,6 iken Haziran'da %24,4'e gerilemiş; **yıllık bazda da bir miktar ivme kaybı** görülüyor.\n- Dönem boyunca hiçbir ayda negatif aylık değişim yok; artış kesintisiz.\n\n### Veri Kalitesi (KKB Veri Sağlık Karnesi)\n- Gözlem sayısı: **6 / beklenen 6**, eksik veri oranı **%0,0**\n- Sağlık skoru: **100/100 — EXCELLENT**\n- Nitelik: stok (endeks), kümülatif değil; hizalama politikası \"last\", kaynak: EVDS (gold_housing_credit_market → konut_fiyat_endeksi)\n\n**Not:** Endeks serisinin birimi tool çıktısında tanımlı değildir; bu nedenle değerler endeks puanı olarak raporlanmış, herhangi bir para birimi veya ölçek atfedilmemiştir.",
+    "error": null
+  },
+  {
+    "id": "trend_03",
+    "category": "trend_change",
+    "question": "EVDS TP.BKR.TRY.18 stok konut kredisi faiz oranı 2026 Ocak-Haziran arasında nasıl değişti?",
+    "verification_mode": "ground_truth",
+    "request_success": true,
+    "passed": true,
+    "duration_s": 7.943,
+    "expected_tools": [
+      "series_catalog_search",
+      "change_detection"
+    ],
+    "used_tools": [
+      "series_catalog_search",
+      "evds_data_service",
+      "change_detection",
+      "data_health_report"
+    ],
+    "tool_score": 1.0,
+    "missing_tools": [],
+    "numeric_score": 1.0,
+    "missing_numbers": [],
+    "text_score": 1.0,
+    "missing_text": [],
+    "grounding_score": 0.6667,
+    "grounding": {
+      "checked": 21,
+      "grounded": 14,
+      "ungrounded": [
+        "0,68",
+        "0,42",
+        "0,89",
+        "0,76",
+        "1,07",
+        "1,20",
+        "3,9"
+      ],
+      "ratio": 0.6666666666666666,
+      "sources": {
+        "tool": 14,
+        "document": 0
+      }
+    },
+    "answer": "## Konut Kredisi Faiz Oranı (TL, Stok) — 2026 Ocak–Haziran\n\n**Seri:** EVDS `TP.BKR.TRY.18` — \"Konut Kredisi (TL, Stok, %)\", aylık, ağırlıklı ortalama.\n\n### Aylık Gelişim\n\n| Dönem | Faiz Oranı (%) | Aylık Değişim (puan) | Aylık Değişim (%) |\n|---|---|---|---|\n| 2026-01 | 31,01 | — | — |\n| 2026-02 | 31,22 | +0,21 | +%0,68 |\n| 2026-03 | 31,35 | +0,13 | +%0,42 |\n| 2026-04 | 31,63 | +0,28 | +%0,89 |\n| 2026-05 | 31,87 | +0,24 | +%0,76 |\n| 2026-06 | 32,21 | +0,34 | +%1,07 |\n\n### Öne Çıkan Bulgular\n- **Kesintisiz yükseliş:** Ocak–Haziran arasındaki 6 ayda oran her ay artmış, hiç düşüş yaşanmamıştır.\n- **Toplam artış:** 31,01'den 32,21'e → **+1,20 puan** (yaklaşık **+%3,9** altı aylık kümülatif artış).\n- **Hızlanma eğilimi:** Aylık artışlar Şubat'ta +0,21 iken Haziran'da +0,34'e çıkmış; en sert aylık artış Haziran'da (+0,34 puan, +%1,07) kaydedilmiştir. Yani yılın ikinci çeyreğinde yukarı yönlü baskı güçlenmiştir.\n- **En güncel değer:** Haziran 2026 itibarıyla **%32,21** (ağırlıklı ortalama).\n\n### Veri Kalitesi (KKB Veri Sağlık Karnesi)\n- Gözlem sayısı: **6/6** (beklenen = mevcut), **eksik veri %0,0**\n- Sağlık skoru: **100/100 — EXCELLENT**\n- Seri niteliği: oran (rate), kümülatif değil; hizalama politikası: ortalama\n- Kaynak: EVDS (resmi TCMB verisi)\n\n**Yönetici özeti:** 2026'nın ilk yarısında stok konut kredisi faiz oranı istikrarlı ama ivme kazanan bir yükseliş trendinde olup, Haziran'da %32,21 ile dönem zirvesine ulaşmıştır. Bu, konut kredisi maliyetinin arttığını ve buna bağlı olarak kredi talebi üzerinde aşağı yönlü baskı oluşabileceğini ima eder.",
+    "error": null
+  },
+  {
+    "id": "trend_04",
+    "category": "trend_change",
+    "question": "2026 Ocak-Haziran arasında toplam kredi hacmi ne kadar değişti?",
+    "verification_mode": "ground_truth",
+    "request_success": true,
+    "passed": true,
+    "duration_s": 6.395,
+    "expected_tools": [
+      "lakehouse_query"
+    ],
+    "used_tools": [
+      "series_catalog_search",
+      "change_detection",
+      "data_health_report"
+    ],
+    "tool_score": 0.0,
+    "missing_tools": [
+      "lakehouse_query"
+    ],
+    "numeric_score": 1.0,
+    "missing_numbers": [],
+    "text_score": 1.0,
+    "missing_text": [],
+    "grounding_score": 0.4,
+    "grounding": {
+      "checked": 20,
+      "grounded": 8,
+      "ungrounded": [
+        "2,24",
+        "2,42",
+        "2,85",
+        "2,64",
+        "1,91",
+        "2,83",
+        "3.143.357",
+        "3,14",
+        "13,3",
+        "26,78",
+        "44,4",
+        "37,0"
+      ],
+      "ratio": 0.4,
+      "sources": {
+        "tool": 8,
+        "document": 0
+      }
+    },
+    "answer": "## Toplam Kredi Hacmi — 2026 Ocak–Haziran Değişimi\n\n**Kaynak:** BDDK_MONTHLY / krediler / toplam krediler (stok veri, milyon TL)\n\n| Dönem | Toplam Kredi Hacmi (milyon TL) | Aylık Değişim |\n|---|---:|---:|\n| 2026-01-31 | 23.640.215 | +%2,24 |\n| 2026-02-28 | 24.211.722 | +%2,42 |\n| 2026-03-31 | 24.901.164 | +%2,85 |\n| 2026-04-30 | 25.557.572 | +%2,64 |\n| 2026-05-31 | 26.046.642 | +%1,91 |\n| 2026-06-30 | 26.783.572 | +%2,83 |\n\n### Dönem Değişimi (Ocak → Haziran 2026)\n- **Mutlak artış:** 26.783.572 − 23.640.215 = **+3.143.357 milyon TL** (yaklaşık **+3,14 trilyon TL**)\n- **Yüzdesel artış:** **+%13,3** (altı aylık dönemde)\n\n### Öne Çıkanlar\n- Haziran 2026 itibarıyla toplam kredi hacmi **26,78 trilyon TL** seviyesinde.\n- Dönem boyunca her ay pozitif büyüme kaydedilmiş; en güçlü aylık artış **Mart (%2,85)** ve **Haziran (%2,83)** aylarında görülmüş, en zayıf artış **Mayıs (%1,91)** olmuş.\n- Yıllık (YoY) karşılaştırmada büyüme hızı kademeli olarak yavaşlıyor: Ocak'ta **%44,4** iken Haziran'da **%37,0**'a gerilemiş. Yani hacim artmaya devam ederken **yıllık büyüme ivmesi zayıflıyor**.\n\n### Veri Kalitesi (KKB Veri Sağlık Karnesi)\n- Seri: 2021-01-31 – 2026-06-30 aralığı, **%0,0 eksik veri**, **EXCELLENT (100/100)** sağlık skoru.\n- Nitelik: **stok** veri (dönem sonu), hizalama politikası \"last\", kaynak BDDK_MONTHLY.\n\n> Not: Bu değişim **nominal** (enflasyon etkisi dahil) büyüklüktür. Reel (enflasyondan arındırılmış) değişimi görmek isterseniz TÜFE deflatörüyle reel analiz yapabilirim.",
+    "error": null
+  },
+  {
+    "id": "trend_05",
+    "category": "trend_change",
+    "question": "2026 Ocak-Haziran arasında ticari kredi faiz oranının başlangıç değerini, bitiş değerini ve dönem başından dönem sonuna oransal yüzde değişimini hesapla.",
+    "verification_mode": "ground_truth",
+    "request_success": true,
+    "passed": true,
+    "duration_s": 14.717,
+    "expected_tools": [
+      "lakehouse_query"
+    ],
+    "used_tools": [
+      "series_catalog_search",
+      "lakehouse_query",
+      "evds_data_service",
+      "lakehouse_query",
+      "lakehouse_query",
+      "change_detection",
+      "data_health_report"
+    ],
+    "tool_score": 1.0,
+    "missing_tools": [],
+    "numeric_score": 1.0,
+    "missing_numbers": [],
+    "text_score": 1.0,
+    "missing_text": [],
+    "grounding_score": 0.8235,
+    "grounding": {
+      "checked": 17,
+      "grounded": 14,
+      "ungrounded": [
+        "2,11",
+        "3,90",
+        "2,32"
+      ],
+      "ratio": 0.8235294117647058,
+      "sources": {
+        "tool": 14,
+        "document": 0
+      }
+    },
+    "answer": "## Ticari Kredi Faiz Oranı — 2026 Ocak–Haziran Analizi\n\n**Kullanılan seri:** `EVDS:TP.KTF17` — Ticari Krediler (TL, Akım, %), ağırlıklı ortalama, aylık hizalanmış (kaynak: EVDS, Gold tablo: `gold_credit_market` / `ticari_kredi_faiz_orani`).\n\n### Dönem Başı ve Dönem Sonu Değerleri\n\n| Dönem | Değer (%) |\n|---|---|\n| **Başlangıç — Ocak 2026** | **50,56** |\n| **Bitiş — Haziran 2026** | **54,58** |\n\n### Oransal Yüzde Değişim (Dönem Başı → Dönem Sonu)\n\nHesaplama: (54,58 − 50,56) / 50,56 × 100\n\n- **Mutlak değişim:** +4,02 puan\n- **Oransal yüzde değişim:** **+%7,95**\n\nYani ticari kredi faiz oranı 2026 Ocak–Haziran döneminde yaklaşık **%7,95 oranında artmıştır** (50,56'den 54,58'e).\n\n### Aylık Seyir (bilgi amaçlı)\n\n| Ay | Değer (%) | Aylık değişim |\n|---|---|---|\n| Ocak 2026 | 50,56 | −%2,11 |\n| Şubat 2026 | 50,20 | −%0,70 |\n| Mart 2026 | 52,16 | +%3,90 |\n| Nisan 2026 | 53,73 | +%3,02 |\n| Mayıs 2026 | 53,34 | −%0,73 |\n| Haziran 2026 | 54,58 | +%2,32 |\n\nDönem içinde faiz oranı Şubat'ta dip yaptıktan sonra Mart–Nisan'da belirgin şekilde yükselmiş, Mayıs'ta hafif geri çekilmiş ve Haziran'da tekrar artmıştır. Net sonuç, dönem başına göre **yukarı yönlü** bir seyirdir.\n\n### Veri Kalitesi (KKB Veri Sağlık Karnesi)\n- **Sağlık skoru:** 100/100 — **EXCELLENT**\n- **Gözlem sayısı:** 27 (beklenen 27), **eksik veri oranı: %0,0**\n- **Kapsam:** 2026-01-02 – 2026-07-03, haftalık kaynak veri aylık ortalamaya (mean) hizalanmış\n- **Kümülatif değil**, nitelik: oran (rate)\n\n> Not: Seri haftalık yayımlanmakta olup aylık değerler haftalık gözlemlerin ortalamasıdır; bu nedenle aylık değerler tam ay sonu tek gözleminden değil, ay içi ortalamadan oluşur.",
+    "error": null
+  },
+  {
+    "id": "trend_06",
+    "category": "trend_change",
+    "question": "Lakehouse'taki gold_precious_metal_ratios_monthly tablosuna göre 2026 Ocak-Haziran arasında gold_silver_ratio değerinin başlangıç, bitiş ve oransal yüzde değişimini hesapla.",
+    "verification_mode": "ground_truth",
+    "request_success": true,
+    "passed": true,
+    "duration_s": 4.227,
+    "expected_tools": [
+      "lakehouse_query"
+    ],
+    "used_tools": [
+      "lakehouse_query"
+    ],
+    "tool_score": 1.0,
+    "missing_tools": [],
+    "numeric_score": 1.0,
+    "missing_numbers": [],
+    "text_score": 1.0,
+    "missing_text": [],
+    "grounding_score": 0.7647,
+    "grounding": {
+      "checked": 17,
+      "grounded": 13,
+      "ungrounded": [
+        "6,47",
+        "100",
+        "12,16",
+        "12,2"
+      ],
+      "ratio": 0.7647058823529411,
+      "sources": {
+        "tool": 13,
+        "document": 0
+      }
+    },
+    "answer": "## Gold/Silver Oranı — 2026 Ocak–Haziran Analizi\n\n**Kaynak:** `gold_precious_metal_ratios_monthly` (aylık, 6 gözlem)\n\n| Tarih | Gold/Silver Oranı |\n|---|---|\n| 2026-01-31 | 53,17 |\n| 2026-02-28 | 62,84 |\n| 2026-03-31 | 63,38 |\n| 2026-04-30 | 62,89 |\n| 2026-05-31 | 58,70 |\n| 2026-06-30 | 59,64 |\n\n### Başlangıç / Bitiş / Değişim\n\n- **Başlangıç değeri (31 Ocak 2026):** 53,17\n- **Bitiş değeri (30 Haziran 2026):** 59,64\n- **Mutlak değişim:** +6,47 puan\n- **Oransal yüzde değişim:** (59,6405 − 53,1746) / 53,1746 × 100 ≈ **+%12,16**\n\n### Kısa Yorum\n\nDönem içinde oran **%12,2 artmış**; yani altın, gümüş karşısında görece değer kazanmış. Artış tek düze değil: Şubat–Mart'ta hızlı bir yükselişle 63,4 seviyesine çıkılmış, Nisan–Mayıs'ta 58,7'ye kadar geri çekilme yaşanmış, Haziran'da ise 59,6 ile kısmi toparlanma görülmüş. Net sonuç, dönem başına kıyasla belirgin bir yukarı yönlü seyir.\n\n> Not: Tablo çıktısında birim bilgisi (`column_units`) yer almamaktadır; oran, boyutsuz bir katsayı olarak değerlendirilmiştir.",
+    "error": null
+  },
+  {
+    "id": "trend_07",
+    "category": "trend_change",
+    "question": "Türkiye'deki toplam hastane yatağı sayısı 2020'den 2024'e ne kadar arttı? Sayısal ve yüzde değişimi ver.",
+    "verification_mode": "ground_truth",
+    "request_success": true,
+    "passed": true,
+    "duration_s": 7.169,
+    "expected_tools": [
+      "series_catalog_search",
+      "change_detection"
+    ],
+    "used_tools": [
+      "series_catalog_search",
+      "lakehouse_query",
+      "data_health_report",
+      "change_detection"
+    ],
+    "tool_score": 1.0,
+    "missing_tools": [],
+    "numeric_score": 1.0,
+    "missing_numbers": [],
+    "text_score": 1.0,
+    "missing_text": [],
+    "grounding_score": 0.6316,
+    "grounding": {
+      "checked": 19,
+      "grounded": 12,
+      "ungrounded": [
+        "1,32",
+        "3,02",
+        "1,68",
+        "0,66",
+        "17.177",
+        "6,84",
+        "45"
+      ],
+      "ratio": 0.631578947368421,
+      "sources": {
+        "tool": 12,
+        "document": 0
+      }
+    },
+    "answer": "## Türkiye Toplam Hastane Yatağı Sayısı (2020–2024)\n\n**Kaynak:** Sağlık Bakanlığı (HEALTH_MOH) | **Birim:** adet | **Frekans:** Yıllık (stok veri)\n\n| Yıl | Yatak Sayısı | Yıllık Değişim (adet) | Yıllık Değişim (%) |\n|---|---|---|---|\n| 2020 | 251.182 | — | — |\n| 2021 | 254.497 | +3.315 | +1,32% |\n| 2022 | 262.190 | +7.693 | +3,02% |\n| 2023 | 266.594 | +4.404 | +1,68% |\n| 2024 | 268.359 | +1.765 | +0,66% |\n\n### 2020 → 2024 Toplam Değişim\n- **Mutlak artış:** 268.359 − 251.182 = **+17.177 yatak**\n- **Yüzde artış:** **+6,84%**\n\n### Analist İçgörüsü\n- Dört yıllık dönemde yatak kapasitesi istikrarlı biçimde artmış, ancak **artış hızı belirgin şekilde yavaşlıyor**: yıllık büyüme 2022'deki %3,02 zirvesinden 2024'te %0,66'ya gerilemiş durumda.\n- Artışın en güçlü olduğu yıl 2022 (+7.693 yatak); 2024'te eklenen kapasite (+1.765) dönemin en düşük yıllık katkısı. Bu, kapasite genişlemesinin olgunlaşma/duraklama fazına girdiğine işaret ediyor.\n- Toplam artışın yaklaşık **%45'i tek başına 2022 yılından** geliyor; yani dönem ortasındaki sıçrama toplam performansı yukarı çeken ana faktör.\n\n### ⚠️ Veri Kalitesi Uyarısı (KKB Veri Sağlık Karnesi)\n- Seri **WARNING** durumunda: sağlık skoru **0/100**.\n- 2002–2024 aralığında beklenen 23 gözlemin yalnızca **6'sı mevcut** (%73,9 eksik veri).\n- Buna karşın **2020–2024 aralığındaki 5 yılın tamamı eksiksiz** olduğundan, bu sorudaki hesaplama için kullanılan veri kesintisizdir. Yine de serinin genel geçmişinde ciddi boşluklar bulunduğunu ve uzun vadeli karşılaştırmalarda dikkatli olunması gerektiğini not etmek gerekir.",
+    "error": null
+  },
+  {
+    "id": "relation_01",
+    "category": "cross_market",
+    "question": "2026 Ocak-Haziran döneminde BDDK TP konut kredisi hacmi ile EVDS TP.BKR.TRY.18 stok konut kredisi faiz oranı arasındaki Pearson korelasyonu nedir?",
+    "verification_mode": "ground_truth",
+    "request_success": true,
+    "passed": true,
+    "duration_s": 9.929,
+    "expected_tools": [
+      "series_catalog_search",
+      "causality_check"
+    ],
+    "used_tools": [
+      "series_catalog_search",
+      "series_catalog_search",
+      "evds_data_service",
+      "causality_check",
+      "data_health_report"
+    ],
+    "tool_score": 1.0,
+    "missing_tools": [],
+    "numeric_score": 1.0,
+    "missing_numbers": [],
+    "text_score": 1.0,
+    "missing_text": [],
+    "grounding_score": 1.0,
+    "grounding": {
+      "checked": 7,
+      "grounded": 7,
+      "ungrounded": [],
+      "ratio": 1.0,
+      "sources": {
+        "tool": 7,
+        "document": 0
+      }
+    },
+    "answer": "## Pearson Korelasyon Analizi: Konut Kredisi Hacmi ↔ Konut Kredisi Faiz Oranı\n\n**2026 Ocak–Haziran dönemi (6 aylık gözlem)**\n\n### 📊 Sonuç\n\n| Gösterge | Değer |\n|---|---|\n| **Pearson korelasyon katsayısı (r)** | **0,977** |\n| Gözlem sayısı (n) | 6 |\n| Dönem | 2026-01-31 – 2026-06-30 |\n| Metrik | Ham değer (value) |\n\n### Kullanılan Seriler\n\n- **Konut kredisi hacmi (TP):** `BDDK_MONTHLY:tuketici_kredileri:tuketici_kredileri_konut` — boyut: Toplam, birim: milyon TL\n- **Konut kredisi faiz oranı (stok):** `EVDS:TP.BKR.TRY.18` — \"Konut Kredisi (TL, Stok, %)\", birim: ağırlıklı ortalama, Haziran 2026 son değeri **%32,21**\n\n### Yorum\n\nİki seri arasında **çok güçlü pozitif bir doğrusal ilişki** (r ≈ 0,98) tespit edilmiştir. Dönem boyunca hem konut kredisi hacmi hem de stok konut kredisi faiz oranı birlikte yükselmiştir (faiz oranı Ocak'tan Haziran'a %31,22 → %32,21 bandında kademeli artış göstermiştir).\n\n⚠️ **Önemli uyarı (nedensellik):** Bu bir **korelasyon ölçümüdür, nedensellik ispatı değildir.** Ortak bir üçüncü faktör (enflasyon, küresel finansal koşullar, para politikası değişikliği vb.) her iki seriyi birlikte etkiliyor olabilir. Ayrıca n=6 gibi küçük bir örneklemde korelasyon katsayısı istatistiksel olarak kırılgan olabilir; yorum ihtiyatla yapılmalıdır.\n\n### 🩺 Veri Sağlık Karnesi\n\n- **EVDS:TP.BKR.TRY.18:** 6 gözlem, %0,0 eksik veri, **EXCELLENT (100/100)** sağlık skoru, kümülatif değil (rate), hizalama politikası: ortalama.\n- **BDDK konut kredisi hacmi:** Aylık frekans, 2021-01 – 2026-06 aralığını kapsayan tam seri.\n\nHer iki seri de dönem için eksiksiz ve yüksek kalitededir; sonuçlar güvenilir bir veri temeline dayanmaktadır.",
+    "error": null
+  },
+  {
+    "id": "relation_02",
+    "category": "cross_market",
+    "question": "2024-2026 döneminde BDDK TP konut kredisi hacmi ile EVDS TP.KFE.TR konut fiyat endeksi arasındaki Pearson korelasyonu nedir?",
+    "verification_mode": "ground_truth",
+    "request_success": true,
+    "passed": true,
+    "duration_s": 12.655,
+    "expected_tools": [
+      "lakehouse_query",
+      "causality_check"
+    ],
+    "used_tools": [
+      "series_catalog_search",
+      "series_catalog_search",
+      "evds_data_service",
+      "evds_data_service",
+      "evds_data_service",
+      "causality_check",
+      "data_health_report"
+    ],
+    "tool_score": 0.5,
+    "missing_tools": [
+      "lakehouse_query"
+    ],
+    "numeric_score": 1.0,
+    "missing_numbers": [],
+    "text_score": 1.0,
+    "missing_text": [],
+    "grounding_score": 1.0,
+    "grounding": {
+      "checked": 15,
+      "grounded": 15,
+      "ungrounded": [],
+      "ratio": 1.0,
+      "sources": {
+        "tool": 15,
+        "document": 0
+      }
+    },
+    "answer": "# BDDK TP Konut Kredisi Hacmi ↔ EVDS Konut Fiyat Endeksi (KFE) Korelasyonu\n\n## 📊 Temel Sonuç\n\n**2024-01 – 2026-08 döneminde Pearson korelasyon katsayısı: r = 0,986**\n\nBu, iki seri arasında **çok güçlü ve pozitif** bir doğrusal ilişki olduğunu gösterir. Konut kredisi hacmi ile konut fiyat endeksi neredeyse birebir aynı yönde hareket etmiştir.\n\n## 🔍 Gecikmeli (Lead-Lag) Analiz\n\n| Gecikme (ay) | Korelasyon |\n|---|---|\n| **-5 (optimal)** | **0,9916** |\n| -4 | 0,9913 |\n| -3 | 0,9909 |\n| -1 | 0,9882 |\n| **0 (eşzamanlı)** | **0,9861** |\n| +1 | 0,9855 |\n| +3 | 0,9838 |\n| +6 | 0,9760 |\n\n- **Optimal gecikme: -5 ay** → En güçlü ilişki, KFE'nin konut kredisi hacminden ~5 ay **önden gitmesiyle** gözleniyor (r = 0,9916).\n- Bu, konut fiyatlarındaki hareketin kredi hacmine yaklaşık 5 aylık gecikmeyle yansıdığına işaret ediyor. Ancak tüm gecikmelerde korelasyon 0,97'nin üzerinde olduğundan, ilişki gecikmeye karşı oldukça **dayanıklı ve yapısal** görünüyor.\n\n## ⚠️ Metodolojik Uyarı (Kritik)\n\n> Bu bir **korelasyon ölçümüdür, nedensellik ispatı değildir.** Ortak bir üçüncü faktör (enflasyon, küresel finansal koşullar, faiz/politika değişiklikleri) her iki seriyi birlikte etkiliyor olabilir. Özellikle 2024-2026 döneminde yüksek enflasyon ortamında hem nominal kredi hacmi hem de nominal konut fiyatları aynı yönde şişmiş olabilir; bu durumda gözlenen yüksek korelasyonun önemli bir kısmı **ortak enflasyon etkisinden** kaynaklanıyor olabilir. Reel (enflasyondan arındırılmış) bir karşılaştırma, ilişkinin gerçek gücünü daha net gösterecektir.\n\n## ✅ Veri Sağlık Karnesi\n\n| Seri | Kaynak | Frekans | Gözlem | Eksik Veri | Sağlık |\n|---|---|---|---|---|---|\n| Konut kredisi hacmi (TP) | BDDK_MONTHLY | Aylık | 198 (2021-01 – 2026-06) | %0,0 | **EXCELLENT (100/100)** |\n| Konut Fiyat Endeksi (KFE) | EVDS:TP.KFE.TR | Aylık | 32 (2024-01 – 2026-08) | — | Yüklendi |\n\n- BDDK konut kredisi serisi **stok (stock)** niteliğinde olup dönem sonu hizalama politikası (\"last\") kullanılmaktadır; birimi **milyon TL**'dir.\n- Korelasyon analizinde **30 ortak gözlem** kullanılmıştır.\n\n## 📌 Özet\n\n2024-2026 döneminde BDDK TP konut kredisi hacmi ile EVDS Konut Fiyat Endeksi arasında **r = 0,986** düzeyinde çok güçlü pozitif korelasyon bulunmaktadır. İlişki, KFE'nin ~5 ay önden gitmesiyle daha da güçlenmektedir (r = 0,9916). Ancak bu yüksek korelasyonun bir kısmının ortak enflasyon dinamiklerinden kaynaklanabileceği göz önünde tutulmalı; nedensellik iddiası için reel serilerle ve kontrol değişkenleriyle ek analiz önerilir.",
+    "error": null
+  },
+  {
+    "id": "relation_03",
+    "category": "cross_market",
+    "question": "2024-2026 döneminde BDDK TP konut kredisi hacmi ile EVDS TP.AKONUTSAT1.KTRTOPLAM toplam konut satışları arasındaki Pearson korelasyonu nedir?",
+    "verification_mode": "ground_truth",
+    "request_success": true,
+    "passed": true,
+    "duration_s": 7.926,
+    "expected_tools": [
+      "lakehouse_query",
+      "causality_check"
+    ],
+    "used_tools": [
+      "series_catalog_search",
+      "series_catalog_search",
+      "causality_check",
+      "data_health_report"
+    ],
+    "tool_score": 0.5,
+    "missing_tools": [
+      "lakehouse_query"
+    ],
+    "numeric_score": 1.0,
+    "missing_numbers": [],
+    "text_score": 1.0,
+    "missing_text": [],
+    "grounding_score": 1.0,
+    "grounding": {
+      "checked": 14,
+      "grounded": 14,
+      "ungrounded": [],
+      "ratio": 1.0,
+      "sources": {
+        "tool": 14,
+        "document": 0
+      }
+    },
+    "answer": "## Pearson Korelasyon Analizi: BDDK TP Konut Kredisi Hacmi ↔ EVDS Toplam Konut Satışları\n\n**Dönem:** 2024-01-01 – 2026-06-30 (30 aylık gözlem)\n\n### 📊 Temel Sonuç\n\n| Ölçüm | Değer |\n|---|---|\n| **Eşzamanlı (lag=0) Pearson korelasyonu** | **0.153** |\n| En güçlü gecikmeli korelasyon | **0.596** (6 ay gecikmede) |\n| Gözlem sayısı | 30 |\n\n**Yorum:** 2024-2026 döneminde iki seri arasındaki **eşzamanlı (aynı ay) Pearson korelasyonu yalnızca 0.153** — yani zayıf ve neredeyse ilişkisiz düzeyde. Konut kredisi hacmi ile aynı ayın toplam konut satışları arasında güçlü bir doğrusal ilişki görünmüyor.\n\n### 🔄 Gecikmeli (Lead-Lag) İlişki\n\nKorelasyon taraması, ilişkinin **6 ay gecikmeyle** belirgin şekilde güçlendiğini gösteriyor:\n\n| Gecikme (ay) | Korelasyon |\n|---|---|\n| -6 | **0.596** |\n| -5 | 0.505 |\n| -4 | 0.442 |\n| -3 | 0.352 |\n| -2 | 0.294 |\n| -1 | 0.178 |\n| **0** | **0.153** |\n| +1 … +6 | 0.084 → -0.156 |\n\nBu örüntü, **toplam konut satışlarındaki hareketin konut kredisi hacmine yaklaşık 6 ay gecikmeyle yansıdığına** işaret ediyor. Yani satışlar öncü, kredi hacmi gecikmeli taraf gibi davranıyor. (Not: Bu, satışların krediyi \"tetiklediği\" anlamına gelmez; ilişkinin yönü ve zamanlaması hakkında istatistiksel bir gözlemdir.)\n\n### ⚠️ Önemli Uyarı\n\nBu sonuç bir **korelasyon ölçümüdür, nedensellik ispatı değildir.** Ortak bir üçüncü faktör (enflasyon, faiz oranları, küresel finansal koşullar, makro ihtiyati politika değişiklikleri) her iki seriyi birlikte etkiliyor olabilir. Ayrıca 30 aylık gözlem sayısı sınırlıdır ve gecikmeli korelasyonlar çoklu test etkisiyle yanıltıcı görünebilir.\n\n### ✅ Veri Kalitesi (Kanıt Paneli)\n\n- **BDDK TP Konut Kredisi** (`BDDK_MONTHLY:tuketici_kredileri:tuketici_kredileri_konut`): 198 gözlem, **%0.0 eksik veri**, stok (stock) niteliğinde, dönem sonu hizalama (\"last\"), sağlık skoru **100/100 (EXCELLENT)**. Birim: milyon TL.\n- **EVDS Toplam Konut Satışları** (`EVDS:TP.AKONUTSAT1.KTRTOPLAM`): aylık, birim **Adet**, 2021-01 – 2026-06 aralığı.\n\n> Not: İki seri farklı birimlerde (milyon TL vs. adet) olduğundan korelasyon düzey karşılaştırması için uygundur; ancak büyüklük karşılaştırması yapılmamalıdır.\n\n**Özet:** Sorduğunuz eşzamanlı Pearson korelasyonu **0.153** (zayıf). İlişki ancak 6 aylık gecikmeyle anlamlı hale geliyor (r ≈ 0.60).",
+    "error": null
+  },
+  {
+    "id": "relation_04",
+    "category": "cross_market",
+    "question": "2024-2026 döneminde toplam kredi hacmi ile ticari kredi faiz oranı arasındaki korelasyon nedir?",
+    "verification_mode": "ground_truth",
+    "request_success": true,
+    "passed": true,
+    "duration_s": 8.808,
+    "expected_tools": [
+      "lakehouse_query",
+      "causality_check"
+    ],
+    "used_tools": [
+      "series_catalog_search",
+      "series_catalog_search",
+      "causality_check",
+      "data_health_report",
+      "data_health_report"
+    ],
+    "tool_score": 0.5,
+    "missing_tools": [
+      "lakehouse_query"
+    ],
+    "numeric_score": 1.0,
+    "missing_numbers": [],
+    "text_score": 1.0,
+    "missing_text": [],
+    "grounding_score": 1.0,
+    "grounding": {
+      "checked": 14,
+      "grounded": 14,
+      "ungrounded": [],
+      "ratio": 1.0,
+      "sources": {
+        "tool": 14,
+        "document": 0
+      }
+    },
+    "answer": "## Toplam Kredi Hacmi ile Ticari Kredi Faiz Oranı Korelasyonu (2024–2026)\n\n**Kullanılan seriler:**\n- **Toplam kredi hacmi:** `BDDK_MONTHLY:krediler:toplam_krediler` (milyon TL, aylık, stok)\n- **Ticari kredi faiz oranı:** `EVDS:TP.KTF17` (TL ticari krediler, ağırlıklı ortalama, %)\n\n### 📊 Korelasyon Sonuçları\n\n| Ölçüm | Değer |\n|---|---|\n| Eşzamanlı korelasyon (lag=0) | **-0.649** |\n| En güçlü korelasyon | **-0.842** (3 ay gecikmede) |\n| Gözlem sayısı | 30 |\n\n**Yorum:** İki seri arasında **negatif ve güçlü** bir ilişki var. Eşzamanlı olarak korelasyon -0.65 iken, kredi hacmi faiz oranından **3 ay önden gittiğinde** ilişki -0.84'e kadar güçleniyor. Yani kredi hacmindeki değişim, faiz oranına yaklaşık 3 aylık gecikmeyle yansıyor.\n\nGecikmeli korelasyon tablosu ilişkinin yapısını net gösteriyor:\n\n| Gecikme (ay) | -3 | -2 | -1 | 0 | +1 | +2 | +3 | +4 |\n|---|---|---|---|---|---|---|---|---|\n| Korelasyon | -0.63 | -0.64 | -0.65 | -0.65 | -0.73 | -0.82 | **-0.84** | -0.83 |\n\nİlişki pozitif gecikmelerde (kredi hacmi önde) belirgin şekilde güçleniyor; bu da kredi hacminin faiz oranına öncülük ettiği bir örüntüye işaret ediyor.\n\n### ⚠️ Önemli Uyarı\nBu sonuç **Pearson korelasyon katsayısıdır; nedensellik ispatı değildir.** Ortak bir üçüncü faktör (enflasyon, küresel finansal koşullar, para politikası değişiklikleri) her iki seriyi birlikte etkiliyor olabilir. Negatif ilişki, faiz oranı yükseldikçe kredi talebinin/hacminin nominal olarak yavaşlamasıyla tutarlı görünse de, bu ilişkinin yönü ve kaynağı ek analiz (esneklik, kontrol değişkenli regresyon) gerektirir.\n\n### 🏥 Veri Sağlık Karnesi (Kalite Güvencesi)\n\n| Seri | Gözlem | Eksik Veri | Sağlık Skoru | Durum |\n|---|---|---|---|---|\n| Toplam kredi hacmi | 594 | %0.0 | 100/100 | EXCELLENT |\n| Ticari kredi faiz oranı | 27 | %0.0 | 100/100 | EXCELLENT |\n\nHer iki seri de eksiksiz ve yüksek kalitede. Not: Faiz oranı serisi haftalık frekansta olup analizde aylık hizalanmıştır (ortalama politikası); kredi hacmi stok niteliğinde ve dönem sonu değeriyle hizalanmıştır.\n\n**Özet:** 2024–2026 döneminde toplam kredi hacmi ile ticari kredi faiz oranı arasında güçlü negatif korelasyon (eşzamanlı -0.65, 3 ay gecikmede -0.84) tespit edilmiştir; ancak bu istatistiksel bir ilişkidir, nedensellik iddiası taşımaz.",
+    "error": null
+  },
+  {
+    "id": "relation_05",
+    "category": "cross_market",
+    "question": "2024-2026 döneminde BDDK TP konut kredisi hacminin EVDS TP.KFE.TR konut fiyat endeksine göre log-log esnekliğini yaklaşık hesapla.",
+    "verification_mode": "ground_truth",
+    "request_success": true,
+    "passed": true,
+    "duration_s": 11.06,
+    "expected_tools": [
+      "lakehouse_query",
+      "elasticity_and_sensitivity_analyzer"
+    ],
+    "used_tools": [
+      "series_catalog_search",
+      "series_catalog_search",
+      "evds_data_service",
+      "data_health_report",
+      "elasticity_and_sensitivity_analyzer"
+    ],
+    "tool_score": 0.5,
+    "missing_tools": [
+      "lakehouse_query"
+    ],
+    "numeric_score": 1.0,
+    "missing_numbers": [],
+    "text_score": 1.0,
+    "missing_text": [],
+    "grounding_score": 0.8889,
+    "grounding": {
+      "checked": 9,
+      "grounded": 8,
+      "ungrounded": [
+        "97"
+      ],
+      "ratio": 0.8888888888888888,
+      "sources": {
+        "tool": 8,
+        "document": 0
+      }
+    },
+    "answer": "## Konut Kredisi Hacmi – Konut Fiyat Endeksi Esneklik Analizi (2024–2026)\n\n**Kullanılan seriler**\n- Bağımlı değişken: BDDK TP Konut Kredisi Hacmi (`BDDK_MONTHLY:tuketici_kredileri:tuketici_kredileri_konut`, milyon TL, aylık, stok)\n- Bağımsız değişken: EVDS Konut Fiyat Endeksi (`EVDS:TP.KFE.TR`, aylık, endeks)\n\n**Yöntem:** Log-log OLS regresyonu (esneklik katsayısı doğrudan regresyon eğiminden okunur), 2024-01 – 2026-06, 30 aylık gözlem.\n\n### Sonuçlar\n\n| Gösterge | Değer |\n|---|---|\n| Esneklik katsayısı (β) | **1.029** |\n| R² (belirleme katsayısı) | **0.972** |\n| Sınıflandırma | Birim esnekliğe yakın |\n| Örneklem | 30 gözlem |\n\n### Yorum\n\n- **β ≈ 1.03**: Konut fiyat endeksindeki %1'lik bir artış, konut kredisi hacminde yaklaşık **%1.03 oranında aynı yönlü** bir değişimle ilişkilidir. Katsayı 1'e çok yakın olduğundan ilişki \"birim esnek\" olarak sınıflandırılmıştır; yani kredi hacmi fiyat hareketlerine neredeyse bire bir oranda eşlik etmektedir.\n- **R² = 0.972**: Konut kredisi hacmindeki değişimin ~%97'si konut fiyat endeksiyle açıklanmaktadır. Bu, iki seri arasında çok güçlü bir doğrusal (log düzeyinde) ilişkiye işaret eder.\n- **Pozitif yönlü ilişki** beklenen bir sonuçtur: artan konut fiyatları, aynı konutu finanse etmek için gereken kredi tutarını (nominal olarak) yükseltir; dolayısıyla kredi hacmi fiyatlarla birlikte büyür.\n\n### ⚠️ Önemli uyarılar\n\n1. **Bu bir korelasyon/esneklik ölçümüdür, nedensellik ispatı değildir.** İki seri de ortak üçüncü faktörlerden (yüksek enflasyon, faiz politikası, kredi erişim koşulları, makro ihtiyati düzenlemeler) birlikte etkileniyor olabilir. Özellikle 2024–2026 döneminde yüksek enflasyon ortamında hem konut fiyatları hem de nominal kredi hacmi aynı yönde şiştiği için ilişkinin bir kısmı **ortak nominalite/enflasyon etkisinden** kaynaklanabilir.\n2. **Nominal büyüklük uyarısı:** Kredi hacmi nominal TL cinsindendir. Reel (enflasyondan arındırılmış) bir esneklik için serinin TÜFE ile deflate edilmesi gerekir; burada hesaplanan katsayı nominal ilişkiyi yansıtır.\n3. **Örneklem kısıtı:** 30 aylık gözlem görece kısa bir dönemdir; yapısal kırılmalara (faiz şokları, düzenleme değişiklikleri) karşı duyarlıdır.\n\n### Veri sağlık karnesi\n- BDDK konut kredisi serisi: 2021-01 – 2026-06, **%0.0 eksik veri**, stok niteliğinde, \"last\" hizalama politikası, **sağlık skoru 100/100 (EXCELLENT)**.\n- EVDS KFE (TP.KFE.TR): 2024-01 – 2026-06, 30 gözlem, en güncel değer 231.34 (2026-06).\n\n![Grafik](/static/charts/elasticity_20260920_205114_7e6a95dd.png)\n\n**Yönetici özeti:** 2024–2026 döneminde konut kredisi hacmi ile konut fiyat endeksi arasında çok güçlü ve birim esnekliğe yakın (β≈1.03, R²≈0.97) bir ilişki gözlenmektedir. Ancak bu ilişkinin önemli bir kısmı ortak enflasyon/nominalite etkisinden kaynaklanabileceğinden, politika değerlendirmesinde reel (deflate edilmiş) esneklikle birlikte okunması önerilir.",
+    "error": null
+  },
+  {
+    "id": "relation_06",
+    "category": "cross_market",
+    "question": "Lakehouse'taki gold_precious_metal_ratios_monthly tablosunda 2021-2026 dönemindeki gold_mom_pct_change ve silver_mom_pct_change kolonlarının Pearson korelasyonu nedir?",
+    "verification_mode": "ground_truth",
+    "request_success": true,
+    "passed": true,
+    "duration_s": 14.025,
+    "expected_tools": [
+      "lakehouse_query",
+      "causality_check"
+    ],
+    "used_tools": [
+      "lakehouse_query",
+      "causality_check",
+      "data_health_report"
+    ],
+    "tool_score": 1.0,
+    "missing_tools": [],
+    "numeric_score": 1.0,
+    "missing_numbers": [],
+    "text_score": 1.0,
+    "missing_text": [],
+    "grounding_score": 0.75,
+    "grounding": {
+      "checked": 8,
+      "grounded": 6,
+      "ungrounded": [
+        "31,5",
+        "38,3"
+      ],
+      "ratio": 0.75,
+      "sources": {
+        "tool": 6,
+        "document": 0
+      }
+    },
+    "answer": "## Altın ve Gümüş Aylık Getiri Korelasyonu (2021–2026)\n\n**Sonuç: Pearson korelasyon katsayısı ≈ 0,648** (n = 65 gözlem)\n\n`gold_precious_metal_ratios_monthly` tablosundaki `gold_mom_pct_change` ve `silver_mom_pct_change` kolonları arasındaki aylık (MoM) getiri ilişkisi **pozitif ve orta-güçlü** düzeydedir. Katsayı 0,648 olup her iki değerli metalin aylık fiyat hareketlerinin aynı yönde ve belirgin biçimde birlikte hareket ettiğini gösterir.\n\n### Yorum\n- **Yön ve güç:** Pozitif korelasyon, altın ve gümüşün ortak bir makro faktör kümesine (küresel risk iştahı, reel faizler, dolar endeksi, enflasyon beklentileri) birlikte tepki verdiğine işaret eder. Gümüş, altına kıyasla hem değerli metal hem de sanayi metali olduğundan oynaklığı daha yüksektir; bu yüzden katsayı 1'e yakın değil, orta-güçlü seviyededir.\n- **Öne çıkan dönemler:** 2025 sonu–2026 başında (2025-12: gümüş +%31,5; 2026-01: gümüş +%38,3) gümüşün altından çok daha sert yükseldiği, buna karşın 2022 ortasında (2022-05 ve 2022-07) her ikisinin de birlikte sert düştüğü görülüyor. Bu tür ayrışmalar katsayıyı 1'in altına çeken başlıca etkenlerdir.\n\n### ⚠️ Metodolojik Uyarı\nBu bir **korelasyon ölçümüdür, nedensellik ispatı değildir.** Ortak bir üçüncü faktör (enflasyon, küresel finansal koşullar, para politikası değişikliği, jeopolitik riskler) her iki seriyi birlikte etkiliyor olabilir. Katsayı, altının gümüşü \"yönlendirdiği\" anlamına gelmez.\n\n### 📋 Veri Sağlık Karnesi (Kalite Güvencesi)\n| Gösterge | Değer |\n|---|---|\n| Kaynak | Gold (`gold_precious_metal_ratios_monthly`) |\n| Frekans | Aylık (M) |\n| Gözlem sayısı | 66 (2021-01-31 – 2026-06-30) |\n| Eksik veri | 1 gözlem (%1,5) — ilk ay (2021-01) MoM değişimi tanım gereği boş |\n| Kümülatif mi? | Hayır |\n| Hizalama politikası | last (dönem sonu) |\n| Sağlık skoru | **97,7 / 100 — EXCELLENT** |\n\nKorelasyon hesabı, ilk ayın boş MoM değeri nedeniyle 65 geçerli eşleşmiş gözlem üzerinden yapılmıştır. Veri seti yüksek kalitede ve analiz için güvenilirdir.",
+    "error": null
+  },
+  {
+    "id": "finturk_01",
+    "category": "finturk_geo",
+    "question": "2026 Haziran sonunda Ankara'nın takipteki alacak oranı (Gold tablodaki npl_ratio metriği) nedir?",
+    "verification_mode": "ground_truth",
+    "request_success": true,
+    "passed": true,
+    "duration_s": 4.611,
+    "expected_tools": [
+      "lakehouse_query"
+    ],
+    "used_tools": [
+      "series_catalog_search",
+      "lakehouse_query"
+    ],
+    "tool_score": 1.0,
+    "missing_tools": [],
+    "numeric_score": 1.0,
+    "missing_numbers": [],
+    "text_score": 1.0,
+    "missing_text": [],
+    "grounding_score": 0.4,
+    "grounding": {
+      "checked": 5,
+      "grounded": 2,
+      "ungrounded": [
+        "1,71",
+        "100",
+        "17"
+      ],
+      "ratio": 0.4,
+      "sources": {
+        "tool": 2,
+        "document": 0
+      }
+    },
+    "answer": "## Ankara – Takipteki Alacak Oranı (2026 Haziran Sonu)\n\n**Sonuç:** 2026-06-30 itibarıyla Ankara'nın takipteki alacak oranı (npl_ratio) **0,01707** (oran olarak) yani **%1,71**'dir.\n\n| Gösterge | Değer |\n|---|---|\n| İl | Ankara |\n| Tarih | 2026-06-30 |\n| Metrik | npl_ratio |\n| Değer | 0,0170715 (≈ %1,71) |\n| Kaynak tablo | `gold_finturk_province_credit_quality` |\n\n**Not:** Tablodaki `npl_ratio` metriği birim olarak \"ratio\" (oran) cinsinden tutulmaktadır; bu nedenle değer 100 ile çarpılarak yüzdeye çevrilmiştir. Yani Ankara'da nakdi kredilerin yaklaşık binde 17'si (yüzde 1,71'i) takipteki alacak statüsündedir.\n\nİsterseniz bu oranı diğer illerle karşılaştırabilir, Ankara'nın zaman içindeki seyrini (dönüm noktaları/anomaliler) inceleyebilir veya iller arası risk yoğunlaşmasını (CR5/HHI) analiz edebilirim.",
+    "error": null
+  },
+  {
+    "id": "finturk_02",
+    "category": "finturk_geo",
+    "question": "2026 Haziran sonunda Ankara'daki toplam nakdi kredi tutarı nedir? Birimi koru.",
+    "verification_mode": "ground_truth",
+    "request_success": true,
+    "passed": true,
+    "duration_s": 6.719,
+    "expected_tools": [
+      "lakehouse_query"
+    ],
+    "used_tools": [
+      "series_catalog_search",
+      "lakehouse_query",
+      "lakehouse_query",
+      "lakehouse_query"
+    ],
+    "tool_score": 1.0,
+    "missing_tools": [],
+    "numeric_score": 1.0,
+    "missing_numbers": [],
+    "text_score": 1.0,
+    "missing_text": [],
+    "grounding_score": 0.6667,
+    "grounding": {
+      "checked": 3,
+      "grounded": 2,
+      "ungrounded": [
+        "1,74"
+      ],
+      "ratio": 0.6666666666666666,
+      "sources": {
+        "tool": 2,
+        "document": 0
+      }
+    },
+    "answer": "**Ankara – Toplam Nakdi Kredi Tutarı (2026 Haziran sonu)**\n\n| Gösterge | Değer | Birim |\n|---|---|---|\n| Toplam nakdi krediler | **3.649.355.488** | bin TL |\n| Takipteki alacaklar (NPL) | 63.382.129 | bin TL |\n\n**Kaynak:** `gold_finturk_province_credit_quality` tablosu, 2026-06-30 tarihli Ankara kaydı.\n\n**Notlar:**\n- Değer, tablonun sağladığı birimle (**bin TL**) korunmuştur; istenildiği gibi başka bir ölçeğe dönüştürülmemiştir.\n- Aynı kayıtta Ankara'nın takipteki alacakları 63.382.129 bin TL olarak yer almaktadır; bu, toplam nakdi kredilerin yaklaşık %1,74'üne karşılık gelir (basit oran, tool çıktısındaki iki değerden hesaplanmıştır).\n- Bu seri üç aylık (Q) frekansta olup 2026-06-30 dönem sonu stok değeridir.",
+    "error": null
+  },
+  {
+    "id": "finturk_03",
+    "category": "finturk_geo",
+    "question": "2026 Haziran sonunda İstanbul'un Gold tablodaki npl_ratio metriği nedir?",
+    "verification_mode": "ground_truth",
+    "request_success": true,
+    "passed": true,
+    "duration_s": 3.517,
+    "expected_tools": [
+      "lakehouse_query"
+    ],
+    "used_tools": [
+      "series_catalog_search",
+      "lakehouse_query"
+    ],
+    "tool_score": 1.0,
+    "missing_tools": [],
+    "numeric_score": 1.0,
+    "missing_numbers": [],
+    "text_score": 1.0,
+    "missing_text": [],
+    "grounding_score": 0.6,
+    "grounding": {
+      "checked": 5,
+      "grounded": 3,
+      "ungrounded": [
+        "2,49",
+        "2,5"
+      ],
+      "ratio": 0.6,
+      "sources": {
+        "tool": 3,
+        "document": 0
+      }
+    },
+    "answer": "**İstanbul – NPL Oranı (2026 Haziran sonu)**\n\nGold tablodaki (`gold_finturk_province_credit_quality`) veriye göre İstanbul için 30 Haziran 2026 tarihli **npl_ratio değeri: 0,024879 ≈ %2,49**'dur.\n\n| Alan | Değer |\n|---|---|\n| Tarih | 2026-06-30 |\n| İl | İstanbul |\n| Metrik | npl_ratio (oran) |\n| Değer | 0,024879 (~%2,49) |\n\nNot: `npl_ratio` birim olarak **oran** (ratio) cinsinden tutulmaktadır; yani 0,0249 değeri %2,49'a karşılık gelir. Bu, İstanbul'daki nakdi krediler içinde takipteki alacakların payının yaklaşık %2,5 seviyesinde olduğunu gösterir.\n\nİsterseniz bu metriği diğer illerle karşılaştırabilir (yoğunlaşma analizi), zaman içindeki değişimini veya dönüm noktalarını inceleyebilirim.",
+    "error": null
+  },
+  {
+    "id": "finturk_04",
+    "category": "finturk_geo",
+    "question": "2026 Haziran sonunda Gold tablodaki npl_ratio metriği en yüksek il hangisidir ve oran kaçtır?",
+    "verification_mode": "ground_truth",
+    "request_success": true,
+    "passed": true,
+    "duration_s": 4.507,
+    "expected_tools": [
+      "lakehouse_query",
+      "risk_concentration_analyzer"
+    ],
+    "used_tools": [
+      "series_catalog_search",
+      "lakehouse_query"
+    ],
+    "tool_score": 0.5,
+    "missing_tools": [
+      "risk_concentration_analyzer"
+    ],
+    "numeric_score": 1.0,
+    "missing_numbers": [],
+    "text_score": 1.0,
+    "missing_text": [],
+    "grounding_score": 0.1429,
+    "grounding": {
+      "checked": 7,
+      "grounded": 1,
+      "ungrounded": [
+        "9,29",
+        "7,77",
+        "7,75",
+        "6,87",
+        "6,59",
+        "4,30"
+      ],
+      "ratio": 0.14285714285714285,
+      "sources": {
+        "tool": 1,
+        "document": 0
+      }
+    },
+    "answer": "## 2026 Haziran Sonu — En Yüksek NPL Oranına Sahip İl\n\n**Gold tablo:** `gold_finturk_province_credit_quality`\n**Dönem:** 2026-06-30\n\n| Sıra | İl | NPL Oranı |\n|---|---|---|\n| 1 | **Mardin** | **%9,29** |\n| 2 | Karaman | %7,77 |\n| 3 | Diyarbakır | %7,75 |\n| 4 | Şırnak | %6,87 |\n| 5 | Şanlıurfa | %6,59 |\n\n### Cevap\n2026 Haziran sonu itibarıyla **npl_ratio metriği en yüksek il Mardin**'dir ve oran **0,0929 (yaklaşık %9,29)** seviyesindedir.\n\n### Analist Notu\n- İlk beş ilin tamamı ağırlıklı olarak Güneydoğu Anadolu bölgesinde yoğunlaşıyor; bu, kredi kalitesi riskinin coğrafi olarak belirgin biçimde kümelenmiş olduğunu gösteriyor.\n- Mardin'in oranı, listedeki 10. ilin (Zonguldak, %4,30) yaklaşık iki katından fazla; yani en riskli il ile görece düşük riskli iller arasında ciddi bir ayrışma var.\n- Bu tablo, riskin bölgesel yoğunlaşmasını (CR3/CR5, HHI) ölçmek için `risk_concentration_analyzer` ile derinleştirilebilir; ayrıca Mardin'in zaman içindeki seyri `change_detection` veya `turning_point_and_cycle_detector` ile izlenebilir.\n\n> Not: `npl_ratio` birim bilgisi **\"ratio\"** olarak gelmiştir; değerler ondalık oran biçimindedir (0,0929 = %9,29).",
+    "error": null
+  },
+  {
+    "id": "finturk_05",
+    "category": "finturk_geo",
+    "question": "2026 Haziran sonunda Gold tablodaki npl_ratio metriği en düşük il hangisidir ve oran kaçtır?",
+    "verification_mode": "ground_truth",
+    "request_success": true,
+    "passed": true,
+    "duration_s": 3.378,
+    "expected_tools": [
+      "lakehouse_query"
+    ],
+    "used_tools": [
+      "series_catalog_search",
+      "lakehouse_query"
+    ],
+    "tool_score": 1.0,
+    "missing_tools": [],
+    "numeric_score": 1.0,
+    "missing_numbers": [],
+    "text_score": 1.0,
+    "missing_text": [],
+    "grounding_score": 0.4545,
+    "grounding": {
+      "checked": 11,
+      "grounded": 5,
+      "ungrounded": [
+        "1,56",
+        "1,70",
+        "1,71",
+        "1,74",
+        "1,92",
+        "100"
+      ],
+      "ratio": 0.45454545454545453,
+      "sources": {
+        "tool": 5,
+        "document": 0
+      }
+    },
+    "answer": "**2026 Haziran sonu (2026-06-30) itibarıyla `gold_finturk_province_credit_quality` tablosunda `npl_ratio` metriği en düşük il: Kırşehir — %1,56** (0,015623, yani oran cinsinden ≈ %1,56).\n\nEn düşük 5 il:\n\n| Sıra | İl | npl_ratio (oran) | Yüzde |\n|---|---|---|---|\n| 1 | Kırşehir | 0,015623 | %1,56 |\n| 2 | Çankırı | 0,016969 | %1,70 |\n| 3 | Ankara | 0,017072 | %1,71 |\n| 4 | Ardahan | 0,017358 | %1,74 |\n| 5 | Kastamonu | 0,019186 | %1,92 |\n\nNot: `npl_ratio` birimi oran (ratio) olarak verilmiştir; yüzde karşılığı 100 ile çarpılarak hesaplanmıştır.",
+    "error": null
+  },
+  {
+    "id": "finturk_06",
+    "category": "finturk_geo",
+    "question": "2026 Haziran sonunda toplam nakdi kredi hacmi en yüksek il hangisidir ve tutar nedir?",
+    "verification_mode": "ground_truth",
+    "request_success": true,
+    "passed": true,
+    "duration_s": 6.451,
+    "expected_tools": [
+      "lakehouse_query",
+      "risk_concentration_analyzer"
+    ],
+    "used_tools": [
+      "series_catalog_search",
+      "series_catalog_search",
+      "lakehouse_query"
+    ],
+    "tool_score": 0.5,
+    "missing_tools": [
+      "risk_concentration_analyzer"
+    ],
+    "numeric_score": 1.0,
+    "missing_numbers": [],
+    "text_score": 1.0,
+    "missing_text": [],
+    "grounding_score": 0.8,
+    "grounding": {
+      "checked": 25,
+      "grounded": 20,
+      "ungrounded": [
+        "9,04",
+        "2,5",
+        "6,3",
+        "2,55",
+        "230,6"
+      ],
+      "ratio": 0.8,
+      "sources": {
+        "tool": 20,
+        "document": 0
+      }
+    },
+    "answer": "## 2026 Haziran Sonu — En Yüksek Nakdi Kredi Hacmine Sahip İl\n\n**En yüksek il: İstanbul**\n\n| Gösterge | Değer |\n|---|---|\n| İl | İstanbul |\n| Tarih | 2026-06-30 |\n| Toplam nakdi kredi hacmi | **9.037.199.663 bin TL** (≈ 9,04 trilyon TL) |\n| Takipteki alacaklar (NPL) | 230.574.946 bin TL |\n\n### İlk 10 il karşılaştırması (2026-06-30, bin TL)\n\n| Sıra | İl | Toplam Nakdi Kredi | Takipteki Alacak |\n|---|---|---|---|\n| 1 | İstanbul | 9.037.199.663 | 230.574.946 |\n| 2 | Ankara | 3.649.355.488 | 63.382.129 |\n| 3 | İzmir | 1.444.489.550 | 48.098.223 |\n| 4 | Antalya | 1.108.447.896 | 24.577.655 |\n| 5 | Bursa | 822.431.905 | 28.377.533 |\n| 6 | Gaziantep | 817.994.618 | 27.454.850 |\n| 7 | Kocaeli | 675.174.084 | 23.891.326 |\n| 8 | Adana | 605.673.070 | 25.892.709 |\n| 9 | Konya | 484.371.960 | 20.937.558 |\n| 10 | Mersin | 389.125.703 | 16.808.084 |\n\n### Analist İçgörüsü\n- **İstanbul, açık ara lider:** Nakdi kredi hacmi Ankara'nın yaklaşık **2,5 katı**, İzmir'in ise **6,3 katı** seviyesinde. Bu, finansal aracılığın İstanbul merkezli yoğunlaştığını gösteriyor.\n- **İlk 3 il (İstanbul + Ankara + İzmir)** toplamda ilk 10 ilin hacminin büyük bölümünü oluşturuyor; bu da kredi portföyünde belirgin bir **coğrafi yoğunlaşma (konsantrasyon) riski** olduğuna işaret ediyor.\n- **NPL oranı açısından** İstanbul'un takipteki alacaklarının hacme oranı (~%2,55) görece ılımlı görünüyor; ancak mutlak büyüklük (230,6 milyar TL) tek başına en yüksek risk stoğunu oluşturuyor.\n\n> **Not:** Değerler `gold_finturk_province_credit_quality` tablosundan alınmıştır ve birim **bin TL**'dir. İsterseniz bu iller için **CR3/CR5 ve HHI yoğunlaşma analizi** veya **NPL oranı sıralaması** yapabilirim.",
+    "error": null
+  },
+  {
+    "id": "anomaly_01",
+    "category": "anomaly_shock",
+    "question": "BDDK TP konut kredisi hacminde 2021-2026 arasında en büyük aylık yüzde artış hangi ayda gerçekleşti ve oran kaçtı?",
+    "verification_mode": "ground_truth",
+    "request_success": true,
+    "passed": true,
+    "duration_s": 7.478,
+    "expected_tools": [
+      "lakehouse_query",
+      "anomaly_detection"
+    ],
+    "used_tools": [
+      "series_catalog_search",
+      "change_detection",
+      "data_health_report"
+    ],
+    "tool_score": 0.0,
+    "missing_tools": [
+      "lakehouse_query",
+      "anomaly_detection"
+    ],
+    "numeric_score": 1.0,
+    "missing_numbers": [],
+    "text_score": 1.0,
+    "missing_text": [],
+    "grounding_score": 0.6,
+    "grounding": {
+      "checked": 15,
+      "grounded": 9,
+      "ungrounded": [
+        "6,49",
+        "6,5",
+        "5,42",
+        "4,79",
+        "4,58",
+        "3,7"
+      ],
+      "ratio": 0.6,
+      "sources": {
+        "tool": 9,
+        "document": 0
+      }
+    },
+    "answer": "## BDDK TP Konut Kredisi Hacmi — En Büyük Aylık Artış (2021–2026)\n\n**Cevap: Mart 2023** ayında, **%6,49** (yaklaşık %6,5) aylık artışla.\n\n### Detaylar\n| Gösterge | Değer |\n|---|---|\n| Seri | BDDK_MONTHLY / tüketici kredileri konut (TP) |\n| Birim | milyon TL |\n| En büyük MoM artış ayı | **2023-03-31** |\n| Aylık değişim | **+%6,49** |\n| Önceki ay (Şubat 2023) | 367.891 milyon TL |\n| Mart 2023 | 391.782 milyon TL |\n| Aylık mutlak artış | +23.891 milyon TL |\n\n### İkinci ve üçüncü sıradaki aylar (karşılaştırma)\n- **Mayıs 2023:** +%5,42 (432.835 milyon TL)\n- **Nisan 2023:** +%4,79 (410.564 milyon TL)\n- **Haziran 2022:** +%4,58 (346.952 milyon TL)\n\n### Yönetici düzeyinde içgörü\n- En büyük aylık sıçrama **2023 yılının ikinci çeyreğine (Mart–Mayıs 2023)** yığılmıştır. Bu dönem, konut kredisinde hem mutlak hem oransal olarak yılın en güçlü genişleme penceresidir; Mart 2023 tek başına serinin 2021–2026 aralığındaki zirve aylık artışını temsil eder.\n- Buna karşılık 2023'ün son çeyreği ile 2024 başı (Eylül 2023 – Ocak 2024) üst üste **negatif aylık değişimler** göstermiş; yani 2023 ortasındaki hızlı genişlemeyi bir daralma fazı izlemiştir.\n- 2024 sonundan itibaren (Ekim 2024 sonrası) seri yeniden istikrarlı bir yükseliş trendine girmiş, 2026'da aylık artışlar %2–3,7 bandında seyretmiştir. Ancak bu dönemdeki artışlar Mart 2023 zirvesini yakalayamamıştır.\n\n### Veri sağlık karnesi (kalite güvencesi)\n- **Sağlık skoru: 100/100 (EXCELLENT)**\n- Gözlem sayısı: 198 | Dönem: 2021-01-31 – 2026-06-30\n- **Eksik veri oranı: %0,0**\n- Seri niteliği: **stok (stock)**, kümülatif değil; hizalama politikası \"last\" (dönem sonu değeri)\n- Kaynak: BDDK_MONTHLY → gold_housing_credit_market / konut_kredisi_hacmi_tp\n\n> Not: Bu analiz, aylık yüzde değişimlerin **nominal** (enflasyon arındırılmamış) değerleridir. Reel (satın alma gücü bazlı) karşılaştırma isterseniz TÜFE deflatörüyle arındırılmış reel değişim analizini de yapabilirim.",
+    "error": null
+  },
+  {
+    "id": "anomaly_02",
+    "category": "anomaly_shock",
+    "question": "Toplam kredi hacminde 2021-2026 arasında en büyük aylık yüzde artış hangi ayda gerçekleşti ve oran kaçtı?",
+    "verification_mode": "ground_truth",
+    "request_success": true,
+    "passed": true,
+    "duration_s": 7.985,
+    "expected_tools": [
+      "lakehouse_query",
+      "anomaly_detection"
+    ],
+    "used_tools": [
+      "series_catalog_search",
+      "change_detection",
+      "anomaly_detection"
+    ],
+    "tool_score": 0.5,
+    "missing_tools": [
+      "lakehouse_query"
+    ],
+    "numeric_score": 1.0,
+    "missing_numbers": [],
+    "text_score": 1.0,
+    "missing_text": [],
+    "grounding_score": 0.625,
+    "grounding": {
+      "checked": 8,
+      "grounded": 5,
+      "ungrounded": [
+        "14,47",
+        "8,35",
+        "7,64"
+      ],
+      "ratio": 0.625,
+      "sources": {
+        "tool": 5,
+        "document": 0
+      }
+    },
+    "answer": "## Toplam Kredi Hacminde En Büyük Aylık Artış (2021–2026)\n\n**Cevap: Kasım 2021** ayında gerçekleşmiştir ve aylık artış oranı **%14,47**'dir.\n\n### Detaylar\n\n| Gösterge | Değer |\n|---|---|\n| Seri | BDDK Aylık – Krediler / Toplam Krediler |\n| Birim | milyon TL |\n| Dönem | 2021-01 – 2026-06 (65 gözlem) |\n| **En büyük aylık artış ayı** | **Kasım 2021 (2021-11-30)** |\n| **Aylık değişim (MoM)** | **+%14,47** |\n| Önceki ay değeri (Ekim 2021) | 4.179.613,9 milyon TL |\n| Kasım 2021 değeri | 4.784.559,2 milyon TL |\n| Aylık mutlak artış | +604.945,3 milyon TL |\n\n### Analitik Değerlendirme\n\n- **Açık ara fark:** Kasım 2021'deki %14,47'lik artış, incelenen dönemin en büyük aylık sıçramasıdır. Anomali analizinde bu ay **z-skoru ≈ 11,1** ile \"yüksek\" yönlü en güçlü uç değer olarak işaretlenmiştir; yani normal aylık oynaklığın çok ötesindedir.\n- **İkinci ve üçüncü sıradakiler:** Haziran 2023 (%8,35) ve Mayıs 2022 (%7,64) en büyük artışlar arasında yer alır — ancak Kasım 2021'in yaklaşık yarısı seviyesindedir.\n- **Bağlam:** Kasım 2021, TL'de hızlı değer kaybı ve yüksek enflasyonist baskının yaşandığı bir döneme denk gelir. Bu tür dönemlerde nominal kredi hacmindeki sıçramalar kısmen **kur etkisi ve enflasyon kaynaklı nominal şişmeden** kaynaklanabilir; dolayısıyla %14,47'lik artışın reel (enflasyondan arındırılmış) karşılığı bundan daha düşük olacaktır.\n- **Genel eğilim:** 2021 sonrası aylık artışlar tipik olarak %2–4 bandına oturmuş; 2021'deki çift haneli sıçrama bir daha tekrarlanmamıştır.\n\n> **Not:** Bu analiz nominal (milyon TL) değerler üzerinden yapılmıştır. Enflasyonun etkisini arındırıp reel büyümeyi görmek isterseniz, aynı seriyi TÜFE deflatörüyle reel hale getirebilirim.",
+    "error": null
+  },
+  {
+    "id": "anomaly_03",
+    "category": "anomaly_shock",
+    "question": "Konut fiyat endeksinde 2021-2026 arasında en büyük aylık yüzde değişim hangi ayda gerçekleşti?",
+    "verification_mode": "ground_truth",
+    "request_success": true,
+    "passed": true,
+    "duration_s": 14.442,
+    "expected_tools": [
+      "lakehouse_query",
+      "anomaly_detection"
+    ],
+    "used_tools": [
+      "series_catalog_search",
+      "evds_data_service",
+      "evds_data_service",
+      "evds_data_service",
+      "evds_data_service",
+      "series_catalog_search",
+      "series_catalog_search",
+      "change_detection",
+      "data_health_report"
+    ],
+    "tool_score": 0.0,
+    "missing_tools": [
+      "lakehouse_query",
+      "anomaly_detection"
+    ],
+    "numeric_score": 1.0,
+    "missing_numbers": [],
+    "text_score": 1.0,
+    "missing_text": [],
+    "grounding_score": 0.6875,
+    "grounding": {
+      "checked": 16,
+      "grounded": 11,
+      "ungrounded": [
+        "14,30",
+        "12,98",
+        "12,85",
+        "11,44",
+        "11,15"
+      ],
+      "ratio": 0.6875,
+      "sources": {
+        "tool": 11,
+        "document": 0
+      }
+    },
+    "answer": "## Konut Fiyat Endeksi (KFE) — 2021–2026 En Büyük Aylık Yüzde Değişim\n\n**Kaynak:** EVDS / TCMB — Konut Fiyat Endeksi (Türkiye Geneli), seri kodu `TP.KFE.TR`, aylık frekans.\n\n### Cevap\n2021–2026 döneminde en büyük **aylık yüzde değişim Aralık 2021'de** gerçekleşmiştir:\n\n| Sıra | Dönem | Aylık % değişim | Endeks değeri |\n|------|-------|-----------------|---------------|\n| **1** | **Aralık 2021** | **+%14,30** | 26,54 |\n| 2 | Mayıs 2022 | +%12,98 | 44,56 |\n| 3 | Ocak 2022 | +%12,85 | 29,95 |\n| 4 | Nisan 2022 | +%11,44 | 39,44 |\n| 5 | Haziran 2022 | +%11,15 | 49,53 |\n\n### Analist İçgörüsü\n- **Zirve tek bir ayda değil, bir dönemde toplanmış:** En büyük 5 aylık artışın tamamı **Aralık 2021 – Haziran 2022** aralığına sıkışmış durumda. Bu, 2021 sonunda TL'deki hızlı değer kaybı ve yüksek enflasyon ortamının konut fiyatlarına yansıdığı döneme işaret ediyor.\n- **Aralık 2021 ayrışıyor:** +%14,30 ile ikinci sıradaki Mayıs 2022'nin (+%12,98) belirgin şekilde üzerinde; endeks bir önceki aya göre 23,22'den 26,54'e sıçramış (aylık +3,32 puan).\n- **Sonrasında sert yavaşlama:** 2023 sonundan itibaren aylık değişimler +%1–4 bandına inmiş; 2025–2026'da aylık artışlar çoğunlukla %1–3 aralığında seyrediyor. Yani fiyat artış hızı zirveden bu yana belirgin biçimde normalize olmuş durumda.\n\n### Veri Sağlık Karnesi (Kalite Güvencesi)\n- **Seri:** EVDS:TP.KFE.TR — Konut Fiyat Endeksi (Türkiye Geneli)\n- **Sağlık skoru:** 100/100 (EXCELLENT)\n- **Eksik veri:** %0,0 (30/30 gözlem — sağlık raporu kapsamı 2024-01 – 2026-06)\n- **Yapı:** Aylık, stok (stock) niteliğinde, kümülatif değil; hizalama politikası \"mean\", dönem sonu değeri baz alınmış.\n- **Not:** Analiz, change_detection çıktısındaki 2021-01 – 2026-06 aralığını kapsayan tam gözlem seti üzerinden yapılmıştır; en güncel gözlem **Haziran 2026** (231,34) olup 2026 Temmuz ve sonrası verisi henüz mevcut değildir.",
+    "error": null
+  },
+  {
+    "id": "anomaly_04",
+    "category": "anomaly_shock",
+    "question": "Konut satışlarında 2021-2026 arasında mutlak olarak en sert aylık yüzde hareket hangi ayda gerçekleşti?",
+    "verification_mode": "ground_truth",
+    "request_success": true,
+    "passed": true,
+    "duration_s": 7.883,
+    "expected_tools": [
+      "lakehouse_query",
+      "anomaly_detection"
+    ],
+    "used_tools": [
+      "series_catalog_search",
+      "change_detection",
+      "anomaly_detection"
+    ],
+    "tool_score": 0.5,
+    "missing_tools": [
+      "lakehouse_query"
+    ],
+    "numeric_score": 1.0,
+    "missing_numbers": [],
+    "text_score": 1.0,
+    "missing_text": [],
+    "grounding_score": 0.6667,
+    "grounding": {
+      "checked": 18,
+      "grounded": 12,
+      "ungrounded": [
+        "121,8",
+        "80,4",
+        "72,9",
+        "61,7",
+        "58,0",
+        "26"
+      ],
+      "ratio": 0.6666666666666666,
+      "sources": {
+        "tool": 12,
+        "document": 0
+      }
+    },
+    "answer": "# Konut Satışlarında En Sert Aylık Yüzde Hareket (2021–2026)\n\n**Kullanılan seri:** Türkiye Konut Toplam Satışlar (`EVDS:TP.AKONUTSAT1.KTRTOPLAM`, birim: Adet, aylık, dönem: 2021-01 – 2026-06)\n\n## Cevap: Haziran 2021\n\n2021–2026 döneminde **mutlak değerce en sert aylık yüzde hareket Haziran 2021'de** gerçekleşti:\n\n| Sıra | Dönem | Aylık değişim (MoM) | Satış (Adet) |\n|------|-------|---------------------|--------------|\n| **1** | **Haziran 2021** | **+%121,8** | 145.247 |\n| 2 | Aralık 2025 | +%80,4 | 265.223 |\n| 3 | Aralık 2022 | +%72,9 | 225.623 |\n| 4 | Ocak 2022 | −%61,7 | 93.118 |\n| 5 | Ocak 2026 | −%58,0 | 111.480 |\n\nHaziran 2021'de satışlar Mayıs 2021'deki 65.497 adetten 145.247 adede sıçrayarak **%121,8** arttı. Bu, tüm dönemin en büyük aylık yüzde hareketidir.\n\n## Anomali (Robust Z-Score) Doğrulaması\n\nAynı seri üzerinde yapılan anomali tespiti (medyan + MAD yöntemi, 65 gözlem) bu bulguyu teyit ediyor. En yüksek z-skorlu uç değerler:\n\n- **Haziran 2021:** z = **+3,71** (en güçlü anomali, yukarı yönlü)\n- Aralık 2025: z = +2,40\n- Aralık 2022: z = +2,16\n- Ocak 2022: z = −2,12\n- Ocak 2026: z = −2,00\n\n## Yönetici Düzeyinde İçgörü\n\n- **Mevsimsellik baskın:** En sert hareketlerin tamamı ya yıl sonu (Aralık) ya da yıl başı (Ocak) ile Haziran geçişlerinde kümeleniyor. Bu, konut satışlarında güçlü bir takvim/mevsimsellik etkisine işaret ediyor; yorum yaparken mevsimsellikten arındırılmış veri tercih edilmelidir.\n- **Haziran 2021'in ayrıksılığı:** Bu ayın z-skoru (+3,71) diğer tüm uçlardan belirgin biçimde yüksek. 2021 ortasındaki bu sıçrama, dönemin kredi/faiz koşulları ve kampanya etkileriyle ilişkili olabilir; ancak bu nedensellik bu veri setinden doğrulanamaz.\n- **Son dönem:** Aralık 2025 (+%80,4) ve Ocak 2026 (−%58,0) ikilisi, yıl sonu–yıl başı geçişindeki sert dalgalanmanın 2025/26'da da tekrarlandığını gösteriyor.\n\n> **Not:** Bu analiz yalnızca aylık yüzde değişim (MoM) üzerinedir; mevsimsellikten arındırılmamıştır. En sert hareketin \"mevsimsel normalin üzerinde\" olup olmadığını ayırt etmek için mevsimsel düzeltme gerekir.",
+    "error": null
+  },
+  {
+    "id": "anomaly_05",
+    "category": "anomaly_shock",
+    "question": "Lakehouse'taki gold_precious_metal_ratios_monthly tablosunda 2021-2026 döneminde gold_silver_ratio_pct_change kolonunun mutlak değerce en sert aylık değişimi hangi ayda gerçekleşti?",
+    "verification_mode": "ground_truth",
+    "request_success": true,
+    "passed": true,
+    "duration_s": 20.375,
+    "expected_tools": [
+      "lakehouse_query",
+      "anomaly_detection"
+    ],
+    "used_tools": [
+      "lakehouse_query",
+      "lakehouse_query",
+      "series_catalog_search",
+      "lakehouse_query",
+      "lakehouse_query",
+      "change_detection",
+      "change_detection",
+      "anomaly_detection"
+    ],
+    "tool_score": 1.0,
+    "missing_tools": [],
+    "numeric_score": 1.0,
+    "missing_numbers": [],
+    "text_score": 1.0,
+    "missing_text": [],
+    "grounding_score": 1.0,
+    "grounding": {
+      "checked": 13,
+      "grounded": 13,
+      "ungrounded": [],
+      "ratio": 1.0,
+      "sources": {
+        "tool": 13,
+        "document": 0
+      }
+    },
+    "answer": "## Sonuç: En sert aylık değişim **Aralık 2025** ayında\n\n`gold_precious_metal_ratios_monthly` tablosundaki `gold_silver_ratio` serisinin 2021-01 – 2026-06 dönemindeki aylık yüzde değişimlerini inceledim. Mutlak değerce en sert hareket **2025-12-31** tarihinde gerçekleşti:\n\n| Sıra | Ay | Aylık değişim (MoM %) | Yön |\n|---|---|---|---|\n| 1 | **2025-12-31** | **−19,52** | Düşüş |\n| 2 | 2026-01-31 | −19,46 | Düşüş |\n| 3 | 2026-02-28 | +18,17 | Yükseliş |\n| 4 | 2025-04-30 | +12,00 | Yükseliş |\n| 5 | 2025-06-30 | −8,25 | Düşüş |\n\n### Öne çıkan bulgular\n- **En sert tek aylık değişim:** Aralık 2025'te oran 82,04'ten 66,02'ye inerek **%19,52** geriledi (robust z-skoru ≈ −5,04; yani normal oynaklığın çok ötesinde bir şok).\n- **Hemen ardından Ocak 2026** neredeyse aynı büyüklükte bir düşüşle (−%19,46) 53,17'ye indi. İki ay üst üste gelen bu sert düşüş, oranın 2025 boyunca 80-101 bandından 2026 başında 53-63 bandına keskin biçimde çökmesine yol açtı.\n- **Şubat 2026'da** ise +%18,17 ile güçlü bir tepki (rebound) yaşandı; bu da listenin üçüncü en sert hareketi.\n- Anomali taraması (Medyan+MAD, robust yöntem) bu üç ayı da istatistiksel uç değer olarak işaretledi; 2025-04 (+%12,00) ve 2025-06 (−%8,25) daha hafif uçlar olarak öne çıktı.\n\n### Yorum\nAltın/gümüş oranındaki bu sert düşüşler, gümüşün altına kıyasla belirgin şekilde güçlendiği (veya altının gümüş karşısında zayıfladığı) dönemlere işaret ediyor. Aralık 2025 – Ocak 2026'daki iki aylık çöküş, serinin 2021-2026 aralığındaki en oynak evresi; Şubat 2026'daki güçlü tepki ise kısa vadeli bir düzeltme/denge arayışı olarak okunabilir.\n\n**Not:** Tabloda `gold_silver_ratio_pct_change` adlı hazır bir kolon bulunmadığından, aylık yüzde değişimler `gold_silver_ratio` seviye serisinden ardışık gözlemler arası farkla hesaplanmıştır. Veri 2026-06-30'a kadar mevcut olup 2026'nın ikinci yarısı kapsam dışıdır.",
+    "error": null
+  },
+  {
+    "id": "live_01",
+    "category": "live_evds",
+    "question": "EVDS üzerinde güncel USD/TL döviz kuru serisini bul ve en güncel mevcut gözlemi getir. Tarihi ve kaynağı açıkça yaz.",
+    "verification_mode": "live_tool",
+    "request_success": true,
+    "passed": true,
+    "duration_s": 8.088,
+    "expected_tools": [
+      "series_catalog_search",
+      "evds_data_service"
+    ],
+    "used_tools": [
+      "series_catalog_search",
+      "evds_data_service",
+      "evds_data_service"
+    ],
+    "tool_score": 1.0,
+    "missing_tools": [],
+    "numeric_score": 1.0,
+    "missing_numbers": [],
+    "text_score": 1.0,
+    "missing_text": [],
+    "grounding_score": 1.0,
+    "grounding": {
+      "checked": 6,
+      "grounded": 6,
+      "ungrounded": [],
+      "ratio": 1.0,
+      "sources": {
+        "tool": 6,
+        "document": 0
+      }
+    },
+    "answer": "## USD/TL Döviz Kuru — En Güncel Gözlem\n\n**Seri:** TP.DK.USD.A.YTL — \"(USD) ABD Doları (Döviz Alış)\"\n**Kaynak:** TCMB EVDS (resmi veri servisi)\n**Frekans:** Günlük (D)\n**Birim:** Türk lirası\n\n### En Güncel Değer\n| Gösterge | Değer |\n|---|---|\n| **Son gözlem tarihi** | **2026-09-18** |\n| **USD/TL (Döviz Alış)** | **48,5873 TL** |\n\n### Son Günlere İlişkin Görünüm\n| Tarih | USD/TL |\n|---|---|\n| 2026-09-14 | 48,4305 |\n| 2026-09-15 | 48,5343 |\n| 2026-09-16 | 48,5585 |\n| 2026-09-17 | 48,5779 |\n| **2026-09-18** | **48,5873** |\n\n### Notlar\n- Seri, 2026-01-02 ile 2026-09-18 aralığında **178 günlük gözlem** içermektedir ve EVDS'ten canlı olarak çekilmiştir.\n- Bu seri **\"Döviz Alış\"** kurudur (TCMB'nin ABD Doları alış kuru). Farklı bir kur tanımı (ör. döviz satış, efektif alış/satış veya bankalararası) istenirse ilgili EVDS seri kodu ayrıca çekilebilir.\n- Son gözlem tarihi 2026-09-18 olup, bugünün (2026-09-20) hafta sonuna denk gelmesi nedeniyle hafta sonu için yeni bir iş günü gözlemi bulunmamaktadır; bu nedenle en güncel mevcut iş günü verisi sunulmuştur.\n\nİsterseniz bu seri üzerinde günlük değişim, oynaklık (volatilite) veya dönüm noktası analizi de yapabilirim.",
+    "error": null
+  },
+  {
+    "id": "live_02",
+    "category": "live_evds",
+    "question": "EVDS üzerinden konut fiyat endeksi serisini bul ve en güncel mevcut değeri getir.",
+    "verification_mode": "live_tool",
+    "request_success": true,
+    "passed": true,
+    "duration_s": 21.302,
+    "expected_tools": [
+      "series_catalog_search",
+      "evds_data_service"
+    ],
+    "used_tools": [
+      "evds_data_service",
+      "evds_data_service",
+      "evds_data_service",
+      "series_catalog_search",
+      "evds_data_service",
+      "evds_data_service",
+      "web_search",
+      "web_url_reader",
+      "web_url_reader"
+    ],
+    "tool_score": 1.0,
+    "missing_tools": [],
+    "numeric_score": 1.0,
+    "missing_numbers": [],
+    "text_score": 1.0,
+    "missing_text": [],
+    "grounding_score": 1.0,
+    "grounding": {
+      "checked": 16,
+      "grounded": 16,
+      "ungrounded": [],
+      "ratio": 1.0,
+      "sources": {
+        "tool": 16,
+        "document": 0
+      }
+    },
+    "answer": "## Konut Fiyat Endeksi (KFE) — En Güncel Değer\n\n**Kaynak:** TCMB / EVDS resmi Konut Fiyat Endeksi bülteni\n\n### 📊 En Güncel Değer (Ağustos 2026)\n\n| Gösterge | Değer |\n|---|---|\n| **KFE (Türkiye, 2023=100)** | **236,8** |\n| Aylık değişim | +%0,9 |\n| Yıllık nominal değişim | +%23,0 |\n| Yıllık reel değişim (TÜFE ile düzeltilmiş) | −%6,5 |\n| Yayım tarihi | 16.09.2026 |\n\n**Büyük iller (Ağustos 2026, 2023=100):**\n\n| İl | Endeks | Aylık | Yıllık |\n|---|---|---|---|\n| İstanbul | 265,0 | +%1,9 | +%26,3 |\n| Ankara | 229,6 | +%1,5 | +%24,8 |\n| İzmir | 226,6 | +%2,7 | +%23,3 |\n\n### 🔎 Süreç ve Veri Notu\n\n- **EVDS katalog aramasında** \"konut fiyat endeksi\" için yalnızca **arşiv serileri** (2010=100 bazlı: `TP.01TKFE`, `TP.01TYKFE`, `TP.01YOKFE` vb.) listelendi. Bu arşiv serilerinden veri çekilemedi (EVDS \"no observation data\" döndü).\n- Güncel KFE serisi **2023=100 bazına** geçtiği için, en güncel resmi değer TCMB'nin Ağustos 2026 KFE bülteninden teyit edildi.\n- **Önemli:** Ağustos 2026'da KFE nominal olarak yıllık **+%23,0** artarken, TÜFE ile düzeltilmiş **reel bazda −%6,5 azalmıştır**. Yani konut fiyatları enflasyonun altında kalmış, satın alma gücü cinsinden gerilemiştir.\n- Bölgesel dağılımda en yüksek yıllık artış **%27,0** ile TRB bölgesi (Bingöl, Elâzığ, Malatya, Tunceli, Van, Bitlis, Hakkâri, Muş), en düşük artış **%13,0** ile TR21 (Edirne, Kırklareli, Tekirdağ) bölgesinde gözlenmiştir.\n\n> Not: EVDS katalog aramasında güncel (2023=100) KFE seri kodu dönmediği için değer, TCMB'nin resmi bülteninden alınmıştır. İsterseniz bu seriyi Lakehouse'a yükleyip aylık/yıllık değişim, anomali veya reel değer analizlerini çalıştırabilirim.\n\n### 🔗 Kaynaklar\n- [TCMB - Konut Fiyat Endeksi (Ağustos 2026)](https://www.tcmb.gov.tr/wps/wcm/connect/TR/TCMB+TR/Main+Page+Site+Area/Veriler/Konut+Fiyat+Endeksi)\n- [Konut Fiyat Endeksi Bülteni PDF (Ağustos 2026)](https://www.tcmb.gov.tr/wps/wcm/connect/8bbac42a-c854-4c58-8b0c-e7e55c35ec2d/KFE.pdf?MOD=AJPERES)",
+    "error": null
+  },
+  {
+    "id": "live_03",
+    "category": "live_evds",
+    "question": "EVDS üzerinden tüketici fiyat endeksi (TÜFE) serisini bul ve en güncel mevcut değeri getir.",
+    "verification_mode": "live_tool",
+    "request_success": true,
+    "passed": true,
+    "duration_s": 6.243,
+    "expected_tools": [
+      "series_catalog_search",
+      "evds_data_service"
+    ],
+    "used_tools": [
+      "series_catalog_search",
+      "lakehouse_query",
+      "data_health_report",
+      "change_detection"
+    ],
+    "tool_score": 0.5,
+    "missing_tools": [
+      "evds_data_service"
+    ],
+    "numeric_score": 1.0,
+    "missing_numbers": [],
+    "text_score": 1.0,
+    "missing_text": [],
+    "grounding_score": 0.7143,
+    "grounding": {
+      "checked": 7,
+      "grounded": 5,
+      "ungrounded": [
+        "0,99",
+        "32,11"
+      ],
+      "ratio": 0.7142857142857143,
+      "sources": {
+        "tool": 5,
+        "document": 0
+      }
+    },
+    "answer": "## TÜFE (Tüketici Fiyat Endeksi) — Genel Endeks (2003=100)\n\n**Seri bilgisi**\n- **Seri kodu:** `TP.GENENDEKS.T1`\n- **Kaynak:** EVDS (TCMB resmi veri servisi)\n- **Tanım:** Genel Endeks (2003=100)\n- **Frekans:** Aylık\n- **Seri tipi:** Stok (endeks seviyesi)\n\n**En güncel mevcut değer**\n\n| Dönem | Endeks Değeri | Aylık Değişim (MoM) | Yıllık Değişim (YoY) |\n|---|---|---|---|\n| 2026-06-30 | **4.137,93** | +%0,99 | +%32,11 |\n\n- Aylık artış: **+40,38 puan** (≈ +%0,99)\n- Yıllık artış: **+1.005,76 puan** (≈ +%32,11)\n\n**Veri sağlık karnesi (kalite güvencesi)**\n- Gözlem sayısı: 8 (beklenen 8) — **eksik veri yok (%0,0)**\n- Kapsanan dönem: 2026-01-31 – 2026-08-31\n- Sağlık skoru: **100/100 (EXCELLENT)**\n- Hizalama politikası: ortalama; kümülatif değil (stok seri)\n\n**Not:** Yerel katalogdaki seri 2026-08-31'e kadar gözlem içermekle birlikte, değişim hesaplamasında kullanılabilen en güncel tam gözlem **2026-06-30** tarihlidir. Daha güncel resmi bir değer gerekiyorsa EVDS canlı servisinden seriyi yeniden yükleyebilirim.",
+    "error": null
+  },
+  {
+    "id": "edge_01",
+    "category": "edge_case",
+    "question": "HEALTH_MOH:hospital_beds_total serisinin veri sağlığını değerlendir. Kaç gözlem var, kaç gözlem bekleniyor ve eksik oranı nedir?",
+    "verification_mode": "static_contract",
+    "request_success": true,
+    "passed": true,
+    "duration_s": 5.121,
+    "expected_tools": [
+      "data_health_report"
+    ],
+    "used_tools": [
+      "data_health_report"
+    ],
+    "tool_score": 1.0,
+    "missing_tools": [],
+    "numeric_score": 1.0,
+    "missing_numbers": [],
+    "text_score": 1.0,
+    "missing_text": [],
+    "grounding_score": 1.0,
+    "grounding": {
+      "checked": 4,
+      "grounded": 4,
+      "ungrounded": [],
+      "ratio": 1.0,
+      "sources": {
+        "tool": 4,
+        "document": 0
+      }
+    },
+    "answer": "## Veri Sağlık Karnesi: Türkiye Toplam Hastane Yatağı Sayısı\n\n**Seri:** `HEALTH_MOH:hospital_beds_total`\n**Kaynak:** Sağlık Bakanlığı (HEALTH_MOH) · **Frekans:** Yıllık · **Birim:** adet · **Yapı:** Stok (kümülatif değil)\n\n### Temel Bulgular\n\n| Gösterge | Değer |\n|---|---|\n| Gözlem sayısı | **6** |\n| Beklenen gözlem sayısı | **23** |\n| Eksik gözlem sayısı | **17** |\n| Eksik veri oranı | **%73,9** |\n| Kapsanan dönem | 2002-12-31 – 2024-12-31 |\n| Hizalama politikası | `last` (dönem sonu stok değeri) |\n| Sağlık skoru | **0 / 100** |\n| Sağlık durumu | ⚠️ **WARNING** |\n\n### Değerlendirme\n\n- **Kapsam ciddi biçimde zayıf:** 2002–2024 aralığında yıllık frekansta 23 gözlem beklenirken yalnızca 6 gözlem mevcut. Yani serinin yaklaşık **dörtte üçü boş** (%73,9 eksik).\n- **Sağlık skoru 0/100** ve durum **WARNING** olarak işaretlenmiş. Bu, serinin tek başına trend, döngü veya dönüm noktası analizlerine dayanak olarak kullanılmasının güvenilir olmadığını gösterir.\n- **Stok yapıda ve `last` hizalama politikasında** olması, mevcut gözlemlerin dönem sonu değerleri temsil ettiğini; ancak eksik yılların enterpolasyonla doldurulmadığını (ve doldurulmaması gerektiğini) ima eder.\n- **Lineage (veri kökeni):** Doğrudan `HEALTH_MOH:hospital_beds_total` kaynak serisine dayanıyor; ara bir türetme/agregasyon katmanı görünmüyor.\n\n### Öneri\n\nBu seri üzerinde analitik bir çalışma planlıyorsanız:\n1. Eksik yılların kaynakta mı yoksa aktarım hattında mı kaybolduğu kontrol edilmeli (veri hattı/lineage doğrulaması),\n2. Alternatif veya tamamlayıcı bir kaynak (örn. TÜİK sağlık istatistikleri) ile çapraz doğrulama yapılmalı,\n3. Eksik veri giderilmeden yıllık değişim, döngü veya nedensellik analizleri **temkinli** yorumlanmalıdır.\n\nİsterseniz bu seriyi başka bir sağlık göstergesiyle karşılaştırabilir veya mevcut 6 gözlem üzerinden yıllık değişim analizi çıkarabilirim.",
+    "error": null
+  },
+  {
+    "id": "edge_02",
+    "category": "edge_case",
+    "question": "HEALTH_MOH:hospital_beds_total için 2025 yılı değerini ver. Veri yoksa sayı uydurma ve mevcut olmadığını açıkça söyle.",
+    "verification_mode": "ground_truth",
+    "request_success": true,
+    "passed": true,
+    "duration_s": 8.341,
+    "expected_tools": [
+      "series_catalog_search"
+    ],
+    "used_tools": [
+      "series_catalog_search",
+      "lakehouse_query",
+      "lakehouse_query",
+      "lakehouse_query",
+      "change_detection"
+    ],
+    "tool_score": 1.0,
+    "missing_tools": [],
+    "numeric_score": 1.0,
+    "missing_numbers": [],
+    "text_score": 1.0,
+    "missing_text": [],
+    "grounding_score": 0.6667,
+    "grounding": {
+      "checked": 3,
+      "grounded": 2,
+      "ungrounded": [
+        "0,66"
+      ],
+      "ratio": 0.6666666666666666,
+      "sources": {
+        "tool": 2,
+        "document": 0
+      }
+    },
+    "answer": "## Sonuç: 2025 yılı verisi mevcut değil\n\n**HEALTH_MOH:hospital_beds_total** (Türkiye Toplam Hastane Yatağı Sayısı) serisi için **2025 yılına ait bir değer sistemde bulunmamaktadır.** Bu nedenle 2025 değeri olarak hiçbir sayı vermiyorum — uydurma yapılmayacaktır.\n\n### Serinin durumu\n\n| Özellik | Değer |\n|---|---|\n| Seri adı | Türkiye Toplam Hastane Yatağı Sayısı |\n| Kaynak | HEALTH_MOH (Sağlık Bakanlığı) |\n| Birim | adet |\n| Frekans | Yıllık (Y) |\n| Kapsanan dönem | **2002-12-31 – 2024-12-31** |\n| Veri niteliği | Stok (stock) |\n\n### Mevcut en güncel gözlem (2024)\n\n- **Tarih:** 2024-12-31\n- **Değer:** 268.359 adet\n- **Yıllık değişim:** +1.765 adet (yaklaşık **+%0,66**)\n\n### Değerlendirme\n\n- Seri yıllık frekansta olduğu için 2025 gözlemi ancak yıl sonu (2025-12-31) itibarıyla yayımlanır; katalogdaki veri aralığı 2024 sonunda bitmektedir.\n- 2025 değerini görmek için serinin bir sonraki yıllık güncellemesinin sisteme yüklenmesi gerekir. Şu anki veriyle 2025 için yalnızca **2024 değeri (268.359 adet)** referans alınabilir; bu, 2025 değeri olarak sunulamaz.\n\nİsterseniz 2024'e kadarki yıllık seriyi çekip uzun dönemli trendi veya dönüm noktalarını analiz edebilirim.",
+    "error": null
+  },
+  {
+    "id": "edge_03",
+    "category": "edge_case",
+    "question": "BDDK FinTürk nakdi kredi verisinin birimini aynen belirt; milyon TL'ye kendiliğinden dönüştürme.",
+    "verification_mode": "static_contract",
+    "request_success": true,
+    "passed": true,
+    "duration_s": 3.426,
+    "expected_tools": [
+      "series_catalog_search"
+    ],
+    "used_tools": [
+      "series_catalog_search"
+    ],
+    "tool_score": 1.0,
+    "missing_tools": [],
+    "numeric_score": 1.0,
+    "missing_numbers": [],
+    "text_score": 1.0,
+    "missing_text": [],
+    "grounding_score": null,
+    "grounding": {
+      "checked": 0,
+      "grounded": 0,
+      "ungrounded": [],
+      "ratio": 1.0,
+      "sources": {
+        "tool": 0,
+        "document": 0
+      }
+    },
+    "answer": "**BDDK FinTürk nakdi kredi verisinin birimi: `bin TL`**\n\nKatalogdan doğrulanan bilgiler:\n\n| Seri ID | Seri Adı | Kaynak | Kategori | **Birim** | Frekans | Dönem |\n|---|---|---|---|---|---|---|\n| `BDDK_FINTURK:t1:nakdikrediler` | t1 / nakdikrediler | BDDK_FINTURK | finturk | **bin TL** | Çeyreklik (Q) | 2021-03-31 – 2026-06-30 |\n| `BDDK_FINTURK:t1:toplamnakdikrediler` | t1 / toplamnakdikrediler | BDDK_FINTURK | finturk | **bin TL** | Çeyreklik (Q) | 2021-03-31 – 2026-06-30 |\n\nNotlar:\n- Birim, katalog metadata'sında açıkça **\"bin TL\"** olarak tanımlıdır. Bu değer aynen korunmuştur; **milyon TL'ye veya başka bir ölçeğe dönüştürülmemiştir.**\n- Aynı kategorideki diğer FinTürk serileri (örn. `t4:finansalkuruluslar`) de **bin TL** birimindedir.\n- Karışıklığa yol açabilecek bir nokta: BDDK'nın **haftalık** kredi serileri (`BDDK_WEEKLY:krediler:...`) **milyon TL** birimindedir. Yani FinTürk (çeyreklik) = bin TL, Haftalık krediler = milyon TL. İki kaynağı karşılaştırırken birim farkına dikkat edilmelidir.\n\nİsterseniz bu serinin güncel değerini veya çeyreklik değişimini de getirebilirim.",
+    "error": null
+  },
+  {
+    "id": "edge_04",
+    "category": "edge_case",
+    "question": "Veri kataloğunda 'kredi' araması yap. Birden fazla seri varsa tek bir seriyi keyfi olarak doğru kabul etme; uygun adayları belirt.",
+    "verification_mode": "behavioral",
+    "request_success": true,
+    "passed": true,
+    "duration_s": 7.151,
+    "expected_tools": [
+      "series_catalog_search"
+    ],
+    "used_tools": [
+      "series_catalog_search"
+    ],
+    "tool_score": 1.0,
+    "missing_tools": [],
+    "numeric_score": 1.0,
+    "missing_numbers": [],
+    "text_score": 1.0,
+    "missing_text": [],
+    "grounding_score": 1.0,
+    "grounding": {
+      "checked": 3,
+      "grounded": 3,
+      "ungrounded": [],
+      "ratio": 1.0,
+      "sources": {
+        "tool": 3,
+        "document": 0
+      }
+    },
+    "answer": "# Veri Kataloğunda \"kredi\" Araması Sonuçları\n\nKatalogda \"kredi\" araması yapıldı ve **tek bir seriyi doğru kabul etmek yerine**, öne çıkan adaylar aşağıda listelenmiştir. En yüksek benzerlik skoru 0.64 civarında olup, adaylar birbirine çok yakın skorlara sahiptir — bu nedenle hangi serinin \"doğru\" olduğu **kullanıcının asıl sorusuna (hangi kredi türü, hangi frekans, hangi kırılım)** bağlıdır.\n\n## Aday Seriler\n\n| # | Seri Adı | series_id | Kaynak | Kategori | Birim | Frekans | Dönem |\n|---|----------|-----------|--------|----------|------|---------|-------|\n| 1 | krediler / toplam krediler | `BDDK_MONTHLY:krediler:toplam_krediler` | BDDK_MONTHLY | krediler | milyon TL | Aylık | 2021-01-31 – 2026-06-30 |\n| 2 | sektorel kredi dagilimi / ferdi kredi konut | `BDDK_MONTHLY:sektorel_kredi_dagilimi:ferdi_kredi_konut` | BDDK_MONTHLY | sektorel_kredi_dagilimi | bin TL | Aylık | 2021-01-31 – 2026-06-30 |\n| 3 | krediler / r15 / c ihtiyac | `BDDK_WEEKLY:krediler:r15:c_ihtiyac` | BDDK_WEEKLY | krediler | milyon TL | Haftalık | 2021-01-08 – 2026-06-26 |\n| 4 | krediler / tuketici kredileri | `BDDK_MONTHLY:krediler:tuketici_kredileri` | BDDK_MONTHLY | krediler | milyon TL | Aylık | 2021-01-31 – 2026-06-30 |\n| 5 | bilanco / krediler | `BDDK_MONTHLY:bilanco:krediler` | BDDK_MONTHLY | bilanco | milyon TL | Aylık | 2021-01-31 – 2026-06-30 |\n\n## Adayların Ayrımı ve Seçim Rehberi\n\n- **Toplam kredi hacmi (makro bakış):** `BDDK_MONTHLY:krediler:toplam_krediler` — bankacılık sektörü toplam kredi stoku.\n- **Bilanço kalemi olarak krediler:** `BDDK_MONTHLY:bilanco:krediler` — bilanço tarafındaki kredi kalemi; toplam kredilerle karıştırılmamalı.\n- **Hanehalkı/tüketici kredileri:** `BDDK_MONTHLY:krediler:tuketici_kredileri` — tüketici kredisi alt kırılımı.\n- **Konut kredisi (sektörel kırılım):** `BDDK_MONTHLY:sektorel_kredi_dagilimi:ferdi_kredi_konut` — dikkat: birimi **bin TL** (diğerleri milyon TL).\n- **Haftalık takip:** `BDDK_WEEKLY:krediler:r15:c_ihtiyac` — haftalık frekansta, \"c ihtiyac\" kırılımı.\n\n## Önemli Notlar\n\n- **Birim farkı:** 2 numaralı seri **bin TL**, diğerleri **milyon TL** cinsindendir. Karşılaştırma veya toplama yapılacaksa birim dönüşümü gerekir; ölçekler kendiliğinden eşitlenmemelidir.\n- **Frekans farkı:** 3 numaralı seri **haftalık**, diğerleri **aylık**tır. Zaman serisi analizlerinde hizalama (alignment) gerekir.\n- **Skorlar birbirine çok yakın** (0.637–0.641): Bu, aramanın \"kredi\" gibi geniş bir kavramda ayırt edici olmadığını gösterir. Doğru seriyi seçmek için lütfen şunu netleştirin:\n  - Hangi kredi türü? (toplam / tüketici / konut / ihtiyaç / bilanço)\n  - Hangi frekans? (aylık / haftalık)\n  - Hangi analiz? (seviye, değişim, anomali, reel arındırma vb.)\n\nHangi adayla ilerlemek istediğinizi belirtirseniz, o `series_id` üzerinden `lakehouse_query`, `change_detection` veya uygun analiz aracını çalıştırabilirim.",
+    "error": null
+  },
+  {
+    "id": "edge_05",
+    "category": "edge_case",
+    "question": "NovaData veri kataloğunda 'mars nüfusu bankacılık kredisi' adlı bir seri var mı? Yoksa varmış gibi veri üretme.",
+    "verification_mode": "behavioral",
+    "request_success": true,
+    "passed": true,
+    "duration_s": 4.431,
+    "expected_tools": [
+      "series_catalog_search"
+    ],
+    "used_tools": [
+      "series_catalog_search"
+    ],
+    "tool_score": 1.0,
+    "missing_tools": [],
+    "numeric_score": 1.0,
+    "missing_numbers": [],
+    "text_score": 1.0,
+    "missing_text": [],
+    "grounding_score": 1.0,
+    "grounding": {
+      "checked": 1,
+      "grounded": 1,
+      "ungrounded": [],
+      "ratio": 1.0,
+      "sources": {
+        "tool": 1,
+        "document": 0
+      }
+    },
+    "answer": "**Hayır, \"mars nüfusu bankacılık kredisi\" adlı bir seri NovaData veri kataloğunda bulunmuyor.**\n\nKatalog aramasında bu kavrama karşılık gelen bir seri yok. Dönen sonuçlar yalnızca kelime benzerliği nedeniyle eşleşen, tamamen farklı konulardaki gerçek BDDK serileri (ör. \"sektorel kredi dagilimi / ferdi kredi konut\", \"bankalara kullandirilan krediler\"). Bunların hiçbiri \"Mars nüfusu\" ile ilgili değil; en yüksek benzerlik skoru da yalnızca ~0,61 düzeyinde ve bu tür bir serinin varlığını göstermez.\n\nAyrıca belirtmem gerekir ki:\n- Sistemde Mars nüfusu, uzay/gezegen demografisi veya buna bağlı bir kredi göstergesi **yoktur**.\n- Bu tür bir seri için **veri üretmeyeceğim**; katalogda bulunmayan bir seriyi varmış gibi sunmam.\n\nEğer amacınız gerçek bir analizse, aşağıdaki gibi katalogda mevcut olan konularda yardımcı olabilirim:\n- **Konut kredisi hacmi ve değişimi** (BDDK aylık serileri)\n- **Sektörel kredi dağılımı** (ferdi, ticari, bankalara kullandırılan krediler vb.)\n- **Tüketici kredileri ve takipteki alacaklar (NPL)** analizleri\n\nİlgilendiğiniz gerçek seriyi belirtirseniz, katalogdan bulup değişim, anomali veya döngü analizini yapabilirim.",
+    "error": null
+  }
+]
