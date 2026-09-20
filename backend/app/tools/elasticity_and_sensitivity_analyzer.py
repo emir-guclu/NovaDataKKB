@@ -7,9 +7,14 @@ from typing import Any, Literal
 
 import duckdb
 import numpy as np
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 
 from backend.app.services.chart_generator import generate_elasticity_chart
+from backend.app.services.inline_series import (
+    DIMENSION_IGNORED_WARNING,
+    OBSERVATIONS_DESCRIPTION,
+    parse_inline_observations,
+)
 from backend.app.services.series_data_resolver import (
     ALIGNED_PARQUET,
     SILVER_DB,
@@ -36,14 +41,37 @@ class ElasticityAndSensitivityAnalyzerTool(BaseTool):
     description = (
         "İki finansal değişken arasındaki esneklik katsayısını (elasticity) ve duyarlılığı hesaplar "
         "(örn. Faiz artışının konut/tüketici kredisi talebine etkisi). OLS log-log regresyon veya "
-        "arc elasticity ile saçılım ve trend grafiği üretir. Doğrudan nedensellik veya anomali tespiti için KULLANMA; "
+        "arc elasticity ile saçılım ve trend grafiği üretir. Hem yerel Lakehouse serilerini "
+        "(dependent_series_id, independent_series_id) hem de dış kaynaklı satır içi serileri "
+        "(observations_dependent, observations_independent) destekler. Doğrudan nedensellik veya anomali tespiti için KULLANMA; "
         "onun için causality_check veya anomaly_detection kullanılmalıdır. Örnek: dependent_series_id: "
-        "'BDDK_MONTHLY:tuketici_kredileri:tuketici_kredileri_konut', independent_series_id: 'EVDS:TP.GENENDEKS.T1'."
+        "'BDDK_MONTHLY:tuketici_kredileri:tuketici_kredileri_konut', independent_series_id: 'EVDS:TP.GENENDEKS.T1' "
+        "veya dış veri için observations_dependent / observations_independent."
     )
 
     class Input(BaseModel):
-        dependent_series_id: str = Field(description="Bağımlı değişken serisi (örn. Konut Kredisi)")
-        independent_series_id: str = Field(description="Bağımsız değişken serisi (örn. Politika Faizi / TÜFE)")
+        dependent_series_id: str | None = Field(
+            default=None,
+            description="Bağımlı değişken serisi (örn. Konut Kredisi). observations_dependent verilmişse boş bırakılır.",
+        )
+        observations_dependent: list[dict] | None = Field(
+            default=None,
+            description=(
+                "Bağımlı satır içi zaman serisi: [{'date': 'YYYY-MM-DD', 'value': 123.4}, ...]. "
+                "Lakehouse dışı veriler için kullanılır. dependent_series_id ile birlikte KULLANILMAZ."
+            ),
+        )
+        independent_series_id: str | None = Field(
+            default=None,
+            description="Bağımsız değişken serisi (örn. Politika Faizi / TÜFE). observations_independent verilmişse boş bırakılır.",
+        )
+        observations_independent: list[dict] | None = Field(
+            default=None,
+            description=(
+                "Bağımsız satır içi zaman serisi: [{'date': 'YYYY-MM-DD', 'value': 123.4}, ...]. "
+                "Lakehouse dışı veriler için kullanılır. independent_series_id ile birlikte KULLANILMAZ."
+            ),
+        )
         dependent_dimension: str | None = Field(default=None, description="Bağımlı değişken boyutu (örn: Toplam)")
         independent_dimension: str | None = Field(default=None, description="Bağımsız değişken boyutu")
         lag_months: int = Field(default=0, ge=0, le=24, description="Gecikme süresi (ay cinsinden)")
@@ -53,6 +81,18 @@ class ElasticityAndSensitivityAnalyzerTool(BaseTool):
         )
         start_date: str | None = Field(default=None, description="Başlangıç tarihi (YYYY-MM-DD)")
         end_date: str | None = Field(default=None, description="Bitiş tarihi (YYYY-MM-DD)")
+
+        @model_validator(mode="after")
+        def _validate_sources(self):
+            if bool(self.dependent_series_id) == bool(self.observations_dependent):
+                raise ValueError(
+                    "Bağımlı taraf için dependent_series_id veya observations_dependent parametrelerinden tam olarak biri verilmelidir."
+                )
+            if bool(self.independent_series_id) == bool(self.observations_independent):
+                raise ValueError(
+                    "Bağımsız taraf için independent_series_id veya observations_independent parametrelerinden tam olarak biri verilmelidir."
+                )
+            return self
 
     class Output(BaseModel):
         success: bool
@@ -66,51 +106,146 @@ class ElasticityAndSensitivityAnalyzerTool(BaseTool):
         interpretation: str | None = None
         chart_url: str | None = None
         sample_size: int = 0
+        data_source_dependent: str | None = None
+        data_source_independent: str | None = None
+        warnings: list[str] = Field(default_factory=list)
 
     def run(self, params: Input) -> Output:
+        is_inline_dep = bool(params.observations_dependent)
+        is_inline_indep = bool(params.observations_independent)
+        data_source_dep = "inline" if is_inline_dep else "lakehouse"
+        data_source_indep = "inline" if is_inline_indep else "lakehouse"
+        warnings: list[str] = []
+
+        if is_inline_dep and params.dependent_dimension:
+            warnings.append(f"Bağımlı taraf: {DIMENSION_IGNORED_WARNING}")
+        if is_inline_indep and params.independent_dimension:
+            warnings.append(f"Bağımsız taraf: {DIMENSION_IGNORED_WARNING}")
+
         try:
-            if not ALIGNED_PARQUET.exists():
-                return self.Output(success=False, error=f"Aligned parquet bulunamadi: {ALIGNED_PARQUET}")
+            # Lakehouse kontrolü: En az bir taraf lakehouse ise ALIGNED_PARQUET aranır
+            if not is_inline_dep or not is_inline_indep:
+                if not ALIGNED_PARQUET.exists():
+                    return self.Output(
+                        success=False,
+                        error=f"Aligned parquet bulunamadi: {ALIGNED_PARQUET}",
+                        data_source_dependent=data_source_dep,
+                        data_source_independent=data_source_indep,
+                        warnings=warnings,
+                    )
 
-            con = duckdb.connect()
+            con: duckdb.DuckDBPyConnection | None = None
+            if not is_inline_dep or not is_inline_indep:
+                con = duckdb.connect()
+
+            dep_data: dict[str, float] = {}
+            dep_id: str = params.dependent_series_id or "inline:dependent"
+
+            indep_data: dict[str, float] = {}
+            indep_id: str = params.independent_series_id or "inline:independent"
+
             try:
-                dep_data, dep_id, dep_dim, dep_err = fetch_series_observations(
-                    con, params.dependent_series_id, params.dependent_dimension,
-                    parquet_path=ALIGNED_PARQUET, silver_db_path=SILVER_DB,
-                )
-                if dep_err or not dep_data:
-                    return self.Output(
-                        success=False,
-                        error=f"Bagimli seri bulunamadi: {params.dependent_series_id}"
-                        if not dep_err or "Seri bulunamadi" in dep_err
-                        else dep_err,
+                # Bağımlı değişken verisi
+                if is_inline_dep:
+                    try:
+                        rows_dep, parse_warn_dep = parse_inline_observations(
+                            params.observations_dependent,  # type: ignore
+                            metric="value",
+                            start_date=params.start_date,
+                            end_date=params.end_date,
+                        )
+                        warnings.extend(parse_warn_dep)
+                        dep_data = dict(rows_dep)
+                    except ValueError as exc:
+                        return self.Output(
+                            success=False,
+                            error=f"Bağımlı seri yüklenemedi: {exc}",
+                            data_source_dependent=data_source_dep,
+                            data_source_independent=data_source_indep,
+                            warnings=warnings,
+                        )
+                else:
+                    assert con is not None
+                    fetched_dep, resolved_dep_id, _, dep_err = fetch_series_observations(
+                        con,
+                        params.dependent_series_id,  # type: ignore
+                        params.dependent_dimension,
+                        parquet_path=ALIGNED_PARQUET,
+                        silver_db_path=SILVER_DB,
                     )
+                    if dep_err or not fetched_dep:
+                        return self.Output(
+                            success=False,
+                            error=f"Bagimli seri bulunamadi: {params.dependent_series_id}"
+                            if not dep_err or "Seri bulunamadi" in dep_err
+                            else dep_err,
+                            data_source_dependent=data_source_dep,
+                            data_source_independent=data_source_indep,
+                            warnings=warnings,
+                        )
+                    dep_data = fetched_dep
+                    dep_id = resolved_dep_id
 
-                indep_data, indep_id, indep_dim, indep_err = fetch_series_observations(
-                    con, params.independent_series_id, params.independent_dimension,
-                    parquet_path=ALIGNED_PARQUET, silver_db_path=SILVER_DB,
-                )
-                if indep_err or not indep_data:
-                    return self.Output(
-                        success=False,
-                        error=f"Bagimsiz seri bulunamadi: {params.independent_series_id}"
-                        if not indep_err or "Seri bulunamadi" in indep_err
-                        else indep_err,
+                # Bağımsız değişken verisi
+                if is_inline_indep:
+                    try:
+                        rows_indep, parse_warn_indep = parse_inline_observations(
+                            params.observations_independent,  # type: ignore
+                            metric="value",
+                            start_date=params.start_date,
+                            end_date=params.end_date,
+                        )
+                        warnings.extend(parse_warn_indep)
+                        indep_data = dict(rows_indep)
+                    except ValueError as exc:
+                        return self.Output(
+                            success=False,
+                            error=f"Bağımsız seri yüklenemedi: {exc}",
+                            data_source_dependent=data_source_dep,
+                            data_source_independent=data_source_indep,
+                            warnings=warnings,
+                        )
+                else:
+                    assert con is not None
+                    fetched_indep, resolved_indep_id, _, indep_err = fetch_series_observations(
+                        con,
+                        params.independent_series_id,  # type: ignore
+                        params.independent_dimension,
+                        parquet_path=ALIGNED_PARQUET,
+                        silver_db_path=SILVER_DB,
                     )
+                    if indep_err or not fetched_indep:
+                        return self.Output(
+                            success=False,
+                            error=f"Bagimsiz seri bulunamadi: {params.independent_series_id}"
+                            if not indep_err or "Seri bulunamadi" in indep_err
+                            else indep_err,
+                            data_source_dependent=data_source_dep,
+                            data_source_independent=data_source_indep,
+                            warnings=warnings,
+                        )
+                    indep_data = fetched_indep
+                    indep_id = resolved_indep_id
+
             finally:
-                con.close()
+                if con is not None:
+                    con.close()
 
-            # Tarihleri sırala ve gecikmeyi (lag) uygula
+            # Tarihleri sırala ve tarih filtrelerini uygula
             sorted_dates = sorted(set(dep_data.keys()))
             if params.start_date:
                 sorted_dates = [d for d in sorted_dates if d >= params.start_date]
             if params.end_date:
                 sorted_dates = [d for d in sorted_dates if d <= params.end_date]
 
-            # Lag: bağımsız değişken t-k zamanındaki değeri
             indep_dates = sorted(set(indep_data.keys()))
-            date_to_idx = {d: i for i, d in enumerate(indep_dates)}
+            if params.start_date:
+                indep_dates = [d for d in indep_dates if d >= params.start_date]
+            if params.end_date:
+                indep_dates = [d for d in indep_dates if d <= params.end_date]
 
+            # Gün bazında eşleşme denemesi (exact date matching with lag)
+            date_to_idx = {d: i for i, d in enumerate(indep_dates)}
             paired_x: list[float] = []
             paired_y: list[float] = []
 
@@ -121,15 +256,49 @@ class ElasticityAndSensitivityAnalyzerTool(BaseTool):
                 lag_idx = cur_idx - params.lag_months
                 if 0 <= lag_idx < len(indep_dates):
                     lag_dt = indep_dates[lag_idx]
-                    x_val = indep_data[lag_dt]
-                    y_val = dep_data[dt]
-                    paired_x.append(x_val)
-                    paired_y.append(y_val)
+                    paired_x.append(indep_data[lag_dt])
+                    paired_y.append(dep_data[dt])
+
+            # Gün bazında eşleşme < 3 ise otomatik %Y-%m ay bazlı fallback eşleştirme
+            if len(paired_x) < 3:
+                dep_by_month: dict[str, float] = {}
+                for d in sorted_dates:
+                    dep_by_month[d[:7]] = dep_data[d]
+
+                indep_by_month: dict[str, float] = {}
+                for d in indep_dates:
+                    indep_by_month[d[:7]] = indep_data[d]
+
+                sorted_indep_months = sorted(indep_by_month.keys())
+                month_to_idx = {m: i for i, m in enumerate(sorted_indep_months)}
+
+                fallback_x: list[float] = []
+                fallback_y: list[float] = []
+
+                for m in sorted(dep_by_month.keys()):
+                    if m not in month_to_idx:
+                        continue
+                    cur_idx = month_to_idx[m]
+                    lag_idx = cur_idx - params.lag_months
+                    if 0 <= lag_idx < len(sorted_indep_months):
+                        lag_m = sorted_indep_months[lag_idx]
+                        fallback_x.append(indep_by_month[lag_m])
+                        fallback_y.append(dep_by_month[m])
+
+                if len(fallback_x) >= 3:
+                    paired_x = fallback_x
+                    paired_y = fallback_y
+                    warnings.append(
+                        "Gün bazlı doğrudan eşleşme yetersiz kaldığı için seriler ay bazında (%Y-%m) eşleştirildi."
+                    )
 
             if len(paired_x) < 3:
                 return self.Output(
                     success=False,
                     error=f"Yeterli gözlem sayısı bulunamadı (mevcut: {len(paired_x)}).",
+                    data_source_dependent=data_source_dep,
+                    data_source_independent=data_source_indep,
+                    warnings=warnings,
                 )
 
             x_arr = np.array(paired_x, dtype=float)
@@ -210,8 +379,18 @@ class ElasticityAndSensitivityAnalyzerTool(BaseTool):
                 interpretation=interpretation,
                 chart_url=chart_url,
                 sample_size=len(paired_x),
+                data_source_dependent=data_source_dep,
+                data_source_independent=data_source_indep,
+                warnings=warnings,
             )
 
         except Exception as exc:
             logger.exception("elasticity_and_sensitivity_analyzer failed")
-            return self.Output(success=False, error=str(exc))
+            return self.Output(
+                success=False,
+                error=str(exc),
+                data_source_dependent=data_source_dep,
+                data_source_independent=data_source_indep,
+                warnings=warnings,
+            )
+
