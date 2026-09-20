@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import logging
 import math
+import statistics
 import unicodedata
 from datetime import date, datetime
 from pathlib import Path
@@ -48,7 +49,8 @@ class AnomalyDetectionTool(BaseTool):
     name = "anomaly_detection"
     description = (
         "Zaman serisindeki istatistiksel uclari (aylik/yillik soklar veya "
-        "mevsimsellik disi hareketler) IQR ve z-score hibrit yontemi ile tespit eder. "
+        "mevsimsellik disi hareketler) Robust Z-Score (Medyan+MAD) veya klasik z-score "
+        "yontemi ile tespit eder. "
         "Genel trend veya ham veri okumak icin KULLANMA; onun icin change_detection "
         "kullan. Ornek: konut kredisi aylik degisim soklari icin "
         "series_id='BDDK_MONTHLY:tuketici_kredileri:tuketici_kredileri_konut', "
@@ -66,6 +68,10 @@ class AnomalyDetectionTool(BaseTool):
             default="mom_pct_change",
             description="Anomali tespiti yapilacak metrik",
         )
+        method: Literal["robust", "zscore"] = Field(
+            default="robust",
+            description="Anomali tespit yontemi: 'robust' (Medyan + MAD, aykiri degerlere dayanikli) veya 'zscore' (Klasik ortalama + standart sapma).",
+        )
         start_date: str | None = Field(default=None, description="Opsiyonel baslangic tarihi, YYYY-MM-DD")
         end_date: str | None = Field(default=None, description="Opsiyonel bitis tarihi, YYYY-MM-DD")
         z_threshold: float = Field(default=2.0, gt=0, description="Mutlak z-score esigi")
@@ -82,6 +88,9 @@ class AnomalyDetectionTool(BaseTool):
         error: str | None = None
         metric: str | None = None
         selected_dimension: str | None = None
+        method: Literal["robust", "zscore"] = "robust"
+        median: float | None = None
+        mad: float | None = None
         mean: float | None = None
         stddev: float | None = None
         n_observations: int = 0
@@ -178,7 +187,11 @@ class AnomalyDetectionTool(BaseTool):
                 rows, dimension, data_source, warnings = self._load_series(params)
             except SeriesLoadError as exc:
                 return self.Output(
-                    success=False, error=str(exc), metric=params.metric, data_source=exc.data_source
+                    success=False,
+                    error=str(exc),
+                    metric=params.metric,
+                    method=params.method,
+                    data_source=exc.data_source,
                 )
 
             n = len(rows)
@@ -188,52 +201,89 @@ class AnomalyDetectionTool(BaseTool):
                     error="Anomali hesabi icin en az iki gozlem gereklidir.",
                     metric=params.metric,
                     selected_dimension=dimension,
+                    method=params.method,
                     n_observations=n,
                     data_source=data_source,
                     warnings=warnings,
                 )
 
             values = [row[1] for row in rows]
-            mean = sum(values) / n
-            stddev = math.sqrt(sum((value - mean) ** 2 for value in values) / (n - 1))
-            if stddev == 0:
+
+            if params.method == "robust":
+                med = float(statistics.median(values))
+                deviations = [abs(v - med) for v in values]
+                mad = float(statistics.median(deviations))
+                mad_denom = 1e-9 if mad == 0.0 else mad
+
+                anomalies = []
+                for row_date, value in rows:
+                    z_score = 0.6745 * (value - med) / mad_denom
+                    if abs(z_score) >= params.z_threshold:
+                        anomalies.append(
+                            {
+                                "date": _json_ready(row_date),
+                                "value": value,
+                                "z_score": z_score,
+                                "direction": "high" if z_score > 0 else "low",
+                            }
+                        )
+                anomalies.sort(key=lambda row: abs(row["z_score"]), reverse=True)
+
                 return self.Output(
-                    success=False,
-                    error="Anomali hesaplanamadi: standart sapma sifir.",
+                    success=True,
                     metric=params.metric,
                     selected_dimension=dimension,
-                    mean=mean,
-                    stddev=stddev,
+                    method="robust",
+                    median=med,
+                    mad=mad,
                     n_observations=n,
+                    anomalies=anomalies[: params.max_results],
                     data_source=data_source,
                     warnings=warnings,
                 )
-
-            anomalies = []
-            for row_date, value in rows:
-                z_score = (value - mean) / stddev
-                if abs(z_score) >= params.z_threshold:
-                    anomalies.append(
-                        {
-                            "date": _json_ready(row_date),
-                            "value": value,
-                            "z_score": z_score,
-                            "direction": "high" if z_score > 0 else "low",
-                        }
+            else:
+                mean = sum(values) / n
+                stddev = math.sqrt(sum((value - mean) ** 2 for value in values) / (n - 1))
+                if stddev == 0:
+                    return self.Output(
+                        success=False,
+                        error="Anomali hesaplanamadi: standart sapma sifir.",
+                        metric=params.metric,
+                        selected_dimension=dimension,
+                        method="zscore",
+                        mean=mean,
+                        stddev=stddev,
+                        n_observations=n,
+                        data_source=data_source,
+                        warnings=warnings,
                     )
-            anomalies.sort(key=lambda row: abs(row["z_score"]), reverse=True)
 
-            return self.Output(
-                success=True,
-                metric=params.metric,
-                selected_dimension=dimension,
-                mean=mean,
-                stddev=stddev,
-                n_observations=n,
-                anomalies=anomalies[: params.max_results],
-                data_source=data_source,
-                warnings=warnings,
-            )
+                anomalies = []
+                for row_date, value in rows:
+                    z_score = (value - mean) / stddev
+                    if abs(z_score) >= params.z_threshold:
+                        anomalies.append(
+                            {
+                                "date": _json_ready(row_date),
+                                "value": value,
+                                "z_score": z_score,
+                                "direction": "high" if z_score > 0 else "low",
+                            }
+                        )
+                anomalies.sort(key=lambda row: abs(row["z_score"]), reverse=True)
+
+                return self.Output(
+                    success=True,
+                    metric=params.metric,
+                    selected_dimension=dimension,
+                    method="zscore",
+                    mean=mean,
+                    stddev=stddev,
+                    n_observations=n,
+                    anomalies=anomalies[: params.max_results],
+                    data_source=data_source,
+                    warnings=warnings,
+                )
         except Exception as exc:
             logger.exception("anomaly_detection failed")
-            return self.Output(success=False, error=str(exc), metric=params.metric)
+            return self.Output(success=False, error=str(exc), metric=params.metric, method=params.method)

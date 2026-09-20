@@ -1832,5 +1832,12 @@
     "UNIXTIME": {
       "$numberLong": "1789765200"
     }
+  },
+  {
+    "Tarih": "20-09-2026",
+    "TP_DK_USD_A_YTL": null,
+    "UNIXTIME": {
+      "$numberLong": "1789851600"
+    }
   }
 ]

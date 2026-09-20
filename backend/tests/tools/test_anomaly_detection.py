@@ -23,11 +23,13 @@ def test_anomaly_detection_success_with_real_gold_data():
             dimension="Toplam",
             metric="mom_pct_change",
             z_threshold=2.0,
+            method="zscore",
         )
     )
 
     assert result.success is True
     assert result.error is None
+    assert result.method == "zscore"
     assert result.metric == "mom_pct_change"
     assert result.selected_dimension == "Toplam"
     assert result.n_observations == 65
@@ -36,6 +38,29 @@ def test_anomaly_detection_success_with_real_gold_data():
     assert result.anomalies[0]["value"] == pytest.approx(0.06493989124712915)
     assert result.anomalies[0]["z_score"] == pytest.approx(3.148910785701634)
     assert result.anomalies[0]["direction"] == "high"
+
+
+def test_anomaly_detection_success_with_real_gold_data_robust():
+    tool = AnomalyDetectionTool()
+    result = tool.run(
+        tool.Input(
+            series_id=REAL_SERIES,
+            dimension="Toplam",
+            metric="mom_pct_change",
+            z_threshold=2.0,
+            # method defaults to "robust"
+        )
+    )
+
+    assert result.success is True
+    assert result.error is None
+    assert result.method == "robust"
+    assert result.metric == "mom_pct_change"
+    assert result.selected_dimension == "Toplam"
+    assert result.n_observations == 65
+    assert result.median is not None
+    assert result.mad is not None
+    assert len(result.anomalies) > 0
 
 
 def test_anomaly_detection_missing_series_returns_structured_error():
