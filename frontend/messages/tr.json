@@ -77,6 +77,11 @@
     "data_health_obs": "Gözlem Sayısı",
     "data_health_lineage": "Veri Hattı (Lineage)",
     "data_health_alignment": "Hizalama Politikası",
-    "data_health_range": "Zaman Aralığı"
+    "data_health_range": "Zaman Aralığı",
+    "table_data": "Tablo Verisi",
+    "table_copy": "Kopyala",
+    "table_copied": "Kopyalandı!",
+    "table_csv": "Excel / CSV",
+    "table_pdf": "PDF İndir"
   }
 }

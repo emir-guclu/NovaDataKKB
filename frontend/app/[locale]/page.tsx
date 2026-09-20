@@ -1011,17 +1011,191 @@ function DashboardContent({ t }: { t: any }) {
     );
   };
 
-  // ReactMarkdown için Görsel ve Tablo Kart Bileşenleri
-  const markdownComponents = {
-    table: ({ children, ...props }: any) => (
-      <div className={`my-3.5 w-full overflow-x-auto rounded-xl border shadow-md ${
+  // ReactMarkdown için Dışa Aktarılabilir (Copy, CSV, PDF) Tablo Bileşeni
+  const ExportableTable = ({ children, ...props }: any) => {
+    const tableRef = useRef<HTMLTableElement | null>(null);
+    const [copied, setCopied] = useState(false);
+
+    const extractTableData = () => {
+      if (!tableRef.current) return { headers: [], rows: [] };
+      const ths = Array.from(tableRef.current.querySelectorAll("thead th")).map(
+        (th) => th.textContent?.trim() || ""
+      );
+      const trs = Array.from(tableRef.current.querySelectorAll("tbody tr"));
+      const rows = trs.map((tr) =>
+        Array.from(tr.querySelectorAll("td")).map((td) => td.textContent?.trim() || "")
+      );
+      return { headers: ths, rows };
+    };
+
+    const handleCopy = async () => {
+      const { headers, rows } = extractTableData();
+      if (headers.length === 0 && rows.length === 0) return;
+      const tsv = [
+        headers.join("\t"),
+        ...rows.map((r) => r.join("\t")),
+      ].join("\n");
+      await navigator.clipboard.writeText(tsv);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    };
+
+    const handleDownloadCsv = () => {
+      const { headers, rows } = extractTableData();
+      if (headers.length === 0 && rows.length === 0) return;
+      const escapeCsv = (val: string) => `"${val.replace(/"/g, '""')}"`;
+      const csvContent = "\uFEFF" + [
+        headers.map(escapeCsv).join(";"),
+        ...rows.map((r) => r.map(escapeCsv).join(";")),
+      ].join("\r\n");
+      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `tablo_raporu_${new Date().toISOString().slice(0, 10)}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    };
+
+    const handleDownloadPdf = () => {
+      const { headers, rows } = extractTableData();
+      if (headers.length === 0 && rows.length === 0) return;
+
+      const printWindow = window.open("", "_blank", "width=850,height=700");
+      if (!printWindow) return;
+
+      const html = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <meta charset="utf-8">
+          <title>KKB NOVA Analytics - Tablo Raporu</title>
+          <style>
+            body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; padding: 30px; color: #1e293b; background: #fff; }
+            .header { border-bottom: 2px solid #059669; padding-bottom: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: flex-end; }
+            .title { font-size: 18px; font-weight: bold; color: #0f172a; margin: 0; }
+            .subtitle { font-size: 11px; color: #64748b; margin-top: 4px; }
+            .date { font-size: 11px; color: #64748b; font-family: monospace; }
+            table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 12px; }
+            th { background-color: #f1f5f9; color: #0f172a; font-weight: 600; text-align: left; padding: 8px 12px; border: 1px solid #cbd5e1; }
+            td { padding: 8px 12px; border: 1px solid #e2e8f0; }
+            tr:nth-child(even) { background-color: #f8fafc; }
+            .footer { margin-top: 30px; font-size: 10px; color: #94a3b8; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 10px; }
+            @media print {
+              body { padding: 0; }
+              @page { margin: 1.5cm; }
+            }
+          </style>
+        </head>
+        <body>
+          <div class="header">
+            <div>
+              <div class="title">📊 NOVA Analytics — Veri Tablosu Raporu</div>
+              <div class="subtitle">KKB Kurumsal Veri ve Analitik Platformu</div>
+            </div>
+            <div class="date">Tarih: ${new Date().toLocaleDateString("tr-TR")}</div>
+          </div>
+          <table>
+            <thead>
+              <tr>${headers.map((h) => `<th>${h}</th>`).join("")}</tr>
+            </thead>
+            <tbody>
+              ${rows
+                .map(
+                  (r) => `<tr>${r.map((c) => `<td>${c}</td>`).join("")}</tr>`
+                )
+                .join("")}
+            </tbody>
+          </table>
+          <div class="footer">
+            Bu belge KKB NOVA Analytics Agent sistemi tarafından otomatik olarak üretilmiştir.
+          </div>
+          <script>
+            window.onload = function() {
+              window.print();
+            };
+          </script>
+        </body>
+        </html>
+      `;
+
+      printWindow.document.open();
+      printWindow.document.write(html);
+      printWindow.document.close();
+    };
+
+    return (
+      <div className={`my-3.5 w-full rounded-xl border shadow-md overflow-hidden ${
         isDark ? "border-white/10 bg-white/[0.02]" : "border-slate-200 bg-white"
       }`}>
-        <table className="w-full text-left text-xs border-collapse min-w-[340px]" {...props}>
-          {children}
-        </table>
+        {/* Tablo Üst Çubuğu (Export Toolbar) */}
+        <div className={`flex items-center justify-between px-3 py-2 border-b text-xs ${
+          isDark ? "bg-white/[0.04] border-white/10" : "bg-slate-50 border-slate-200"
+        }`}>
+          <div className="flex items-center gap-1.5 font-semibold text-slate-500 dark:text-gray-400">
+            <span className="text-sm">📊</span>
+            <span>{t("table_data") || "Tablo Verisi"}</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <button
+              type="button"
+              onClick={handleCopy}
+              className={`px-2 py-1 rounded-md transition-all flex items-center gap-1 font-medium cursor-pointer ${
+                copied
+                  ? (isDark ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/40" : "bg-emerald-100 text-emerald-800")
+                  : (isDark ? "bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white" : "bg-white hover:bg-slate-100 text-slate-700 border border-slate-200")
+              }`}
+              title="Excel'e yapıştırmaya hazır kopyala"
+            >
+              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+              </svg>
+              <span>{copied ? (t("table_copied") || "Kopyalandı!") : (t("table_copy") || "Kopyala")}</span>
+            </button>
+            <button
+              type="button"
+              onClick={handleDownloadCsv}
+              className={`px-2 py-1 rounded-md transition-all flex items-center gap-1 font-medium cursor-pointer ${
+                isDark ? "bg-white/5 hover:bg-white/10 text-emerald-400 hover:text-emerald-300" : "bg-white hover:bg-emerald-50 text-emerald-700 border border-slate-200"
+              }`}
+              title="Excel uyumlu CSV indir"
+            >
+              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              <span>{t("table_csv") || "Excel / CSV"}</span>
+            </button>
+            <button
+              type="button"
+              onClick={handleDownloadPdf}
+              className={`px-2 py-1 rounded-md transition-all flex items-center gap-1 font-medium cursor-pointer ${
+                isDark ? "bg-white/5 hover:bg-white/10 text-blue-400 hover:text-blue-300" : "bg-white hover:bg-blue-50 text-blue-700 border border-slate-200"
+              }`}
+              title="PDF olarak yazdır / kaydet"
+            >
+              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+              </svg>
+              <span>{t("table_pdf") || "PDF"}</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Tablo İçeriği */}
+        <div className="w-full overflow-x-auto">
+          <table ref={tableRef} className="w-full text-left text-xs border-collapse min-w-[340px]" {...props}>
+            {children}
+          </table>
+        </div>
       </div>
-    ),
+    );
+  };
+
+  // ReactMarkdown için Görsel ve Tablo Kart Bileşenleri
+  const markdownComponents = {
+    table: (tableProps: any) => <ExportableTable {...tableProps} />,
     thead: ({ children, ...props }: any) => (
       <thead className={`text-xs font-bold uppercase tracking-wider border-b ${
         isDark 

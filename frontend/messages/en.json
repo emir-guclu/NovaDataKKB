@@ -76,6 +76,11 @@
     "data_health_obs": "Observation Count",
     "data_health_lineage": "Data Lineage",
     "data_health_alignment": "Alignment Policy",
-    "data_health_range": "Date Range"
+    "data_health_range": "Date Range",
+    "table_data": "Table Data",
+    "table_copy": "Copy",
+    "table_copied": "Copied!",
+    "table_csv": "Excel / CSV",
+    "table_pdf": "Download PDF"
   }
 }
