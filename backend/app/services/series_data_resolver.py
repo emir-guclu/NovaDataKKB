@@ -158,62 +158,145 @@ def create_silver_periodic_view(
     series_id: str,
     dimension: str | None = None,
 ) -> None:
-    """Silver.duckdb serisi üzerinde gold_periodic_change ile aynı şemada geçici bir DuckDB view oluşturur."""
+    """Create frequency-aware periodic changes for a Silver series.
+
+    Monthly series preserve the existing MoM/YoY behaviour.
+    Quarterly and yearly series receive calendar-consistent YoY changes.
+    Unsupported comparisons remain NULL instead of fabricating values.
+    """
     escaped_id = _escape_sql_literal(series_id)
     clauses = [f"series_id = '{escaped_id}'"]
 
     if dimension is not None:
         escaped_dim = _escape_sql_literal(dimension)
-        clauses.append(f"json_extract_string(dims, '$.variable') = '{escaped_dim}'")
+        clauses.append(
+            f"json_extract_string(dims, '$.variable') = '{escaped_dim}'"
+        )
 
     sql = f"""
     CREATE OR REPLACE TEMPORARY VIEW {view_name} AS
     WITH base AS (
-        SELECT 
+        SELECT
             series_id,
             CAST(date AS DATE) AS date,
             value,
-            LAG(CAST(date AS DATE), 1) OVER (ORDER BY date) AS prev_date_1,
-            LAG(value, 1) OVER (ORDER BY date) AS prev_value_1,
-            LAG(CAST(date AS DATE), 12) OVER (ORDER BY date) AS prev_date_12,
-            LAG(value, 12) OVER (ORDER BY date) AS prev_value_12,
+            freq,
+
+            LAG(CAST(date AS DATE), 1)
+                OVER (ORDER BY date) AS prev_date_1,
+            LAG(value, 1)
+                OVER (ORDER BY date) AS prev_value_1,
+
+            LAG(CAST(date AS DATE), 4)
+                OVER (ORDER BY date) AS prev_date_4,
+            LAG(value, 4)
+                OVER (ORDER BY date) AS prev_value_4,
+
+            LAG(CAST(date AS DATE), 12)
+                OVER (ORDER BY date) AS prev_date_12,
+            LAG(value, 12)
+                OVER (ORDER BY date) AS prev_value_12,
+
             source,
             unit,
-            dims
+            dims,
+            COALESCE(
+                (
+                    SELECT m.nature
+                    FROM silver_db.series_metadata AS m
+                    WHERE m.series_id = silver_db.observations.series_id
+                    LIMIT 1
+                ),
+                'unclassified'
+            ) AS nature
         FROM silver_db.observations
         WHERE {' AND '.join(clauses)}
     )
-    SELECT 
+    SELECT
         date,
         series_id,
         value,
-        CASE 
-            WHEN ((year(date) - year(prev_date_1)) * 12 + (month(date) - month(prev_date_1))) = 1 
-            THEN value - prev_value_1 
-            ELSE NULL 
+
+        CASE
+            WHEN freq = 'M'
+             AND (
+                 (year(date) - year(prev_date_1)) * 12
+                 + (month(date) - month(prev_date_1))
+             ) = 1
+            THEN value - prev_value_1
+            ELSE NULL
         END AS mom_abs_change,
-        CASE 
-            WHEN ((year(date) - year(prev_date_1)) * 12 + (month(date) - month(prev_date_1))) = 1 AND prev_value_1 IS NOT NULL AND prev_value_1 != 0 
-            THEN (value - prev_value_1) / ABS(prev_value_1) 
-            ELSE NULL 
+
+        CASE
+            WHEN freq = 'M'
+             AND (
+                 (year(date) - year(prev_date_1)) * 12
+                 + (month(date) - month(prev_date_1))
+             ) = 1
+             AND prev_value_1 IS NOT NULL
+             AND prev_value_1 != 0
+            THEN (value - prev_value_1) / ABS(prev_value_1)
+            ELSE NULL
         END AS mom_pct_change,
-        CASE 
-            WHEN ((year(date) - year(prev_date_12)) * 12 + (month(date) - month(prev_date_12))) = 12 
-            THEN value - prev_value_12 
-            ELSE NULL 
+
+        CASE
+            WHEN freq = 'M'
+             AND (
+                 (year(date) - year(prev_date_12)) * 12
+                 + (month(date) - month(prev_date_12))
+             ) = 12
+            THEN value - prev_value_12
+
+            WHEN freq = 'Q'
+             AND (
+                 (year(date) - year(prev_date_4)) * 12
+                 + (month(date) - month(prev_date_4))
+             ) = 12
+            THEN value - prev_value_4
+
+            WHEN freq = 'Y'
+             AND year(date) - year(prev_date_1) = 1
+            THEN value - prev_value_1
+
+            ELSE NULL
         END AS yoy_abs_change,
-        CASE 
-            WHEN ((year(date) - year(prev_date_12)) * 12 + (month(date) - month(prev_date_12))) = 12 AND prev_value_12 IS NOT NULL AND prev_value_12 != 0 
-            THEN (value - prev_value_12) / ABS(prev_value_12) 
-            ELSE NULL 
+
+        CASE
+            WHEN freq = 'M'
+             AND (
+                 (year(date) - year(prev_date_12)) * 12
+                 + (month(date) - month(prev_date_12))
+             ) = 12
+             AND prev_value_12 IS NOT NULL
+             AND prev_value_12 != 0
+            THEN (value - prev_value_12) / ABS(prev_value_12)
+
+            WHEN freq = 'Q'
+             AND (
+                 (year(date) - year(prev_date_4)) * 12
+                 + (month(date) - month(prev_date_4))
+             ) = 12
+             AND prev_value_4 IS NOT NULL
+             AND prev_value_4 != 0
+            THEN (value - prev_value_4) / ABS(prev_value_4)
+
+            WHEN freq = 'Y'
+             AND year(date) - year(prev_date_1) = 1
+             AND prev_value_1 IS NOT NULL
+             AND prev_value_1 != 0
+            THEN (value - prev_value_1) / ABS(prev_value_1)
+
+            ELSE NULL
         END AS yoy_pct_change,
+
         source,
-        'unclassified' AS nature,
+        nature,
         unit,
         dims
     FROM base
     ORDER BY date
     """
+
     con.execute(sql)
 
 

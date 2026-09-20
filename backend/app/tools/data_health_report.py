@@ -3,6 +3,8 @@ from __future__ import annotations
 import logging
 import math
 from datetime import date, datetime
+
+import pandas as pd
 from pathlib import Path
 from typing import Any
 
@@ -27,6 +29,79 @@ def _format_date(val: Any) -> str | None:
     if isinstance(val, (datetime, date)):
         return val.strftime("%Y-%m-%d")
     return str(val).split("T")[0]
+
+
+def _expected_period_count(
+    start_date: str | None,
+    end_date: str | None,
+    frequency: str | None,
+) -> int | None:
+    """Return expected observation count between two dates for supported frequencies."""
+    if not start_date or not end_date or not frequency:
+        return None
+
+    start = pd.Timestamp(start_date)
+    end = pd.Timestamp(end_date)
+    freq = str(frequency).upper().strip()
+
+    if end < start:
+        return None
+
+    aliases = {
+        "D": "D",
+        "W": "W",
+        "M": "ME",
+        "Q": "QE",
+        "Y": "YE",
+        "A": "YE",
+    }
+
+    pandas_freq = aliases.get(freq)
+    if pandas_freq is None:
+        return None
+
+    # Series dates may be period-end dates. Normalize the first expected
+    # period to the period containing start, then count through end.
+    if freq == "D":
+        expected = pd.date_range(start=start, end=end, freq="D")
+    elif freq == "W":
+        expected = pd.period_range(start=start, end=end, freq="W")
+    elif freq == "M":
+        expected = pd.period_range(start=start, end=end, freq="M")
+    elif freq == "Q":
+        expected = pd.period_range(start=start, end=end, freq="Q")
+    else:
+        expected = pd.period_range(start=start, end=end, freq="Y")
+
+    return len(expected)
+
+
+def _coverage_missing(
+    *,
+    observation_count: int,
+    null_count: int,
+    start_date: str | None,
+    end_date: str | None,
+    frequency: str | None,
+) -> tuple[int, float, int | None]:
+    """Combine null observations with calendar gaps without double-counting."""
+    expected_count = _expected_period_count(start_date, end_date, frequency)
+
+    if expected_count is None:
+        total_slots = observation_count
+        missing_count = null_count
+    else:
+        calendar_gaps = max(expected_count - observation_count, 0)
+        total_slots = max(expected_count, observation_count)
+        missing_count = calendar_gaps + null_count
+
+    missing_pct = (
+        round((missing_count / total_slots) * 100.0, 2)
+        if total_slots > 0
+        else 0.0
+    )
+
+    return missing_count, missing_pct, expected_count
 
 
 def _calculate_health_score(observation_count: int, missing_pct: float) -> tuple[float, str]:
@@ -107,6 +182,7 @@ class DataHealthReportTool(BaseTool):
         frequency: str | None = None
         unit: str | None = None
         observation_count: int = 0
+        expected_observation_count: int | None = None
         start_date: str | None = None
         end_date: str | None = None
         missing_count: int = 0
@@ -455,7 +531,13 @@ class DataHealthReportTool(BaseTool):
                 lineage_info.get("alignment_method"),
             )
 
-            missing_pct = round((missing_count / total_obs) * 100.0, 2) if total_obs > 0 else 0.0
+            missing_count, missing_pct, expected_obs = _coverage_missing(
+                observation_count=total_obs,
+                null_count=missing_count,
+                start_date=start_date,
+                end_date=end_date,
+                frequency=s_freq,
+            )
             health_score, health_status = _calculate_health_score(total_obs, missing_pct)
 
             summary = (
@@ -471,6 +553,7 @@ class DataHealthReportTool(BaseTool):
                 frequency=s_freq,
                 unit=s_unit,
                 observation_count=total_obs,
+                expected_observation_count=expected_obs,
                 start_date=start_date,
                 end_date=end_date,
                 missing_count=missing_count,

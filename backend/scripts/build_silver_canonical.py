@@ -54,6 +54,38 @@ OUTPUT_DB = (
     / "silver.duckdb"
 )
 
+CORE_SOURCE_DIRS = {"evds", "bddk"}
+
+CANONICAL_OBSERVATION_COLUMNS = [
+    "series_id",
+    "source",
+    "date",
+    "period_start",
+    "period_end",
+    "value",
+    "freq",
+    "unit",
+    "dims",
+    "source_file",
+]
+
+CANONICAL_METADATA_COLUMNS = [
+    "series_id",
+    "source",
+    "series_code",
+    "series_name",
+    "category",
+    "freq",
+    "unit",
+    "description",
+    "tags",
+    "accumulation",
+    "is_cumulative",
+    "nature",
+    "nature_reviewed",
+    "alignment_override",
+]
+
 
 PROVINCE_CANONICAL = {
     "ADANA": ("Adana", "01"),
@@ -448,6 +480,73 @@ def _build_bddk_metadata() -> pd.DataFrame:
     return result
 
 
+def _discover_generic_source_dirs() -> list[Path]:
+    """Discover additional canonical Silver sources.
+
+    EVDS and BDDK keep their source-specific normalization paths.
+    Any other directory under data/silver containing both canonical
+    observations.parquet and series_metadata.parquet is loaded generically.
+    """
+    discovered: list[Path] = []
+
+    for source_dir in sorted(SILVER_ROOT.iterdir()):
+        if not source_dir.is_dir() or source_dir.name in CORE_SOURCE_DIRS:
+            continue
+
+        observations_path = source_dir / "observations.parquet"
+        metadata_path = source_dir / "series_metadata.parquet"
+
+        has_obs = observations_path.exists()
+        has_meta = metadata_path.exists()
+
+        if has_obs != has_meta:
+            raise ValueError(
+                f"Generic Silver source {source_dir.name!r} is incomplete: "
+                "observations.parquet and series_metadata.parquet must both exist."
+            )
+
+        if has_obs and has_meta:
+            discovered.append(source_dir)
+
+    return discovered
+
+
+def _build_generic_observations(source_dir: Path) -> pd.DataFrame:
+    obs = pd.read_parquet(source_dir / "observations.parquet")
+
+    missing = set(CANONICAL_OBSERVATION_COLUMNS) - set(obs.columns)
+    if missing:
+        raise ValueError(
+            f"Generic Silver source {source_dir.name!r} observation columns missing: "
+            f"{sorted(missing)}"
+        )
+
+    obs = obs.copy()
+
+    for column in ["date", "period_start", "period_end"]:
+        obs[column] = pd.to_datetime(obs[column]).dt.date
+
+    obs["dims"] = [
+        normalize_dims(str(source), dims)
+        for source, dims in zip(obs["source"], obs["dims"])
+    ]
+
+    return obs[CANONICAL_OBSERVATION_COLUMNS]
+
+
+def _build_generic_metadata(source_dir: Path) -> pd.DataFrame:
+    meta = pd.read_parquet(source_dir / "series_metadata.parquet")
+
+    missing = set(CANONICAL_METADATA_COLUMNS) - set(meta.columns)
+    if missing:
+        raise ValueError(
+            f"Generic Silver source {source_dir.name!r} metadata columns missing: "
+            f"{sorted(missing)}"
+        )
+
+    return meta[CANONICAL_METADATA_COLUMNS].copy()
+
+
 def main() -> None:
     for path in [
         EVDS_OBSERVATIONS,
@@ -463,10 +562,24 @@ def main() -> None:
     print("Building canonical BDDK observations...")
     bddk_obs = _build_bddk_observations()
 
+    generic_source_dirs = _discover_generic_source_dirs()
+    generic_observations: list[pd.DataFrame] = []
+    generic_metadata: list[pd.DataFrame] = []
+
+    for source_dir in generic_source_dirs:
+        print(f"Building generic canonical source: {source_dir.name}...")
+        generic_observations.append(
+            _build_generic_observations(source_dir)
+        )
+        generic_metadata.append(
+            _build_generic_metadata(source_dir)
+        )
+
     observations = pd.concat(
         [
             evds_obs,
             bddk_obs,
+            *generic_observations,
         ],
         ignore_index=True,
     )
@@ -476,8 +589,33 @@ def main() -> None:
         [
             _build_evds_metadata(),
             _build_bddk_metadata(),
+            *generic_metadata,
         ],
         ignore_index=True,
+    )
+
+    # Canonical Silver contains only semantically reviewed series.
+    # Unreviewed source series remain available in their source-specific
+    # Silver artifacts until their nature/unit metadata is verified.
+    reviewed_ids = set(
+        metadata.loc[
+            metadata["nature_reviewed"].eq(True),
+            "series_id",
+        ].astype(str)
+    )
+
+    metadata = (
+        metadata[
+            metadata["series_id"].astype(str).isin(reviewed_ids)
+        ]
+        .reset_index(drop=True)
+    )
+
+    observations = (
+        observations[
+            observations["series_id"].astype(str).isin(reviewed_ids)
+        ]
+        .reset_index(drop=True)
     )
 
     if observations.duplicated(
