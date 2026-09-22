@@ -57,7 +57,7 @@ class SeriesCatalogSearchTool(BaseTool):
         "Lakehouse katalogundaki zaman serilerini ve gostergeleri dogal dil ile arar. "
         "Kullanici herhangi bir seri, gosterge, metrik, kategori veya veri kavrami sorup tam series_id "
         "bilinmediginde once bunu kullan. Ham veri getirmek icin KULLANMA; eslesen series_id ile "
-        "lakehouse_query veya change_detection kullan. Ornek query='aylik hasta sayisi'."
+        "lakehouse_query veya change_detection kullan."
     )
 
     class Input(BaseModel):

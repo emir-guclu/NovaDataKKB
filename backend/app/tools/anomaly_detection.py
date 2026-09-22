@@ -51,10 +51,7 @@ class AnomalyDetectionTool(BaseTool):
         "Zaman serisindeki istatistiksel uclari (aylik/yillik soklar veya "
         "mevsimsellik disi hareketler) Robust Z-Score (Medyan+MAD) veya klasik z-score "
         "yontemi ile tespit eder. "
-        "Genel trend veya ham veri okumak icin KULLANMA; onun icin change_detection "
-        "kullan. Ornek: konut kredisi aylik degisim soklari icin "
-        "series_id='BDDK_MONTHLY:tuketici_kredileri:tuketici_kredileri_konut', "
-        "dimension='Toplam', metric='mom_pct_change'."
+        "Genel trend veya ham veri okumak icin KULLANMA; onun icin change_detection kullan."
     )
 
     class Input(BaseModel):

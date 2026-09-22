@@ -2846,5 +2846,32 @@
     "BIRIMI": null,
     "NOTE": null,
     "TAG": []
+  },
+  "TP.TRY.MT03.S": {
+    "SERIE_CODE": "TP.TRY.MT03.S",
+    "SERIE_NAME": "TP.TRY.MT03.S",
+    "FREQUENCY_STR": "AYLIK",
+    "DATAGROUP_NAME": "Genel",
+    "BIRIMI": null,
+    "NOTE": null,
+    "TAG": []
+  },
+  "TP.EUR.MT03.S": {
+    "SERIE_CODE": "TP.EUR.MT03.S",
+    "SERIE_NAME": "TP.EUR.MT03.S",
+    "FREQUENCY_STR": "AYLIK",
+    "DATAGROUP_NAME": "Genel",
+    "BIRIMI": null,
+    "NOTE": null,
+    "TAG": []
+  },
+  "TP.USD.MT03.S": {
+    "SERIE_CODE": "TP.USD.MT03.S",
+    "SERIE_NAME": "TP.USD.MT03.S",
+    "FREQUENCY_STR": "AYLIK",
+    "DATAGROUP_NAME": "Genel",
+    "BIRIMI": null,
+    "NOTE": null,
+    "TAG": []
   }
 }

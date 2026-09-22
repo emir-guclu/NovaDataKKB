@@ -158,7 +158,7 @@ class DataHealthReportTool(BaseTool):
     class Input(BaseModel):
         series_id: str | None = Field(
             default=None,
-            description="Lakehouse veya Silver zaman serisi ID'si (orn. 'BDDK_MONTHLY:tuketici_kredileri:tuketici_kredileri_konut' veya 'EVDS:TP.AB.B1')",
+            description="Lakehouse veya Silver zaman serisi ID'si",
         )
         observations: list[dict[str, Any]] | None = Field(
             default=None,
@@ -166,11 +166,11 @@ class DataHealthReportTool(BaseTool):
         )
         gold_table: str | None = Field(
             default=None,
-            description="Opsiyonel Gold tablosu adi (orn. 'gold_housing_credit_market')",
+            description="Opsiyonel Gold tablosu adi",
         )
         gold_column: str | None = Field(
             default=None,
-            description="Opsiyonel Gold kolonu adi (orn. 'konut_kredisi_faiz_orani')",
+            description="Opsiyonel Gold kolonu adi",
         )
 
     class Output(BaseModel):

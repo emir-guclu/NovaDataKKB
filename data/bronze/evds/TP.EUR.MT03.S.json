@@ -1,84 +1,84 @@
 [
   {
     "Tarih": "2025-1",
-    "TP_FE25_OKTG01": "88.57829100",
+    "TP_EUR_MT03_S": "4.00000000",
     "UNIXTIME": {
       "$numberLong": "1735678800"
     }
   },
   {
     "Tarih": "2025-2",
-    "TP_FE25_OKTG01": "90.59197000",
+    "TP_EUR_MT03_S": "4.80000000",
     "UNIXTIME": {
       "$numberLong": "1738357200"
     }
   },
   {
     "Tarih": "2025-3",
-    "TP_FE25_OKTG01": "92.82052400",
+    "TP_EUR_MT03_S": "5.55000000",
     "UNIXTIME": {
       "$numberLong": "1740776400"
     }
   },
   {
     "Tarih": "2025-4",
-    "TP_FE25_OKTG01": "95.60197700",
+    "TP_EUR_MT03_S": "4.25000000",
     "UNIXTIME": {
       "$numberLong": "1743454800"
     }
   },
   {
     "Tarih": "2025-5",
-    "TP_FE25_OKTG01": "97.06307100",
+    "TP_EUR_MT03_S": "4.00000000",
     "UNIXTIME": {
       "$numberLong": "1746046800"
     }
   },
   {
     "Tarih": "2025-6",
-    "TP_FE25_OKTG01": "98.39599500",
+    "TP_EUR_MT03_S": "3.80000000",
     "UNIXTIME": {
       "$numberLong": "1748725200"
     }
   },
   {
     "Tarih": "2025-7",
-    "TP_FE25_OKTG01": "100.42192500",
+    "TP_EUR_MT03_S": "5.00000000",
     "UNIXTIME": {
       "$numberLong": "1751317200"
     }
   },
   {
     "Tarih": "2025-8",
-    "TP_FE25_OKTG01": "102.46576100",
+    "TP_EUR_MT03_S": "4.50000000",
     "UNIXTIME": {
       "$numberLong": "1753995600"
     }
   },
   {
     "Tarih": "2025-9",
-    "TP_FE25_OKTG01": "105.78000600",
+    "TP_EUR_MT03_S": "3.00000000",
     "UNIXTIME": {
       "$numberLong": "1756674000"
     }
   },
   {
     "Tarih": "2025-10",
-    "TP_FE25_OKTG01": "108.47758100",
+    "TP_EUR_MT03_S": "3.25000000",
     "UNIXTIME": {
       "$numberLong": "1759266000"
     }
   },
   {
     "Tarih": "2025-11",
-    "TP_FE25_OKTG01": "109.41593600",
+    "TP_EUR_MT03_S": "3.80000000",
     "UNIXTIME": {
       "$numberLong": "1761944400"
     }
   },
   {
     "Tarih": "2025-12",
-    "TP_FE25_OKTG01": "110.38696300",
+    "TP_EUR_MT03_S": "3.00000000",
     "UNIXTIME": {
       "$numberLong": "1764536400"
     }

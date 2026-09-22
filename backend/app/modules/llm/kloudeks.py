@@ -54,6 +54,32 @@ class QwenChatClient(KloudeksClient):
         return self.chat(messages)
 
 
+class DeepSeekFlashClient(KloudeksClient):
+    """
+    Client for DeepSeek-V4.1-Flash model hosted on Kloudeks.
+    Used for ultra-fast Q&A, multi-turn reasoning, and tool execution.
+    """
+    MODEL_ID = "deepseek-ai/DeepSeek-V4.1-Flash"
+
+    def chat(self, messages: List[Dict[str, Any]], temperature: float = 0.7) -> str:
+        try:
+            response = self.client.chat.completions.create(
+                model=self.MODEL_ID,
+                messages=messages,
+                temperature=temperature,
+            )
+            return response.choices[0].message.content
+        except Exception as e:
+            raise KloudeksAPIError(f"DeepSeekFlashClient error: {str(e)}")
+
+    def ask(self, prompt: str, system_prompt: Optional[str] = None) -> str:
+        messages = []
+        if system_prompt:
+            messages.append({"role": "system", "content": system_prompt})
+        messages.append({"role": "user", "content": prompt})
+        return self.chat(messages)
+
+
 class QwenEmbeddingClient(KloudeksClient):
     """
     Client for Qwen3-Embedding-8B model.

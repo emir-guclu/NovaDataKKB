@@ -98,3 +98,19 @@ def test_lakehouse_query_finturk_preserves_column_units():
     assert result.column_units["nonperforming_receivables"] == "bin TL"
     assert result.column_units["npl_ratio"] == "ratio"
     assert result.rows[0]["total_cash_loans"] == pytest.approx(9037199663.0)
+
+
+def test_lakehouse_query_silver_observations_success():
+    tool = LakehouseQueryTool()
+    result = tool.run(
+        tool.Input(
+            table="silver_observations",
+            columns=["date", "value", "series_id"],
+            limit=5,
+        )
+    )
+    assert result.success is True
+    assert result.row_count > 0
+    assert "date" in result.rows[0]
+    assert "value" in result.rows[0]
+

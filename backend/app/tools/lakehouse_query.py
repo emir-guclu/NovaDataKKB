@@ -110,19 +110,20 @@ def _column_units(table_name: str, columns: list[str]) -> dict[str, str]:
 class LakehouseQueryTool(BaseTool):
     name = "lakehouse_query"
     description = (
-        "Lakehouse icindeki hazir Silver, Aligned ve Gold tablolarindan guvenli, "
-        "sinirli veri getirir. Guncel/harici internet bilgisi icin KULLANMA; onun "
-        "icin web_search kullanilmalidir. Ham SQL almaz; table, columns, filters "
-        "ve limit gibi yapilandirilmis parametrelerle cagrilir. Ornek table: "
-        "'gold_housing_credit_market', columns: ['date', 'konut_kredisi_faiz_orani']."
+        "Lakehouse icindeki hazir Gold tablolarindan veya tum ham/yuklenen zaman serisi "
+        "gozlemlerini iceren 'silver_observations' tablosundan guvenli veri getirir. "
+        "Guncel/harici internet bilgisi icin KULLANMA; onun icin web_search kullanilmalidir. "
+        "Ham SQL almaz; table, columns, filters ve limit parametreleriyle cagrilir."
     )
 
     class Input(BaseModel):
-        table: str = Field(description="Lakehouse tablosu veya view adi")
-        columns: list[str] = Field(description="Getirilecek kolon adlari")
+        table: str = Field(
+            description="Lakehouse tablosu (orn. 'silver_observations', 'aligned_observations' veya Gold tablolari)",
+        )
+        columns: list[str] = Field(description="Getirilecek kolon adlari (orn. ['date', 'value'])")
         filters: dict[str, Any] = Field(
             default_factory=dict,
-            description="Kolon-esitlik filtreleri. Ornek: {'geo_level': 'province'}",
+            description="Kolon-esitlik filtreleri (orn. {'series_id': '...'})",
         )
         start_date: str | None = Field(default=None, description="Opsiyonel baslangic tarihi, YYYY-MM-DD")
         end_date: str | None = Field(default=None, description="Opsiyonel bitis tarihi, YYYY-MM-DD")

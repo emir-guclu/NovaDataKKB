@@ -435,11 +435,11 @@ def load_evds_series(
                 exc_info=True,
             )
 
-    # 8. Build preview
+    # 8. Build preview (all canonical observations)
     sorted_obs = sorted(canonical_obs_rows, key=lambda x: x["date"])
     preview = [
         {"date": str(o["date"]), "value": o["value"]}
-        for o in sorted_obs[-5:]
+        for o in sorted_obs
     ]
 
     return {

@@ -370,7 +370,6 @@ function DashboardContent({ t }: { t: any }) {
   // Sağ paneldeki güven/izlenebilirlik bölümü için son agent mesajının trace'i
   const latestAgentMsg = [...messages].reverse().find(m => m.role === "agent" && m.content);
   const lastAgentTrace = latestAgentMsg?.trace;
-  const lastGrounding = latestAgentMsg?.grounding;
 
   // Sağ panelde gösterilecek analitik grafikler (tüm oturum boyunca üretilenlerin tamamı)
   const sessionImages: Array<{ src: string; alt: string; messageIndex: number; questionPrompt?: string }> = [];
@@ -1867,51 +1866,6 @@ function DashboardContent({ t }: { t: any }) {
             </div>
           </div>
 
-          {/* Güven Katmanı - Doğruluk Kontrolü (cevaptaki sayıların araç çıktılarıyla eşleşmesi) */}
-          {lastGrounding && lastGrounding.checked > 0 && (
-            <div className={`border rounded-2xl p-4 sm:p-5 transition-all ${
-              lastGrounding.ungrounded.length === 0
-                ? (isDark ? "bg-emerald-500/5 border-emerald-500/20" : "bg-emerald-50 border-emerald-200 shadow-md")
-                : (isDark ? "bg-amber-500/5 border-amber-500/30" : "bg-amber-50 border-amber-300 shadow-md")
-            }`}>
-              <h3 className={`font-bold text-xs uppercase tracking-wider mb-2 ${
-                isDark ? "text-gray-300" : "text-slate-700"
-              }`}>
-                {t('grounding_title')}
-              </h3>
-              <p className={`text-sm font-medium leading-relaxed ${
-                lastGrounding.ungrounded.length === 0
-                  ? (isDark ? "text-emerald-300" : "text-emerald-700")
-                  : (isDark ? "text-amber-300" : "text-amber-800")
-              }`}>
-                {lastGrounding.ungrounded.length === 0 ? "✅ " : "⚠️ "}
-                {lastGrounding.ungrounded.length === 0
-                  ? ((lastGrounding.sources?.document ?? 0) > 0
-                      ? t('grounding_ok_document', {
-                          checked: lastGrounding.checked,
-                          tool: lastGrounding.sources?.tool ?? 0,
-                          document: lastGrounding.sources?.document ?? 0,
-                        })
-                      : t('grounding_ok', { checked: lastGrounding.checked }))
-                  : ((lastGrounding.sources?.document ?? 0) > 0
-                      ? t('grounding_partial_document', {
-                          checked: lastGrounding.checked,
-                          grounded: lastGrounding.grounded,
-                          tool: lastGrounding.sources?.tool ?? 0,
-                          document: lastGrounding.sources?.document ?? 0,
-                          n: lastGrounding.ungrounded.length,
-                        })
-                      : t('grounding_partial', {
-                          checked: lastGrounding.checked,
-                          grounded: lastGrounding.grounded,
-                          n: lastGrounding.ungrounded.length,
-                        }))}
-                {lastGrounding.ungrounded.length > 0 && (
-                  <span className="font-mono">{`: ${lastGrounding.ungrounded.join(" · ")}`}</span>
-                )}
-              </p>
-            </div>
-          )}
 
           {/* Güven Katmanı - İzlenebilirlik / Kullanılan Araçlar (Açılır Kapanır) */}
           {traceSteps.length > 0 && (

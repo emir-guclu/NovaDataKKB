@@ -44,8 +44,7 @@ class TurningPointAndCycleDetectorTool(BaseTool):
     description = (
         "Zaman serilerindeki makroekonomik döngüleri, dönüm noktalarını (yerel tepe/dip noktaları), "
         "genişleme ve daralma fazlarının sürelerini tespit eder ve görselleştirir. "
-        "Kısa vadeli ani sıçramalar veya anomali tespiti için KULLANMA; onun için anomaly_detection kullanılmalıdır. "
-        "Örnek series_id: 'BDDK_MONTHLY:tuketici_kredileri:tuketici_kredileri_konut', dimension: 'Toplam'."
+        "Kısa vadeli ani sıçramalar veya anomali tespiti için KULLANMA; onun için anomaly_detection kullanılmalıdır."
     )
 
     class Input(BaseModel):

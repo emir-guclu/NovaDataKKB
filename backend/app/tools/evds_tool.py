@@ -48,7 +48,7 @@ class EvdsTool(BaseTool):
         "TCMB EVDS resmi veri servisinden canli seri arar veya indirir. Lakehouse katalogunda "
         "bulunmayan Merkez Bankasi serileri icin kullanilir. Haber veya tahmin uretmek icin "
         "KULLANMA; resmi seri gerekiyorsa action='search' ile katalogda ara, action='load' ile "
-        "seri kodunu vererek veriyi indir ve son degerini getir. Ornek series_code='TP.DK.USD.A.YTL'."
+        "seri kodunu vererek veriyi indir ve son degerini getir."
     )
 
     class Input(BaseModel):
@@ -58,11 +58,11 @@ class EvdsTool(BaseTool):
         )
         query: str | None = Field(
             default=None,
-            description="Arama terimi (action='search' ise zorunlu; ornek: 'ihracat reeskont', 'brut rezerv').",
+            description="Arama terimi (action='search' ise zorunlu).",
         )
         series_code: str | None = Field(
             default=None,
-            description="EVDS seri kodu (action='load' ise zorunlu; ornek: 'TP.DK.USD.A.YTL').",
+            description="EVDS seri kodu (action='load' ise zorunlu).",
         )
         start_date: str = Field(
             default="01-01-2021",

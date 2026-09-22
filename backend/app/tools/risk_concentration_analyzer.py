@@ -61,8 +61,7 @@ class RiskConcentrationAnalyzerTool(BaseTool):
         "yoğunlaşmasını (CR3, CR5 ve Herfindahl-Hirschman Endeksi - HHI) hesaplar. "
         "Pareto dağılımı ve kümülatif yoğunlaşma grafiği üretir. Zaman serisi değişimlerini veya "
         "makroekonomik döngüleri analiz etmek için KULLANMA; onlar için change_detection veya "
-        "turning_point_and_cycle_detector kullanılmalıdır. Örnek table_name: 'gold_finturk_province_credit_quality', "
-        "dimension_column: 'province', metric_column: 'nonperforming_receivables'."
+        "turning_point_and_cycle_detector kullanılmalıdır."
     )
 
     class Input(BaseModel):

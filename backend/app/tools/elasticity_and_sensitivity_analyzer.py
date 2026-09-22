@@ -40,19 +40,17 @@ class ElasticityAndSensitivityAnalyzerTool(BaseTool):
     name = "elasticity_and_sensitivity_analyzer"
     description = (
         "İki finansal değişken arasındaki esneklik katsayısını (elasticity) ve duyarlılığı hesaplar "
-        "(örn. Faiz artışının konut/tüketici kredisi talebine etkisi). OLS log-log regresyon veya "
+        "(örn. Faiz veya fiyat değişimlerinin talebe etkisi). OLS log-log regresyon veya "
         "arc elasticity ile saçılım ve trend grafiği üretir. Hem yerel Lakehouse serilerini "
         "(dependent_series_id, independent_series_id) hem de dış kaynaklı satır içi serileri "
         "(observations_dependent, observations_independent) destekler. Doğrudan nedensellik veya anomali tespiti için KULLANMA; "
-        "onun için causality_check veya anomaly_detection kullanılmalıdır. Örnek: dependent_series_id: "
-        "'BDDK_MONTHLY:tuketici_kredileri:tuketici_kredileri_konut', independent_series_id: 'EVDS:TP.GENENDEKS.T1' "
-        "veya dış veri için observations_dependent / observations_independent."
+        "onun için causality_check veya anomaly_detection kullanılmalıdır."
     )
 
     class Input(BaseModel):
         dependent_series_id: str | None = Field(
             default=None,
-            description="Bağımlı değişken serisi (örn. Konut Kredisi). observations_dependent verilmişse boş bırakılır.",
+            description="Bağımlı değişken serisi ID'si. observations_dependent verilmişse boş bırakılır.",
         )
         observations_dependent: list[dict] | None = Field(
             default=None,
@@ -63,7 +61,7 @@ class ElasticityAndSensitivityAnalyzerTool(BaseTool):
         )
         independent_series_id: str | None = Field(
             default=None,
-            description="Bağımsız değişken serisi (örn. Politika Faizi / TÜFE). observations_independent verilmişse boş bırakılır.",
+            description="Bağımsız değişken serisi ID'si. observations_independent verilmişse boş bırakılır.",
         )
         observations_independent: list[dict] | None = Field(
             default=None,

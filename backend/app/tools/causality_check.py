@@ -124,10 +124,7 @@ class CausalityCheckTool(BaseTool):
         "max_lag parametresi ile -max_lag...+max_lag donem taranarak iliskinin kac donem/ay "
         "gecikmeyle en guclu seviyeye ulastigi tespit edilir. Bu istatistiksel korelasyondur, "
         "kesin nedensellik ispati degildir; tek seri degisimleri icin KULLANMA, onun icin "
-        "change_detection veya anomaly_detection kullan. "
-        "Ornek: series_id_a='BDDK_MONTHLY:tuketici_kredileri:tuketici_kredileri_konut', "
-        "dimension_a='Toplam', series_id_b='EVDS:TP.KTF12', max_lag=6 veya dis kaynaktan "
-        "gelen veriler icin observations_a/observations_b."
+        "change_detection veya anomaly_detection kullan."
     )
 
     class Input(BaseModel):

@@ -39,10 +39,7 @@ class ChangeDetectionTool(BaseTool):
     description = (
         "Bir finansal serinin aylik (MoM) veya yillik (YoY) degisimini gercek "
         "gold_periodic_change verisinden getirir. Ham degeri veya guncel haberleri "
-        "aramak icin KULLANMA. Tarih verilmezse en guncel gozlemi getirir. "
-        "Ornek: konut kredisi hacmi icin "
-        "series_id='BDDK_MONTHLY:tuketici_kredileri:tuketici_kredileri_konut' "
-        "ve dimension='Toplam' kullan."
+        "aramak icin KULLANMA. Tarih verilmezse en guncel gozlemi getirir."
     )
 
     class Input(BaseModel):

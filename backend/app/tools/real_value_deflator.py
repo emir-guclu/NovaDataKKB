@@ -44,9 +44,7 @@ class RealValueDeflatorTool(BaseTool):
         "arındırarak reel büyüme oranını, enflasyon erozyonunu (satın alma gücü kaybı) ve alan grafiğini üretir. "
         "Hem Lakehouse serilerini (nominal_series_id) hem de kullanıcı tarafından yüklenen/dış kaynaklı "
         "satır içi serileri (nominal_observations) destekler. Ham nominal değişimleri veya korelasyonu incelemek "
-        "için KULLANMA; onlar için change_detection veya causality_check kullanılmalıdır. "
-        "Örnek nominal_series_id: 'BDDK_MONTHLY:tuketici_kredileri:tuketici_kredileri_konut', deflator_series_id: 'TP.GENENDEKS.T1' "
-        "veya harici veri için nominal_observations."
+        "için KULLANMA; onlar için change_detection veya causality_check kullanılmalıdır."
     )
 
     class Input(BaseModel):

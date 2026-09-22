@@ -45,13 +45,16 @@ class LLMProvider(ABC):
 
 class KloudeksProvider(LLMProvider):
     BASE_URL = "https://mia.csp.kloudeks.com/v1"
-    CHAT_MODEL = "kkbhackathon2026/Qwen3.8-27B"
+    MODEL_QWEN = "kkbhackathon2026/Qwen3.8-27B"
+    MODEL_DEEPSEEK_FLASH = "deepseek-ai/DeepSeek-V4.1-Flash"
+    CHAT_MODEL = os.getenv("KLOUDEKS_MODEL", MODEL_DEEPSEEK_FLASH)
     EMBEDDING_MODEL = "kkbhackathon2026/Qwen3-Embedding-8B"
     OCR_MODEL = "kkbhackathon2026/Unlimited-OCR"
 
     def __init__(
         self,
         api_key: str | None = None,
+        model: str | None = None,
         *,
         client: Any | None = None,
         sleep_fn: Callable[[float], None] = time.sleep,
@@ -60,6 +63,7 @@ class KloudeksProvider(LLMProvider):
         if not self.api_key and client is None:
             raise ValueError("MIA_API_KEY is required")
 
+        self.model = model or os.getenv("KLOUDEKS_MODEL", self.CHAT_MODEL)
         self.client = client or OpenAI(
             api_key=self.api_key,
             base_url=self.BASE_URL,
@@ -89,7 +93,7 @@ class KloudeksProvider(LLMProvider):
         response_format: dict[str, Any] | None = None,
     ) -> LLMResponse:
         kwargs: dict[str, Any] = {
-            "model": self.CHAT_MODEL,
+            "model": self.model,
             "messages": messages,
         }
 
@@ -402,6 +406,10 @@ class DeepSeekProvider(LLMProvider):
 def get_default_provider(provider_name: str | None = None) -> LLMProvider:
     """Belirtilen veya ortam degiskenine gore DeepSeekProvider, NvidiaProvider veya KloudeksProvider dondurur."""
     name = (provider_name or os.getenv("LLM_PROVIDER", "")).lower().strip()
+    if name in ("kloudeks-deepseek", "kloudeks-deepseek-flash", "deepseek-flash", "flash"):
+        return KloudeksProvider(model=KloudeksProvider.MODEL_DEEPSEEK_FLASH)
+    if name in ("kloudeks-qwen", "qwen"):
+        return KloudeksProvider(model=KloudeksProvider.MODEL_QWEN)
     if name == "deepseek":
         return DeepSeekProvider()
     if name == "nvidia":
@@ -409,7 +417,9 @@ def get_default_provider(provider_name: str | None = None) -> LLMProvider:
     if name == "kloudeks":
         return KloudeksProvider()
 
-    # Otomatik secim
+    # Otomatik secim: once Kloudeks (MIA), ardindan DeepSeek veya Nvidia
+    if os.getenv("MIA_API_KEY"):
+        return KloudeksProvider()
     if os.getenv("DEEPSEEK_API_KEY"):
         return DeepSeekProvider()
     if os.getenv("NVIDIA_API_KEY"):
@@ -419,10 +429,30 @@ def get_default_provider(provider_name: str | None = None) -> LLMProvider:
 
 def get_available_providers() -> list[dict[str, Any]]:
     """Mevcut ve aktif API anahtarina sahip providerlari listeler."""
+    mia_available = bool(os.getenv("MIA_API_KEY"))
+    active_kloudeks_model = os.getenv("KLOUDEKS_MODEL", KloudeksProvider.MODEL_DEEPSEEK_FLASH)
     return [
         {
+            "id": "kloudeks",
+            "name": f"Kloudeks ({'DeepSeek Flash' if 'DeepSeek' in active_kloudeks_model else 'Qwen 3.8'})",
+            "model": active_kloudeks_model,
+            "available": mia_available,
+        },
+        {
+            "id": "kloudeks-deepseek-flash",
+            "name": "Kloudeks DeepSeek Flash",
+            "model": KloudeksProvider.MODEL_DEEPSEEK_FLASH,
+            "available": mia_available,
+        },
+        {
+            "id": "kloudeks-qwen",
+            "name": "Kloudeks Qwen 3.8",
+            "model": KloudeksProvider.MODEL_QWEN,
+            "available": mia_available,
+        },
+        {
             "id": "deepseek",
-            "name": "DeepSeek-V3",
+            "name": "DeepSeek-V3 (Harici API)",
             "model": "deepseek-chat",
             "available": bool(os.getenv("DEEPSEEK_API_KEY")),
         },
@@ -432,10 +462,5 @@ def get_available_providers() -> list[dict[str, Any]]:
             "model": os.getenv("NVIDIA_MODEL", "meta/llama-3.2-11b-vision-instruct"),
             "available": bool(os.getenv("NVIDIA_API_KEY")),
         },
-        {
-            "id": "kloudeks",
-            "name": "Kloudeks Qwen 3.8",
-            "model": "Qwen3.8-27B",
-            "available": bool(os.getenv("MIA_API_KEY")),
-        },
     ]
+

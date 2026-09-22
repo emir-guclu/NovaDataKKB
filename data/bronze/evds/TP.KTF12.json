@@ -1,426 +1,426 @@
 [
   {
-    "Tarih": "05-01-2024",
-    "YEARWEEK": "2024-1",
-    "TP_KTF12": "42.10000000",
-    "UNIXTIME": {
-      "$numberLong": "1704402000"
-    }
-  },
-  {
-    "Tarih": "12-01-2024",
-    "YEARWEEK": "2024-2",
-    "TP_KTF12": "41.62000000",
-    "UNIXTIME": {
-      "$numberLong": "1705006800"
-    }
-  },
-  {
-    "Tarih": "19-01-2024",
-    "YEARWEEK": "2024-3",
-    "TP_KTF12": "41.38000000",
-    "UNIXTIME": {
-      "$numberLong": "1705611600"
-    }
-  },
-  {
-    "Tarih": "26-01-2024",
-    "YEARWEEK": "2024-4",
-    "TP_KTF12": "41.21000000",
-    "UNIXTIME": {
-      "$numberLong": "1706216400"
-    }
-  },
-  {
-    "Tarih": "02-02-2024",
-    "YEARWEEK": "2024-5",
-    "TP_KTF12": "41.03000000",
-    "UNIXTIME": {
-      "$numberLong": "1706821200"
-    }
-  },
-  {
-    "Tarih": "09-02-2024",
-    "YEARWEEK": "2024-6",
-    "TP_KTF12": "40.89000000",
-    "UNIXTIME": {
-      "$numberLong": "1707426000"
-    }
-  },
-  {
-    "Tarih": "16-02-2024",
-    "YEARWEEK": "2024-7",
-    "TP_KTF12": "40.95000000",
-    "UNIXTIME": {
-      "$numberLong": "1708030800"
-    }
-  },
-  {
-    "Tarih": "23-02-2024",
-    "YEARWEEK": "2024-8",
-    "TP_KTF12": "40.99000000",
-    "UNIXTIME": {
-      "$numberLong": "1708635600"
-    }
-  },
-  {
-    "Tarih": "01-03-2024",
-    "YEARWEEK": "2024-9",
-    "TP_KTF12": "40.88000000",
-    "UNIXTIME": {
-      "$numberLong": "1709240400"
-    }
-  },
-  {
-    "Tarih": "08-03-2024",
-    "YEARWEEK": "2024-10",
-    "TP_KTF12": "41.32000000",
-    "UNIXTIME": {
-      "$numberLong": "1709845200"
-    }
-  },
-  {
-    "Tarih": "15-03-2024",
-    "YEARWEEK": "2024-11",
-    "TP_KTF12": "42.65000000",
-    "UNIXTIME": {
-      "$numberLong": "1710450000"
-    }
-  },
-  {
-    "Tarih": "22-03-2024",
-    "YEARWEEK": "2024-12",
-    "TP_KTF12": "43.13000000",
-    "UNIXTIME": {
-      "$numberLong": "1711054800"
-    }
-  },
-  {
-    "Tarih": "29-03-2024",
-    "YEARWEEK": "2024-13",
-    "TP_KTF12": "43.53000000",
-    "UNIXTIME": {
-      "$numberLong": "1711659600"
-    }
-  },
-  {
-    "Tarih": "05-04-2024",
-    "YEARWEEK": "2024-14",
-    "TP_KTF12": "45.14000000",
-    "UNIXTIME": {
-      "$numberLong": "1712264400"
-    }
-  },
-  {
-    "Tarih": "12-04-2024",
-    "YEARWEEK": "2024-15",
-    "TP_KTF12": "44.10000000",
-    "UNIXTIME": {
-      "$numberLong": "1712869200"
-    }
-  },
-  {
-    "Tarih": "19-04-2024",
-    "YEARWEEK": "2024-16",
-    "TP_KTF12": "44.94000000",
-    "UNIXTIME": {
-      "$numberLong": "1713474000"
-    }
-  },
-  {
-    "Tarih": "26-04-2024",
-    "YEARWEEK": "2024-17",
-    "TP_KTF12": "44.70000000",
-    "UNIXTIME": {
-      "$numberLong": "1714078800"
-    }
-  },
-  {
-    "Tarih": "03-05-2024",
-    "YEARWEEK": "2024-18",
-    "TP_KTF12": "44.02000000",
-    "UNIXTIME": {
-      "$numberLong": "1714683600"
-    }
-  },
-  {
-    "Tarih": "10-05-2024",
-    "YEARWEEK": "2024-19",
-    "TP_KTF12": "44.66000000",
-    "UNIXTIME": {
-      "$numberLong": "1715288400"
-    }
-  },
-  {
-    "Tarih": "17-05-2024",
-    "YEARWEEK": "2024-20",
-    "TP_KTF12": "44.88000000",
-    "UNIXTIME": {
-      "$numberLong": "1715893200"
-    }
-  },
-  {
-    "Tarih": "24-05-2024",
-    "YEARWEEK": "2024-21",
-    "TP_KTF12": "44.93000000",
-    "UNIXTIME": {
-      "$numberLong": "1716498000"
-    }
-  },
-  {
-    "Tarih": "31-05-2024",
-    "YEARWEEK": "2024-22",
-    "TP_KTF12": "44.98000000",
-    "UNIXTIME": {
-      "$numberLong": "1717102800"
-    }
-  },
-  {
-    "Tarih": "07-06-2024",
-    "YEARWEEK": "2024-23",
-    "TP_KTF12": "44.84000000",
-    "UNIXTIME": {
-      "$numberLong": "1717707600"
-    }
-  },
-  {
-    "Tarih": "14-06-2024",
-    "YEARWEEK": "2024-24",
-    "TP_KTF12": "44.35000000",
-    "UNIXTIME": {
-      "$numberLong": "1718312400"
-    }
-  },
-  {
-    "Tarih": "21-06-2024",
-    "YEARWEEK": "2024-25",
-    "TP_KTF12": "44.58000000",
-    "UNIXTIME": {
-      "$numberLong": "1718917200"
-    }
-  },
-  {
-    "Tarih": "28-06-2024",
-    "YEARWEEK": "2024-26",
-    "TP_KTF12": "44.16000000",
-    "UNIXTIME": {
-      "$numberLong": "1719522000"
-    }
-  },
-  {
-    "Tarih": "05-07-2024",
-    "YEARWEEK": "2024-27",
-    "TP_KTF12": "44.26000000",
-    "UNIXTIME": {
-      "$numberLong": "1720126800"
-    }
-  },
-  {
-    "Tarih": "12-07-2024",
-    "YEARWEEK": "2024-28",
-    "TP_KTF12": "44.24000000",
-    "UNIXTIME": {
-      "$numberLong": "1720731600"
-    }
-  },
-  {
-    "Tarih": "19-07-2024",
-    "YEARWEEK": "2024-29",
-    "TP_KTF12": "44.17000000",
-    "UNIXTIME": {
-      "$numberLong": "1721336400"
-    }
-  },
-  {
-    "Tarih": "26-07-2024",
-    "YEARWEEK": "2024-30",
-    "TP_KTF12": "43.72000000",
-    "UNIXTIME": {
-      "$numberLong": "1721941200"
-    }
-  },
-  {
-    "Tarih": "02-08-2024",
-    "YEARWEEK": "2024-31",
-    "TP_KTF12": "43.64000000",
-    "UNIXTIME": {
-      "$numberLong": "1722546000"
-    }
-  },
-  {
-    "Tarih": "09-08-2024",
-    "YEARWEEK": "2024-32",
-    "TP_KTF12": "43.48000000",
-    "UNIXTIME": {
-      "$numberLong": "1723150800"
-    }
-  },
-  {
-    "Tarih": "16-08-2024",
-    "YEARWEEK": "2024-33",
-    "TP_KTF12": "43.56000000",
-    "UNIXTIME": {
-      "$numberLong": "1723755600"
-    }
-  },
-  {
-    "Tarih": "23-08-2024",
-    "YEARWEEK": "2024-34",
-    "TP_KTF12": "43.49000000",
-    "UNIXTIME": {
-      "$numberLong": "1724360400"
-    }
-  },
-  {
-    "Tarih": "30-08-2024",
-    "YEARWEEK": "2024-35",
-    "TP_KTF12": "43.48000000",
-    "UNIXTIME": {
-      "$numberLong": "1724965200"
-    }
-  },
-  {
-    "Tarih": "06-09-2024",
-    "YEARWEEK": "2024-36",
-    "TP_KTF12": "43.25000000",
-    "UNIXTIME": {
-      "$numberLong": "1725570000"
-    }
-  },
-  {
-    "Tarih": "13-09-2024",
-    "YEARWEEK": "2024-37",
-    "TP_KTF12": "43.22000000",
-    "UNIXTIME": {
-      "$numberLong": "1726174800"
-    }
-  },
-  {
-    "Tarih": "20-09-2024",
-    "YEARWEEK": "2024-38",
-    "TP_KTF12": "43.20000000",
-    "UNIXTIME": {
-      "$numberLong": "1726779600"
-    }
-  },
-  {
-    "Tarih": "27-09-2024",
-    "YEARWEEK": "2024-39",
-    "TP_KTF12": "42.93000000",
-    "UNIXTIME": {
-      "$numberLong": "1727384400"
-    }
-  },
-  {
-    "Tarih": "04-10-2024",
-    "YEARWEEK": "2024-40",
-    "TP_KTF12": "41.76000000",
-    "UNIXTIME": {
-      "$numberLong": "1727989200"
-    }
-  },
-  {
-    "Tarih": "11-10-2024",
-    "YEARWEEK": "2024-41",
-    "TP_KTF12": "41.61000000",
-    "UNIXTIME": {
-      "$numberLong": "1728594000"
-    }
-  },
-  {
-    "Tarih": "18-10-2024",
-    "YEARWEEK": "2024-42",
-    "TP_KTF12": "41.41000000",
-    "UNIXTIME": {
-      "$numberLong": "1729198800"
-    }
-  },
-  {
-    "Tarih": "25-10-2024",
-    "YEARWEEK": "2024-43",
-    "TP_KTF12": "41.29000000",
-    "UNIXTIME": {
-      "$numberLong": "1729803600"
-    }
-  },
-  {
-    "Tarih": "01-11-2024",
-    "YEARWEEK": "2024-44",
-    "TP_KTF12": "41.36000000",
-    "UNIXTIME": {
-      "$numberLong": "1730408400"
-    }
-  },
-  {
-    "Tarih": "08-11-2024",
-    "YEARWEEK": "2024-45",
-    "TP_KTF12": "41.33000000",
-    "UNIXTIME": {
-      "$numberLong": "1731013200"
-    }
-  },
-  {
-    "Tarih": "15-11-2024",
-    "YEARWEEK": "2024-46",
-    "TP_KTF12": "40.88000000",
-    "UNIXTIME": {
-      "$numberLong": "1731618000"
-    }
-  },
-  {
-    "Tarih": "22-11-2024",
-    "YEARWEEK": "2024-47",
-    "TP_KTF12": "41.28000000",
-    "UNIXTIME": {
-      "$numberLong": "1732222800"
-    }
-  },
-  {
-    "Tarih": "29-11-2024",
-    "YEARWEEK": "2024-48",
-    "TP_KTF12": "41.33000000",
-    "UNIXTIME": {
-      "$numberLong": "1732827600"
-    }
-  },
-  {
-    "Tarih": "06-12-2024",
-    "YEARWEEK": "2024-49",
-    "TP_KTF12": "41.11000000",
-    "UNIXTIME": {
-      "$numberLong": "1733432400"
-    }
-  },
-  {
-    "Tarih": "13-12-2024",
-    "YEARWEEK": "2024-50",
-    "TP_KTF12": "41.23000000",
-    "UNIXTIME": {
-      "$numberLong": "1734037200"
-    }
-  },
-  {
-    "Tarih": "20-12-2024",
-    "YEARWEEK": "2024-51",
-    "TP_KTF12": "41.01000000",
-    "UNIXTIME": {
-      "$numberLong": "1734642000"
-    }
-  },
-  {
-    "Tarih": "27-12-2024",
-    "YEARWEEK": "2024-52",
-    "TP_KTF12": "40.87000000",
-    "UNIXTIME": {
-      "$numberLong": "1735246800"
-    }
-  },
-  {
     "Tarih": "03-01-2025",
     "YEARWEEK": "2025-1",
     "TP_KTF12": "40.71000000",
     "UNIXTIME": {
       "$numberLong": "1735851600"
+    }
+  },
+  {
+    "Tarih": "10-01-2025",
+    "YEARWEEK": "2025-2",
+    "TP_KTF12": "40.87000000",
+    "UNIXTIME": {
+      "$numberLong": "1736456400"
+    }
+  },
+  {
+    "Tarih": "17-01-2025",
+    "YEARWEEK": "2025-3",
+    "TP_KTF12": "40.41000000",
+    "UNIXTIME": {
+      "$numberLong": "1737061200"
+    }
+  },
+  {
+    "Tarih": "24-01-2025",
+    "YEARWEEK": "2025-4",
+    "TP_KTF12": "40.46000000",
+    "UNIXTIME": {
+      "$numberLong": "1737666000"
+    }
+  },
+  {
+    "Tarih": "31-01-2025",
+    "YEARWEEK": "2025-5",
+    "TP_KTF12": "40.23000000",
+    "UNIXTIME": {
+      "$numberLong": "1738270800"
+    }
+  },
+  {
+    "Tarih": "07-02-2025",
+    "YEARWEEK": "2025-6",
+    "TP_KTF12": "40.05000000",
+    "UNIXTIME": {
+      "$numberLong": "1738875600"
+    }
+  },
+  {
+    "Tarih": "14-02-2025",
+    "YEARWEEK": "2025-7",
+    "TP_KTF12": "40.03000000",
+    "UNIXTIME": {
+      "$numberLong": "1739480400"
+    }
+  },
+  {
+    "Tarih": "21-02-2025",
+    "YEARWEEK": "2025-8",
+    "TP_KTF12": "39.96000000",
+    "UNIXTIME": {
+      "$numberLong": "1740085200"
+    }
+  },
+  {
+    "Tarih": "28-02-2025",
+    "YEARWEEK": "2025-9",
+    "TP_KTF12": "39.86000000",
+    "UNIXTIME": {
+      "$numberLong": "1740690000"
+    }
+  },
+  {
+    "Tarih": "07-03-2025",
+    "YEARWEEK": "2025-10",
+    "TP_KTF12": "39.85000000",
+    "UNIXTIME": {
+      "$numberLong": "1741294800"
+    }
+  },
+  {
+    "Tarih": "14-03-2025",
+    "YEARWEEK": "2025-11",
+    "TP_KTF12": "39.63000000",
+    "UNIXTIME": {
+      "$numberLong": "1741899600"
+    }
+  },
+  {
+    "Tarih": "21-03-2025",
+    "YEARWEEK": "2025-12",
+    "TP_KTF12": "39.25000000",
+    "UNIXTIME": {
+      "$numberLong": "1742504400"
+    }
+  },
+  {
+    "Tarih": "28-03-2025",
+    "YEARWEEK": "2025-13",
+    "TP_KTF12": "38.79000000",
+    "UNIXTIME": {
+      "$numberLong": "1743109200"
+    }
+  },
+  {
+    "Tarih": "04-04-2025",
+    "YEARWEEK": "2025-14",
+    "TP_KTF12": "39.42000000",
+    "UNIXTIME": {
+      "$numberLong": "1743714000"
+    }
+  },
+  {
+    "Tarih": "11-04-2025",
+    "YEARWEEK": "2025-15",
+    "TP_KTF12": "39.59000000",
+    "UNIXTIME": {
+      "$numberLong": "1744318800"
+    }
+  },
+  {
+    "Tarih": "18-04-2025",
+    "YEARWEEK": "2025-16",
+    "TP_KTF12": "39.59000000",
+    "UNIXTIME": {
+      "$numberLong": "1744923600"
+    }
+  },
+  {
+    "Tarih": "25-04-2025",
+    "YEARWEEK": "2025-17",
+    "TP_KTF12": "39.65000000",
+    "UNIXTIME": {
+      "$numberLong": "1745528400"
+    }
+  },
+  {
+    "Tarih": "02-05-2025",
+    "YEARWEEK": "2025-18",
+    "TP_KTF12": "40.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1746133200"
+    }
+  },
+  {
+    "Tarih": "09-05-2025",
+    "YEARWEEK": "2025-19",
+    "TP_KTF12": "41.65000000",
+    "UNIXTIME": {
+      "$numberLong": "1746738000"
+    }
+  },
+  {
+    "Tarih": "16-05-2025",
+    "YEARWEEK": "2025-20",
+    "TP_KTF12": "42.73000000",
+    "UNIXTIME": {
+      "$numberLong": "1747342800"
+    }
+  },
+  {
+    "Tarih": "23-05-2025",
+    "YEARWEEK": "2025-21",
+    "TP_KTF12": "42.76000000",
+    "UNIXTIME": {
+      "$numberLong": "1747947600"
+    }
+  },
+  {
+    "Tarih": "30-05-2025",
+    "YEARWEEK": "2025-22",
+    "TP_KTF12": "43.56000000",
+    "UNIXTIME": {
+      "$numberLong": "1748552400"
+    }
+  },
+  {
+    "Tarih": "06-06-2025",
+    "YEARWEEK": "2025-23",
+    "TP_KTF12": "43.61000000",
+    "UNIXTIME": {
+      "$numberLong": "1749157200"
+    }
+  },
+  {
+    "Tarih": "13-06-2025",
+    "YEARWEEK": "2025-24",
+    "TP_KTF12": "43.49000000",
+    "UNIXTIME": {
+      "$numberLong": "1749762000"
+    }
+  },
+  {
+    "Tarih": "20-06-2025",
+    "YEARWEEK": "2025-25",
+    "TP_KTF12": "43.55000000",
+    "UNIXTIME": {
+      "$numberLong": "1750366800"
+    }
+  },
+  {
+    "Tarih": "27-06-2025",
+    "YEARWEEK": "2025-26",
+    "TP_KTF12": "43.23000000",
+    "UNIXTIME": {
+      "$numberLong": "1750971600"
+    }
+  },
+  {
+    "Tarih": "04-07-2025",
+    "YEARWEEK": "2025-27",
+    "TP_KTF12": "43.08000000",
+    "UNIXTIME": {
+      "$numberLong": "1751576400"
+    }
+  },
+  {
+    "Tarih": "11-07-2025",
+    "YEARWEEK": "2025-28",
+    "TP_KTF12": "42.70000000",
+    "UNIXTIME": {
+      "$numberLong": "1752181200"
+    }
+  },
+  {
+    "Tarih": "18-07-2025",
+    "YEARWEEK": "2025-29",
+    "TP_KTF12": "42.57000000",
+    "UNIXTIME": {
+      "$numberLong": "1752786000"
+    }
+  },
+  {
+    "Tarih": "25-07-2025",
+    "YEARWEEK": "2025-30",
+    "TP_KTF12": "41.90000000",
+    "UNIXTIME": {
+      "$numberLong": "1753390800"
+    }
+  },
+  {
+    "Tarih": "01-08-2025",
+    "YEARWEEK": "2025-31",
+    "TP_KTF12": "41.37000000",
+    "UNIXTIME": {
+      "$numberLong": "1753995600"
+    }
+  },
+  {
+    "Tarih": "08-08-2025",
+    "YEARWEEK": "2025-32",
+    "TP_KTF12": "40.70000000",
+    "UNIXTIME": {
+      "$numberLong": "1754600400"
+    }
+  },
+  {
+    "Tarih": "15-08-2025",
+    "YEARWEEK": "2025-33",
+    "TP_KTF12": "40.14000000",
+    "UNIXTIME": {
+      "$numberLong": "1755205200"
+    }
+  },
+  {
+    "Tarih": "22-08-2025",
+    "YEARWEEK": "2025-34",
+    "TP_KTF12": "40.03000000",
+    "UNIXTIME": {
+      "$numberLong": "1755810000"
+    }
+  },
+  {
+    "Tarih": "29-08-2025",
+    "YEARWEEK": "2025-35",
+    "TP_KTF12": "39.56000000",
+    "UNIXTIME": {
+      "$numberLong": "1756414800"
+    }
+  },
+  {
+    "Tarih": "05-09-2025",
+    "YEARWEEK": "2025-36",
+    "TP_KTF12": "39.28000000",
+    "UNIXTIME": {
+      "$numberLong": "1757019600"
+    }
+  },
+  {
+    "Tarih": "12-09-2025",
+    "YEARWEEK": "2025-37",
+    "TP_KTF12": "39.15000000",
+    "UNIXTIME": {
+      "$numberLong": "1757624400"
+    }
+  },
+  {
+    "Tarih": "19-09-2025",
+    "YEARWEEK": "2025-38",
+    "TP_KTF12": "38.65000000",
+    "UNIXTIME": {
+      "$numberLong": "1758229200"
+    }
+  },
+  {
+    "Tarih": "26-09-2025",
+    "YEARWEEK": "2025-39",
+    "TP_KTF12": "38.12000000",
+    "UNIXTIME": {
+      "$numberLong": "1758834000"
+    }
+  },
+  {
+    "Tarih": "03-10-2025",
+    "YEARWEEK": "2025-40",
+    "TP_KTF12": "38.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1759438800"
+    }
+  },
+  {
+    "Tarih": "10-10-2025",
+    "YEARWEEK": "2025-41",
+    "TP_KTF12": "38.04000000",
+    "UNIXTIME": {
+      "$numberLong": "1760043600"
+    }
+  },
+  {
+    "Tarih": "17-10-2025",
+    "YEARWEEK": "2025-42",
+    "TP_KTF12": "37.91000000",
+    "UNIXTIME": {
+      "$numberLong": "1760648400"
+    }
+  },
+  {
+    "Tarih": "24-10-2025",
+    "YEARWEEK": "2025-43",
+    "TP_KTF12": "38.00000000",
+    "UNIXTIME": {
+      "$numberLong": "1761253200"
+    }
+  },
+  {
+    "Tarih": "31-10-2025",
+    "YEARWEEK": "2025-44",
+    "TP_KTF12": "37.75000000",
+    "UNIXTIME": {
+      "$numberLong": "1761858000"
+    }
+  },
+  {
+    "Tarih": "07-11-2025",
+    "YEARWEEK": "2025-45",
+    "TP_KTF12": "37.78000000",
+    "UNIXTIME": {
+      "$numberLong": "1762462800"
+    }
+  },
+  {
+    "Tarih": "14-11-2025",
+    "YEARWEEK": "2025-46",
+    "TP_KTF12": "37.87000000",
+    "UNIXTIME": {
+      "$numberLong": "1763067600"
+    }
+  },
+  {
+    "Tarih": "21-11-2025",
+    "YEARWEEK": "2025-47",
+    "TP_KTF12": "37.70000000",
+    "UNIXTIME": {
+      "$numberLong": "1763672400"
+    }
+  },
+  {
+    "Tarih": "28-11-2025",
+    "YEARWEEK": "2025-48",
+    "TP_KTF12": "37.70000000",
+    "UNIXTIME": {
+      "$numberLong": "1764277200"
+    }
+  },
+  {
+    "Tarih": "05-12-2025",
+    "YEARWEEK": "2025-49",
+    "TP_KTF12": "37.75000000",
+    "UNIXTIME": {
+      "$numberLong": "1764882000"
+    }
+  },
+  {
+    "Tarih": "12-12-2025",
+    "YEARWEEK": "2025-50",
+    "TP_KTF12": "37.63000000",
+    "UNIXTIME": {
+      "$numberLong": "1765486800"
+    }
+  },
+  {
+    "Tarih": "19-12-2025",
+    "YEARWEEK": "2025-51",
+    "TP_KTF12": "37.21000000",
+    "UNIXTIME": {
+      "$numberLong": "1766091600"
+    }
+  },
+  {
+    "Tarih": "26-12-2025",
+    "YEARWEEK": "2025-52",
+    "TP_KTF12": "36.57000000",
+    "UNIXTIME": {
+      "$numberLong": "1766696400"
+    }
+  },
+  {
+    "Tarih": "02-01-2026",
+    "YEARWEEK": "2026-1",
+    "TP_KTF12": "36.38000000",
+    "UNIXTIME": {
+      "$numberLong": "1767301200"
     }
   }
 ]

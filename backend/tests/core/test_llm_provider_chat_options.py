@@ -36,3 +36,28 @@ def test_chat_passes_temperature_and_response_format(provider_cls):
     assert response.content == "{}"
     assert client.completions.kwargs["temperature"] == 0.0
     assert client.completions.kwargs["response_format"] == {"type": "json_object"}
+
+
+def test_kloudeks_provider_default_and_custom_model():
+    client = FakeClient()
+    provider = KloudeksProvider(client=client)
+    assert provider.model == "deepseek-ai/DeepSeek-V4.1-Flash"
+
+    provider_qwen = KloudeksProvider(client=client, model=KloudeksProvider.MODEL_QWEN)
+    assert provider_qwen.model == "kkbhackathon2026/Qwen3.8-27B"
+
+    provider_qwen.chat([{"role": "user", "content": "test"}])
+    assert client.completions.kwargs["model"] == "kkbhackathon2026/Qwen3.8-27B"
+
+
+def test_get_default_provider_kloudeks_flash_and_qwen():
+    from backend.app.core.llm_provider import get_default_provider
+
+    p_flash = get_default_provider("kloudeks-deepseek-flash")
+    assert isinstance(p_flash, KloudeksProvider)
+    assert p_flash.model == "deepseek-ai/DeepSeek-V4.1-Flash"
+
+    p_qwen = get_default_provider("kloudeks-qwen")
+    assert isinstance(p_qwen, KloudeksProvider)
+    assert p_qwen.model == "kkbhackathon2026/Qwen3.8-27B"
+
