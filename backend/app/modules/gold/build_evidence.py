@@ -38,6 +38,30 @@ def build_gold_evidence(gold_dir: Path) -> None:
         },
         {
             "gold_table": "gold_housing_credit_market",
+            "gold_column": "konut_kredisi_hacmi_yp",
+            "source_series_id": "BDDK_MONTHLY:tuketici_kredileri:tuketici_kredileri_konut",
+            "source": "BDDK_MONTHLY",
+            "source_freq": "M",
+            "source_nature": "stock",
+            "alignment_method": "last",
+            "dimension_filter": '{"variable": "YP"}',
+            "transformation": "None",
+            "semantic_description": "Total housing loans in Foreign Currency (FX/YP)"
+        },
+        {
+            "gold_table": "gold_housing_credit_market",
+            "gold_column": "konut_kredisi_hacmi_toplam",
+            "source_series_id": "BDDK_MONTHLY:tuketici_kredileri:tuketici_kredileri_konut",
+            "source": "BDDK_MONTHLY",
+            "source_freq": "M",
+            "source_nature": "stock",
+            "alignment_method": "last",
+            "dimension_filter": '{"variable": "Toplam"}',
+            "transformation": "None",
+            "semantic_description": "Total housing loans (TRY + FX)"
+        },
+        {
+            "gold_table": "gold_housing_credit_market",
             "gold_column": "konut_kredisi_faiz_orani",
             "source_series_id": "EVDS:TP.KTF12",
             "source": "EVDS",

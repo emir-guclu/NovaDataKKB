@@ -37,11 +37,13 @@ gold_periodic_change = Table(
 gold_housing_credit_market = Table(
     'gold_housing_credit_market', lakehouse_metadata,
     Column('date', Date, primary_key=True, comment="İşlem veya gözlem tarihi (Aylık frekans)"),
-    Column('konut_kredisi_hacmi_tp', Float, comment="Bankacılık sektörü toplam konut kredisi hacmi (Milyon TL)"),
+    Column('konut_kredisi_hacmi_tp', Float, comment="Bankacılık sektörü konut kredisi Türk Parası (TP) hacmi (Milyon TL)"),
+    Column('konut_kredisi_hacmi_yp', Float, comment="Bankacılık sektörü konut kredisi Yabancı Para (YP) hacmi (Milyon TL)"),
+    Column('konut_kredisi_hacmi_toplam', Float, comment="Bankacılık sektörü konut kredisi Toplam hacmi (Milyon TL)"),
     Column('konut_kredisi_faiz_orani', Float, comment="Konut kredilerine uygulanan ağırlıklı ortalama faiz oranı (%)"),
     Column('konut_fiyat_endeksi', Float, comment="Konut Fiyat Endeksi (KFE)"),
     Column('toplam_konut_satisi', Float, comment="Türkiye geneli satılan toplam konut sayısı (Adet)"),
-    comment="Konut ve gayrimenkul piyasasına dair kredi, satış ve faiz verilerini aynı tarihte hizalayarak birleştiren çapraz kaynak tablosu."
+    comment="Konut ve gayrimenkul piyasasına dair kredi (TP, YP, Toplam), satış ve faiz verilerini aynı tarihte hizalayarak birleştiren çapraz kaynak tablosu."
 )
 
 gold_credit_market = Table(

@@ -3,7 +3,17 @@ from pathlib import Path
 import json
 from dataclasses import dataclass
 from typing import Optional, Dict
-from app.modules.gold.review_guard import reviewed_series_ids
+import sys
+
+_project_root = Path(__file__).parent.parent.parent.parent.parent
+_backend_path = str(_project_root / "backend")
+if _backend_path not in sys.path:
+    sys.path.insert(0, _backend_path)
+
+try:
+    from app.modules.gold.review_guard import reviewed_series_ids
+except ModuleNotFoundError:
+    from backend.app.modules.gold.review_guard import reviewed_series_ids
 
 @dataclass
 class ColumnDef:
@@ -84,6 +94,8 @@ def build_all_cross_source(aligned_obs_path: Path, gold_dir: Path) -> None:
         obs_df=obs_df,
         columns_config={
             "konut_kredisi_hacmi_tp": ColumnDef("BDDK_MONTHLY:tuketici_kredileri:tuketici_kredileri_konut", "variable", "TP"),
+            "konut_kredisi_hacmi_yp": ColumnDef("BDDK_MONTHLY:tuketici_kredileri:tuketici_kredileri_konut", "variable", "YP"),
+            "konut_kredisi_hacmi_toplam": ColumnDef("BDDK_MONTHLY:tuketici_kredileri:tuketici_kredileri_konut", "variable", "Toplam"),
             "konut_kredisi_faiz_orani": ColumnDef("EVDS:TP.KTF12"),
             "konut_fiyat_endeksi": ColumnDef("EVDS:TP.KFE.TR"),
             "toplam_konut_satisi": ColumnDef("EVDS:TP.AKONUTSAT1.KTRTOPLAM")
