@@ -418,47 +418,5 @@
     "UNIXTIME": {
       "$numberLong": "1764536400"
     }
-  },
-  {
-    "Tarih": "2026-1",
-    "TP_KFE_TR": "211.73000000",
-    "UNIXTIME": {
-      "$numberLong": "1767214800"
-    }
-  },
-  {
-    "Tarih": "2026-2",
-    "TP_KFE_TR": "215.40000000",
-    "UNIXTIME": {
-      "$numberLong": "1769893200"
-    }
-  },
-  {
-    "Tarih": "2026-3",
-    "TP_KFE_TR": "219.52000000",
-    "UNIXTIME": {
-      "$numberLong": "1772312400"
-    }
-  },
-  {
-    "Tarih": "2026-4",
-    "TP_KFE_TR": "223.32000000",
-    "UNIXTIME": {
-      "$numberLong": "1774990800"
-    }
-  },
-  {
-    "Tarih": "2026-5",
-    "TP_KFE_TR": "226.99000000",
-    "UNIXTIME": {
-      "$numberLong": "1777582800"
-    }
-  },
-  {
-    "Tarih": "2026-6",
-    "TP_KFE_TR": "231.34000000",
-    "UNIXTIME": {
-      "$numberLong": "1780261200"
-    }
   }
 ]
