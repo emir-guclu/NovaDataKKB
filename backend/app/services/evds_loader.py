@@ -30,7 +30,7 @@ from app.models.silver_canonical import (
 )
 from app.modules.evds.catalog_store import load_catalog
 from app.modules.evds.client import EvdsClient
-from app.modules.evds.metadata import sync_metadata
+from app.modules.evds.metadata import fetch_single_series_metadata, sync_metadata
 from app.services.align_service import align_to_monthly
 from app.services.aligned_store import upsert_single_series_to_aligned_duckdb
 from app.services.alignment_policies import build_alignment_policies
@@ -160,15 +160,24 @@ def load_evds_series(
 
     meta_info = meta_dict.get(code)
     if not meta_info:
-        # Fetch datagroup / series metadata via client if possible
-        try:
-            cat_info = client.get_series_metadata(code)
-            if cat_info and isinstance(cat_info, list) and len(cat_info) > 0:
-                meta_info = cat_info[0]
-            elif isinstance(cat_info, dict):
-                meta_info = cat_info
-        except Exception as err:
-            logger.warning(f"Could not fetch live metadata for {code}: {err}")
+        # 1. Try via client.get_series_metadata if available (works for EvdsClient and test mocks)
+        if hasattr(client, "get_series_metadata") and callable(getattr(client, "get_series_metadata")):
+            try:
+                cat_info = client.get_series_metadata(code)
+                if cat_info and isinstance(cat_info, list) and len(cat_info) > 0:
+                    meta_info = cat_info[0]
+                elif isinstance(cat_info, dict):
+                    meta_info = cat_info
+            except Exception as err:
+                logger.warning(f"Could not fetch live metadata via client for {code}: {err}")
+
+        # 2. Try via catalog + metadata module if still missing
+        if not meta_info:
+            catalog_path = (b_dir / "evds_catalog.parquet") if (b_dir / "evds_catalog.parquet").exists() else DEFAULT_CATALOG_PATH
+            try:
+                meta_info = fetch_single_series_metadata(code, client=client, catalog_path=catalog_path)
+            except Exception as err:
+                logger.warning(f"Could not fetch catalog metadata for {code}: {err}")
 
         if not meta_info:
             # Fallback basic metadata structure

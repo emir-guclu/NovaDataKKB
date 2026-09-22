@@ -2873,5 +2873,14 @@
     "BIRIMI": null,
     "NOTE": null,
     "TAG": []
+  },
+  "TP.HKFE01": {
+    "SERIE_CODE": "TP.HKFE01",
+    "SERIE_NAME": "TP.HKFE01",
+    "FREQUENCY_STR": "AYLIK",
+    "DATAGROUP_NAME": "Genel",
+    "BIRIMI": null,
+    "NOTE": null,
+    "TAG": []
   }
 }

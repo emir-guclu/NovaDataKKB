@@ -22,8 +22,12 @@ import pandas as pd
 import yaml
 from dotenv import load_dotenv
 
-from app.modules.evds.catalog_store import load_catalog
-from app.modules.evds.client import EvdsClient
+try:
+    from app.modules.evds.catalog_store import load_catalog
+    from app.modules.evds.client import EvdsClient
+except ModuleNotFoundError:
+    from backend.app.modules.evds.catalog_store import load_catalog
+    from backend.app.modules.evds.client import EvdsClient
 
 # Automatically load .env if present
 load_dotenv()
@@ -211,6 +215,90 @@ def sync_metadata(
     # Step 4: Atomic save
     save_metadata_atomic(existing_meta, output_path)
     return existing_meta
+
+
+def fetch_single_series_metadata(
+    code: str,
+    client: Optional[EvdsClient] = None,
+    catalog_path: Union[str, Path] = DEFAULT_CATALOG_PATH,
+) -> Optional[Dict[str, Any]]:
+    """Tekil bir EVDS serisi icin katalog ve resmi EVDS API uzerinden zengin metadata getirir."""
+    cat_path = Path(catalog_path)
+    if not cat_path.exists():
+        return None
+
+    try:
+        catalog_df = load_catalog(cat_path)
+    except Exception as exc:
+        logger.warning(f"Could not load catalog from {cat_path}: {exc}")
+        return None
+
+    match = catalog_df[catalog_df["series_code"] == code]
+    if match.empty:
+        return None
+
+    row = match.iloc[0]
+    dg_id = str(row.get("datagroup_id") or "")
+    cat_id = row.get("category_id")
+
+    if client is None:
+        try:
+            client = EvdsClient()
+        except Exception:
+            client = None
+
+    dg_info: Dict[str, Any] = {}
+    s_info: Dict[str, Any] = {}
+
+    if client and dg_id:
+        try:
+            sub_cats = client.get_sub_categories(cat_id, raw=True) if cat_id else client.get_sub_categories("", raw=True)
+            if isinstance(sub_cats, list):
+                for sc in sub_cats:
+                    if sc.get("DATAGROUP_CODE") == dg_id:
+                        dg_info = sc
+                        break
+        except Exception as exc:
+            logger.warning(f"Could not fetch datagroup metadata for {dg_id}: {exc}")
+
+        try:
+            s_res = client.get_series(dg_id, raw=True)
+            if isinstance(s_res, list):
+                for s in s_res:
+                    if s.get("SERIE_CODE") == code:
+                        s_info = s
+                        break
+        except Exception as exc:
+            logger.warning(f"Could not fetch series detail for {code}: {exc}")
+
+    serie_name = clean_text(s_info.get("SERIE_NAME") or row.get("series_name") or code)
+    serie_name_eng = clean_text(s_info.get("SERIE_NAME_ENG"))
+    freq_str = clean_text(s_info.get("FREQUENCY_STR") or dg_info.get("FREQUENCY_STR") or row.get("frequency") or "AYLIK")
+    note = clean_text(dg_info.get("NOTE"))
+    unit = clean_text(dg_info.get("BIRIMI"))
+    tag = clean_text(s_info.get("TAG"))
+    tag_list = [t.strip() for t in tag.split(",") if t.strip()] if tag else []
+
+    return {
+        "SERIE_CODE": code,
+        "SERIE_NAME": serie_name,
+        "SERIE_NAME_ENG": serie_name_eng,
+        "DATAGROUP_CODE": dg_id,
+        "DATAGROUP_NAME": clean_text(dg_info.get("DATAGROUP_NAME") or row.get("datagroup_name") or "Genel"),
+        "CATEGORY_ID": cat_id,
+        "CATEGORY_NAME": clean_text(row.get("category_name")),
+        "FREQUENCY_STR": freq_str,
+        "DEFAULT_AGG_METHOD_STR": clean_text(s_info.get("DEFAULT_AGG_METHOD_STR")),
+        "START_DATE": s_info.get("START_DATE"),
+        "END_DATE": s_info.get("END_DATE"),
+        "BIRIMI": unit,
+        "BIRIMI_EN": clean_text(dg_info.get("BIRIMI_EN")),
+        "NOTE": note,
+        "NOTE_ENG": clean_text(dg_info.get("NOTE_ENG")),
+        "TAG": tag_list,
+        "METADATA_LINK": dg_info.get("METADATA_LINK"),
+    }
+
 
 
 if __name__ == "__main__":

@@ -94,7 +94,7 @@ def test_max_history_turns_limit_is_applied():
     provider = CapturingProvider()
     history = [
         {"role": "user" if i % 2 == 0 else "assistant", "content": f"tur {i}"}
-        for i in range(30)
+        for i in range(60)
     ]
 
     run_agent(
@@ -106,7 +106,31 @@ def test_max_history_turns_limit_is_applied():
     )
 
     messages = provider.messages
-    # system + son 20 tur (MAX_HISTORY_TURNS) + guncel soru
-    assert len(messages) == 1 + 20 + 1
-    assert "tur 10" in messages[1]["content"]
-    assert messages[-2]["content"] == "tur 29"
+    # system + son 40 tur (MAX_HISTORY_TURNS) + guncel soru
+    assert len(messages) == 1 + 40 + 1
+    assert "tur 20" in messages[1]["content"]
+    assert messages[-2]["content"] == "tur 59"
+
+
+
+def test_max_history_chars_limit_is_applied():
+    provider = CapturingProvider()
+    very_long_content = "X" * 8000
+    history = [
+        {"role": "assistant", "content": very_long_content},
+    ]
+
+    run_agent(
+        "Son soru",
+        registry=ToolRegistry(),
+        provider=provider,
+        max_iterations=1,
+        history=history,
+    )
+
+    messages = provider.messages
+    # system + 1 truncated history assistant + user current question
+    assert len(messages) == 3
+    assert messages[1]["role"] == "assistant"
+    assert len(messages[1]["content"]) == 6000
+

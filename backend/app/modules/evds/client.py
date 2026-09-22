@@ -258,3 +258,16 @@ class EvdsClient:
             lambda api: api.get_series(datagroup_code, **kwargs),
         )
 
+    def get_series_metadata(self, series_code: str) -> Optional[List[dict[str, Any]]]:
+        """Fetches rich metadata for a given series code via catalog and EVDS API."""
+        try:
+            from app.modules.evds.metadata import fetch_single_series_metadata
+        except ModuleNotFoundError:
+            from backend.app.modules.evds.metadata import fetch_single_series_metadata
+
+        meta = fetch_single_series_metadata(series_code, client=self)
+        if meta:
+            return [meta]
+        return None
+
+

@@ -101,7 +101,7 @@ class EvdsTool(BaseTool):
                 return self._search(params)
             return self._load(params)
         except Exception as exc:
-            logger.exception("evds_data_service failed")
+            logger.warning("evds_data_service call failed (%s): %s", params.action, exc)
             return self.Output(success=False, error=str(exc), action=params.action)
 
     def _search(self, params: Input) -> Output:
@@ -126,9 +126,10 @@ class EvdsTool(BaseTool):
 
         ranked = catalog.copy()
         ranked["_match_score"] = ranked.apply(score, axis=1)
+        ranked["_is_archive"] = ranked["series_name"].astype(str).str.contains(r"ar[sş]iv", case=False, regex=True)
         ranked = ranked[ranked["_match_score"] > 0].sort_values(
-            by=["_match_score", "series_code"],
-            ascending=[False, True],
+            by=["_match_score", "_is_archive", "series_code"],
+            ascending=[False, True, True],
         )
 
         matches = [

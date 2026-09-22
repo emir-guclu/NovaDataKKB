@@ -645,10 +645,10 @@ function DashboardContent({ t }: { t: any }) {
     setAttachment(null);
     setAttachmentError(null);
 
-    // Yeni kullanıcı mesajı state'e eklenmeden ÖNCE geçmişi hesapla
+    // Yeni kullanıcı mesajı state'e eklenmeden ÖNCE geçmişi hesapla (son 20 soru-cevap çifti = 40 mesaj)
     const history = messages
       .filter(m => m.content && m.content.trim() !== "")
-      .slice(-6)
+      .slice(-40)
       .map(m => ({ role: m.role, content: m.content }));
 
     const currentSession = sessions.find(s => s.id === currentSessionId);
