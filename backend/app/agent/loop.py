@@ -16,7 +16,7 @@ from backend.app.prompts.sanitizer import (
 
 logger = logging.getLogger(__name__)
 
-MAX_HISTORY_TURNS = 40         # son 20 soru-cevap çifti
+MAX_HISTORY_TURNS = 100        # son 50 soru-cevap çifti
 MAX_HISTORY_CHARS = 6000       # tur başına üst sınır (asistan cevapları ve geniş analizler için 6.000 karakter)
 
 

@@ -113,14 +113,17 @@ class LakehouseQueryTool(BaseTool):
         "Lakehouse icindeki hazir Gold tablolarindan veya tum ham/yuklenen zaman serisi "
         "gozlemlerini iceren 'silver_observations' tablosundan guvenli veri getirir. "
         "Guncel/harici internet bilgisi icin KULLANMA; onun icin web_search kullanilmalidir. "
-        "Ham SQL almaz; table, columns, filters ve limit parametreleriyle cagrilir."
+        "Ham SQL almaz; table, columns, filters ve limit parametreleriyle cagrilir. "
+        "'silver_observations' tablosunun kolonlari: 'series_id', 'date', 'value', 'dims', 'freq', 'unit'. "
+        "Vade dilimleri, para birimi ve alt kirilimlar 'dims' JSON kolonunda tutulur (orn. {'variable': '1-3 Ay Arası'}). "
+        "Cok boyutlu serilerde hangi degerin hangi kirilima ait oldugunu gormek icin 'columns' listesine MUTLAKA 'dims' kolonunu ekleyin."
     )
 
     class Input(BaseModel):
         table: str = Field(
             description="Lakehouse tablosu (orn. 'silver_observations', 'aligned_observations' veya Gold tablolari)",
         )
-        columns: list[str] = Field(description="Getirilecek kolon adlari (orn. ['date', 'value'])")
+        columns: list[str] = Field(description="Getirilecek kolon adlari (orn. ['date', 'value', 'dims'])")
         filters: dict[str, Any] = Field(
             default_factory=dict,
             description="Kolon-esitlik filtreleri (orn. {'series_id': '...'})",
@@ -130,7 +133,7 @@ class LakehouseQueryTool(BaseTool):
         date_column: str = Field(default="date", description="Tarih filtresi icin kullanilacak kolon")
         order_by: str | None = Field(default=None, description="Opsiyonel siralama kolonu")
         order_direction: Literal["asc", "desc"] = Field(default="asc", description="Siralama yonu")
-        limit: int = Field(default=50, ge=1, le=500, description="Maksimum satir sayisi")
+        limit: int = Field(default=200, ge=1, le=2000, description="Maksimum satir sayisi. Cok boyutlu serilerde tum satirlari almak icin yuksek bir deger (orn. 500-1000) verin.")
 
     class Output(BaseModel):
         success: bool

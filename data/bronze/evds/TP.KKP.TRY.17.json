@@ -1,0 +1,44 @@
+[
+  {
+    "Tarih": "2026-1",
+    "TP_KKP_TRY_17": "36.59000000",
+    "UNIXTIME": {
+      "$numberLong": "1767214800"
+    }
+  },
+  {
+    "Tarih": "2026-2",
+    "TP_KKP_TRY_17": "35.88000000",
+    "UNIXTIME": {
+      "$numberLong": "1769893200"
+    }
+  },
+  {
+    "Tarih": "2026-3",
+    "TP_KKP_TRY_17": "35.10000000",
+    "UNIXTIME": {
+      "$numberLong": "1772312400"
+    }
+  },
+  {
+    "Tarih": "2026-4",
+    "TP_KKP_TRY_17": "34.71000000",
+    "UNIXTIME": {
+      "$numberLong": "1774990800"
+    }
+  },
+  {
+    "Tarih": "2026-5",
+    "TP_KKP_TRY_17": "33.67000000",
+    "UNIXTIME": {
+      "$numberLong": "1777582800"
+    }
+  },
+  {
+    "Tarih": "2026-6",
+    "TP_KKP_TRY_17": "32.08000000",
+    "UNIXTIME": {
+      "$numberLong": "1780261200"
+    }
+  }
+]

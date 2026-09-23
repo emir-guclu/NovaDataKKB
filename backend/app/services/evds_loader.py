@@ -22,6 +22,7 @@ from pathlib import Path
 from typing import Any, Dict, List, Literal, Optional, Union
 
 import duckdb
+import numpy as np
 import pandas as pd
 
 from app.models.silver_canonical import (
@@ -193,7 +194,19 @@ def load_evds_series(
 
         meta_dict[code] = meta_info
         with open(meta_path, "w", encoding="utf-8") as f:
-            json.dump(meta_dict, f, ensure_ascii=False, indent=2)
+            json.dump(
+                meta_dict,
+                f,
+                ensure_ascii=False,
+                indent=2,
+                default=lambda o: int(o)
+                if isinstance(o, (np.integer, int))
+                else float(o)
+                if isinstance(o, (np.floating, float))
+                else bool(o)
+                if isinstance(o, (np.bool_, bool))
+                else str(o),
+            )
 
     # 3. Transform to EVDS Silver Parquet format
     raw_obs_rows = transform_single_series(code, raw_payload, meta_info)
@@ -447,9 +460,21 @@ def load_evds_series(
     # 8. Build preview (all canonical observations)
     sorted_obs = sorted(canonical_obs_rows, key=lambda x: x["date"])
     preview = [
-        {"date": str(o["date"]), "value": o["value"]}
+        {
+            "date": str(o["date"]),
+            "value": float(o["value"]) if (o.get("value") is not None and pd.notna(o.get("value"))) else None
+        }
         for o in sorted_obs
     ]
+
+    last_val = sorted_obs[-1]["value"] if sorted_obs else None
+    if last_val is not None and pd.notna(last_val):
+        try:
+            last_val = float(last_val)
+        except Exception:
+            last_val = None
+    else:
+        last_val = None
 
     return {
         "status": "pending_review" if pending_review else "success",
@@ -464,10 +489,10 @@ def load_evds_series(
         "series_name": canonical_meta_dict["series_name"],
         "freq": canonical_meta_dict["freq"],
         "unit": unit_val,
-        "rows_count": len(canonical_obs_rows),
-        "first_date": str(sorted_obs[0]["date"]),
-        "last_date": str(sorted_obs[-1]["date"]),
-        "latest_value": sorted_obs[-1]["value"],
+        "rows_count": int(len(canonical_obs_rows)),
+        "first_date": str(sorted_obs[0]["date"]) if sorted_obs else None,
+        "last_date": str(sorted_obs[-1]["date"]) if sorted_obs else None,
+        "latest_value": last_val,
         "added_to_silver": added_to_silver,
         "added_to_aligned": added_to_aligned,
         "embedding_catalog_updated": embedding_catalog_updated,

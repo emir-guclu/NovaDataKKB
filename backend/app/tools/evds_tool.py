@@ -6,6 +6,7 @@ from datetime import date
 from pathlib import Path
 from typing import Any, Callable, Literal
 
+import numpy as np
 import pandas as pd
 from pydantic import BaseModel, Field
 
@@ -161,9 +162,25 @@ class EvdsTool(BaseTool):
             context="live",
             add_to_silver=True,
         )
-        preview = list(summary.get("preview") or [])
+        def _clean(val: Any) -> Any:
+            if isinstance(val, (np.integer,)):
+                return int(val)
+            if isinstance(val, (np.floating,)):
+                return float(val)
+            if isinstance(val, (np.bool_,)):
+                return bool(val)
+            return val
+
+        raw_preview = list(summary.get("preview") or [])
+        preview = [
+            {
+                "date": str(p.get("date")),
+                "value": float(p["value"]) if p.get("value") is not None and pd.notna(p.get("value")) else None,
+            }
+            for p in raw_preview
+        ]
         series_info = {
-            key: summary.get(key)
+            key: _clean(summary.get(key))
             for key in [
                 "status",
                 "series_id",
@@ -178,12 +195,21 @@ class EvdsTool(BaseTool):
                 "added_to_aligned",
             ]
         }
+        latest_val = summary.get("latest_value")
+        if latest_val is not None and pd.notna(latest_val):
+            try:
+                latest_val = float(latest_val)
+            except Exception:
+                latest_val = None
+        else:
+            latest_val = None
+
         return self.Output(
             success=True,
             action="load",
             series_info=series_info,
-            latest_value=summary.get("latest_value"),
-            latest_date=summary.get("last_date"),
+            latest_value=latest_val,
+            latest_date=str(summary.get("last_date")) if summary.get("last_date") else None,
             preview=preview,
             message=summary.get("message"),
         )

@@ -73,6 +73,19 @@ def load_existing_metadata(metadata_path: Union[str, Path] = DEFAULT_METADATA_OU
         return {}
 
 
+import numpy as np
+
+
+def _json_serial(obj: Any) -> Any:
+    if isinstance(obj, (np.integer, int)):
+        return int(obj)
+    if isinstance(obj, (np.floating, float)):
+        return float(obj)
+    if isinstance(obj, (np.bool_, bool)):
+        return bool(obj)
+    return str(obj)
+
+
 def save_metadata_atomic(
     metadata_dict: Dict[str, Any],
     metadata_path: Union[str, Path] = DEFAULT_METADATA_OUTPUT_PATH,
@@ -82,7 +95,7 @@ def save_metadata_atomic(
     path.parent.mkdir(parents=True, exist_ok=True)
 
     with tempfile.NamedTemporaryFile("w", dir=path.parent, delete=False, encoding="utf-8", suffix=".tmp") as tf:
-        json.dump(metadata_dict, tf, ensure_ascii=False, indent=2)
+        json.dump(metadata_dict, tf, ensure_ascii=False, indent=2, default=_json_serial)
         temp_name = tf.name
 
     os.replace(temp_name, path)
@@ -239,7 +252,8 @@ def fetch_single_series_metadata(
 
     row = match.iloc[0]
     dg_id = str(row.get("datagroup_id") or "")
-    cat_id = row.get("category_id")
+    cat_id_raw = row.get("category_id")
+    cat_id = int(cat_id_raw) if (cat_id_raw is not None and pd.notna(cat_id_raw)) else None
 
     if client is None:
         try:
