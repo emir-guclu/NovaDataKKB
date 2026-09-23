@@ -114,3 +114,23 @@ def test_lakehouse_query_silver_observations_success():
     assert "date" in result.rows[0]
     assert "value" in result.rows[0]
 
+
+def test_lakehouse_query_silver_observations_virtual_variable_columns():
+    tool = LakehouseQueryTool()
+    result = tool.run(
+        tool.Input(
+            table="silver_observations",
+            columns=["date", "value", "variable"],
+            filters={
+                "series_id": "BDDK_MONTHLY:mevduat_vade_itibariyla:tp_mevduat_katilim_fonlari_yurt_ici_yerlesik",
+                "variable": "Toplam",
+            },
+            limit=3,
+        )
+    )
+    assert result.success is True
+    assert result.row_count > 0
+    assert "variable" in result.rows[0]
+    assert result.rows[0]["variable"] == "Toplam"
+
+

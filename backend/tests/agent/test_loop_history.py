@@ -115,7 +115,7 @@ def test_max_history_turns_limit_is_applied():
 
 def test_max_history_chars_limit_is_applied():
     provider = CapturingProvider()
-    very_long_content = "X" * 8000
+    very_long_content = "X" * 15000
     history = [
         {"role": "assistant", "content": very_long_content},
     ]
@@ -132,5 +132,5 @@ def test_max_history_chars_limit_is_applied():
     # system + 1 truncated history assistant + user current question
     assert len(messages) == 3
     assert messages[1]["role"] == "assistant"
-    assert len(messages[1]["content"]) == 6000
+    assert len(messages[1]["content"]) == 10000
 

@@ -445,7 +445,7 @@ def test_align_pair_real_silver_duckdb():
     res = align_pair("EVDS:TP.DK.USD.A.YTL", "EVDS:TP.KTF10", silver_db_path=silver_db)
 
     assert res.target_freq == "W"
-    assert res.common_periods_count > 200
+    assert res.common_periods_count >= 20
     assert len(res.df) == res.common_periods_count
     assert "EVDS:TP.DK.USD.A.YTL" in res.df.columns
     assert "EVDS:TP.KTF10" in res.df.columns

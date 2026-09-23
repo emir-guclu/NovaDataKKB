@@ -205,7 +205,8 @@ def test_causality_one_side_inline_one_side_lakehouse():
     result = tool.run(
         tool.Input(
             observations_a=custom_observations,
-            series_id_b="EVDS:TP.KTF12",
+            series_id_b="BDDK_MONTHLY:tuketici_kredileri:tuketici_kredileri_konut",
+            dimension_b="Toplam",
             start_date="2023-01-01",
             end_date="2023-06-30",
         )

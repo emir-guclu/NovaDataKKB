@@ -46,6 +46,9 @@ def validate_query_safety(sql: str) -> tuple[bool, str | None]:
     return True, None
 
 
+_SAFE_IDENT_RE = re.compile(r"^[a-zA-Z_][a-zA-Z0-9_]*$")
+
+
 def _quote_identifier(identifier: str) -> str:
     return '"' + identifier.replace('"', '""') + '"'
 
@@ -115,8 +118,9 @@ class LakehouseQueryTool(BaseTool):
         "Guncel/harici internet bilgisi icin KULLANMA; onun icin web_search kullanilmalidir. "
         "Ham SQL almaz; table, columns, filters ve limit parametreleriyle cagrilir. "
         "'silver_observations' tablosunun kolonlari: 'series_id', 'date', 'value', 'dims', 'freq', 'unit'. "
-        "Vade dilimleri, para birimi ve alt kirilimlar 'dims' JSON kolonunda tutulur (orn. {'variable': '1-3 Ay Arası'}). "
-        "Cok boyutlu serilerde hangi degerin hangi kirilima ait oldugunu gormek icin 'columns' listesine MUTLAKA 'dims' kolonunu ekleyin."
+        "Vade dilimleri, para cinsi, il, emtia vb. alt kirilimlar 'dims' JSON kolonunda tutulur. "
+        "Tabloda 'dims' varsa, icindeki tum degiskenler ('variable'/'dimension', 'para_cinsi', 'province', 'plate_code', 'currency', 'sales_type', 'commodity', 'region_name' vb.) "
+        "hem 'columns' listesinde dogrudan secilebilir hem de 'filters' icinde filtrelenebilir."
     )
 
     class Input(BaseModel):
@@ -162,8 +166,23 @@ class LakehouseQueryTool(BaseTool):
 
                 schema_rows = con.execute(f"DESCRIBE {_quote_identifier(params.table)}").fetchall()
                 available_columns = {row[0] for row in schema_rows}
+                has_dims = "dims" in available_columns
+
                 requested_columns = set(params.columns)
-                extra_columns = requested_columns - available_columns
+                referenced_columns = set(params.filters.keys())
+                if params.start_date and params.end_date:
+                    referenced_columns.add(params.date_column)
+                if params.order_by:
+                    referenced_columns.add(params.order_by)
+
+                all_needed = requested_columns | referenced_columns
+                virtual_cols = {
+                    c for c in (all_needed - available_columns)
+                    if has_dims and bool(_SAFE_IDENT_RE.match(c))
+                }
+                effective_columns = available_columns | virtual_cols
+
+                extra_columns = requested_columns - effective_columns
                 if extra_columns:
                     return self.Output(
                         success=False,
@@ -171,13 +190,7 @@ class LakehouseQueryTool(BaseTool):
                         table=params.table,
                     )
 
-                referenced_columns = set(params.filters.keys())
-                if params.start_date and params.end_date:
-                    referenced_columns.add(params.date_column)
-                if params.order_by:
-                    referenced_columns.add(params.order_by)
-
-                extra_referenced = referenced_columns - available_columns
+                extra_referenced = referenced_columns - effective_columns
                 if extra_referenced:
                     return self.Output(
                         success=False,
@@ -188,21 +201,44 @@ class LakehouseQueryTool(BaseTool):
                 where_clauses: list[str] = []
                 query_params: list[Any] = []
                 for column, value in params.filters.items():
-                    where_clauses.append(f"{_quote_identifier(column)} = ?")
-                    query_params.append(value)
+                    if column in virtual_cols:
+                        dim_expr = "json_extract_string(dims, '$.variable')" if column == "dimension" else f"json_extract_string(dims, '$.{column}')"
+                        where_clauses.append(f"{dim_expr} = ?")
+                        query_params.append(value)
+                    else:
+                        where_clauses.append(f"{_quote_identifier(column)} = ?")
+                        query_params.append(value)
 
                 if params.start_date and params.end_date:
-                    where_clauses.append(f"{_quote_identifier(params.date_column)} BETWEEN ? AND ?")
+                    if params.date_column in virtual_cols:
+                        dim_expr = "json_extract_string(dims, '$.variable')" if params.date_column == "dimension" else f"json_extract_string(dims, '$.{params.date_column}')"
+                        date_col_sql = dim_expr
+                    else:
+                        date_col_sql = _quote_identifier(params.date_column)
+                    where_clauses.append(f"{date_col_sql} BETWEEN ? AND ?")
                     query_params.extend([params.start_date, params.end_date])
 
+                select_parts = []
+                for col in params.columns:
+                    if col in virtual_cols:
+                        dim_expr = "json_extract_string(dims, '$.variable')" if col == "dimension" else f"json_extract_string(dims, '$.{col}')"
+                        select_parts.append(f"{dim_expr} AS {_quote_identifier(col)}")
+                    else:
+                        select_parts.append(_quote_identifier(col))
+
                 sql = (
-                    f"SELECT {', '.join(_quote_identifier(column) for column in params.columns)} "
+                    f"SELECT {', '.join(select_parts)} "
                     f"FROM {_quote_identifier(params.table)}"
                 )
                 if where_clauses:
                     sql += " WHERE " + " AND ".join(where_clauses)
                 if params.order_by:
-                    sql += f" ORDER BY {_quote_identifier(params.order_by)} {params.order_direction.upper()}"
+                    if params.order_by in virtual_cols:
+                        dim_expr = "json_extract_string(dims, '$.variable')" if params.order_by == "dimension" else f"json_extract_string(dims, '$.{params.order_by}')"
+                        order_col_sql = dim_expr
+                    else:
+                        order_col_sql = _quote_identifier(params.order_by)
+                    sql += f" ORDER BY {order_col_sql} {params.order_direction.upper()}"
                 sql += " LIMIT ?"
                 query_params.append(params.limit)
 

@@ -21,7 +21,7 @@ pytestmark = pytest.mark.skipif(
     reason="silver.duckdb veya gold_periodic_change.parquet bulunamadi",
 )
 
-SILVER_ONLY_SERIES = "EVDS:TP.TRY.MT02.S"
+SILVER_ONLY_SERIES = "EVDS:TP.TRY.MT02"
 GOLD_SERIES = "BDDK_MONTHLY:tuketici_kredileri:tuketici_kredileri_konut"
 
 
